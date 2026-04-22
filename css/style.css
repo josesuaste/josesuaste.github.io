@@ -47,7 +47,8 @@ body {
     color: var(--accent);
 }
 
-/* --- HERO & OJOS --- */
+/* ... Manten todo tu CSS de :root, body y navegación igual ... */
+
 .hero-center {
     display: flex;
     flex-direction: column;
@@ -55,28 +56,40 @@ body {
     align-items: center;
     height: 100vh;
     position: relative;
-    opacity: 0; /* Para la animación de entrada */
+    opacity: 0;
+    animation: revealCenter 1.5s ease-out 1s forwards;
+    /* Importante: no pongas pointer-events: none aquí para no afectar al main */
 }
 
 .eyes-layer {
     position: absolute;
     width: 65vw;
     max-width: 900px;
-    opacity: 0.9;
-    z-index: 1;
+    z-index: 1; /* Detrás del texto */
+    pointer-events: none; /* El mouse atraviesa los ojos para detectar el movimiento de fondo */
+    opacity: 0.85;
 }
 
 .pupil {
-    /* Si usas JS para el mouse, mantén solo la transición. 
-       Si quieres que sea automático, mantén la animación 'watch' */
     transition: transform 0.1s ease-out;
-    animation: watch 6s infinite ease-in-out; 
+    /* Sin animación CSS para que el JS funcione */
 }
 
-@keyframes watch {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-45px); }
-    70% { transform: translateX(45px); }
+.lid {
+    fill: #000;
+    animation: blink-glitch 6s infinite;
+}
+
+@keyframes blink-glitch {
+    0%, 90%, 100% { height: 0; }
+    92%, 94% { height: 200px; }
+}
+
+.collage-container {
+    position: relative;
+    z-index: 10; /* Enfrente de los ojos */
+    text-align: center;
+    pointer-events: none; /* El mouse atraviesa las letras hacia los ojos */
 }
 
 /* --- COLLAGE --- */

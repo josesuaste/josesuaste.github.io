@@ -55,32 +55,32 @@
     </nav>
 
     <main class="hero-center">
-        <div class="eyes-layer" role="img" aria-label="Ojos vigilantes de Error 404 Studio">
-            <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <clipPath id="eye-shape">
-                        <path d="M50,150 Q150,60 250,150 Q150,240 50,150 Z" />
-                    </clipPath>
-                    <clipPath id="eye-shape-2">
-                        <path d="M350,150 Q450,60 550,150 Q450,240 350,150 Z" />
-                    </clipPath>
-                </defs>
-                <rect x="50" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape)" />
-                <circle class="pupil" cx="150" cy="150" r="35" fill="black" clip-path="url(#eye-shape)" />
-                <rect x="350" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape-2)" />
-                <circle class="pupil" cx="450" cy="150" r="35" fill="black" clip-path="url(#eye-shape-2)" />
-            </svg>
-        </div>
+    <div class="eyes-layer" role="img" aria-label="Ojos vigilantes">
+        <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <clipPath id="eye-shape"><path d="M50,150 Q150,60 250,150 Q150,240 50,150 Z" /></clipPath>
+                <clipPath id="eye-shape-2"><path d="M350,150 Q450,60 550,150 Q450,240 350,150 Z" /></clipPath>
+            </defs>
+            <rect x="50" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape)" />
+            <circle class="pupil" cx="150" cy="150" r="35" fill="black" clip-path="url(#eye-shape)" />
+            <rect class="lid" x="50" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape)" />
+            
+            <rect x="350" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape-2)" />
+            <circle class="pupil" cx="450" cy="150" r="35" fill="black" clip-path="url(#eye-shape-2)" />
+            <rect class="lid" x="350" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape-2)" />
+        </svg>
+    </div>
 
-        <div class="collage-container">
-            <h1 class="collage-title">
-                <span class="t-main">E</span><span class="t-pixel">R</span><span class="t-outline">R</span><span class="t-serif">O</span><span class="t-main">R</span>
-            </h1>
-            <div class="number-row">
-                <span class="n-pixel">4</span><span class="n-outline">0</span><span class="n-serif">4<span class="blink-cursor">_</span></span>
-            </div>
+    <div class="collage-container">
+        <h1 class="collage-title">
+            <span class="t-main">E</span><span class="t-pixel">R</span><span class="t-outline">R</span><span class="t-serif">O</span><span class="t-main">R</span>
+        </h1>
+        <div class="number-row">
+            <span class="n-pixel">4</span><span class="n-outline">0</span><span class="n-serif">4<span class="blink-cursor">_</span></span>
         </div>
-    </main>
+    </div>
+</main>
+<script src="js/eyes.js"></script>
 
     </body>
 </html>
