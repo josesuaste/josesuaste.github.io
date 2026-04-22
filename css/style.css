@@ -17,6 +17,7 @@ body {
     overflow: hidden;
     font-family: var(--font-pixel);
     text-transform: uppercase;
+    
 }
 
 /* --- NAVEGACIÓN ESQUINAS --- */
@@ -260,4 +261,17 @@ body {
     .status-badge {
         width: 14px; /* Tamaño pequeño que pediste */
     }
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.04; /* Ajusta este valor si lo quieres más o menos marcado */
+    pointer-events: none; /* Esto permite que el mouse "atraviese" el ruido y haga clic en los botones */
+    z-index: 9999; /* Lo ponemos hasta arriba para que la textura cubra todo */
 }
