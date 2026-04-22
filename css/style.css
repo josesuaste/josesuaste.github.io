@@ -212,3 +212,52 @@ body {
     transform: rotate(360deg); /* Una vuelta completa tipo carga de sistema */
     filter: invert(31%) sepia(94%) saturate(5415%) hue-rotate(241deg); /* Tu azul --accent */
 }
+@media (max-width: 768px) {
+    body {
+        overflow-y: auto; /* Permite scroll si el contenido es largo */
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px 20px;
+        gap: 30px; /* Espacio entre secciones */
+    }
+
+    .corner-nav {
+        position: relative !important; /* Deja de estar en las esquinas */
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        padding: 0 !important;
+        text-align: center;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .hero-center {
+        height: auto;
+        order: -1; /* Asegura que el logo siempre sea lo primero */
+    }
+
+    .eyes-layer {
+        position: relative;
+        width: 90vw;
+        margin-bottom: -30px;
+    }
+
+    .about-skew p {
+        transform: none !important; /* Más legible en móvil sin inclinación */
+        max-width: 100%;
+    }
+
+    .social-tilt {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .status-badge {
+        width: 14px; /* Tamaño pequeño que pediste */
+    }
+}
