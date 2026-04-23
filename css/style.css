@@ -17,21 +17,23 @@ body {
     overflow: hidden;
     font-family: var(--font-pixel);
     text-transform: uppercase;
-    
 }
 
-/* --- NAVEGACIÓN ESQUINAS --- */
+/* --- NAVEGACIÓN ESQUINAS (ESCRITORIO) --- */
 .corner-nav {
     position: fixed;
     padding: 25px;
     font-size: 13px;
     letter-spacing: 0.1em;
     z-index: 20;
+    opacity: 0;
+    animation: revealEntry 1s ease-out forwards;
 }
-.top-left { top: 0; left: 0; }
-.top-right { top: 0; right: 0; }
-.bottom-left { bottom: 0; left: 0; }
-.bottom-right { bottom: 0; right: 0; }
+
+.top-left { top: 0; left: 0; animation-delay: 0.2s; }
+.top-right { top: 0; right: 0; animation-delay: 0.4s; }
+.bottom-left { bottom: 0; left: 0; animation-delay: 0.6s; }
+.bottom-right { bottom: 0; right: 0; animation-delay: 0.8s; }
 
 /* --- ABOUT SKEW --- */
 .about-skew { perspective: 1000px; }
@@ -39,17 +41,12 @@ body {
     margin: 0;
     max-width: 30ch;
     line-height: 1.3;
-    transform-style: preserve-3d;
     transform: skewY(-15deg) rotateX(5deg);
-    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1); /* Solo animamos el movimiento */
-    color: var(--text); /* Aseguramos que sea blanco */
+    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
 }
-.about-skew:hover p {
-    transform: skewY(-2deg) rotateX(0deg);
-}
+.about-skew:hover p { transform: skewY(-2deg) rotateX(0deg); }
 
-/* ... Manten todo tu CSS de :root, body y navegación igual ... */
-
+/* --- HERO & EYES --- */
 .hero-center {
     display: flex;
     flex-direction: column;
@@ -57,101 +54,56 @@ body {
     align-items: center;
     height: 100vh;
     position: relative;
-    opacity: 0;
     animation: revealCenter 1.5s ease-out 1s forwards;
-    /* Importante: no pongas pointer-events: none aquí para no afectar al main */
 }
 
 .eyes-layer {
     position: absolute;
     width: 65vw;
     max-width: 900px;
-    z-index: 1; /* Detrás del texto */
-    pointer-events: none; /* El mouse atraviesa los ojos para detectar el movimiento de fondo */
+    z-index: 1;
+    pointer-events: none;
     opacity: 0.85;
 }
 
-.pupil {
-    transition: transform 0.1s ease-out;
-    /* Sin animación CSS para que el JS funcione */
-}
-
-.lid {
-    fill: #000;
-    animation: blink-glitch 6s infinite;
-}
+.lid { fill: #000; animation: blink-glitch 6s infinite; }
 
 @keyframes blink-glitch {
     0%, 90%, 100% { height: 0; }
     92%, 94% { height: 200px; }
 }
 
-.collage-container {
-    position: relative;
-    z-index: 10; /* Enfrente de los ojos */
-    text-align: center;
-    pointer-events: none; /* El mouse atraviesa las letras hacia los ojos */
-}
-
 /* --- COLLAGE --- */
-.collage-container {
-    position: relative;
-    z-index: 10;
-    text-align: center;
-    pointer-events: none;
-}
+.collage-container { position: relative; z-index: 10; text-align: center; pointer-events: none; }
 .collage-title { font-size: clamp(5rem, 18vw, 12rem); margin: 0; line-height: 0.85; }
 .number-row { font-size: clamp(3rem, 10vw, 6rem); margin-top: 10px; }
 
-.t-main { font-family: var(--font-main); }
-.t-pixel { font-family: var(--font-pixel); }
-.t-serif { font-family: var(--font-serif); font-style: italic; }
+.t-main, .n-main { font-family: var(--font-main); }
+.t-pixel, .n-pixel { font-family: var(--font-pixel); }
+.t-serif, .n-serif { font-family: var(--font-serif); font-style: italic; }
 .t-outline, .n-outline { 
     font-family: var(--font-main);
     -webkit-text-stroke: 2px var(--text);
     color: transparent;
 }
-.n-pixel { font-family: var(--font-pixel); }
-.n-serif { font-family: var(--font-serif); font-style: italic; }
 
-.blink-cursor {
-    display: inline-block;
-    width: 10px;
-    animation: blinker 0.5s steps(1) infinite;
-}
+.blink-cursor { display: inline-block; width: 10px; animation: blinker 0.5s steps(1) infinite; }
 @keyframes blinker { 50% { opacity: 0; } }
 
-/* --- REDES SOCIALES (LIMPIEZA TOTAL) --- */
+/* --- REDES SOCIALES --- */
 .social-tilt { display: flex; gap: 10px; }
-
-.social-tilt a {
-    text-decoration: none;
-    color: var(--text);
-    display: inline-block; 
-    transition: color 0.3s ease, transform 0.3s ease;
-}
-
-/* Solo se activa el azul en el link específico */
-.social-tilt a:hover {
-    color: var(--accent);
-    transform: scale(1.1) rotate(0deg) !important;
-}
-
-.social-tilt span { cursor: default; }
-
+.social-tilt a { text-decoration: none; color: var(--text); transition: all 0.3s ease; }
+.social-tilt a:hover { color: var(--accent); transform: scale(1.1); }
 .tilt-l { transform: rotate(-5deg); }
 .tilt-r { transform: rotate(5deg); }
-.tilt-r2x { transform: rotate(10deg); }
-.tilt-l2x { transform: rotate(-10deg); }
 
-/* --- PAYPAL --- */
+/* --- PAYPAL & SOPORTE --- */
 .paypal-btn {
     text-decoration: none;
     color: var(--text);
     border: 1px solid var(--text);
     padding: 8px 12px;
     transition: all 0.3s ease;
-    display: inline-block;
 }
 .paypal-btn:hover {
     background-color: var(--text);
@@ -160,133 +112,50 @@ body {
     transform: translate(-2px, -2px);
 }
 
-/* --- ANIMACIÓN ENTRADA --- */
-.corner-nav {
-    opacity: 0;
-    animation: revealEntry 1s ease-out forwards;
+.support-unit { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.support-text { margin: 0; font-size: 10px; opacity: 0.5; }
+
+/* --- BADGE IZQUIERDO --- */
+.badge-wrapper { display: flex; align-items: flex-start; gap: 7px; }
+.status-badge { width: 14px; filter: invert(1); transition: transform 0.5s ease; margin-top: 3px; }
+.badge-wrapper:hover .status-badge { 
+    transform: rotate(360deg); 
+    filter: invert(31%) sepia(94%) saturate(5415%) hue-rotate(241deg); 
 }
 
-.top-left { animation-delay: 0.2s; }
-.top-right { animation-delay: 0.4s; }
-.bottom-left { animation-delay: 0.6s; }
-.bottom-right { animation-delay: 0.8s; }
-
-.hero-center { 
-    animation: revealCenter 1.5s ease-out 1s forwards; 
-}
-
-@keyframes revealEntry {
-    from { transform: translateY(10px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes revealCenter {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-/*badge*/
-.badge-wrapper {
-    display: flex;
-    align-items: flex-start; 
-    gap: 7px; /* Espacio más corto */
-}
-
-.status-badge {
-    width: 14px; 
-    height: auto;
-    margin-top: 3px; /* Ajustado para 13px */
-    filter: invert(1);
-    transition: transform 0.5s ease;
-}
-
-.badge-wrapper:hover .status-badge {
-    transform: rotate(360deg) scale(1.1); /* Giro completo de validación */
-    filter: invert(31%) sepia(94%) saturate(5415%) hue-rotate(241deg); /* Tu azul --accent */
-}
-
-.top-left p {
-    max-width: 30ch; 
-    font-size: 13px; /* Tamaño original */
-    line-height: 1.4;
-}
-.badge-wrapper:hover .status-badge {
-    transform: rotate(360deg); /* Una vuelta completa tipo carga de sistema */
-    filter: invert(31%) sepia(94%) saturate(5415%) hue-rotate(241deg); /* Tu azul --accent */
-}
-@media (max-width: 768px) {
-    body {
-        overflow-y: auto; /* Permite scroll si el contenido es largo */
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 50px 20px;
-        gap: 30px; /* Espacio entre secciones */
-        
-    }
-    @media (max-width: 768px) {
-    .site-footer {
-        position: relative; /* Deja de ser fijo para seguir el scroll */
-        bottom: auto;
-        margin-top: 40px; /* Espacio después del botón de PayPal */
-        opacity: 0.6;
-    }
-}
-
-@media (min-width: 769px) {
-    .site-footer {
-        bottom: 25px;
-    }
-}
-
-    .corner-nav {
-        position: relative !important; /* Deja de estar en las esquinas */
-        top: auto !important;
-        left: auto !important;
-        right: auto !important;
-        bottom: auto !important;
-        padding: 0 !important;
-        text-align: center;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .hero-center {
-        height: auto;
-        order: -1; /* Asegura que el logo siempre sea lo primero */
-    }
-
-    .eyes-layer {
-        position: relative;
-        width: 90vw;
-        margin-bottom: -30px;
-    }
-
-    .about-skew p {
-        transform: none !important; /* Más legible en móvil sin inclinación */
-        max-width: 100%;
-    }
-
-    .social-tilt {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .status-badge {
-        width: 14px; /* Tamaño pequeño que pediste */
-    }
-}
-
+/* --- FOOTER (ESCRITORIO) --- */
 .site-footer {
     position: fixed;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-    font-size: 10px;
-    letter-spacing: 2px;
-    opacity: 0.4; /* Muy sutil para que no distraiga */
-    z-index: 5;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
     pointer-events: none;
-    font-family: var(--font-pixel);
+}
+.site-footer p { margin: 0; font-size: 10px; opacity: 0.4; letter-spacing: 2px; }
+
+/* --- ANIMACIONES --- */
+@keyframes revealEntry { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; } }
+@keyframes revealCenter { from { transform: scale(0.95); opacity: 0; } to { opacity: 1; } }
+
+/* --- MÓVIL (TODO EL AJUSTE AQUÍ) --- */
+@media (max-width: 768px) {
+    body { overflow-y: auto; height: auto; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; gap: 40px; }
+    
+    .corner-nav { position: relative !important; top: auto !important; left: auto !important; padding: 0 !important; width: 100%; display: flex; justify-content: center; text-align: center; }
+    
+    .hero-center { height: auto; order: -1; }
+    .eyes-layer { position: relative; width: 90vw; margin-bottom: -20px; }
+    .about-skew p { transform: none !important; max-width: 100%; text-align: center; }
+    
+    .support-unit { align-items: center; }
+    
+    .site-footer { 
+        position: relative !important; 
+        bottom: auto !important; 
+        left: auto !important; 
+        transform: none !important; 
+        margin-top: 20px;
+    }
+    .site-footer p { font-size: 9px !important; opacity: 0.5; }
 }
