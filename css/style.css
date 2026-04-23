@@ -222,7 +222,22 @@ body {
         align-items: center;
         padding: 50px 20px;
         gap: 30px; /* Espacio entre secciones */
+        
     }
+    @media (max-width: 768px) {
+    .site-footer {
+        position: relative; /* Deja de ser fijo para seguir el scroll */
+        bottom: auto;
+        margin-top: 40px; /* Espacio después del botón de PayPal */
+        opacity: 0.6;
+    }
+}
+
+@media (min-width: 769px) {
+    .site-footer {
+        bottom: 25px;
+    }
+}
 
     .corner-nav {
         position: relative !important; /* Deja de estar en las esquinas */
@@ -263,15 +278,15 @@ body {
     }
 }
 
-body::before {
-    content: "";
+.site-footer {
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 10px;
     width: 100%;
-    height: 100%;
-    background: url('https://grainy-gradients.vercel.app/noise.svg');
-    opacity: 0.04; /* Ajusta este valor si lo quieres más o menos marcado */
-    pointer-events: none; /* Esto permite que el mouse "atraviese" el ruido y haga clic en los botones */
-    z-index: 9999; /* Lo ponemos hasta arriba para que la textura cubra todo */
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    opacity: 0.4; /* Muy sutil para que no distraiga */
+    z-index: 5;
+    pointer-events: none;
+    font-family: var(--font-pixel);
 }
