@@ -47,6 +47,7 @@ body {
 .about-skew:hover p { transform: skewY(-2deg) rotateX(0deg); }
 
 /* --- HERO & EYES --- */
+/* --- HERO & EYES CORREGIDO --- */
 .hero-center {
     display: flex;
     flex-direction: column;
@@ -54,7 +55,9 @@ body {
     align-items: center;
     height: 100vh;
     position: relative;
-    animation: revealCenter 1.5s ease-out 1s forwards;
+    /* Añadimos opacidad 0 inicial para que no parpadee antes de la animación */
+    opacity: 0; 
+    animation: revealCenter 1.5s ease-out 0.8s forwards; /* Reduje un poco el delay */
 }
 
 .eyes-layer {
@@ -134,15 +137,54 @@ body {
 }
 .site-footer p { margin: 0; font-size: 10px; opacity: 0.4; letter-spacing: 2px; }
 
-/* --- ANIMACIONES --- */
-@keyframes revealEntry { from { transform: translateY(10px); opacity: 0; } to { opacity: 1; } }
-@keyframes revealCenter { from { transform: scale(0.95); opacity: 0; } to { opacity: 1; } }
+/* --- ANIMACIONES CORREGIDAS --- */
+/* --- ANIMACIONES CORREGIDAS --- */
+@keyframes revealEntry { 
+    from { 
+        transform: translateY(20px); 
+        opacity: 0; 
+    } 
+    to { 
+        transform: translateY(0); 
+        opacity: 1; 
+    } 
+}
 
-/* --- MÓVIL (TODO EL AJUSTE AQUÍ) --- */
+@keyframes revealCenter { 
+    from { 
+        transform: scale(0.9); /* Un poco más marcado el efecto */
+        opacity: 0; 
+    } 
+    to { 
+        transform: scale(1); 
+        opacity: 1; 
+    } 
+}
+
+/* --- MÓVIL --- */
 @media (max-width: 768px) {
-    body { overflow-y: auto; height: auto; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; gap: 40px; }
+    body { 
+        overflow-y: auto; 
+        height: auto; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
+        padding: 40px 20px; 
+        gap: 40px; 
+    }
     
-    .corner-nav { position: relative !important; top: auto !important; left: auto !important; padding: 0 !important; width: 100%; display: flex; justify-content: center; text-align: center; }
+    .corner-nav { 
+        position: relative !important; 
+        top: auto !important; 
+        left: auto !important; 
+        padding: 0 !important; 
+        width: 100%; 
+        display: flex; 
+        justify-content: center; 
+        text-align: center; 
+        opacity: 1; /* Forzamos visibilidad en móvil para evitar retrasos de animación */
+        animation: none; /* Quitamos animación en móvil para carga instantánea */
+    }
     
     .hero-center { height: auto; order: -1; }
     .eyes-layer { position: relative; width: 90vw; margin-bottom: -20px; }
@@ -158,4 +200,11 @@ body {
         margin-top: 20px;
     }
     .site-footer p { font-size: 9px !important; opacity: 0.5; }
+}
+
+.pupil {
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+    transform-box: fill-box; /* IMPORTANTE: centra el eje de transformación en la pupila */
+    transform-origin: center;
 }
