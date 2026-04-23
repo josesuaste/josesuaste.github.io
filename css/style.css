@@ -218,14 +218,14 @@ body {
     }
 
     .site-footer { 
-        position: relative !important; 
-        margin-top: 20px;
-        transform: none !important;
-        left: auto !important;
-        opacity: 0;
-        order: 6; /* FOOTER AL FINAL */
-        animation: revealEntry 1s ease-out 1.1s forwards;
-    }
+    position: relative !important; 
+    margin-top: 80px; /* <--- Aumenta este valor para bajarlo */
+    transform: none !important;
+    left: auto !important;
+    opacity: 0;
+    order: 6; 
+    animation: revealEntry 1s ease-out 1.1s forwards;
+}
 }
 
 .pupil {
