@@ -1,0 +1,39 @@
+# System Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build folders
+dist/
+build/
+out/
+
+# IDE / Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs
+*.log
+
+# Design Studio Trial Fonts (as discussed in previous context)
+*.otf
+*.ttf
+*.woff
+*.woff2
+# Un-comment the next line if you want to allow Google Fonts specifically
+# !/fonts/google-fonts/*
