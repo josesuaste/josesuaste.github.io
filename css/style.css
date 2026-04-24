@@ -1,8 +1,9 @@
 /* ============================================
-   IMPORTS & VARIABLES
+   DESKTOP STYLES (Anclado y Fijo)
    ============================================ */
+ 
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@900&family=Playfair+Display:ital,wght@1,900&display=swap');
-
+ 
 :root {
     --bg: #000000;
     --text: #ffffff;
@@ -11,10 +12,7 @@
     --font-pixel: 'DotGothic16', sans-serif;
     --font-serif: 'Playfair Display', serif;
 }
-
-/* ============================================
-   BASE STYLES
-   ============================================ */
+ 
 body {
     background-color: var(--bg);
     color: var(--text);
@@ -24,10 +22,8 @@ body {
     font-family: var(--font-pixel);
     text-transform: uppercase;
 }
-
-/* ============================================
-   HERO & EYES (CENTRO)
-   ============================================ */
+ 
+/* CENTRO */
 .hero-center {
     display: flex;
     flex-direction: column;
@@ -38,7 +34,7 @@ body {
     opacity: 0; 
     animation: revealCenter 1.5s ease-out 0.8s forwards;
 }
-
+ 
 .eyes-layer {
     position: absolute;
     width: 65vw;
@@ -47,40 +43,20 @@ body {
     pointer-events: none;
     opacity: 0.85;
 }
-
+ 
 .pupil {
     transition: transform 0.15s ease-out;
     will-change: transform;
     transform-box: fill-box;
     transform-origin: center;
 }
-
-.lid { 
-    fill: #000; 
-    animation: blink-glitch 6s infinite; 
-}
-
-/* ============================================
-   COLLAGE / TYPOGRAPHY
-   ============================================ */
-.collage-container { 
-    position: relative; 
-    z-index: 10; 
-    text-align: center; 
-    pointer-events: none; 
-}
-
-.collage-title { 
-    font-size: clamp(5rem, 18vw, 12rem); 
-    margin: 0; 
-    line-height: 0.85; 
-}
-
-.number-row { 
-    font-size: clamp(3rem, 10vw, 6rem); 
-    margin-top: 10px; 
-}
-
+ 
+.lid { fill: #000; animation: blink-glitch 6s infinite; }
+ 
+.collage-container { position: relative; z-index: 10; text-align: center; pointer-events: none; }
+.collage-title { font-size: clamp(5rem, 18vw, 12rem); margin: 0; line-height: 0.85; }
+.number-row { font-size: clamp(3rem, 10vw, 6rem); margin-top: 10px; }
+ 
 .t-main, .n-main { font-family: var(--font-main); }
 .t-pixel, .n-pixel { font-family: var(--font-pixel); }
 .t-serif, .n-serif { font-family: var(--font-serif); font-style: italic; }
@@ -89,16 +65,10 @@ body {
     -webkit-text-stroke: 2px var(--text);
     color: transparent;
 }
-
-.blink-cursor { 
-    display: inline-block; 
-    width: 10px; 
-    animation: blinker 0.5s steps(1) infinite; 
-}
-
-/* ============================================
-   NAVEGACIÓN ESQUINAS
-   ============================================ */
+ 
+.blink-cursor { display: inline-block; width: 10px; animation: blinker 0.5s steps(1) infinite; }
+ 
+/* ESQUINAS */
 .corner-nav {
     position: fixed;
     padding: 25px;
@@ -108,12 +78,12 @@ body {
     opacity: 0;
     animation: revealEntry 1s ease-out forwards;
 }
-
+ 
 .top-left { top: 0; left: 0; animation-delay: 0.2s; }
 .top-right { top: 0; right: 0; animation-delay: 0.4s; }
 .bottom-left { bottom: 0; left: 0; animation-delay: 0.6s; }
 .bottom-right { bottom: 0; right: 0; animation-delay: 0.8s; }
-
+ 
 .about-skew { perspective: 1000px; }
 .about-skew p {
     margin: 0;
@@ -123,54 +93,23 @@ body {
     transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
 }
 .about-skew:hover p { transform: skewY(-2deg) rotateX(0deg); }
-
-/* ============================================
-   REDES SOCIALES
-   ============================================ */
+ 
 .social-tilt { display: flex; gap: 10px; }
-.social-tilt a { 
-    text-decoration: none; 
-    color: var(--text); 
-    transition: all 0.3s ease; 
-}
-.social-tilt a:hover { 
-    color: var(--accent); 
-    transform: scale(1.1); 
-}
+.social-tilt a { text-decoration: none; color: var(--text); transition: all 0.3s ease; }
+.social-tilt a:hover { color: var(--accent); transform: scale(1.1); }
 .tilt-l { transform: rotate(-5deg); }
 .tilt-r { transform: rotate(5deg); }
-
-/* ============================================
-   BADGE & SUPPORT
-   ============================================ */
-.badge-wrapper { 
-    display: flex; 
-    align-items: flex-start; 
-    gap: 7px; 
-}
-.status-badge { 
-    width: 14px; 
-    filter: invert(1); 
-    transition: transform 0.5s ease; 
-    margin-top: 3px; 
-}
+ 
+.badge-wrapper { display: flex; align-items: flex-start; gap: 7px; }
+.status-badge { width: 14px; filter: invert(1); transition: transform 0.5s ease; margin-top: 3px; }
 .badge-wrapper:hover .status-badge { 
     transform: rotate(360deg); 
     filter: invert(31%) sepia(94%) saturate(5415%) hue-rotate(241deg); 
 }
-
-.support-unit { 
-    display: flex; 
-    flex-direction: column; 
-    align-items: flex-end; 
-    gap: 8px; 
-}
-.support-text { 
-    margin: 0; 
-    font-size: 10px; 
-    opacity: 0.5; 
-}
-
+ 
+.support-unit { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.support-text { margin: 0; font-size: 10px; opacity: 0.5; }
+ 
 .paypal-btn {
     text-decoration: none;
     color: var(--text);
@@ -184,125 +123,149 @@ body {
     box-shadow: 4px 4px 0px var(--accent);
     transform: translate(-2px, -2px);
 }
-
-/* ============================================
-   FOOTER
-   ============================================ */
+ 
 .site-footer {
     position: fixed;
     bottom: 25px;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, 20px); 
     z-index: 10;
     pointer-events: none;
+    opacity: 0;
+    animation: revealFooter 1s ease-out 1s forwards;
+    font-family: var(--font-pixel);
 }
+ 
 .site-footer p { 
     margin: 0; 
     font-size: 10px; 
     opacity: 0.4; 
-    letter-spacing: 2px; 
+    letter-spacing: 2px;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
 }
+ 
+@keyframes revealFooter {
+    from {
+        transform: translate(-50%, 20px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+ 
+@keyframes revealEntry { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes revealCenter { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes blink-glitch { 0%, 90%, 100% { height: 0; } 92%, 94% { height: 200px; } }
+@keyframes blinker { 50% { opacity: 0; } }
 
 /* ============================================
-   KEYFRAMES / ANIMATIONS
+   RESPONSIVE DESIGN (Mobile & Tablet) - COMPACTO
    ============================================ */
-@keyframes revealEntry { 
-    from { 
-        transform: translateY(20px); 
-        opacity: 0; 
-    } 
-    to { 
-        transform: translateY(0); 
-        opacity: 1; 
-    } 
-}
 
-@keyframes revealCenter { 
-    from { 
-        transform: scale(0.9);
-        opacity: 0; 
-    } 
-    to { 
-        transform: scale(1); 
-        opacity: 1; 
-    } 
-}
-
-@keyframes blink-glitch {
-    0%, 90%, 100% { height: 0; }
-    92%, 94% { height: 200px; }
-}
-
-@keyframes blinker { 
-    50% { opacity: 0; } 
-}
-
-/* ============================================
-   RESPONSIVE / MOBILE
-   ============================================ */
-@media (max-width: 768px) {
-    body { 
-        overflow-y: auto; 
-        height: auto; 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        padding: 40px 20px; 
-        gap: 40px;
-    }
-    
-    .hero-center { 
-        height: auto !important; 
-        min-height: auto;
-        padding-top: 20px;
-        order: 1;
-        opacity: 0; 
-        animation: revealCenter 1.5s ease-out forwards;
+@media (max-width: 850px) {
+    body {
+        overflow-y: auto;
+        height: auto;
+        overflow-x: hidden;
     }
 
-    .eyes-layer { 
-        position: relative; 
-        width: 100%;
-        max-width: 400px;
-        margin: 0 auto; 
+    /* Contenedor principal: ALTURA AUTOMÁTICA y sin paddings grandes */
+    .hero-center {
+        height: auto; /* Ya no forzamos 100vh */
+        min-height: auto; /* Eliminamos mínimos */
+        padding: 60px 0 20px 0; /* Un poco de aire arriba, poco abajo */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
+    /* Ojos: Reducimos tamaño y margen superior */
+    .eyes-layer {
+        position: relative;
+        width: 60vw; /* Más pequeños para compactar */
+        max-width: 300px;
+        margin-top: 0; /* Eliminamos espacio arriba */
+        margin-bottom: 10px; /* Pegamos los ojos al texto ERROR */
+        opacity: 1;
+        display: block;
+    }
+
+    /* Contenedor de texto ERROR y 404 */
     .collage-container {
-        margin-top: -20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0; /* Pegamos ERROR y 404 */
+        margin-bottom: 20px; /* Espacio controlado antes del mail */
     }
 
-    .corner-nav { 
-        position: relative !important; 
-        top: auto !important; 
-        left: auto !important; 
+    .collage-title {
+        font-size: clamp(2.5rem, 12vw, 4rem);
+        line-height: 0.9;
+    }
+
+    .number-row {
+        font-size: clamp(1.2rem, 7vw, 2rem);
+        margin-top: 5px; /* Ajuste fino para acercar el 404_ */
+    }
+
+    /* Navegación (About, Social, Support): Pegados al centro */
+    .corner-nav {
+        position: relative !important;
+        width: 100%;
+        /* Reducimos PADDING VERTICAL drásticamente */
+        padding: 5px 15px; 
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        /* Limpiamos posiciones fijas */
+        top: auto !important;
+        left: auto !important;
         right: auto !important;
         bottom: auto !important;
-        padding: 0 !important; 
-        width: 100%; 
-        display: flex; 
-        justify-content: center; 
-        text-align: center; 
-        opacity: 0; 
-        animation: revealEntry 1s ease-out forwards;
-    }
-
-    .bottom-left { order: 2; animation-delay: 0.3s; }
-    .top-left { order: 3; animation-delay: 0.5s; }
-    .top-right { order: 4; animation-delay: 0.7s; }
-    .bottom-right { order: 5; animation-delay: 0.9s; }
-
-    .about-skew p { 
-        transform: none !important; 
-        max-width: 100%; 
-    }
-
-    .site-footer { 
-        position: relative !important; 
-        margin-top: 80px;
         transform: none !important;
-        left: auto !important;
-        opacity: 0;
-        order: 6; 
-        animation: revealEntry 1s ease-out 1.1s forwards;
+        opacity: 1;
+        animation: none;
+    }
+
+    /* Ajustes finos de contenido para compactar */
+    .about-skew p {
+        max-width: 100%;
+        transform: none !important;
+        font-size: 11px; /* Un punto más pequeña para ahorrar espacio */
+    }
+
+    .social-tilt {
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .support-unit {
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    .paypal-btn {
+        padding: 5px 10px; /* Botón más compacto */
+    }
+
+    /* Footer al final */
+    .site-footer {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        transform: none !important;
+        padding: 20px 0;
+        opacity: 1;
+        animation: none;
+        text-align: center;
     }
 }
