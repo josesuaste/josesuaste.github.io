@@ -142,7 +142,10 @@ body {
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: center; 
+        overscroll-behavior-y: none; /* Evita el rebote en la parte superior e inferior */
+        position: fixed; /* Ancla el cuerpo a la pantalla */
+        width: 100%;
         -webkit-overflow-scrolling: touch;
     }
 
