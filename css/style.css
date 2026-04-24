@@ -143,7 +143,7 @@ body {
         display: flex;
         flex-direction: column;
         align-items: center;
-        -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+        -webkit-overflow-scrolling: touch;
     }
 
     .hero-center {
@@ -220,7 +220,29 @@ body {
         font-size: 14px;
     }
 
-    .badge-wrapper, .support-unit {
+    /* ✅ CORRECCIÓN BADGE EN MÓVIL */
+    .badge-wrapper {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    .contact-info {
+        font-size: 13px;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    .status-badge {
+        margin-top: 0;
+        width: 16px;
+    }
+
+    .support-unit {
         align-items: center;
         text-align: center;
     }
@@ -231,12 +253,6 @@ body {
         font-size: 14px;
         min-width: 140px;
         margin: 10px 0;
-    }
-
-    /* OPTIMIZACIÓN TÁCTIL - Mail */
-    .contact-info {
-        font-size: 13px;
-        padding: 10px;
     }
 
     /* Eliminar resaltado azul de iOS */
