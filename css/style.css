@@ -1,5 +1,5 @@
 /* ============================================
-   DESKTOP STYLES (Anclado y Fijo)
+   DESKTOP STYLES (Anclado y Fijo) - LIMPIO
    ============================================ */
  
 @import url('https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@900&family=Playfair+Display:ital,wght@1,900&display=swap');
@@ -23,6 +23,13 @@ body {
     text-transform: uppercase;
 }
  
+/* ANIMACIONES GLOBALES (Declaradas al inicio para que funcionen siempre) */
+@keyframes blinker { 50% { opacity: 0; } }
+@keyframes blink {
+    0%, 90%, 100% { height: 0; }     /* Ojo abierto el 90% del tiempo */
+    93% { height: 100%; }            /* Cierre rápido (párpado baja) */
+    96% { height: 0; }               /* Apertura rápida (párpado sube) */
+}
 /* CENTRO */
 .hero-center {
     display: flex;
@@ -31,8 +38,7 @@ body {
     align-items: center;
     height: 100vh;
     position: relative;
-    opacity: 0; 
-    animation: revealCenter 1.5s ease-out 0.8s forwards;
+    opacity: 1; 
 }
  
 .eyes-layer {
@@ -41,21 +47,13 @@ body {
     max-width: 900px;
     z-index: 1;
     pointer-events: none;
-    opacity: 0; /* Empieza en 0 para la animación */
-    /* Usamos una animación que termine en 0.3 de opacidad */
-    animation: revealEyesSubtle 2s ease-out forwards; /* SIN !important */
-
+    opacity: 0.3; 
 }
-/* Párpados - Eliminamos la animación de parpadeo automático */
+
 .lid { 
-    fill: #000; 
-    height: 0; /* Siempre abiertos */
-}
-
-/* Nueva animación sutil para los ojos */
-@keyframes revealEyesSubtle {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 0.3; } /* 0.3 es el punto dulce para que no brille de más */
+    fill: var(--bg); /* Usa el color de fondo para "cerrar" el ojo */
+    height: 0; 
+    animation: blink 5s infinite; /* Se ejecutará siempre, en desktop y mobile */
 }
  
 .pupil {
@@ -80,37 +78,24 @@ body {
  
 .blink-cursor { display: inline-block; width: 10px; animation: blinker 0.5s steps(1) infinite; }
  
-/* ESQUINAS */
+/* ESQUINAS (Desktop) */
 .corner-nav {
     position: fixed;
     padding: 25px;
     font-size: 13px;
     letter-spacing: 0.1em;
     z-index: 20;
-    opacity: 0;
-    animation: revealEntry 1s ease-out forwards;
+    opacity: 1; 
 }
 
-.top-right { top: 0; right: 0; animation-delay: 0.2s; }
-.top-left { top: 0; left: 0; animation-delay: 0.4s; }
-.bottom-left { bottom: 0; left: 0; animation-delay: 0.6s; }
-.bottom-right { bottom: 0; right: 0; animation-delay: 0.8s; }
+.top-right { top: 0; right: 0; display: flex; gap: 10px; }
+.top-left { top: 0; left: 0; }
+.bottom-left { bottom: 0; left: 0; }
+.bottom-right { bottom: 0; right: 0; }
  
-.about-skew { perspective: 1000px; }
-.about-skew p {
-    margin: 0;
-    max-width: 30ch;
-    line-height: 1.3;
-    transform: skewY(-15deg) rotateX(5deg);
-    transition: transform 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-}
-.about-skew:hover p { transform: skewY(-2deg) rotateX(0deg); }
- 
-.social-tilt { display: flex; gap: 10px; }
-.social-tilt a { text-decoration: none; color: var(--text); transition: all 0.3s ease; }
-.social-tilt a:hover { color: var(--accent); transform: scale(1.1); }
-.tilt-l { transform: rotate(-5deg); }
-.tilt-r { transform: rotate(5deg); }
+.top-left p { margin: 0; max-width: 30ch; line-height: 1.3; }
+.top-right a { text-decoration: none; color: var(--text); transition: color 0.3s ease; }
+.top-right a:hover { color: var(--accent); }
  
 .badge-wrapper { display: flex; align-items: flex-start; gap: 7px; }
 .status-badge { width: 14px; filter: invert(1); transition: transform 0.5s ease; margin-top: 3px; }
@@ -129,164 +114,126 @@ body {
     padding: 8px 12px;
     transition: all 0.3s ease;
 }
-.paypal-btn:hover {
-    background-color: var(--text);
-    color: var(--bg);
-    box-shadow: 4px 4px 0px var(--accent);
-    transform: translate(-2px, -2px);
-}
+.paypal-btn:hover { background-color: var(--text); color: var(--bg); box-shadow: 4px 4px 0px var(--accent); }
  
 .site-footer {
     position: fixed;
     bottom: 25px;
     left: 50%;
-    transform: translate(-50%, 20px); 
+    transform: translateX(-50%); 
     z-index: 10;
     pointer-events: none;
-    opacity: 0;
-    animation: revealFooter 1s ease-out 1s forwards;
     font-family: var(--font-pixel);
 }
  
 .site-footer p { 
     margin: 0; 
-    font-size: 10px; 
+    font-size: 10px;    /* Mismo tamaño que los otros detalles */
     letter-spacing: 2px;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: antialiased;
+    opacity: 0.5;       /* Misma opacidad que "MEXICO" y "APOYAR_PROYECTO" */
 }
  
-@keyframes revealFooter {
-    from {
-        transform: translate(-50%, 20px);
-        opacity: 0;
-    }
-    to {
-        transform: translate(-50%, 0);
-        opacity: 1;
-    }
-}
- 
-@keyframes revealEntry { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes revealCenter { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-@keyframes blink-glitch { 0%, 90%, 100% { height: 0; } 92%, 94% { height: 200px; } }
-@keyframes blinker { 50% { opacity: 0; } }
-
- /* ... (Todo tu código de Desktop se queda igual hasta que llegas al Media Query) ... */
-
 /* ============================================
-   RESPONSIVE DESIGN (Mobile & Tablet) - FINAL
+   RESPONSIVE DESIGN (Mobile & Tablet) - CORREGIDO
    ============================================ */
-
-/* 1. ANIMACIÓN ÚNICA (Fuera para que sea global) */
-@keyframes revealEntryGeneral {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
 @media (max-width: 850px) {
     body {
+        /* Permitimos scroll pero centramos todo el contenido */
         overflow-y: auto;
         height: auto;
         overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-center {
+        width: 100%; /* Ocupa todo el ancho para centrar los hijos */
         height: auto;
-        min-height: auto;
+        min-height: 100vh; 
         padding: 60px 0 20px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        opacity: 0; /* Correcto: Empieza invisible */
-        animation: revealEntryGeneral 1s ease-out forwards;
+        opacity: 1;
+        animation: none !important;
     }
 
     .eyes-layer {
         position: relative;
-        width: 80vw;
+        width: 85vw;
         max-width: 450px;
-        margin-bottom: 15px;
+        margin: 0 auto 20px auto; /* Centrado horizontal con márgenes */
         display: block;
-        opacity: 0; 
-        /* QUITAR !important AQUÍ */
-        animation: revealEyesSubtle 2s ease-out forwards; 
+        opacity: 0.3;
+        animation: none !important;
     }
 
-    .collage-title {
-        font-size: clamp(3.5rem, 18vw, 6rem);
-        line-height: 0.85;
+    .collage-container {
+        text-align: center; /* Centra el texto de Error 404 */
+        width: 100%;
     }
 
-    .number-row {
-        font-size: clamp(1.8rem, 10vw, 3rem);
-        margin-top: 5px;
-    }
-
+    /* ESQUINAS Y FOOTER - Forzamos el centrado de bloques */
     .corner-nav, .site-footer {
         position: relative !important;
         width: 100%;
-        padding: 10px 20px !important;
+        max-width: 100%;
+        padding: 20px !important;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        align-items: center; /* Centra el contenido de la caja */
+        text-align: center;   /* Centra el texto dentro del párrafo */
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
         transform: none !important;
         margin: 0 !important;
-        opacity: 0;
-        animation: revealEntryGeneral 0.8s ease-out forwards !important;
+        opacity: 1 !important; 
+        animation: none !important;
     }
 
-    /* --- ORDEN DE APARICIÓN CORREGIDO --- */
-    .top-right { animation-delay: 0.3s !important; }    /* Correo (0.3s) */
-    .top-left { animation-delay: 0.5s !important; }     /* About (0.5s - Corregido el punto) */
-    .bottom-left { animation-delay: 0.7s !important; }  /* Redes (0.7s) */
-    .bottom-right { animation-delay: 0.9s !important; } /* PayPal (0.9s) */
-    .site-footer { animation-delay: 1.2s !important; }  /* Footer (1.2s) */
-
-    .about-skew p {
-        max-width: 100%;
-        transform: none !important;
-        font-size: 11px;
-    }
-
-    .social-tilt {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-        margin-top: 20px;
-        flex-wrap: nowrap;
-    }
-
-    .social-tilt a {
-        text-decoration: none;
-        color: var(--text);
-        font-size: 11px;
-        white-space: nowrap;
-    }
-
-    .tilt-l { transform: rotate(-5deg) !important; }
-    .tilt-r { transform: rotate(5deg) !important; }
-
-    .support-unit {
-        align-items: center;
-        margin-top: 10px;
+    /* Especial para el bloque del Mail (Bottom Left) */
+    .badge-wrapper {
+        justify-content: center; /* Centra el badge y el mail */
+        width: 100%;
     }
     
-    .paypal-btn {
-        padding: 5px 10px;
+    .contact-info {
+        text-align: center; /* Centra el texto del mail */
     }
 
-    .site-footer {
-        padding: 80px 0 30px 0;
+    /* Especial para el bloque de PayPal (Bottom Right) */
+    .support-unit {
+        align-items: center; /* Centra el botón de PayPal */
+        width: 100%;
+    }
+
+    .top-left p { 
+        max-width: 100%; 
+        font-size: 11px; 
+        line-height: 1.5;
+        text-align: center; /* Asegura que el párrafo de presentación esté centrado */
+    }
+
+    .top-right { 
+        flex-direction: row; 
+        justify-content: center; 
+        gap: 15px;
+        margin-top: 10px;
+    }
+
+    .site-footer { 
+        padding: 40px 0 60px 0; 
+        width: 100%;
         text-align: center;
     }
+    
 }
+.site-footer p {
+        font-size: 10px; /* Reforzamos el tamaño en móvil */
+        opacity: 0.5;    /* Reforzamos la opacidad */
+    }
