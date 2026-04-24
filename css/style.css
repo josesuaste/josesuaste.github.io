@@ -78,9 +78,9 @@ body {
     opacity: 0;
     animation: revealEntry 1s ease-out forwards;
 }
- 
-.top-left { top: 0; left: 0; animation-delay: 0.2s; }
-.top-right { top: 0; right: 0; animation-delay: 0.4s; }
+
+.top-right { top: 0; right: 0; animation-delay: 0.2s; }
+.top-left { top: 0; left: 0; animation-delay: 0.4s; }
 .bottom-left { bottom: 0; left: 0; animation-delay: 0.6s; }
 .bottom-right { bottom: 0; right: 0; animation-delay: 0.8s; }
  
@@ -161,9 +161,17 @@ body {
 @keyframes blink-glitch { 0%, 90%, 100% { height: 0; } 92%, 94% { height: 200px; } }
 @keyframes blinker { 50% { opacity: 0; } }
 
+ /* ... (Todo tu código de Desktop se queda igual hasta que llegas al Media Query) ... */
+
 /* ============================================
-   RESPONSIVE DESIGN (Mobile & Tablet) - COMPACTO
+   RESPONSIVE DESIGN (Mobile & Tablet) - FINAL
    ============================================ */
+
+/* 1. ANIMACIÓN ÚNICA (Fuera para que sea global) */
+@keyframes revealEntryGeneral {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 
 @media (max-width: 850px) {
     body {
@@ -180,38 +188,30 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        animation: revealEntryGeneral 1s ease-out forwards; /* Entrada suave en móvil */
     }
 
     .eyes-layer {
         position: relative;
-        width: 80vw; /* Aplicando el aumento de tamaño que pediste */
+        width: 80vw;
         max-width: 450px;
-        margin-top: 0;
-        margin-bottom: 15px; 
-        opacity: 1;
+        margin-bottom: 15px;
+        opacity: 1 !important; /* Forzamos visibilidad */
         display: block;
-    }
-
-    .collage-container {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-        margin-bottom: 20px;
+        animation: none !important; /* Quitamos la de desktop para evitar parpadeos */
     }
 
     .collage-title {
-        font-size: clamp(3.5rem, 18vw, 6rem); /* Aplicando aumento de texto */
+        font-size: clamp(3.5rem, 18vw, 6rem);
         line-height: 0.85;
     }
 
     .number-row {
-        font-size: clamp(1.8rem, 10vw, 3rem); /* Aplicando aumento de texto */
+        font-size: clamp(1.8rem, 10vw, 3rem);
         margin-top: 5px;
     }
 
-    .corner-nav {
+    .corner-nav, .site-footer {
         position: relative !important;
         width: 100%;
         padding: 10px 20px !important;
@@ -220,23 +220,22 @@ body {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        opacity: 0;
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
         transform: none !important;
-        opacity: 0;
         margin: 0 !important;
-        animation: revealEntryMobile 0.8s ease-out forwards !important;
+        animation: revealEntryGeneral 0.8s ease-out forwards !important;
     }
 
-    /* Delays de animación */
-    .top-left { animation-delay: 0.2s !important; }
-    .top-right { animation-delay: 0.4s !important; }
-    .bottom-left { animation-delay: 0.6s !important; }
-    .bottom-right { animation-delay: 0.8s !important; }
-
-    /* ELIMINADA LLAVE EXTRA QUE ESTABA AQUÍ */
+    /* --- ORDEN DE APARICIÓN CORREGIDO --- */
+    .top-right { animation-delay: 0.3s !important; }    /* Correo (0.3s) */
+    .top-left { animation-delay: 0.5s !important; }     /* About (0.5s - Corregido el punto) */
+    .bottom-left { animation-delay: 0.7s !important; }  /* Redes (0.7s) */
+    .bottom-right { animation-delay: 0.9s !important; } /* PayPal (0.9s) */
+    .site-footer { animation-delay: 1.2s !important; }  /* Footer (1.2s) */
 
     .about-skew p {
         max-width: 100%;
@@ -244,9 +243,9 @@ body {
         font-size: 11px;
     }
 
-        .social-tilt {
+    .social-tilt {
         display: flex;
-        flex-direction: row; /* Horizontal */
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         gap: 12px;
@@ -254,29 +253,15 @@ body {
         flex-wrap: nowrap;
     }
 
-    /* Restauramos la inclinación pero ajustada para móvil */
     .social-tilt a {
         text-decoration: none;
         color: var(--text);
         font-size: 11px;
         white-space: nowrap;
-        transition: all 0.3s ease;
     }
 
-    /* Mantenemos las clases de inclinación originales */
     .tilt-l { transform: rotate(-5deg) !important; }
     .tilt-r { transform: rotate(5deg) !important; }
-
-    /* Efecto Hover (aunque sea móvil, ayuda al feedback táctil) */
-    .social-tilt a:hover {
-        color: var(--accent);
-        transform: scale(1.1) rotate(0deg) !important;
-    }
-
-    .social-tilt span {
-        opacity: 0.3;
-        font-size: 10px;
-    }
 
     .support-unit {
         align-items: center;
@@ -288,25 +273,7 @@ body {
     }
 
     .site-footer {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        transform: none !important;
-        padding: 80px 0 30px 0; 
-        opacity: 0;
+        padding: 80px 0 30px 0;
         text-align: center;
-        width: 100%;
-        animation: revealEntryMobile 0.8s ease-out 1s forwards !important;
     }
-
-    @keyframes revealEntryMobile {
-        from { 
-            transform: translateY(20px); 
-            opacity: 0; 
-        }
-        to { 
-            transform: translateY(0); 
-            opacity: 1; 
-        }
-    }
-} /* Fin del Media Query */
+}
