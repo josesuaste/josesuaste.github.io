@@ -148,13 +148,15 @@ body {
     }
 
     .hero-center {
-        width: 100%; /* Ocupa todo el ancho para centrar los hijos */
+        width: 100%;
         height: auto;
-        min-height: 100vh; 
-        padding: 60px 0 20px 0;
+        /* ELIMINAMOS min-height: 100vh para que no fuerce espacio vacío */
+        min-height: auto; 
+        /* Ponemos el padding superior en 0 */
+        padding: 0 0 20px 0; 
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start; 
         align-items: center;
         opacity: 1;
         animation: none !important;
@@ -164,15 +166,20 @@ body {
         position: relative;
         width: 85vw;
         max-width: 450px;
-        margin: 0 auto 20px auto; /* Centrado horizontal con márgenes */
+        /* Eliminamos el margen superior por completo */
+        margin: 0 auto 10px auto; 
         display: block;
         opacity: 0.3;
         animation: none !important;
+        /* Si el SVG tiene espacio interno, esto lo compensa */
+        top: -10px; 
     }
 
     .collage-container {
-        text-align: center; /* Centra el texto de Error 404 */
+        text-align: center;
         width: 100%;
+        /* Pegamos el texto más a los ojos */
+        margin-top: -10px; 
     }
 
     /* ESQUINAS Y FOOTER - Forzamos el centrado de bloques */
