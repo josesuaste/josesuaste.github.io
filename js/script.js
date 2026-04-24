@@ -21,7 +21,14 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Escuchar Touch (Para celulares y iPads)
+// ✅ CORREGIDO: e.touches es un array, necesitamos acceder al primer elemento [0]
 document.addEventListener('touchmove', (e) => {
-    // Usamos el primer toque
     movePupils(e.touches.clientX, e.touches.clientY);
 }, { passive: true });
+
+// Inicializar pupilas centradas al cargar la página
+window.addEventListener('load', () => {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    movePupils(centerX, centerY);
+});
