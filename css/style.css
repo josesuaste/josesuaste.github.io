@@ -172,82 +172,110 @@ body {
         overflow-x: hidden;
     }
 
-    /* Contenedor principal: ALTURA AUTOMÁTICA y sin paddings grandes */
     .hero-center {
-        height: auto; /* Ya no forzamos 100vh */
-        min-height: auto; /* Eliminamos mínimos */
-        padding: 60px 0 20px 0; /* Un poco de aire arriba, poco abajo */
+        height: auto;
+        min-height: auto;
+        padding: 60px 0 20px 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    /* Ojos: Reducimos tamaño y margen superior */
     .eyes-layer {
         position: relative;
-        width: 60vw; /* Más pequeños para compactar */
-        max-width: 300px;
-        margin-top: 0; /* Eliminamos espacio arriba */
-        margin-bottom: 10px; /* Pegamos los ojos al texto ERROR */
+        width: 80vw; /* Aplicando el aumento de tamaño que pediste */
+        max-width: 450px;
+        margin-top: 0;
+        margin-bottom: 15px; 
         opacity: 1;
         display: block;
     }
 
-    /* Contenedor de texto ERROR y 404 */
     .collage-container {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0; /* Pegamos ERROR y 404 */
-        margin-bottom: 20px; /* Espacio controlado antes del mail */
+        gap: 0;
+        margin-bottom: 20px;
     }
 
     .collage-title {
-        font-size: clamp(2.5rem, 12vw, 4rem);
-        line-height: 0.9;
+        font-size: clamp(3.5rem, 18vw, 6rem); /* Aplicando aumento de texto */
+        line-height: 0.85;
     }
 
     .number-row {
-        font-size: clamp(1.2rem, 7vw, 2rem);
-        margin-top: 5px; /* Ajuste fino para acercar el 404_ */
+        font-size: clamp(1.8rem, 10vw, 3rem); /* Aplicando aumento de texto */
+        margin-top: 5px;
     }
 
-    /* Navegación (About, Social, Support): Pegados al centro */
     .corner-nav {
         position: relative !important;
         width: 100%;
-        /* Reducimos PADDING VERTICAL drásticamente */
         padding: 10px 20px !important;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        /* Limpiamos posiciones fijas */
         top: auto !important;
         left: auto !important;
         right: auto !important;
         bottom: auto !important;
         transform: none !important;
-        opacity: 1;
-        animation: none;
+        opacity: 0;
         margin: 0 !important;
-        top: auto !important;
+        animation: revealEntryMobile 0.8s ease-out forwards !important;
     }
 
-    /* Ajustes finos de contenido para compactar */
+    /* Delays de animación */
+    .top-left { animation-delay: 0.2s !important; }
+    .top-right { animation-delay: 0.4s !important; }
+    .bottom-left { animation-delay: 0.6s !important; }
+    .bottom-right { animation-delay: 0.8s !important; }
+
+    /* ELIMINADA LLAVE EXTRA QUE ESTABA AQUÍ */
+
     .about-skew p {
         max-width: 100%;
         transform: none !important;
-        font-size: 11px; /* Un punto más pequeña para ahorrar espacio */
+        font-size: 11px;
     }
 
-    .social-tilt {
+        .social-tilt {
+        display: flex;
+        flex-direction: row; /* Horizontal */
         justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        flex-wrap: nowrap;
+    }
+
+    /* Restauramos la inclinación pero ajustada para móvil */
+    .social-tilt a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 11px;
+        white-space: nowrap;
+        transition: all 0.3s ease;
+    }
+
+    /* Mantenemos las clases de inclinación originales */
+    .tilt-l { transform: rotate(-5deg) !important; }
+    .tilt-r { transform: rotate(5deg) !important; }
+
+    /* Efecto Hover (aunque sea móvil, ayuda al feedback táctil) */
+    .social-tilt a:hover {
+        color: var(--accent);
+        transform: scale(1.1) rotate(0deg) !important;
+    }
+
+    .social-tilt span {
+        opacity: 0.3;
+        font-size: 10px;
     }
 
     .support-unit {
@@ -256,20 +284,29 @@ body {
     }
     
     .paypal-btn {
-        padding: 5px 10px; /* Botón más compacto */
+        padding: 5px 10px;
     }
 
-    /* Footer al final */
     .site-footer {
         position: relative;
         bottom: auto;
         left: auto;
         transform: none !important;
-        /* Aumentamos el padding superior para separarlo del contenido anterior */
         padding: 80px 0 30px 0; 
-        opacity: 1;
-        animation: none;
+        opacity: 0;
         text-align: center;
         width: 100%;
+        animation: revealEntryMobile 0.8s ease-out 1s forwards !important;
     }
-}
+
+    @keyframes revealEntryMobile {
+        from { 
+            transform: translateY(20px); 
+            opacity: 0; 
+        }
+        to { 
+            transform: translateY(0); 
+            opacity: 1; 
+        }
+    }
+} /* Fin del Media Query */
