@@ -41,7 +41,21 @@ body {
     max-width: 900px;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0; /* Empieza en 0 para la animación */
+    /* Usamos una animación que termine en 0.3 de opacidad */
+    animation: revealEyesSubtle 2s ease-out 0.5s forwards;
+
+}
+/* Párpados - Eliminamos la animación de parpadeo automático */
+.lid { 
+    fill: #000; 
+    height: 0; /* Siempre abiertos */
+}
+
+/* Nueva animación sutil para los ojos */
+@keyframes revealEyesSubtle {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 0.3; } /* 0.3 es el punto dulce para que no brille de más */
 }
  
 .pupil {
@@ -196,9 +210,9 @@ body {
         width: 80vw;
         max-width: 450px;
         margin-bottom: 15px;
-        opacity: 1 !important; /* Forzamos visibilidad */
         display: block;
-        animation: none !important; /* Quitamos la de desktop para evitar parpadeos */
+        opacity: 0;
+        animation: revealEyesSubtle 2s ease-out forwards !important;
     }
 
     .collage-title {
