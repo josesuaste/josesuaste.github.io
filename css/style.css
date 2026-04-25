@@ -142,10 +142,7 @@ body {
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
-        align-items: center; 
-        overscroll-behavior-y: none; /* Evita el rebote en la parte superior e inferior */
-        position: fixed; /* Ancla el cuerpo a la pantalla */
-        width: 100%;
+        align-items: center;
         -webkit-overflow-scrolling: touch;
     }
 
@@ -270,18 +267,5 @@ body {
     .site-footer p {
         font-size: 10px;
         opacity: 0.5;
-    }
-}
-@media (max-width: 850px) {
-    html, body {
-        height: 100%;
-        overflow: hidden; /* Evita que el scroll se active si no es necesario */
-        position: fixed;
-    }
-    
-    .hero-center {
-        height: 100%;
-        overflow-y: auto; /* Permite scroll solo si el contenido es más largo que la pantalla */
-        -webkit-overflow-scrolling: touch;
     }
 }
