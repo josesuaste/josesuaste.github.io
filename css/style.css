@@ -13,6 +13,12 @@
     --font-serif: 'Playfair Display', serif;
 }
 
+/* ✅ BLOQUEO GLOBAL DE SCROLL HORIZONTAL */
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
 body {
     background-color: var(--bg);
     color: var(--text);
@@ -21,8 +27,13 @@ body {
     overflow: hidden;
     font-family: var(--font-pixel);
     text-transform: uppercase;
-    /* ✅ ELIMINAR BOUNCE EFFECT EN DESKTOP */
+    /* ✅ ELIMINAR BOUNCE EFFECT */
     overscroll-behavior-y: none;
+    overscroll-behavior-x: none;
+    /* ✅ BLOQUEAR SCROLL HORIZONTAL */
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 
 /* ANIMACIONES GLOBALES */
@@ -41,7 +52,9 @@ body {
     align-items: center;
     height: 100vh;
     position: relative;
-    opacity: 1; 
+    opacity: 1;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .eyes-layer {
@@ -66,9 +79,26 @@ body {
     transform-origin: center;
 }
 
-.collage-container { position: relative; z-index: 10; text-align: center; pointer-events: none; }
-.collage-title { font-size: clamp(5rem, 18vw, 12rem); margin: 0; line-height: 0.85; }
-.number-row { font-size: clamp(3rem, 10vw, 6rem); margin-top: 10px; }
+.collage-container { 
+    position: relative; 
+    z-index: 10; 
+    text-align: center; 
+    pointer-events: none;
+    max-width: 100%;
+}
+
+.collage-title { 
+    font-size: clamp(5rem, 18vw, 12rem); 
+    margin: 0; 
+    line-height: 0.85;
+    max-width: 100%;
+}
+
+.number-row { 
+    font-size: clamp(3rem, 10vw, 6rem); 
+    margin-top: 10px;
+    max-width: 100%;
+}
 
 .t-main, .n-main { font-family: var(--font-main); }
 .t-pixel, .n-pixel { font-family: var(--font-pixel); }
@@ -88,14 +118,21 @@ body {
     font-size: 13px;
     letter-spacing: 0.1em;
     z-index: 20;
+    max-width: calc(100vw - 50px);
 }
 
-.top-right { top: 0; right: 0; display: flex; gap: 10px; }
+.top-right { top: 0; right: 0; display: flex; gap: 10px; flex-wrap: wrap; }
 .top-left { top: 0; left: 0; }
 .bottom-left { bottom: 0; left: 0; }
 .bottom-right { bottom: 0; right: 0; }
 
-.top-left p { margin: 0; max-width: 30ch; line-height: 1.3; }
+.top-left p { 
+    margin: 0; 
+    max-width: 30ch; 
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
 .top-right a { text-decoration: none; color: var(--text); transition: color 0.3s ease; }
 .top-right a:hover { color: var(--accent); }
 
@@ -131,26 +168,34 @@ body {
    RESPONSIVE DESIGN (Mobile & Tablet)
    ============================================ */
 @media (max-width: 850px) {
+    /* ✅ BLOQUEO TOTAL DE SCROLL HORIZONTAL EN MÓVIL */
+    html {
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
+        overscroll-behavior: none;
+    }
+
     body {
         overflow-y: auto;
         height: auto;
+        /* ✅ CRÍTICO: Bloquear scroll horizontal completamente */
         overflow-x: hidden;
+        width: 100%;
+        max-width: 100vw;
         display: flex;
         flex-direction: column;
         align-items: center;
         -webkit-overflow-scrolling: touch;
         /* ✅ ELIMINAR BOUNCE EFFECT EN iOS/iPadOS */
         overscroll-behavior-y: none;
+        overscroll-behavior-x: none;
         position: relative;
-    }
-
-    /* ✅ IMPORTANTE: Evitar que HTML también haga bounce */
-    html {
-        overscroll-behavior-y: none;
     }
 
     .hero-center {
         width: 100%;
+        max-width: 100vw;
         height: auto;
         min-height: auto; 
         padding: 0 0 10px 0; 
@@ -158,6 +203,7 @@ body {
         flex-direction: column;
         justify-content: flex-start; 
         align-items: center;
+        overflow: hidden;
     }
 
     .eyes-layer {
@@ -174,12 +220,25 @@ body {
         order: 2;
         text-align: center;
         width: 100%;
+        max-width: 100vw;
         margin-top: -20px; 
         margin-bottom: 20px;
+        overflow: hidden;
+        padding: 0 10px;
+        box-sizing: border-box;
     }
 
-    .collage-title { font-size: clamp(3.5rem, 18vw, 6rem); }
-    .number-row { font-size: clamp(1.8rem, 10vw, 3rem); }
+    .collage-title { 
+        font-size: clamp(3.5rem, 18vw, 6rem);
+        max-width: 100%;
+        overflow: hidden;
+    }
+    
+    .number-row { 
+        font-size: clamp(1.8rem, 10vw, 3rem);
+        max-width: 100%;
+        overflow: hidden;
+    }
 
     /* Orden de los bloques */
     .bottom-left { order: 3; }
@@ -191,6 +250,7 @@ body {
     .corner-nav, .site-footer {
         position: relative;
         width: 100%;
+        max-width: 100vw;
         padding: 15px;
         display: flex;
         flex-direction: column;
@@ -202,12 +262,15 @@ body {
         bottom: auto;
         transform: none;
         margin: 0;
+        box-sizing: border-box;
     }
 
     .top-left p { 
         max-width: 100%; 
         font-size: 11px; 
-        line-height: 1.5; 
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* OPTIMIZACIÓN TÁCTIL - Redes sociales */
@@ -216,11 +279,13 @@ body {
         justify-content: center; 
         gap: 25px;
         padding: 20px;
+        flex-wrap: wrap;
     }
 
     .top-right a {
         padding: 8px;
         font-size: 14px;
+        white-space: nowrap;
     }
 
     .support-unit {
@@ -241,6 +306,9 @@ body {
         font-size: 13px;
         padding: 10px;
         line-height: 1.6;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 90vw;
     }
 
     /* Eliminar resaltado azul de iOS */
@@ -249,7 +317,8 @@ body {
     }
 
     .site-footer { 
-        padding: 30px 0 50px 0; 
+        padding: 30px 0 50px 0;
+        max-width: 100vw;
     }
     
     .site-footer p {
