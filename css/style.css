@@ -272,4 +272,16 @@ body {
         opacity: 0.5;
     }
 }
-
+@media (max-width: 850px) {
+    html, body {
+        height: 100%;
+        overflow: hidden; /* Evita que el scroll se active si no es necesario */
+        position: fixed;
+    }
+    
+    .hero-center {
+        height: 100%;
+        overflow-y: auto; /* Permite scroll solo si el contenido es más largo que la pantalla */
+        -webkit-overflow-scrolling: touch;
+    }
+}
