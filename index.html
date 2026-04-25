@@ -2,9 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>José Suaste - Creador de Contenido Mac & Apple</title>
-    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Precarga de fuentes (sin bloqueo) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@900&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 
     <!-- SEO Meta Tags -->
     <meta name="description" content="José Suaste - Creador de contenido sobre Mac, apps y tecnología Apple. Tutoriales, tips y recursos para el ecosistema Apple en español para Latinoamérica.">
@@ -25,15 +29,18 @@
     <meta property="twitter:description" content="Tutoriales y contenido sobre el ecosistema Apple en español.">
     <meta property="twitter:image" content="https://josesuaste.github.io/img/og-image.png">
 
-    <!-- Favicons -->
+    <!-- Favicons (ajusta rutas si es necesario) -->
     <link rel="icon" type="image/svg+xml" href="images/favicon/favicon.svg">
     <link rel="alternate icon" type="image/png" href="images/favicon/favicon.png">
     <link rel="alternate icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <main class="hero-center">
-        <div class="eyes-layer" role="img" aria-label="Animación decorativa de ojos que siguen el cursor">
+        <!-- Capa de ojos decorativa (oculta a lectores de pantalla) -->
+        <div class="eyes-layer" role="img" aria-label="Animación decorativa de ojos" aria-hidden="true">
             <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <clipPath id="eye-shape"><path d="M50,150 Q150,60 250,150 Q150,240 50,150 Z" /></clipPath>
@@ -48,11 +55,14 @@
             </svg>
         </div>
 
+        <!-- Título principal con accesibilidad mejorada -->
         <div class="collage-container">
-            <h1 class="collage-title">
-                <span class="t-main">E</span><span class="t-pixel">R</span><span class="t-outline">R</span><span class="t-serif">O</span><span class="t-main">R</span>
+            <h1 class="collage-title" aria-label="Error 404">
+                <span aria-hidden="true">
+                    <span class="t-main">E</span><span class="t-pixel">R</span><span class="t-outline">R</span><span class="t-serif">O</span><span class="t-main">R</span>
+                </span>
             </h1>
-            <div class="number-row">
+            <div class="number-row" aria-hidden="true">
                 <span class="n-pixel">4</span><span class="n-outline">0</span><span class="n-serif">4</span><span class="blink-cursor">_</span>
             </div>
         </div>
@@ -77,7 +87,6 @@
         <a href="https://github.com/josesuaste" target="_blank" rel="noopener noreferrer">GITHUB</a>
     </nav>
 
-    <!-- ✅ SIN BADGE - Solo el email y ubicación -->
     <nav class="corner-nav bottom-left">
         <div class="contact-info">
             MAIL: FNDR.MEDIA@ICLOUD.COM<br>
