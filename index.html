@@ -1,112 +1,155 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-MX">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>José Suaste - Creador de Contenido Mac & Apple</title>
+    <meta name="theme-color" content="#000000">
+    <meta name="color-scheme" content="dark">
 
-    <!-- Precarga de fuentes (sin bloqueo) -->
+    <!-- SEO -->
+    <title>José Suaste — Creador de Contenido Mac &amp; Apple</title>
+    <meta name="description" content="José Suaste — Creador de contenido sobre Mac, apps y tecnología Apple. Tutoriales, tips y recursos del ecosistema Apple en español para Latinoamérica.">
+    <meta name="keywords" content="José Suaste, Mac, Apple, macOS, iOS, iPadOS, tutoriales Apple, apps Mac, creador de contenido, YouTube tech español, ecosistema Apple Latinoamérica">
+    <meta name="author" content="José Suaste">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://josesuaste.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_MX">
+    <meta property="og:site_name" content="José Suaste">
+    <meta property="og:url" content="https://josesuaste.github.io/">
+    <meta property="og:title" content="José Suaste — Creador de Contenido Mac &amp; Apple">
+    <meta property="og:description" content="Tutoriales, tips y curiosidades sobre Mac, apps y el ecosistema Apple en español.">
+    <meta property="og:image" content="https://josesuaste.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="José Suaste — Creador de contenido Mac &amp; Apple">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="José Suaste — Creador Mac &amp; Apple">
+    <meta name="twitter:description" content="Tutoriales y contenido sobre el ecosistema Apple en español.">
+    <meta name="twitter:image" content="https://josesuaste.github.io/og-image.png">
+
+    <!-- Favicons (SVG inline para que nunca falle) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-family='monospace' font-weight='900' font-size='14'%3E404%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%23000'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-family='monospace' font-weight='900' font-size='72'%3E404%3C/text%3E%3C/svg%3E">
+
+    <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@900&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;700;900&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="José Suaste - Creador de contenido sobre Mac, apps y tecnología Apple. Tutoriales, tips y recursos para el ecosistema Apple en español para Latinoamérica.">
-    <meta name="keywords" content="Mac, Apple, macOS, iOS, iPadOS, Tutoriales Apple, Apps Mac, Creador Contenido, YouTube Tech Español">
-    <meta name="author" content="José Suaste">
-    
-    <!-- Canonical & OG Tags -->
-    <link rel="canonical" href="https://josesuaste.github.io/">
-    
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://josesuaste.github.io/">
-    <meta property="og:title" content="José Suaste - Creador de Contenido Mac & Apple">
-    <meta property="og:description" content="Creador de contenido sobre Mac, apps y tecnología Apple en español.">
-    <meta property="og:image" content="https://josesuaste.github.io/img/og-image.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="José Suaste - Creador Mac & Apple">
-    <meta property="twitter:description" content="Tutoriales y contenido sobre el ecosistema Apple en español.">
-    <meta property="twitter:image" content="https://josesuaste.github.io/img/og-image.png">
-
-    <!-- Favicons (ajusta rutas si es necesario) -->
-    <link rel="icon" type="image/svg+xml" href="images/favicon/favicon.svg">
-    <link rel="alternate icon" type="image/png" href="images/favicon/favicon.png">
-    <link rel="alternate icon" href="images/favicon/favicon.ico">
+    <!-- Datos estructurados (Person + WebSite) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "name": "José Suaste",
+          "url": "https://josesuaste.github.io/",
+          "email": "mailto:fndr.media@icloud.com",
+          "nationality": "MX",
+          "jobTitle": "Creador de Contenido",
+          "knowsAbout": ["Mac", "Apple", "macOS", "iOS", "iPadOS", "Apps", "Tutoriales"],
+          "sameAs": [
+            "https://www.youtube.com/@errrrror404",
+            "https://github.com/josesuaste"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "name": "José Suaste",
+          "url": "https://josesuaste.github.io/",
+          "inLanguage": "es-MX",
+          "publisher": { "@type": "Person", "name": "José Suaste" }
+        }
+      ]
+    }
+    </script>
 
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <noscript>Necesitas habilitar JavaScript para ver las animaciones interactivas, pero el contenido principal funciona sin él.</noscript>
+
+    <!-- H1 invisible (SEO real) — el "ERROR 404" es decorativo -->
+    <h1 class="sr-only">José Suaste — Creador de Contenido Mac &amp; Apple</h1>
 
     <main class="hero-center">
-        <!-- Capa de ojos decorativa (oculta a lectores de pantalla) -->
-        <div class="eyes-layer" role="img" aria-label="Animación decorativa de ojos" aria-hidden="true">
-            <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Capa de ojos decorativa -->
+        <div class="eyes-layer" role="img" aria-label="Animación decorativa de ojos">
+            <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <defs>
-                    <clipPath id="eye-shape"><path d="M50,150 Q150,60 250,150 Q150,240 50,150 Z" /></clipPath>
-                    <clipPath id="eye-shape-2"><path d="M350,150 Q450,60 550,150 Q450,240 350,150 Z" /></clipPath>
+                    <clipPath id="eye-shape"><path d="M50,150 Q150,60 250,150 Q150,240 50,150 Z"/></clipPath>
+                    <clipPath id="eye-shape-2"><path d="M350,150 Q450,60 550,150 Q450,240 350,150 Z"/></clipPath>
                 </defs>
-                <rect x="50" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape)" />
-                <circle class="pupil" cx="150" cy="150" r="35" fill="black" clip-path="url(#eye-shape)" />
-                <rect class="lid" x="50" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape)" />
-                <rect x="350" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape-2)" />
-                <circle class="pupil" cx="450" cy="150" r="35" fill="black" clip-path="url(#eye-shape-2)" />
-                <rect class="lid" x="350" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape-2)" />
+                <rect x="50" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape)"/>
+                <circle class="pupil" cx="150" cy="150" r="35" fill="black" clip-path="url(#eye-shape)"/>
+                <rect class="lid" x="50" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape)"/>
+                <rect x="350" y="50" width="200" height="200" fill="white" clip-path="url(#eye-shape-2)"/>
+                <circle class="pupil" cx="450" cy="150" r="35" fill="black" clip-path="url(#eye-shape-2)"/>
+                <rect class="lid" x="350" y="50" width="200" height="0" fill="black" clip-path="url(#eye-shape-2)"/>
             </svg>
         </div>
 
-        <!-- Título principal con accesibilidad mejorada -->
-        <div class="collage-container">
-            <h1 class="collage-title" aria-label="Error 404">
+        <!-- Título decorativo "ERROR 404" -->
+        <div class="collage-container reveal">
+            <div class="collage-title" aria-label="Error 404">
                 <span aria-hidden="true">
                     <span class="t-main">E</span><span class="t-pixel">R</span><span class="t-outline">R</span><span class="t-serif">O</span><span class="t-main">R</span>
                 </span>
-            </h1>
+            </div>
             <div class="number-row" aria-hidden="true">
                 <span class="n-pixel">4</span><span class="n-outline">0</span><span class="n-serif">4</span><span class="blink-cursor">_</span>
             </div>
         </div>
     </main>
 
-    <nav class="corner-nav top-left">
+    <aside class="corner-nav top-left reveal d-1">
         <p>
             HOLA! MI NOMBRE<br>
-            ES JOSE SUASTE TENGO<br> 
+            ES JOSE SUASTE TENGO<br>
             UN CANAL DE YOUTUBE DONDE COMPARTO TODO LO QUE<br>
-            APRENDO SOBRE APPS, TIPS, TRUCOS,TUTORIALES<br>
-            Y CURIOSIDADES.<br>
+            APRENDO SOBRE APPS, TIPS, TRUCOS, TUTORIALES<br>
+            Y CURIOSIDADES.
         </p>
-    </nav>
+    </aside>
 
-    <nav class="corner-nav top-right">
-        <!-- ⚠️ REEMPLAZA ESTOS ENLACES CON TUS URLs REALES -->
+    <nav class="corner-nav top-right reveal d-2" aria-label="Redes sociales">
         <a href="https://www.youtube.com/@errrrror404" target="_blank" rel="noopener noreferrer">YOUTUBE</a>
-        <span>/</span>
+        <span aria-hidden="true">/</span>
         <a href="https://instagram.com/tuperfil" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-        <span>/</span>
+        <span aria-hidden="true">/</span>
         <a href="https://github.com/josesuaste" target="_blank" rel="noopener noreferrer">GITHUB</a>
     </nav>
 
-    <nav class="corner-nav bottom-left">
+    <aside class="corner-nav bottom-left reveal d-3">
         <div class="contact-info">
-            MAIL: FNDR.MEDIA@ICLOUD.COM<br>
-            <span style="opacity: 0.5; font-size: 10px;">MÉXICO</span>
+            MAIL: <a href="mailto:fndr.media@icloud.com" class="mail-link">FNDR.MEDIA@ICLOUD.COM</a><br>
+            <span class="country">MÉXICO</span>
         </div>
-    </nav>
+    </aside>
 
-    <nav class="corner-nav bottom-right">
+    <aside class="corner-nav bottom-right reveal d-4">
         <div class="support-unit">
-            <a href="https://www.paypal.me/josesuaste" target="_blank" class="paypal-btn" rel="noopener noreferrer">
-                PAYPAL
+            <a href="https://www.paypal.me/josesuaste" target="_blank" rel="noopener noreferrer" class="paypal-btn" aria-label="Apoyar el proyecto vía PayPal">
+                <span class="paypal-label">PAYPAL</span>
+                <span class="paypal-arrow" aria-hidden="true">→</span>
             </a>
             <p class="support-text">APOYAR_PROYECTO_</p>
         </div>
-    </nav>
+    </aside>
 
-    <footer class="site-footer">
-      <p>© 2026 BY JOSE SUASTE</p>
+    <footer class="site-footer reveal d-5">
+        <p>© 2026 BY JOSE SUASTE</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
