@@ -16,6 +16,7 @@ html {
     overflow-x: hidden;
     width: 100%;
     box-sizing: border-box;
+    scrollbar-gutter: stable;   /* evita desplazamiento horizontal */
 }
 *, *::before, *::after {
     box-sizing: inherit;
@@ -25,16 +26,15 @@ body {
     background-color: var(--bg);
     color: var(--text);
     margin: 0;
-    height: 100vh;
     overflow: hidden;
     font-family: var(--font-pixel);
     text-transform: uppercase;
-    /* Eliminar bounce en iOS */
     overflow-x: hidden;
     width: 100%;
     position: relative;
     /* Soporte para notch / home indicator */
     padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100dvh;         /* adaptación suave a barras del iPad */
 }
 
 /* ANIMACIONES GLOBALES */
@@ -51,10 +51,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     position: relative;
     max-width: 100%;
     overflow: hidden;
+    min-height: 100dvh;
+    contain: layout style; 
 }
 
 .eyes-layer {
@@ -64,6 +65,8 @@ body {
     z-index: 1;
     pointer-events: none;
     opacity: 0.3;
+    contain: layout style;
+    
 }
 
 .lid { 
@@ -85,6 +88,7 @@ body {
     text-align: center; 
     pointer-events: none;
     max-width: 100%;
+    contain: layout style;   /* el texto y el número */
 }
 
 .collage-title { 
@@ -92,12 +96,18 @@ body {
     margin: 0; 
     line-height: 0.85;
     max-width: 100%;
+    transition: font-size 0.05s linear;
 }
 
 .number-row { 
     font-size: clamp(3rem, 10vw, 6rem); 
     margin-top: 10px;
     max-width: 100%;
+    transition: font-size 0.05s linear;
+}
+.collage-title, .number-row {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
 }
 
 .t-main, .n-main { font-family: var(--font-main); }
@@ -196,14 +206,14 @@ body {
 
     .hero-center {
         width: 100%;
-        height: auto;
-        min-height: auto; 
         padding: 0 0 10px 0; 
         display: flex;
         flex-direction: column;
         justify-content: flex-start; 
         align-items: center;
         overflow: hidden;
+        min-height: 100dvh;
+        contain: layout style;
     }
 
     .eyes-layer {
