@@ -1,10 +1,3 @@
-/* ============================================
-   JOSÉ SUASTE — Pupila siguiendo el mouse
-   - Throttle real con requestAnimationFrame
-   - Respeta prefers-reduced-motion
-   - Desactivado en dispositivos táctiles puros
-   ============================================ */
-
 (function () {
     "use strict";
 
