@@ -124,6 +124,19 @@ body {
 /* ===========================
    2. ESTADÍSTICAS
    =========================== */
+
+   .stats-title {
+    color: var(--white); /* Para que resalte sobre el fondo azul */
+    text-align: center;
+    margin-bottom: 60px; /* Espacio antes de las tarjetas */
+}
+
+/* Opcional: Si quieres que el título de estadísticas sea un poco más grande 
+   o tenga un estilo diferente al de "Últimos Videos" */
+.stats-section .section-title {
+    color: var(--white);
+    /* Ya hereda la fuente Fraunces y el tamaño de .section-title */
+}
 .stats-section {
     background: var(--blue);
     padding: 100px 20px;
