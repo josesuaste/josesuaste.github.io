@@ -110,7 +110,7 @@ body {
     transform: translateY(-10px) scale(1.05); 
 }
 
-.blue-arc { 
+/*.blue-arc { 
     position: absolute; 
     bottom: -150px; 
     width: 150%; 
@@ -119,6 +119,7 @@ body {
     border-radius: 50% 50% 0 0; 
     z-index: 1; 
 }
+*/
 
 /* ===========================
    2. ESTADÍSTICAS
