@@ -2,139 +2,276 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tu Nombre | Portfolio Tech</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    
+    <!-- SEO -->
+    <title>José Suaste — Creador de Contenido Mac & Apple</title>
+    <meta name="description" content="José Suaste — Creador de contenido sobre Mac, apps y tecnología Apple. Tutoriales, tips y recursos del ecosistema Apple en español para Latinoamérica.">
+    <meta name="keywords" content="José Suaste, Mac, Apple, macOS, iOS, iPadOS, tutoriales Apple, apps Mac, creador de contenido, YouTube tech español, ecosistema Apple Latinoamérica">
+    <meta name="author" content="José Suaste">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Umami Analytics -->
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7d243bf9-5a94-4c25-9371-e60236ca9366"></script>
+    
+    <!-- Canonical -->
+    <link rel="canonical" href="https://josesuaste.github.io/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_MX">
+    <meta property="og:site_name" content="José Suaste">
+    <meta property="og:url" content="https://josesuaste.github.io/">
+    <meta property="og:title" content="José Suaste — Creador de Contenido Mac & Apple">
+    <meta property="og:description" content="Tutoriales, tips y curiosidades sobre Mac, apps y el ecosistema Apple en español.">
+    <meta property="og:image" content="https://josesuaste.github.io/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="José Suaste — Creador de contenido Mac & Apple">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="José Suaste — Creador Mac & Apple">
+    <meta name="twitter:description" content="Tutoriales y contenido sobre el ecosistema Apple en español.">
+    <meta name="twitter:image" content="https://josesuaste.github.io/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon/favicon.svg">
+    <link rel="apple-touch-icon" href="images/favicon/favicon.png">
+
     <!-- Fuentes: Fraunces (Serif) e Inter (Sans) -->
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <!-- 1. HEADER (Inspiración Editorial + Arco) -->
     <header class="hero">
         <nav class="navbar">
-            <span class="logo">ERR0R4O4</span>
+            <span class="logo">TN( )</span>
             <div class="nav-links">
-    <a href="https://www.youtube.com/@TuCanal" target="_blank" rel="noopener noreferrer">Youtube</a>
-    <a href="https://www.instagram.com/tu_usuario" target="_blank" rel="noopener noreferrer">Instagram</a>
-    <a href="https://www.paypal.me/tu_usuario" target="_blank" rel="noopener noreferrer">Paypal</a>
-</div>
+                <a href="#about">Sobre mí</a>
+                <a href="#videos">Contenido</a>
+                <a href="#setup">Set up</a>
+            </div>
         </nav>
         
         <div class="hero-content">
-            <h1 class="giant-title">JOSE SAUSTE</h1>
-            <p class="subtitle">Haciendo la tecnología fácil</p>
-            <div class="profile-wrapper">
-                <img src="images/img/Fondo de “709645a5429709e4734ea89caef6341f” eliminado.png" alt="Tu Foto" class="profile-img">
+            <h1 class="giant-title" data-aos="fade-up" data-aos-duration="1000">JOSE SUASTE</h1>
+            <p class="subtitle" data-aos="fade-up" data-aos-delay="200">Haciendo la tecnología fácil</p>
+            <div class="profile-wrapper" data-aos="zoom-in" data-aos-delay="400">
+                <img src="images/img/Fondo de “709645a5429709e4734ea89caef6341f” eliminado.png" alt="José Suaste" class="profile-img">
             </div>
         </div>
         <div class="blue-arc"></div>
     </header>
 
+    <!-- 2. ESTADÍSTICAS DEL CANAL -->
+    <section class="stats-section" id="stats">
+        <div class="stats-container">
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">📺</div>
+                <div class="stat-number" data-target="150">0</div>
+                <div class="stat-label">Suscriptores</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">🎥</div>
+                <div class="stat-number" data-target="12">0</div>
+                <div class="stat-label">Videos</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon">👁️</div>
+                <div class="stat-number" data-target="2500">0</div>
+                <div class="stat-label">Visualizaciones</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat-icon">🌎</div>
+                <div class="stat-number" data-target="8">0</div>
+                <div class="stat-label">Países</div>
+            </div>
+        </div>
+    </section>
+
     <!-- 3. SOBRE MÍ (Forma de Nube Orgánica) -->
     <section class="about-section" id="about">
-        <div class="nube-container">
+        <div class="nube-container" data-aos="zoom-in" data-aos-duration="800">
             <span class="handle">@josesuaste-tech</span>
             <h2 class="serif-title">Un poco más <br> <i>sobre mí</i></h2>
             <div class="emoji">☺</div>
             <p class="about-text">
-                Hola tengo un canal de youtube donde comparto todo lo que aprendo sobre tecnologia apps, tips, trucos, personalizacion, tutoriales y curiosidades, fusiono el diseño para crear experiencias digitales que no solo funcionan, sino que se sienten bien.
+                Hola tengo un canal de youtube donde comparto todo lo que aprendo sobre tecnología apps, tips, trucos, personalización, tutoriales y curiosidades.
             </p>
-            <button class="cta-pill"> Mi Media Kit </button>
+            <a href="#contact" class="cta-pill">Mi Media Kit</a>
         </div>
     </section>
 
-    <!-- 4. GRID DE CONTENIDO (Tarjetas Neo-brutalistas) -->
-    <section class="grid-section" id="content">
-        <div class="card card-blue">
-            <h3>Tutoriales</h3>
-            <p>Aprende a dominar herramientas tech desde cero.</p>
+    <!-- 4. VIDEOS DESTACADOS -->
+    <section class="videos-section" id="videos">
+        <h2 class="section-title" data-aos="fade-up">Últimos Videos</h2>
+        <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+            Contenido reciente sobre el ecosistema Apple
+        </p>
+        
+        <div class="videos-grid">
+            <!-- Video 1 -->
+            <div class="video-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="video-thumbnail">
+                    <iframe 
+                        loading="lazy"
+                        src="https://www.youtube.com/embed/TU_VIDEO_ID_1" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h3>Título de tu video más reciente</h3>
+                    <p>Breve descripción del contenido del video.</p>
+                </div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="video-thumbnail">
+                    <iframe 
+                        loading="lazy"
+                        src="https://www.youtube.com/embed/TU_VIDEO_ID_2" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h3>Segundo video destacado</h3>
+                    <p>Descripción del segundo video.</p>
+                </div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="video-thumbnail">
+                    <iframe 
+                        loading="lazy"
+                        src="https://www.youtube.com/embed/TU_VIDEO_ID_3" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h3>Tercer video destacado</h3>
+                    <p>Descripción del tercer video.</p>
+                </div>
+            </div>
         </div>
-        <div class="card card-orange">
-            <h3>Reviews</h3>
-            <p>Análisis honestos de gadgets y software.</p>
-        </div>
-        <div class="card">
-            <h3>Newsletter</h3>
-            <p>Recibe tips semanales directamente en tu inbox.</p>
-        </div>
+
+        <a href="https://www.youtube.com/@josesuaste-tech" target="_blank" class="view-all-btn" data-aos="fade-up" data-aos-delay="400">
+            Ver todos los videos →
+        </a>
     </section>
 
     <!-- 5. MY SET UP (Miniaturas en blanco y negro) -->
     <section class="setup-section" id="setup">
-        <h2 class="section-title">Set Up</h2>
+        <h2 class="section-title" data-aos="fade-up">Set Up</h2>
         <div class="setup-grid">
-            <div class="setup-item"><img src="images/img/mac_mini_M4.webp" alt="Mac mini"></div>
-            <div class="setup-item"><img src="images/img/DJI_mic_mini.webp" alt=""></div>
-            <div class="setup-item"><img src="images/img/logi_pebble_keys_K380s.webp" alt="Teclado"></div>
-            <div class="setup-item"><img src="images/img/logitech_MX_vertical.webp" alt="Mouse"></div>
+            <div class="setup-item" data-aos="zoom-in" data-aos-delay="100">
+                <img src="images/img/mac_mini_M4.webp" alt="Mac mini M4" loading="lazy">
+                <p class="setup-name">Mac mini M4</p>
+            </div>
+            <div class="setup-item" data-aos="zoom-in" data-aos-delay="200">
+                <img src="images/img/DJI_mic_mini.webp" alt="DJI Mic Mini" loading="lazy">
+                <p class="setup-name">DJI Mic Mini</p>
+            </div>
+            <div class="setup-item" data-aos="zoom-in" data-aos-delay="300">
+                <img src="images/img/logi_pebble_keys_K380s.webp" alt="Logitech Pebble K380s" loading="lazy">
+                <p class="setup-name">Logitech K380s</p>
+            </div>
+            <div class="setup-item" data-aos="zoom-in" data-aos-delay="400">
+                <img src="images/img/logitech_MX_vertical.webp" alt="Logitech MX Vertical" loading="lazy">
+                <p class="setup-name">MX Vertical</p>
+            </div>
         </div>
     </section>
 
- 
-<!-- 6. FOOTER MASIVO (Inter-K Style) -->
-<footer class="massive-footer">
-    <div class="footer-marquee">OPEN FOR COLLABORATION • GET IN TOUCH •</div>
-    
-    <!-- FORMULARIO DE CONTACTO INTEGRADO -->
-    <div class="contact-section">
-        <div class="contact-intro">
-            <h2 class="form-hero-title">Let's talk</h2>
-            <p class="form-subtitle">¿Tienes un proyecto en mente? Cuéntame más.</p>
-        </div>
+    <!-- 6. FOOTER MASIVO (Inter-K Style) -->
+    <footer class="massive-footer" id="contact">
+        <div class="footer-marquee">OPEN FOR COLLABORATION • GET IN TOUCH •</div>
         
-        <form class="contact-form" action="#" method="POST">
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="nombre">NOMBRE</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">EMAIL</label>
-                    <input type="email" id="email" name="email" placeholder="hola@tudominio.com" required>
-                </div>
+        <!-- FORMULARIO DE CONTACTO INTEGRADO -->
+        <div class="contact-section" data-aos="fade-up">
+            <div class="contact-intro">
+                <h2 class="form-hero-title">Let's talk</h2>
+                <p class="form-subtitle">¿Tienes un proyecto en mente? Cuéntame más.</p>
             </div>
             
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="marca">MARCA / EMPRESA</label>
-                    <input type="text" id="marca" name="marca" placeholder="Nombre de tu marca" required>
+            <form class="contact-form" action="#" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">NOMBRE</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">EMAIL</label>
+                        <input type="email" id="email" name="email" placeholder="hola@tudominio.com" required>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="presupuesto">PRESUPUESTO</label>
-                    <select id="presupuesto" name="presupuesto" required>
-                        <option value="">Selecciona un rango</option>
-                        <option value="500-1000">$500 - $1,000 USD</option>
-                        <option value="1000-3000">$1,000 - $3,000 USD</option>
-                        <option value="3000-5000">$3,000 - $5,000 USD</option>
-                        <option value="5000+">$5,000+ USD</option>
-                    </select>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="marca">MARCA / EMPRESA</label>
+                        <input type="text" id="marca" name="marca" placeholder="Nombre de tu marca" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="presupuesto">PRESUPUESTO</label>
+                        <select id="presupuesto" name="presupuesto" required>
+                            <option value="">Selecciona un rango</option>
+                            <option value="500-1000">$500 - $1,000 USD</option>
+                            <option value="1000-3000">$1,000 - $3,000 USD</option>
+                            <option value="3000-5000">$3,000 - $5,000 USD</option>
+                            <option value="5000+">$5,000+ USD</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group full-width">
+                    <label for="detalles">DETALLES DEL PROYECTO</label>
+                    <textarea id="detalles" name="detalles" rows="5" placeholder="Cuéntame sobre tu proyecto, objetivos, timeline..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">ENVIAR ></button>
+            </form>
+        </div>
+            
+        <div class="footer-bottom">
+            <div class="footer-col">
+                <h4>Social</h4>
+                <div class="social-pills">
+                 <span>IG</span> <span>YT</span>
                 </div>
             </div>
-            
-            <div class="form-group full-width">
-                <label for="detalles">DETALLES DEL PROYECTO</label>
-                <textarea id="detalles" name="detalles" rows="5" placeholder="Cuéntame sobre tu proyecto, objetivos, timeline..." required></textarea>
+            <div class="footer-col">
+                <h4>Contacto</h4>
+                <p>ERROR404@icloud.com</p>
             </div>
-            
-            <button type="submit" class="submit-btn">ENVIAR ></button>
-        </form>
-    </div>
-        
-    <div class="footer-bottom">
-        <div class="footer-col">
-            <h4>Social</h4>
-            <div class="social-pills">
-                <span>𝕏</span> <span>IG</span> <span>YT</span> <span>LI</span>
+            <div class="footer-col">
+                <h4>GitHub</h4>
+                <p><a href="https://github.com/josesuaste" target="_blank">@josesuaste</a></p>
             </div>
         </div>
-        <div class="footer-col">
-            <h4>Contacto</h4>
-            <p>fndr.media@icloud.com</p>
-        </div>
-        <div class="footer-col">
-            <h4>GitHub</h4>
-            <p><a href="https://github.com/josesuaste" target="_blank">@josesuaste</a></p>
-        </div>
-    </div>
-</footer>
+    </footer>
+
+    <!-- js Library -->
+    <script src="js/script.js"></script>
+</body>
+</html>
