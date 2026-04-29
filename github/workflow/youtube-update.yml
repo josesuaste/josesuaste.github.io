@@ -1,0 +1,29 @@
+name: Actualizar Videos de YouTube
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-readme-with-youtube:
+    name: Update this repo with latest videos
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gautamkrishnar/blog-post-workflow@master
+        with:
+          comment_tag_name: "YOUTUBE-VIDEOS-LIST"
+          feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_AQUÍ"
+          max_post_count: 3
+          template: |
+            <div class="video-card" data-aos="fade-up">
+                <a href="$url" target="_blank" style="text-decoration: none; color: inherit;">
+                    <div class="video-thumbnail">
+                        <img src="$img" alt="$title" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+                    </div>
+                    <div class="video-info">
+                        <h3>$title</h3>
+                        <p>Haz clic para ver el tutorial completo en YouTube.</p>
+                    </div>
+                </a>
+            </div>
