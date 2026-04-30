@@ -110,7 +110,7 @@ body {
     transform: translateY(-10px) scale(1.05); 
 }
 
-.blue-arc { 
+/*.blue-arc { 
     position: absolute; 
     bottom: -150px; 
     width: 150%; 
@@ -119,10 +119,60 @@ body {
     border-radius: 50% 50% 0 0; 
     z-index: 1; 
 }
-
-
+*/
 /* ===========================
-   2. ESTADÍSTICAS
+   2. SOBRE MÍ (Nube)
+   =========================== */
+.about-section {
+    background-color: var(--blue);
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-flex {
+    max-width: 1600px;
+    width: 100%;
+    color: white;
+    /* Cambio principal: usa Grid en lugar de Flex */
+    display: grid;
+    grid-template-columns: minmax(300px, 5fr) 1fr;/* 50% cada columna (fija la posición del párrafo) */
+    gap: 40px;
+    align-items: start; /* alinea el contenido arriba */
+}
+
+.about-left {
+    /* El título vivirá dentro de su columna, que siempre ocupa 50% */
+}
+
+.big-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(5rem, 12vw, 10rem); /* ajusta a tu gusto */
+    line-height: 0.9;
+    margin: 0;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: white;
+    word-break: break-word; /* evita desbordamiento si crece mucho */
+}
+
+.about-right {
+    /* El párrafo vive en la segunda columna, su inicio es fijo (50% + gap) */
+}
+
+.about-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 0;
+}
+@media (max-width: 768px) {
+    .about-flex {
+        grid-template-columns: 1fr; /* una sola columna */
+        gap: 20px;
+    }
+}
+/* ===========================
+   3. ESTADÍSTICAS
    =========================== */
 
 .stats-title {
@@ -195,71 +245,6 @@ body {
     letter-spacing: 1px;
     opacity: 0.9;
     font-weight: 600;
-}
-
-/* ===========================
-   3. SOBRE MÍ (Nube)
-   =========================== */
-.about-section { 
-    background-color: var(--blue); 
-    padding: 120px 20px; 
-    display: flex; 
-    justify-content: center; 
-}
-
-.nube-container { 
-    background: var(--white); 
-    padding: 80px 40px; 
-    border-radius: 43% 57% 41% 59% / 57% 45% 55% 43%; 
-    text-align: center; 
-    max-width: 600px; 
-    box-shadow: 20px 20px 0 var(--black); 
-}
-
-.handle {
-    display: inline-block;
-    background: var(--neon);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
-
-.serif-title { 
-    font-family: 'Fraunces', serif; 
-    font-size: clamp(2rem, 5vw, 3rem); 
-    margin: 20px 0; 
-}
-
-.emoji {
-    font-size: 3rem;
-    margin: 20px 0;
-}
-
-.about-text {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin: 20px 0;
-}
-
-.cta-pill { 
-    display: inline-block;
-    background: var(--blue); 
-    color: white; 
-    padding: 15px 30px; 
-    border-radius: 50px; 
-    border: none; 
-    font-weight: bold; 
-    cursor: pointer; 
-    margin-top: 20px; 
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.cta-pill:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(59, 89, 255, 0.3);
 }
 
 /* ===========================
