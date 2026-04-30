@@ -121,11 +121,14 @@ body {
 }
 */
 /* ===========================
-   2. SOBRE MÍ (Nube)
+   SOBRE MÍ (Estilo Editorial)
+   =========================== */
+/* ===========================
+   SOBRE MÍ (Estilo Editorial)
    =========================== */
 .about-section {
     background-color: var(--blue);
-    padding: 100px 20px;
+    padding: 120px 40px; /* Más espacio para que respire */
     display: flex;
     justify-content: center;
 }
@@ -134,41 +137,60 @@ body {
     max-width: 1600px;
     width: 100%;
     color: white;
-    /* Cambio principal: usa Grid en lugar de Flex */
     display: grid;
-    grid-template-columns: minmax(300px, 5fr) 1fr;/* 50% cada columna (fija la posición del párrafo) */
-    gap: 40px;
-    align-items: start; /* alinea el contenido arriba */
-}
-
-.about-left {
-    /* El título vivirá dentro de su columna, que siempre ocupa 50% */
+    /* La columna derecha ahora es un poco más ancha para el párrafo */
+    grid-template-columns: 1.5fr 1fr; 
+    gap: 20px;
+    /* Alineamos los elementos al fondo para que el párrafo baje */
+    align-items: end; 
 }
 
 .big-title {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(5rem, 12vw, 10rem); /* ajusta a tu gusto */
-    line-height: 0.9;
+    /* Cambiamos a Sans-Serif para el look de la imagen */
+    font-family: 'Inter', sans-serif; 
+    font-size: clamp(6rem, 18vw, 15rem);
+    line-height: 0.75; /* Interlineado muy cerrado */
+    letter-spacing: -0.05em; /* Letras muy juntas */
     margin: 0;
-    font-weight: 900;
-    text-transform: uppercase;
+    font-weight: 800;
+    text-transform: lowercase; /* Todo en minúsculas como en la imagen */
     color: white;
-    word-break: break-word; /* evita desbordamiento si crece mucho */
 }
 
 .about-right {
-    /* El párrafo vive en la segunda columna, su inicio es fijo (50% + gap) */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 2rem; /* Ajuste para que no quede pegado al piso */
+}
+
+.sub-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .about-description {
-    font-size: 1.2rem;
-    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.4;
     margin: 0;
+    max-width: 450px;
+    opacity: 0.9; /* Un toque más suave para el cuerpo de texto */
 }
+
+/* Responsivo para móviles */
 @media (max-width: 768px) {
     .about-flex {
-        grid-template-columns: 1fr; /* una sola columna */
-        gap: 20px;
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+    
+    .about-right {
+        margin-top: 40px;
     }
 }
 /* ===========================
