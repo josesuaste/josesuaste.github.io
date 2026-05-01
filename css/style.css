@@ -110,7 +110,7 @@ body {
     transform: translateY(-10px) scale(1.05); 
 }
 
-/*.blue-arc { 
+.blue-arc { 
     position: absolute; 
     bottom: -150px; 
     width: 150%; 
@@ -119,10 +119,7 @@ body {
     border-radius: 50% 50% 0 0; 
     z-index: 1; 
 }
-*/
-/* ===========================
-   SOBRE MÍ (Estilo Editorial)
-   =========================== */
+
 /* ===========================
    SOBRE MÍ (Estilo Editorial)
    =========================== */
@@ -193,222 +190,429 @@ body {
         margin-top: 40px;
     }
 }
+
 /* ===========================
-   3. ESTADÍSTICAS
+   3. ESTADÍSTICAS (MINIMALISTAS)
    =========================== */
-
-.stats-title {
-    color: var(--white); /* Para que resalte sobre el fondo azul */
-    text-align: center;
-    margin-bottom: 60px; /* Espacio antes de las tarjetas */
-}
-
-/* Opcional: Si quieres que el título de estadísticas sea un poco más grande 
-   o tenga un estilo diferente al de "Últimos Videos" */
-.stats-section .section-title {
-    color: var(--white);
-    /* Ya hereda la fuente Fraunces y el tamaño de .section-title */
-}
+/* ===========================
+   ESTADÍSTICAS (Versión Azul)
+   =========================== */
 .stats-section {
-    background: var(--blue);
-    padding: 100px 20px;
-    position: relative;
+    background: var(--blue); /* Fondo azul de tu marca */
+    padding: 100px 5%;
+    overflow: hidden;
+    /* Eliminamos el borde gris para que se vea más limpio */
+    border-bottom: none; 
 }
 
-.stats-container {
-    max-width: 1200px;
+.stats-grid {
+    max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+/* Bloque de Números */
+.stats-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
 
-.stat-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
-    padding: 40px 20px;
-    text-align: center;
-    transition: all 0.3s ease;
-    color: white;
-}
-
-.stat-card:hover {
-    transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.stat-icon {
-    margin-bottom: 15px;
+.stat-item {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.stat-icon img {
-    width: 50px; /* Ajusta el tamaño a tu gusto */
-    height: 50px;
-    /* Si tus SVG son negros y los quieres blancos para el diseño editorial: */
-    filter: brightness(0) invert(1); 
+    flex-direction: column;
 }
 
 .stat-number {
     font-family: 'Fraunces', serif;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 600;
+    color: white; /* Números en blanco */
     line-height: 1;
-    margin-bottom: 10px;
+    letter-spacing: -2px;
 }
 
 .stat-label {
-    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.9;
-    font-weight: 600;
+    letter-spacing: 0.15em;
+    /* Un blanco ligeramente transparente para jerarquía */
+    color: rgba(255, 255, 255, 0.8); 
+    font-weight: 700;
 }
 
+/* Título Gigante */
+.stats-title-container {
+    text-align: right;
+}
+
+.stats-big-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(5rem, 12vw, 12rem);
+    font-weight: 900;
+    line-height: 0.8;
+    letter-spacing: -0.05em;
+    color: white; /* Título en blanco */
+    text-transform: lowercase;
+    margin: 0;
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-title-container {
+        grid-row: 1;
+        text-align: left;
+        margin-bottom: 50px;
+    }
+
+    .stats-big-title {
+        font-size: clamp(4rem, 15vw, 8rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-content {
+        grid-template-columns: 1fr;
+    }
+}
 /* ===========================
    4. VIDEOS DESTACADOS
    =========================== */
 .videos-section {
     padding: 100px 20px;
-    background: var(--bg-cream);
-    text-align: center;
+    background: var(--white);
+    overflow: hidden;
 }
 
 .section-title {
+    text-align: center;
     font-family: 'Fraunces', serif;
-    font-size: clamp(2.5rem, 6vw, 4rem);
-    margin-bottom: 15px;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    margin-bottom: 0.3rem;
     letter-spacing: -2px;
 }
 
 .section-subtitle {
-    font-size: 1.1rem;
-    color: rgba(26, 26, 26, 0.7);
+    text-align: center;
+    color: rgba(26,26,26,0.5);
     margin-bottom: 60px;
-    font-weight: 300;
 }
 
 .videos-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 40px;
-    margin-bottom: 50px;
+    display: flex;
+    gap: 4rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 20px 0 40px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+.videos-grid::-webkit-scrollbar {
+    display: none;
 }
 
 .video-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    border: 3px solid var(--black);
-    box-shadow: 8px 8px 0 var(--black);
-    transition: all 0.3s ease;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 600px;
+    white-space: normal;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .video-card:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 12px 12px 0 var(--black);
+    transform: translateY(-4px);
 }
 
 .video-thumbnail {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%; /* Aspect ratio 16:9 */
-    overflow: hidden;
-    background: var(--black);
+    display: none;  /* Fuera thumbnails */
 }
 
-.video-thumbnail iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.video-info {
-    padding: 25px;
-    text-align: left;
+.video-link {
+    text-decoration: none;
+    color: var(--black);
 }
 
 .video-info h3 {
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--blue);
+    margin-bottom: 0.3rem;
+    max-width: 500px;
 }
 
 .video-info p {
-    font-size: 0.95rem;
-    color: rgba(26, 26, 26, 0.7);
-    line-height: 1.5;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    font-weight: 300;
+    max-width: 400px;
 }
 
 .view-all-btn {
     display: inline-block;
-    background: var(--blue);
-    color: white;
-    padding: 18px 40px;
-    border-radius: 50px;
+    margin-top: 40px;
+    border-bottom: 2px solid var(--black);
     text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    border: 3px solid var(--black);
-    box-shadow: 6px 6px 0 var(--black);
+    font-weight: 600;
+    color: var(--black);
+    padding-bottom: 4px;
+    transition: all 0.2s;
 }
 
 .view-all-btn:hover {
-    transform: translate(-4px, -4px);
-    box-shadow: 10px 10px 0 var(--black);
+    border-bottom-color: var(--blue);
+    color: var(--blue);
 }
-
 /* ===========================
-   5. SET UP
+   SETUP - CASCADA REFINADA
    =========================== */
-.setup-section { 
-    padding: 100px 50px; 
-    text-align: center; 
-    background: white;
+.setup-pile-section {
+    background-color: var(--blue);
+    min-height: 55vh; /* Ajustado para mejor proporción */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    overflow: hidden;
+    position: relative;
 }
 
-.setup-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
-    gap: 30px; 
-    margin-top: 60px; 
-    max-width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
+.pile-title {
+    color: white;
+    margin-bottom: 70px;
+    text-align: center;
 }
 
-.setup-item {
+.pile-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px; /* Ajustado para que quepan bien las 6 píldoras */
+    height: 220px; /* Aumentado para la cascada */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Píldoras base */
+.pill-gear {
+    position: absolute;
+    padding: 22px 55px;
+    border-radius: 100px;
+    box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.18),
+        0 6px 18px rgba(0, 0, 0, 0.12);
+    transform: translate(var(--x), var(--y)) rotate(var(--r));
+    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.pill-gear span {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--black);
     transition: all 0.3s ease;
 }
 
-.setup-item img { 
-    width: 100%; 
-    border-radius: 20px; 
-    filter: grayscale(100%); 
-    transition: all 0.3s ease; 
-    border: 3px solid var(--black);
+/* Colores y z-index para efecto cascada CORRECTO */
+.layer-1 {
+    background: #FFE66D; /* Amarillo */
+    z-index: 1; /* Más atrás */
 }
 
-.setup-item:hover img { 
-    filter: grayscale(0%); 
-    transform: scale(1.05);
-    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+.layer-2 {
+    background: #C9ADA7; /* Beige/Rosa */
+    z-index: 2;
 }
 
-.setup-name {
-    margin-top: 15px;
-    font-weight: 600;
-    font-size: 0.95rem;
+.layer-3 {
+    background: #A8DADC; /* Verde agua */
+    z-index: 3;
+}
+
+.layer-4 {
+    background: #FFAFCC; /* Rosa */
+    z-index: 4;
+}
+
+.layer-5 {
+    background: #FF8E53; /* Naranja */
+    z-index: 5;
+}
+
+.layer-6 {
+    background: #FFA07A; /* Salmón */
+    z-index: 6; /* Más adelante */
+}
+
+/* Hover effect mejorado */
+.pill-gear:hover {
+    z-index: 100 !important;
+    transform: translate(var(--x), calc(var(--y) - 30px)) rotate(0deg) scale(1.1);
+    box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.3),
+        0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pill-gear:hover span {
+    color: var(--blue);
+    font-weight: 700;
+}
+
+/* Efecto sutil de "respiración" */
+@keyframes float-cascade {
+    0%, 100% {
+        transform: translate(var(--x), var(--y)) rotate(var(--r)) translateY(0px);
+    }
+    50% {
+        transform: translate(var(--x), var(--y)) rotate(var(--r)) translateY(-8px);
+    }
+}
+
+.pill-gear {
+    animation: float-cascade 5s ease-in-out infinite;
+}
+
+/* Delays para que no se muevan todas al mismo tiempo */
+.layer-1 { animation-delay: 0s; }
+.layer-2 { animation-delay: 0.6s; }
+.layer-3 { animation-delay: 1.2s; }
+.layer-4 { animation-delay: 1.8s; }
+.layer-5 { animation-delay: 2.4s; }
+.layer-6 { animation-delay: 3s; }
+
+/* ===========================
+   RESPONSIVE OPTIMIZADO
+   =========================== */
+
+/* Tablets grandes y laptops pequeñas */
+@media (max-width: 1024px) {
+    .pile-container {
+        max-width: 850px;
+        height: 200px;
+    }
+    
+    .pill-gear {
+        padding: 20px 50px;
+    }
+    
+    .pill-gear span {
+        font-size: 1.5rem;
+    }
+    
+    /* Ajustar posiciones para que quepan */
+    .layer-1 { --x: -160px !important; }
+    .layer-2 { --x: -75px !important; }
+    .layer-3 { --x: 0px !important; }
+    .layer-4 { --x: 75px !important; }
+    .layer-5 { --x: 145px !important; }
+    .layer-6 { --x: 215px !important; }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .setup-pile-section {
+        min-height: 50vh;
+        padding: 70px 20px;
+    }
+    
+    .pile-title {
+        margin-bottom: 50px;
+    }
+    
+    .pile-container {
+        max-width: 650px;
+        height: 180px;
+        transform: scale(0.95);
+    }
+    
+    .pill-gear {
+        padding: 18px 45px;
+    }
+    
+    .pill-gear span {
+        font-size: 1.4rem;
+    }
+    
+    /* Acercar más las píldoras */
+    .layer-1 { --x: -140px !important; }
+    .layer-2 { --x: -65px !important; }
+    .layer-3 { --x: 0px !important; }
+    .layer-4 { --x: 65px !important; }
+    .layer-5 { --x: 130px !important; }
+    .layer-6 { --x: 190px !important; }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    .setup-pile-section {
+        min-height: 45vh;
+        padding: 60px 15px;
+    }
+    
+    .pile-title {
+        margin-bottom: 40px;
+        font-size: 2.5rem;
+    }
+    
+    .pile-container {
+        max-width: 100%;
+        height: 160px;
+        transform: scale(0.75);
+    }
+    
+    .pill-gear {
+        padding: 16px 40px;
+    }
+    
+    .pill-gear span {
+        font-size: 1.3rem;
+    }
+    
+    /* Apilar más verticalmente en móvil */
+    .layer-1 { --x: -120px !important; --y: 40px !important; }
+    .layer-2 { --x: -55px !important; --y: 25px !important; }
+    .layer-3 { --x: 0px !important; --y: 10px !important; }
+    .layer-4 { --x: 55px !important; --y: -5px !important; }
+    .layer-5 { --x: 110px !important; --y: -15px !important; }
+    .layer-6 { --x: 160px !important; --y: -25px !important; }
+}
+
+/* Móviles muy pequeños */
+@media (max-width: 380px) {
+    .pile-container {
+        transform: scale(0.65);
+        height: 140px;
+    }
+    
+    .pill-gear {
+        padding: 14px 35px;
+    }
+    
+    .pill-gear span {
+        font-size: 1.2rem;
+    }
 }
 
 /* ===========================

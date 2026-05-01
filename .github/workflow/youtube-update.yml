@@ -1,29 +1,48 @@
 name: Actualizar Videos de YouTube
+
 on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  update-readme-with-youtube:
-    name: Update this repo with latest videos
+  update-videos:
+    name: Actualizar videos en index.html
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v2
-      - uses: gautamkrishnar/blog-post-workflow@master
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Update YouTube Videos
+        uses: gautamkrishnar/blog-post-workflow@v1
         with:
           comment_tag_name: "YOUTUBE-VIDEOS-LIST"
-          feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=TU_ID_AQUÍ"
+          feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=UCue5K1mHzM6JWRuG-xcyVtQ"
           max_post_count: 3
           template: |
             <div class="video-card" data-aos="fade-up">
-                <a href="$url" target="_blank" style="text-decoration: none; color: inherit;">
+                <a href="$url" target="_blank" rel="noopener noreferrer" class="video-link">
                     <div class="video-thumbnail">
-                        <img src="$img" alt="$title" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+                        <img src="$thumbnail" alt="$title" loading="lazy">
+                        <div class="play-overlay">
+                            <svg width="68" height="48" viewBox="0 0 68 48" fill="white">
+                                <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"></path>
+                                <path d="M 45,24 27,14 27,34" fill="#fff"></path>
+                            </svg>
+                        </div>
                     </div>
                     <div class="video-info">
                         <h3>$title</h3>
-                        <p>Haz clic para ver el tutorial completo en YouTube.</p>
+                        <p>$description</p>
                     </div>
                 </a>
             </div>
+          commit_message: "🎬 Videos actualizados - ERROR 404"
+          committer_username: "ERROR404Bot"
+          committer_email: "actions@github.com"
