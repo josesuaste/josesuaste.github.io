@@ -15,7 +15,6 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    scroll-padding-top: 80px;
 }
 
 body { 
@@ -51,11 +50,8 @@ body {
 .logo {
     font-size: 1.2rem;
     cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
+    /* FIX: GSAP maneja el scale con hover, quitamos transition de transform */
+    transition: color 0.3s ease;
 }
 
 .nav-links a { 
@@ -100,13 +96,23 @@ body {
     width: 600px; 
     max-width: 90vw;
     filter: grayscale(100%); 
-    transition: all 0.4s ease; 
     border-radius: 50%;
+
+    /*
+     * FIX CRÍTICO #1: "transition: all" incluye opacity y transform,
+     * lo que crea un conflicto directo con las animaciones GSAP.
+     * Solo hacemos transition de filter (el efecto hover blanco/negro)
+     * y dejamos que GSAP sea el único dueño de opacity y transform.
+     */
+    transition: filter 0.4s ease;
 }
 
 .profile-img:hover { 
     filter: grayscale(0%); 
-    transform: translateY(-10px) scale(1.05); 
+    /* FIX: quitamos el translateY y scale del hover CSS.
+     * Si los dejamos, al hacer hover CSS sobreescribe el transform
+     * que GSAP puso durante la animación de entrada y hay un flash.
+     * Si quieres el efecto hover en la imagen, ponlo en el JS con GSAP. */
 }
 
 .blue-arc { 
@@ -118,11 +124,24 @@ body {
     border-radius: 50% 50% 0 0; 
     z-index: 1; 
 }
+
 /* BOTON SUSCRIBIRSE */
 .bottom-sub-btn {
     position: absolute;
-    bottom: 40px; /* Misma altura que .header-corner */
+    bottom: 40px;
     left: 50%;
+
+    /*
+     * FIX CRÍTICO #2: El botón usa transform: translateX(-50%) para
+     * centrarse horizontalmente. Cuando GSAP anima "y" sobre este elemento,
+     * sobreescribe el transform completo y el translateX(-50%) desaparece,
+     * mandando el botón fuera de pantalla.
+     *
+     * Solución: usamos margin-left: -50% del ancho del botón en su lugar,
+     * pero la forma más limpia y compatible es mantener el translateX
+     * y NO animar y/x con GSAP sobre este elemento (ya corregido en script.js).
+     * El CSS queda igual, GSAP solo anima autoAlpha sobre él.
+     */
     transform: translateX(-50%);
     background-color: var(--orange);
     color: var(--white);
@@ -133,11 +152,16 @@ body {
     font-weight: 900;
     letter-spacing: 1px;
     z-index: 20;
-    transition: all 0.3s ease;
     border: none;
+
+    /* FIX: separamos las propiedades del transition para que GSAP
+     * pueda animar opacity/visibility sin conflicto */
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .bottom-sub-btn:hover {
+    /* FIX: el hover mueve el botón con translateY pero también debe
+     * mantener el translateX(-50%). Lo escribimos explícitamente. */
     transform: translateX(-50%) translateY(-5px);
     box-shadow: 0 10px 20px rgba(59, 89, 255, 0.4);
 }
@@ -145,7 +169,7 @@ body {
 /* TEXTO DE LAS ESQUINAS */
 .header-corner {
     position: absolute;
-    bottom: 40px; /* Consistente con el botón */
+    bottom: 40px;
     max-width: 280px;
     font-size: 0.7rem;
     line-height: 1.4;
@@ -178,8 +202,14 @@ body {
     .bottom-sub-btn {
         position: relative;
         bottom: 0;
+        /* En móvil ya no es absolute, quitamos el translateX */
+        transform: none;
         margin: 40px auto;
         display: inline-block;
+    }
+    /* FIX: en móvil el hover tampoco necesita mantener translateX */
+    .bottom-sub-btn:hover {
+        transform: translateY(-5px);
     }
     .header-corner {
         position: relative;
@@ -191,10 +221,11 @@ body {
         max-width: 90%;
     }
 }
-/*SOBRE MÍ */
+
+/* SOBRE MÍ */
 .about-section {
     background-color: var(--blue);
-    padding: 120px 40px; /* Más espacio para que respire */
+    padding: 120px 40px;
     display: flex;
     justify-content: center;
 }
@@ -204,30 +235,30 @@ body {
     width: 100%;
     color: white;
     display: grid;
-    /* La columna derecha ahora es un poco más ancha para el párrafo */
     grid-template-columns: 1.5fr 1fr; 
     gap: 20px;
-    /* Alineamos los elementos al fondo para que el párrafo baje */
     align-items: end; 
 }
 
 .big-title {
-    /* Cambiamos a Sans-Serif para el look de la imagen */
+    color: white;
     font-family: 'Inter', sans-serif; 
     font-size: clamp(6rem, 18vw, 15rem);
-    line-height: 0.75; /* Interlineado muy cerrado */
-    letter-spacing: -0.05em; /* Letras muy juntas */
+    font-weight: 900;
+    line-height: 0.75;
+    letter-spacing: -0.07em;
+    text-transform: lowercase;
     margin: 0;
-    font-weight: 800;
-    text-transform: lowercase; /* Todo en minúsculas como en la imagen */
-    color: white;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .about-right {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-bottom: 2rem; /* Ajuste para que no quede pegado al piso */
+    padding-bottom: 2rem;
 }
 
 .sub-title {
@@ -245,26 +276,24 @@ body {
     line-height: 1.4;
     margin: 0;
     max-width: 450px;
-    opacity: 0.9; /* Un toque más suave para el cuerpo de texto */
+    opacity: 0.9;
 }
 
-/* Responsivo para móviles */
 @media (max-width: 768px) {
     .about-flex {
         grid-template-columns: 1fr;
         align-items: start;
     }
-    
     .about-right {
         margin-top: 40px;
     }
 }
-/*ESTADÍSTICAS */
+
+/* ESTADÍSTICAS */
 .stats-section {
-    background: var(--blue); /* Fondo azul de tu marca */
+    background: var(--blue);
     padding: 100px 5%;
     overflow: hidden;
-    /* Eliminamos el borde gris para que se vea más limpio */
     border-bottom: none; 
 }
 
@@ -277,7 +306,6 @@ body {
     align-items: center;
 }
 
-/* BLOQUE DE NUMEROS */
 .stats-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -293,7 +321,7 @@ body {
     font-family: 'Fraunces', serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
-    color: white; /* Números en blanco */
+    color: white;
     line-height: 1;
     letter-spacing: -2px;
 }
@@ -303,12 +331,10 @@ body {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    /* Un blanco ligeramente transparente para jerarquía */
     color: rgba(255, 255, 255, 0.8); 
     font-weight: 700;
 }
 
-/* TITULO GIGANTE */
 .stats-title-container {
     text-align: right;
 }
@@ -319,23 +345,20 @@ body {
     font-weight: 900;
     line-height: 0.8;
     letter-spacing: -0.05em;
-    color: white; /* Título en blanco */
+    color: white;
     text-transform: lowercase;
     margin: 0;
 }
 
-/* Responsivo */
 @media (max-width: 992px) {
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
     .stats-title-container {
         grid-row: 1;
         text-align: left;
         margin-bottom: 50px;
     }
-
     .stats-big-title {
         font-size: clamp(4rem, 15vw, 8rem);
     }
@@ -346,7 +369,8 @@ body {
         grid-template-columns: 1fr;
     }
 }
-/* 4. VIDEOS DESTACADOS*/
+
+/* VIDEOS DESTACADOS */
 .videos-section {
     padding: 100px 20px;
     background: var(--white);
@@ -402,7 +426,7 @@ body {
 }
 
 .video-thumbnail {
-    display: none;  /* Fuera thumbnails */
+    display: none;
 }
 
 .video-link {
@@ -443,7 +467,7 @@ body {
     border-bottom-color: var(--blue);
     color: var(--blue);
 }
-/* Ajuste para las miniaturas automáticas */
+
 .video-thumbnail img {
     width: 100%;
     height: 100%;
@@ -456,10 +480,10 @@ body {
     transform: scale(1.05);
 }
 
-/* SETUP - CASCADA*/
+/* SETUP - CASCADA */
 .setup-pile-section {
     background-color: var(--blue);
-    min-height: 55vh; /* Ajustado para mejor proporción */
+    min-height: 55vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -478,14 +502,14 @@ body {
 .pile-container {
     position: relative;
     width: 100%;
-    max-width: 1000px; /* Ajustado para que quepan bien las 6 píldoras */
-    height: 220px; /* Aumentado para la cascada */
+    max-width: 1000px;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Píldoras base */
+/* PILDORAS BASE */
 .pill-gear {
     position: absolute;
     padding: 22px 55px;
@@ -494,9 +518,11 @@ body {
         0 12px 35px rgba(0, 0, 0, 0.18),
         0 6px 18px rgba(0, 0, 0, 0.12);
     transform: translate(var(--x), var(--y)) rotate(var(--r));
-    transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     white-space: nowrap;
+    will-change: transform;
+    /* FIX: solo transition de box-shadow para que GSAP maneje transform */
+    transition: box-shadow 0.3s ease;
 }
 
 .pill-gear span {
@@ -507,44 +533,16 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Colores y z-index para efecto cascada CORRECTO */
-.layer-1 {
-    background: #FFE66D; /* Amarillo */
-    z-index: 1; /* Más atrás */
-}
+.layer-1 { background: #FFE66D; z-index: 1; }
+.layer-2 { background: #C9ADA7; z-index: 2; }
+.layer-3 { background: #A8DADC; z-index: 3; }
+.layer-4 { background: #FFAFCC; z-index: 4; }
+.layer-5 { background: #FF8E53; z-index: 5; }
+.layer-6 { background: #FFA07A; z-index: 6; }
 
-.layer-2 {
-    background: #C9ADA7; /* Beige/Rosa */
-    z-index: 2;
-}
-
-.layer-3 {
-    background: #A8DADC; /* Verde agua */
-    z-index: 3;
-}
-
-.layer-4 {
-    background: #FFAFCC; /* Rosa */
-    z-index: 4;
-}
-
-.layer-5 {
-    background: #FF8E53; /* Naranja */
-    z-index: 5;
-}
-
-.layer-6 {
-    background: #FFA07A; /* Salmón */
-    z-index: 6; /* Más adelante */
-}
-
-/* Hover effect mejorado */
 .pill-gear:hover {
     z-index: 100 !important;
-    transform: translate(var(--x), calc(var(--y) - 30px)) rotate(0deg) scale(1.1);
-    box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.3),
-        0 15px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 .pill-gear:hover span {
@@ -552,140 +550,99 @@ body {
     font-weight: 700;
 }
 
-/* Efecto sutil de "respiración" */
-@keyframes float-cascade {
-    0%, 100% {
-        transform: translate(var(--x), var(--y)) rotate(var(--r)) translateY(0px);
-    }
-    50% {
-        transform: translate(var(--x), var(--y)) rotate(var(--r)) translateY(-8px);
-    }
-}
+/* FIX: eliminado @keyframes float-cascade y animation-delay
+ * porque nunca se aplicaron (faltaba animation-name) y ahora
+ * GSAP maneja el efecto de flotación directamente. */
 
-.pill-gear {
-    animation: float-cascade 5s ease-in-out infinite;
-}
-
-/* Delays para que no se muevan todas al mismo tiempo */
-.layer-1 { animation-delay: 0s; }
-.layer-2 { animation-delay: 0.6s; }
-.layer-3 { animation-delay: 1.2s; }
-.layer-4 { animation-delay: 1.8s; }
-.layer-5 { animation-delay: 2.4s; }
-.layer-6 { animation-delay: 3s; }
-
-/* RESPONSIVE OPTIMIZADO*/
-
-/* Tablets grandes y laptops pequeñas */
+/* RESPONSIVE OPTIMIZADO */
 @media (max-width: 1024px) {
     .pile-container {
         max-width: 850px;
         height: 200px;
     }
-    
     .pill-gear {
         padding: 20px 50px;
     }
-    
     .pill-gear span {
         font-size: 1.5rem;
     }
-    
-    /* Ajustar posiciones para que quepan */
-    .layer-1 { --x: -160px !important; }
-    .layer-2 { --x: -75px !important; }
-    .layer-3 { --x: 0px !important; }
-    .layer-4 { --x: 75px !important; }
-    .layer-5 { --x: 145px !important; }
-    .layer-6 { --x: 215px !important; }
+    .layer-1 { --x: -160px; }
+    .layer-2 { --x: -75px; }
+    .layer-3 { --x: 0px; }
+    .layer-4 { --x: 75px; }
+    .layer-5 { --x: 145px; }
+    .layer-6 { --x: 215px; }
 }
 
-/* Tablets */
 @media (max-width: 768px) {
     .setup-pile-section {
         min-height: 50vh;
         padding: 70px 20px;
     }
-    
     .pile-title {
         margin-bottom: 50px;
     }
-    
     .pile-container {
         max-width: 650px;
         height: 180px;
         transform: scale(0.95);
     }
-    
     .pill-gear {
         padding: 18px 45px;
     }
-    
     .pill-gear span {
         font-size: 1.4rem;
     }
-    
-    /* Acercar más las píldoras */
-    .layer-1 { --x: -140px !important; }
-    .layer-2 { --x: -65px !important; }
-    .layer-3 { --x: 0px !important; }
-    .layer-4 { --x: 65px !important; }
-    .layer-5 { --x: 130px !important; }
-    .layer-6 { --x: 190px !important; }
+    .layer-1 { --x: -140px; }
+    .layer-2 { --x: -65px; }
+    .layer-3 { --x: 0px; }
+    .layer-4 { --x: 65px; }
+    .layer-5 { --x: 130px; }
+    .layer-6 { --x: 190px; }
 }
 
-/* Móviles */
 @media (max-width: 480px) {
     .setup-pile-section {
         min-height: 45vh;
         padding: 60px 15px;
     }
-    
     .pile-title {
         margin-bottom: 40px;
         font-size: 2.5rem;
     }
-    
     .pile-container {
         max-width: 100%;
         height: 160px;
         transform: scale(0.75);
     }
-    
     .pill-gear {
         padding: 16px 40px;
     }
-    
     .pill-gear span {
         font-size: 1.3rem;
     }
-    
-    /* Apilar más verticalmente en móvil */
-    .layer-1 { --x: -120px !important; --y: 40px !important; }
-    .layer-2 { --x: -55px !important; --y: 25px !important; }
-    .layer-3 { --x: 0px !important; --y: 10px !important; }
-    .layer-4 { --x: 55px !important; --y: -5px !important; }
-    .layer-5 { --x: 110px !important; --y: -15px !important; }
-    .layer-6 { --x: 160px !important; --y: -25px !important; }
+    .layer-1 { --x: -120px; --y: 40px; }
+    .layer-2 { --x: -55px;  --y: 25px; }
+    .layer-3 { --x: 0px;    --y: 10px; }
+    .layer-4 { --x: 55px;   --y: -5px; }
+    .layer-5 { --x: 110px;  --y: -15px; }
+    .layer-6 { --x: 160px;  --y: -25px; }
 }
 
-/* Móviles muy pequeños */
 @media (max-width: 380px) {
     .pile-container {
         transform: scale(0.65);
         height: 140px;
     }
-    
     .pill-gear {
         padding: 14px 35px;
     }
-    
     .pill-gear span {
         font-size: 1.2rem;
     }
 }
 
-/*6. FOOTER*/
+/* FOOTER */
 .massive-footer { 
     background: var(--blue); 
     color: white; 
@@ -701,7 +658,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* CONTACTO*/
+/* CONTACTO */
 .contact-section-minimal {
     background: var(--bg-cream);
     padding: 120px 5%;
@@ -716,7 +673,6 @@ body {
     align-items: start;
 }
 
-/* Título grande */
 .contact-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(4rem, 10vw, 8rem);
@@ -729,7 +685,6 @@ body {
     top: 100px;
 }
 
-/* FORMULARIO */
 .contact-intro {
     font-size: 1.1rem;
     line-height: 1.6;
@@ -783,7 +738,7 @@ body {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -820,13 +775,11 @@ body {
     opacity: 0.7;
 }
 
-/* Responsive */
 @media (max-width: 992px) {
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 50px;
     }
-    
     .contact-big-title {
         position: static;
         margin-bottom: 30px;
@@ -837,13 +790,12 @@ body {
     .contact-big-title {
         font-size: clamp(3rem, 12vw, 6rem);
     }
-    
     .contact-intro {
         font-size: 1rem;
     }
 }
-/*FOOTER*/
 
+/* FOOTER BOTTOM */
 .footer-bottom { 
     display: flex; 
     justify-content: space-between; 
@@ -882,7 +834,7 @@ body {
     margin-right: 5px; 
     font-size: 0.8rem; 
     display: inline-block;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
@@ -892,71 +844,30 @@ body {
     transform: translateY(-2px);
 }
 
-/*RESPONSIVE*/
+/* RESPONSIVE GENERAL */
 @media (max-width: 768px) {
     .navbar {
         padding: 0 20px;
     }
-
     .nav-links {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
     }
-
     .nav-links a {
         margin-left: 0;
         font-size: 0.8rem;
     }
-
-    .stats-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .stat-card {
-        padding: 30px 15px;
-    }
-
-    .videos-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .setup-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        padding: 0 20px;
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .contact-section {
-        padding: 0 20px;
-    }
-    
     .footer-bottom {
         flex-direction: column;
         gap: 30px;
     }
-    
     .footer-col {
         text-align: center;
     }
 }
 
 @media (max-width: 480px) {
-    .stats-container {
-        grid-template-columns: 1fr;
-    }
-
-    .setup-grid {
-        grid-template-columns: 1fr;
-    }
-
     .profile-img {
         width: 250px;
     }
