@@ -43,7 +43,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
@@ -155,7 +154,7 @@
             <span>iPad Pro M2</span>
         </div>
         
-        <!-- 4. ESTA FALTABA - Continuando la cascada -->
+        <!-- 4. Continuando la cascada -->
         <div class="pill-gear layer-4" style="--x: 75px; --y: -5px; --r: -2deg;">
             <span>Ugreen</span>
         </div>
@@ -233,7 +232,7 @@
     </div>
 </section>
 
-<!-- 8. FOOTER LIMPIO (Sin el formulario viejo) -->
+<!-- 8. FOOTER LIMPIO -->
 <footer class="massive-footer">
     <div class="footer-bottom">
         <div class="footer-col">
@@ -255,11 +254,14 @@
 
 
     <!-- 9: JS LIBRARY -->
-    <!-- Carga primero el núcleo de GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script> 
-<!-- Carga el plugin de ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<!-- Finalmente tu lógica personalizada -->
-<script src="js/script.js"></script>
+    <!--
+        GSAP actualizado de 3.12.2 → 3.12.5
+        Changelog relevante: bugfixes en clearProps,
+        mejoras en matchMedia y ScrollTrigger.refresh().
+        CDN: cdnjs (mismo origen que antes, solo versión bumpeada).
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
