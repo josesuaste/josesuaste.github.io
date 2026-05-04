@@ -6,10 +6,10 @@
     --bg-cream: #f4f1ea;
 }
 
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 html {
@@ -17,48 +17,47 @@ html {
     scroll-padding-top: 80px;
 }
 
-body { 
-    font-family: 'Inter', sans-serif; 
-    background-color: var(--white); 
-    color: var(--black); 
-    overflow-x: hidden; 
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
 }
 
 /* ===========================
    1. HEADER
    =========================== */
-.hero { 
-    position: relative; 
-    height: 100vh; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    text-align: center; 
-    overflow: hidden; 
-    padding-top: 30px; 
+.hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding-top: 30px;
 }
 
-.navbar { 
-    width: 100%; 
-    display: flex; 
-    justify-content: space-between; 
-    padding: 0 50px; 
-    z-index: 10; 
-    font-weight: 900; 
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 50px;
+    z-index: 10;
+    font-weight: 900;
 }
 
 .logo {
     font-size: 1.2rem;
     cursor: pointer;
-    /* FIX: GSAP maneja el scale con hover, quitamos transition de transform */
     transition: color 0.3s ease;
 }
 
-.nav-links a { 
-    text-decoration: none; 
-    color: var(--black); 
-    margin-left: 20px; 
-    font-size: 0.9rem; 
+.nav-links a {
+    text-decoration: none;
+    color: var(--black);
+    margin-left: 20px;
+    font-size: 0.9rem;
     font-weight: 600;
     transition: color 0.3s ease;
 }
@@ -71,76 +70,51 @@ body {
     z-index: 5;
 }
 
-.giant-title { 
-    font-family: 'Fraunces', serif; 
-    font-size: clamp(4rem, 15vw, 12rem); 
-    line-height: 0.8; 
-    letter-spacing: -4px; 
-    margin-top: 40px; 
+.giant-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(4rem, 15vw, 12rem);
+    line-height: 0.8;
+    letter-spacing: -4px;
+    margin-top: 40px;
 }
 
-.subtitle {
-    font-size: clamp(1rem, 2vw, 1.5rem);
-    font-weight: 300;
-    margin-top: 20px;
-    opacity: 0.8;
+.profile-wrapper {
+    position: relative;
+    z-index: 6;
+    margin-top: -40px;
 }
 
-.profile-wrapper { 
-    position: relative; 
-    z-index: 6; 
-    margin-top: -40px; 
-}
-
-.profile-img { 
-    width: 600px; 
+.profile-img {
+    width: 600px;
     max-width: 90vw;
-    filter: grayscale(100%); 
+    filter: grayscale(100%);
     border-radius: 50%;
-
-    /*
-     * FIX CRÍTICO #1: "transition: all" incluye opacity y transform,
-     * lo que crea un conflicto directo con las animaciones GSAP.
-     * Solo hacemos transition de filter (el efecto hover blanco/negro)
-     * y dejamos que GSAP sea el único dueño de opacity y transform.
-     */
+    /* GSAP es dueño de opacity y transform; solo hacemos transition de filter */
     transition: filter 0.4s ease;
 }
 
-.profile-img:hover { 
-    filter: grayscale(0%); 
-    /* FIX: quitamos el translateY y scale del hover CSS.
-     * Si los dejamos, al hacer hover CSS sobreescribe el transform
-     * que GSAP puso durante la animación de entrada y hay un flash.
-     * Si quieres el efecto hover en la imagen, ponlo en el JS con GSAP. */
+.profile-img:hover {
+    filter: grayscale(0%);
 }
 
-.blue-arc { 
-    position: absolute; 
-    bottom: -150px; 
-    width: 150%; 
-    height: 500px; 
-    background: var(--blue); 
-    border-radius: 50% 50% 0 0; 
-    z-index: 1; 
+.blue-arc {
+    position: absolute;
+    bottom: -150px;
+    width: 150%;
+    height: 500px;
+    background: var(--blue);
+    border-radius: 50% 50% 0 0;
+    z-index: 1;
 }
 
-/* BOTON SUSCRIBIRSE */
+/* BOTÓN SUSCRIBIRSE */
 .bottom-sub-btn {
     position: absolute;
     bottom: 40px;
     left: 50%;
-
     /*
-     * FIX CRÍTICO #2: El botón usa transform: translateX(-50%) para
-     * centrarse horizontalmente. Cuando GSAP anima "y" sobre este elemento,
-     * sobreescribe el transform completo y el translateX(-50%) desaparece,
-     * mandando el botón fuera de pantalla.
-     *
-     * Solución: usamos margin-left: -50% del ancho del botón en su lugar,
-     * pero la forma más limpia y compatible es mantener el translateX
-     * y NO animar y/x con GSAP sobre este elemento (ya corregido en script.js).
-     * El CSS queda igual, GSAP solo anima autoAlpha sobre él.
+     * FIX: translateX(-50%) centra el botón. GSAP NO anima x/y sobre
+     * este elemento (solo autoAlpha) para no sobreescribir este transform.
      */
     transform: translateX(-50%);
     background-color: var(--orange);
@@ -153,20 +127,15 @@ body {
     letter-spacing: 1px;
     z-index: 20;
     border: none;
-
-    /* FIX: separamos las propiedades del transition para que GSAP
-     * pueda animar opacity/visibility sin conflicto */
     transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
 .bottom-sub-btn:hover {
-    /* FIX: el hover mueve el botón con translateY pero también debe
-     * mantener el translateX(-50%). Lo escribimos explícitamente. */
     transform: translateX(-50%) translateY(-5px);
     box-shadow: 0 10px 20px rgba(59, 89, 255, 0.4);
 }
 
-/* TEXTO DE LAS ESQUINAS */
+/* ESQUINAS */
 .header-corner {
     position: absolute;
     bottom: 40px;
@@ -193,7 +162,6 @@ body {
     color: rgba(26, 26, 26, 0.7);
 }
 
-/* Responsive para mantener orden en móvil */
 @media (max-width: 992px) {
     .hero {
         height: auto;
@@ -202,12 +170,10 @@ body {
     .bottom-sub-btn {
         position: relative;
         bottom: 0;
-        /* En móvil ya no es absolute, quitamos el translateX */
         transform: none;
         margin: 40px auto;
         display: inline-block;
     }
-    /* FIX: en móvil el hover tampoco necesita mantener translateX */
     .bottom-sub-btn:hover {
         transform: translateY(-5px);
     }
@@ -222,7 +188,10 @@ body {
     }
 }
 
-/* SOBRE MÍ */
+
+/* ===========================
+   SOBRE MÍ
+   =========================== */
 .about-section {
     background-color: var(--blue);
     padding: 120px 40px;
@@ -235,14 +204,14 @@ body {
     width: 100%;
     color: white;
     display: grid;
-    grid-template-columns: 1.5fr 1fr; 
+    grid-template-columns: 1.5fr 1fr;
     gap: 20px;
-    align-items: end; 
+    align-items: end;
 }
 
 .big-title {
     color: white;
-    font-family: 'Inter', sans-serif; 
+    font-family: 'Inter', sans-serif;
     font-size: clamp(6rem, 18vw, 15rem);
     font-weight: 900;
     line-height: 0.75;
@@ -289,12 +258,14 @@ body {
     }
 }
 
-/* ESTADÍSTICAS */
+
+/* ===========================
+   ESTADÍSTICAS
+   =========================== */
 .stats-section {
     background: var(--blue);
     padding: 100px 5%;
     overflow: hidden;
-    border-bottom: none; 
 }
 
 .stats-grid {
@@ -331,7 +302,7 @@ body {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: rgba(255, 255, 255, 0.8); 
+    color: rgba(255, 255, 255, 0.8);
     font-weight: 700;
 }
 
@@ -351,187 +322,171 @@ body {
 }
 
 @media (max-width: 992px) {
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    .stats-title-container {
-        grid-row: 1;
-        text-align: left;
-        margin-bottom: 50px;
-    }
-    .stats-big-title {
-        font-size: clamp(4rem, 15vw, 8rem);
-    }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stats-title-container { grid-row: 1; text-align: left; margin-bottom: 50px; }
+    .stats-big-title { font-size: clamp(4rem, 15vw, 8rem); }
 }
 
 @media (max-width: 480px) {
-    .stats-content {
-        grid-template-columns: 1fr;
-    }
+    .stats-content { grid-template-columns: 1fr; }
 }
 
-/* SETUP - CASCADA */
-.setup-pile-section {
+
+/* ===========================
+   5. SET UP — Parallax figuras
+   ===========================
+   
+   .setup-section tiene height: 200vh para que el usuario tenga
+   recorrido de scroll suficiente y el efecto de parallax sea visible.
+   
+   .setup-sticky usa position: sticky + top: 0 + height: 100vh para
+   que el contenido quede "pegado" al viewport mientras se hace scroll
+   dentro de la sección. Esta es la técnica que usa el ejemplo de
+   GreenSock con ScrollSmoother, pero sin necesitar ese plugin.
+   
+   Cada .setup-shape tiene will-change: transform porque GSAP va a
+   animar su propiedad y en cada frame del scroll.
+*/
+.setup-section {
     background-color: var(--blue);
-    min-height: 55vh;
+    /* 200vh = espacio de scroll para que el parallax se vea completo */
+    height: 200vh;
+    position: relative;
+}
+
+.setup-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 20px;
     overflow: hidden;
-    position: relative;
+    padding: 60px 5%;
 }
 
-.pile-title {
-    color: white;
-    margin-bottom: 70px;
+/* Título y subtítulo del setup */
+.setup-header {
     text-align: center;
+    margin-bottom: 60px;
 }
 
-.pile-container {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    height: 220px;
+.setup-big-title {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--white);
+    text-transform: lowercase;
+    margin: 0 0 16px 0;
+}
+
+.setup-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.8rem, 1.2vw, 1rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin: 0;
+}
+
+/* Fila de figuras */
+.setup-shapes-row {
     display: flex;
-    align-items: center;
+    align-items: flex-end;      /* base de figuras alineada abajo */
     justify-content: center;
+    gap: clamp(16px, 3vw, 48px);
+    width: 100%;
+    max-width: 1200px;
 }
 
-/* PILDORAS BASE */
-.pill-gear {
-    position: absolute;
-    padding: 22px 55px;
-    border-radius: 100px;
-    box-shadow: 
-        0 12px 35px rgba(0, 0, 0, 0.18),
-        0 6px 18px rgba(0, 0, 0, 0.12);
-    transform: translate(var(--x), var(--y)) rotate(var(--r));
-    cursor: pointer;
-    white-space: nowrap;
+/* Wrapper individual — GSAP anima el y de este elemento */
+.setup-shape {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    flex: 0 0 auto;
+    /*
+     * will-change: transform → promueve el layer para el parallax.
+     * Solo se aplica a los elementos que realmente animan.
+     */
     will-change: transform;
-    /* FIX: solo transition de box-shadow para que GSAP maneje transform */
-    transition: box-shadow 0.3s ease;
+    user-select: none;
 }
 
-.pill-gear span {
+/* La imagen/figura en sí */
+.setup-shape img {
+    /*
+     * Tamaño grande, similar a las figuras naranjas de la referencia.
+     * clamp escala según el viewport manteniendo proporciones.
+     */
+    width: clamp(120px, 16vw, 220px);
+    height: clamp(120px, 16vw, 220px);
+    object-fit: contain;
+    display: block;
+    /* GSAP es dueño de transform; CSS solo hace transition del filtro */
+    transition: filter 0.35s ease;
+    pointer-events: none;
+}
+
+.setup-shape:hover img {
+    filter: brightness(1.1) saturate(1.2);
+}
+
+/* Label con el nombre del equipo */
+.shape-label {
     font-family: 'Fraunces', serif;
-    font-size: 1.6rem;
+    font-size: clamp(0.7rem, 1vw, 0.95rem);
     font-weight: 500;
-    color: var(--black);
-    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    /*
+     * Empieza invisible; GSAP lo revela en el onComplete
+     * de la animación de entrada de las figuras.
+     */
+    opacity: 0;
 }
 
-.layer-1 { background: #FFE66D; z-index: 1; }
-.layer-2 { background: #C9ADA7; z-index: 2; }
-.layer-3 { background: #A8DADC; z-index: 3; }
-.layer-4 { background: #FFAFCC; z-index: 4; }
-.layer-5 { background: #FF8E53; z-index: 5; }
-.layer-6 { background: #FFA07A; z-index: 6; }
-
-.pill-gear:hover {
-    z-index: 100 !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-
-.pill-gear:hover span {
-    color: var(--blue);
-    font-weight: 700;
-}
-
-/* FIX: eliminado @keyframes float-cascade y animation-delay
- * porque nunca se aplicaron (faltaba animation-name) y ahora
- * GSAP maneja el efecto de flotación directamente. */
-
-/* RESPONSIVE OPTIMIZADO */
-@media (max-width: 1024px) {
-    .pile-container {
-        max-width: 850px;
-        height: 200px;
-    }
-    .pill-gear {
-        padding: 20px 50px;
-    }
-    .pill-gear span {
-        font-size: 1.5rem;
-    }
-    .layer-1 { --x: -160px; }
-    .layer-2 { --x: -75px; }
-    .layer-3 { --x: 0px; }
-    .layer-4 { --x: 75px; }
-    .layer-5 { --x: 145px; }
-    .layer-6 { --x: 215px; }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    .setup-pile-section {
-        min-height: 50vh;
-        padding: 70px 20px;
+    .setup-section {
+        /* En móvil reducimos el recorrido de scroll */
+        height: 180vh;
     }
-    .pile-title {
-        margin-bottom: 50px;
+    .setup-shapes-row {
+        flex-wrap: wrap;
+        gap: 24px;
+        justify-content: center;
     }
-    .pile-container {
-        max-width: 650px;
-        height: 180px;
-        transform: scale(0.95);
+    .setup-shape {
+        flex: 0 0 calc(33% - 16px);
     }
-    .pill-gear {
-        padding: 18px 45px;
+    .setup-shape img {
+        width: clamp(80px, 20vw, 140px);
+        height: clamp(80px, 20vw, 140px);
     }
-    .pill-gear span {
-        font-size: 1.4rem;
-    }
-    .layer-1 { --x: -140px; }
-    .layer-2 { --x: -65px; }
-    .layer-3 { --x: 0px; }
-    .layer-4 { --x: 65px; }
-    .layer-5 { --x: 130px; }
-    .layer-6 { --x: 190px; }
 }
 
 @media (max-width: 480px) {
-    .setup-pile-section {
-        min-height: 45vh;
-        padding: 60px 15px;
+    .setup-section { height: 160vh; }
+    .setup-header { margin-bottom: 40px; }
+    .setup-shape { flex: 0 0 calc(45% - 12px); }
+    .setup-shape img {
+        width: clamp(70px, 22vw, 110px);
+        height: clamp(70px, 22vw, 110px);
     }
-    .pile-title {
-        margin-bottom: 40px;
-        font-size: 2.5rem;
-    }
-    .pile-container {
-        max-width: 100%;
-        height: 160px;
-        transform: scale(0.75);
-    }
-    .pill-gear {
-        padding: 16px 40px;
-    }
-    .pill-gear span {
-        font-size: 1.3rem;
-    }
-    .layer-1 { --x: -120px; --y: 40px; }
-    .layer-2 { --x: -55px;  --y: 25px; }
-    .layer-3 { --x: 0px;    --y: 10px; }
-    .layer-4 { --x: 55px;   --y: -5px; }
-    .layer-5 { --x: 110px;  --y: -15px; }
-    .layer-6 { --x: 160px;  --y: -25px; }
 }
 
-@media (max-width: 380px) {
-    .pile-container {
-        transform: scale(0.65);
-        height: 140px;
-    }
-    .pill-gear {
-        padding: 14px 35px;
-    }
-    .pill-gear span {
-        font-size: 1.2rem;
-    }
-}
-/* VIDEOS DESTACADOS */
+
+/* ===========================
+   VIDEOS DESTACADOS
+   =========================== */
 .videos-section {
     padding: 100px 20px;
     background: var(--blue);
@@ -564,9 +519,7 @@ body {
     white-space: nowrap;
 }
 
-.videos-grid::-webkit-scrollbar {
-    display: none;
-}
+.videos-grid::-webkit-scrollbar { display: none; }
 
 .video-card {
     flex: 0 0 auto;
@@ -583,18 +536,9 @@ body {
     transition: transform 0.3s ease;
 }
 
-.video-card:hover {
-    transform: translateY(-4px);
-}
+.video-card:hover { transform: translateY(-4px); }
 
-.video-thumbnail {
-    display: none;
-}
-
-.video-link {
-    text-decoration: none;
-    color: var(--white);
-}
+.video-link { text-decoration: none; color: var(--white); }
 
 .video-info h3 {
     font-family: 'Inter', sans-serif;
@@ -630,35 +574,10 @@ body {
     color: var(--blue);
 }
 
-.video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
 
-.video-card:hover .video-thumbnail img {
-    transform: scale(1.05);
-}
-
-/* FOOTER */
-.massive-footer { 
-    background: var(--blue); 
-    color: white; 
-    padding: 80px 20px 60px; 
-    text-align: center; 
-}
-
-.footer-marquee {
-    font-weight: 700;
-    letter-spacing: 2px;
-    margin-bottom: 60px;
-    opacity: 0.8;
-    font-size: 0.9rem;
-}
-
-/* CONTACTO */
+/* ===========================
+   CONTACTO
+   =========================== */
 .contact-section-minimal {
     background: var(--blue);
     padding: 120px 5%;
@@ -713,20 +632,12 @@ body {
 }
 
 .form-field input::placeholder,
-.form-field textarea::placeholder {
-    color: rgb(255, 255, 255);
-}
+.form-field textarea::placeholder { color: rgb(255, 255, 255); }
 
 .form-field input:focus,
-.form-field textarea:focus {
-    outline: none;
-    border-bottom-color: var(--white);
-}
+.form-field textarea:focus { outline: none; border-bottom-color: var(--white); }
 
-.form-field textarea {
-    resize: vertical;
-    min-height: 100px;
-}
+.form-field textarea { resize: vertical; min-height: 100px; }
 
 .minimal-submit {
     align-self: flex-start;
@@ -750,19 +661,10 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.minimal-submit span {
-    transition: transform 0.3s ease;
-}
+.minimal-submit span { transition: transform 0.3s ease; }
+.minimal-submit:hover span { transform: translateX(5px); }
 
-.minimal-submit:hover span {
-    transform: translateX(5px);
-}
-
-.contact-footer {
-    margin-top: 40px;
-    font-size: 0.9rem;
-    color: rgb(255, 255, 255);
-}
+.contact-footer { margin-top: 40px; font-size: 0.9rem; color: rgb(255, 255, 255); }
 
 .contact-footer a {
     color: var(--white);
@@ -771,39 +673,37 @@ body {
     transition: opacity 0.3s ease;
 }
 
-.contact-footer a:hover {
-    opacity: 0.7;
-}
+.contact-footer a:hover { opacity: 0.7; }
 
 @media (max-width: 992px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 50px;
-    }
-    .contact-big-title {
-        position: static;
-        margin-bottom: 30px;
-    }
+    .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+    .contact-big-title { position: static; margin-bottom: 30px; }
 }
 
 @media (max-width: 768px) {
-    .contact-big-title {
-        font-size: clamp(3rem, 12vw, 6rem);
-    }
-    .contact-intro {
-        font-size: 1rem;
-    }
+    .contact-big-title { font-size: clamp(3rem, 12vw, 6rem); }
+    .contact-intro { font-size: 1rem; }
 }
 
-/* FOOTER BOTTOM */
-.footer-bottom { 
-    display: flex; 
-    justify-content: space-between; 
-    max-width: 1200px; 
-    margin: 0 auto; 
-    text-align: left; 
-    border-top: 1px solid rgb(255, 255, 255); 
-    padding-top: 30px; 
+
+/* ===========================
+   FOOTER
+   =========================== */
+.massive-footer {
+    background: var(--blue);
+    color: white;
+    padding: 80px 20px 60px;
+    text-align: center;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: left;
+    border-top: 1px solid rgb(255, 255, 255);
+    padding-top: 30px;
     gap: 40px;
 }
 
@@ -816,23 +716,16 @@ body {
 }
 
 .footer-col p,
-.footer-col a {
-    color: white;
-    text-decoration: none;
-    opacity: 0.9;
-}
+.footer-col a { color: white; text-decoration: none; opacity: 0.9; }
 
-.footer-col a:hover {
-    opacity: 1;
-    text-decoration: underline;
-}
+.footer-col a:hover { opacity: 1; text-decoration: underline; }
 
-.social-pills span { 
-    border: 1px solid white; 
-    padding: 5px 12px; 
-    border-radius: 50px; 
-    margin-right: 5px; 
-    font-size: 0.8rem; 
+.social-pills span {
+    border: 1px solid white;
+    padding: 5px 12px;
+    border-radius: 50px;
+    margin-right: 5px;
+    font-size: 0.8rem;
     display: inline-block;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
@@ -844,31 +737,18 @@ body {
     transform: translateY(-2px);
 }
 
-/* RESPONSIVE GENERAL */
+
+/* ===========================
+   RESPONSIVE GENERAL
+   =========================== */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 0 20px;
-    }
-    .nav-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .nav-links a {
-        margin-left: 0;
-        font-size: 0.8rem;
-    }
-    .footer-bottom {
-        flex-direction: column;
-        gap: 30px;
-    }
-    .footer-col {
-        text-align: center;
-    }
+    .navbar { padding: 0 20px; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .nav-links a { margin-left: 0; font-size: 0.8rem; }
+    .footer-bottom { flex-direction: column; gap: 30px; }
+    .footer-col { text-align: center; }
 }
 
 @media (max-width: 480px) {
-    .profile-img {
-        width: 250px;
-    }
+    .profile-img { width: 250px; }
 }

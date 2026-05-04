@@ -133,43 +133,60 @@
 </section>
 
 <!-- 5. SET UP -->
-    <section class="setup-pile-section" id="setup">
-    <h2 class="section-title pile-title">Mi Setup</h2>
-    
-    <div class="pile-container">
-        <!-- Cascada: de izquierda-abajo a derecha-arriba -->
-        
-        <!-- 1. Izquierda más baja -->
-        <div class="pill-gear layer-1" style="--x: -160px; --y: 25px; --r: -4deg;">
-            <span>Mac mini M4</span>
+    <!-- 5. SET UP — Parallax con data-speed por figura
+         ─────────────────────────────────────────────────────
+         Estructura idéntica al ejemplo de GreenSock:
+           - .setup-section tiene height: 200vh para dar recorrido
+             de scroll dentro de la sección.
+           - .setup-sticky se ancla al viewport con position: sticky
+             y muestra el contenido mientras ocurre el scroll.
+           - Cada .setup-shape tiene data-speed que controla el
+             parallax en script.js.
+
+         Rutas de imágenes → images/setup/shape-1.png ... shape-5.png
+         Cambia los nombres a los de tus archivos SVG/PNG/WebP reales.
+
+         data-speed:
+           clamp(1.25) → más rápido que el scroll (adelante)
+           0.8         → más lento (atrás, parece lejano)
+           1           → neutral, sin parallax
+           1.2         → ligeramente adelante
+           clamp(0.9)  → casi fijo, ligeramente anclado
+    -->
+           
+    <section class="setup-section" id="setup">
+        <div class="setup-sticky">
+            <div class="setup-header">
+                <h2 class="setup-big-title">mi<br>setup.</h2>
+            </div>
+            <div class="setup-shapes-row">
+                <div class="setup-shape" data-speed="clamp(1.25)">
+                    <img src="images/svg/circulo.svg" alt="Mac mini M4" draggable="false">
+                    <span class="shape-label">Mac mini M4</span>
+                </div>
+                <div class="setup-shape" data-speed="0.8">
+                    <img src="images/svg/flower.svg" alt="Logitech K380s" draggable="false">
+                    <span class="shape-label">Logitech K380s</span>
+                </div>
+                <div class="setup-shape" data-speed="1">
+                    <img src="images/svg/diamante.svg" alt="iPad Pro M2" draggable="false">
+                    <span class="shape-label">iPad Pro M2</span>
+                </div>
+                <div class="setup-shape" data-speed="1.2">
+                    <img src="images/svg/pill.svg" alt="MX Vertical" draggable="false">
+                    <span class="shape-label">MX Vertical</span>
+                </div>
+                <div class="setup-shape" data-speed="clamp(0.9)">
+                    <img src="images/svg/arco.svg" alt="DJI Mic Mini" draggable="false">
+                    <span class="shape-label">DJI Mic Mini</span>
+                </div>
+                <div class="setup-shape" data-speed="clamp(0.9)">
+                    <img src="images/svg/sun.svg" alt="DJI Mic Mini" draggable="false">
+                    <span class="shape-label">Xiaomi light Bar</span>
+                </div>
+            </div>
         </div>
-        
-        <!-- 2. Subiendo y hacia la derecha -->
-        <div class="pill-gear layer-2" style="--x: -75px; --y: 15px; --r: -1deg;">
-            <span>Logitech K380s</span>
-        </div>
-        
-        <!-- 3. Centro -->
-        <div class="pill-gear layer-3" style="--x: 0px; --y: 5px; --r: 2deg;">
-            <span>iPad Pro M2</span>
-        </div>
-        
-        <!-- 4. Continuando la cascada -->
-        <div class="pill-gear layer-4" style="--x: 75px; --y: -5px; --r: -2deg;">
-            <span>Ugreen</span>
-        </div>
-        
-        <!-- 5. Subiendo más -->
-       <div class="pill-gear layer-5" style="--x: 150px; --y: -15px; --r: 4deg;">
-            <span>MX Vertical</span>
-        </div>
-        
-        <!-- 6. Derecha más alta -->
-        <div class="pill-gear layer-6" style="--x: 220px; --y: -25px; --r: -5deg;">
-            <span>DJI Mic Mini</span>
-        </div>
-    </div>
-</section>
+    </section>
 
     <!-- 6. VIDEOS DESTACADOS -->
     <section class="videos-section" id="videos">
