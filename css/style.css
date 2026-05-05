@@ -1,9 +1,16 @@
 :root {
-    --blue: #3b59ff;
+    --blue: #2a78f6;
     --orange: #ff7d61;
     --black: #1a1a1a;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
+}
+@font-face {
+  font-family: "Necto-Mono-Regular"; /* El nombre que tú elijas */
+  src: url("../fonts/NectoMono-Regular.woff2") format("woff2"),
+       url("../fonts/NectoMono-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
@@ -71,7 +78,7 @@ body {
 }
 
 .giant-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(4rem, 15vw, 12rem);
     line-height: 0.8;
     letter-spacing: -4px;
@@ -148,7 +155,7 @@ body {
     text-align: right;
     text-transform: uppercase;
     font-weight: 800;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid #2a78f6;
     color:#2a78f6;
 }
 
@@ -283,7 +290,7 @@ body {
 }
  
 .stat-number {
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
     color: #2a78f6;
@@ -400,7 +407,7 @@ body {
 }
  
 .shape-label {
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(0.7rem, 1vw, 0.95rem);
     font-weight: 500;
     color: #2a78f6;
@@ -438,7 +445,7 @@ body {
 .section-title {
     color: #2a78f6;
     text-align: center;
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(2.8rem, 7vw, 5rem);
     margin-bottom: 0.3rem;
     letter-spacing: -2px;
@@ -503,7 +510,7 @@ body {
 .view-all-btn {
     display: inline-block;
     margin-top: 40px;
-    border-bottom: 2px solid var(--white);
+    border-bottom: 2px solid #2a78f6;
     text-decoration: none;
     font-weight: 600;
     color: #2a78f6;
@@ -574,7 +581,7 @@ body {
 }
 
 .form-field input::placeholder,
-.form-field textarea::placeholder { color: rgb(255, 255, 255); }
+.form-field textarea::placeholder { color: #2a78f6; }
 
 .form-field input:focus,
 .form-field textarea:focus { outline: none; border-bottom-color: var(--white); }
@@ -584,8 +591,8 @@ body {
 .minimal-submit {
     align-self: flex-start;
     padding: 15px 40px;
-    background: var(--white);
-    color: var(--blue);
+    background: #2a78f6;
+    color: white;
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
@@ -611,7 +618,7 @@ body {
 .contact-footer a {
     color: var(--bg-cream);
     text-decoration: none;
-    border-bottom: 1px solid var(--white);
+    border-bottom: 1px solid #2a78f6;
     transition: opacity 0.3s ease;
 }
 
@@ -632,7 +639,7 @@ body {
    FOOTER
    =========================== */
 .massive-footer {
-    background: var(--blue);
+    background: var(--bg-cream);
     color: #2a78f6;
     padding: 80px 20px 60px;
     text-align: center;
@@ -644,7 +651,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     text-align: left;
-    border-top: 1px solid rgb(255, 255, 255);
+    border-top: 1px solid #2a78f6;
     padding-top: 30px;
     gap: 40px;
 }
@@ -658,12 +665,12 @@ body {
 }
 
 .footer-col p,
-.footer-col a { color: white; text-decoration: none; opacity: 0.9; }
+.footer-col a { color: #2a78f6; text-decoration: none; opacity: 0.9; }
 
 .footer-col a:hover { opacity: 1; text-decoration: underline; }
 
 .social-pills span {
-    border: 1px solid white;
+    border: 1px solid #2a78f6;
     padding: 5px 12px;
     border-radius: 50px;
     margin-right: 5px;
