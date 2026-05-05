@@ -109,91 +109,38 @@ mm.add(
 
         // ========================================================
         //  5. SETUP — Parallax diferencial con data-speed
-        //
-        //  Contexto:
-        //  El ejemplo de GreenSock usa ScrollSmoother (Club GSAP,
-        //  no disponible en CDN público). Aquí replicamos el mismo
-        //  efecto visual con ScrollTrigger scrub puro.
-        //
-        //  Cómo funciona:
-        //  La sección tiene height: 200vh en CSS. El wrapper interno
-        //  es sticky a 100vh, así que el usuario ve las figuras
-        //  mientras hace scroll 100vh adicionales.
-        //  En ese recorrido de 100vh, cada figura se desplaza en Y
-        //  una cantidad proporcional a su delta de velocidad:
-        //
-        //    delta  = speed - 1
-        //    yFinal = -(delta * RANGE)
-        //
-        //  speed > 1 → delta positivo → yFinal negativo → sube (adelante)
-        //  speed < 1 → delta negativo → yFinal positivo → baja (atrás)
-        //  speed = 1 → sin movimiento adicional
-        //
-        //  "clamp(x)" en data-speed: extraemos solo el número.
-        //  El clamping real lo da el RANGE conservador (120px) que
-        //  evita que las figuras salgan del contenedor sticky.
-        //
-        //  CRÍTICO: ease: "none" en scrub — sin esto la posición
-        //  y el progreso de scroll no son 1:1 y se siente raro.
-        // ========================================================
+        // ── 5a. Título y descripción: entran al hacer scroll ────────
+gsap.timeline({
+    defaults: { ease: "expo.out" },
+    scrollTrigger: { trigger: ".setup-section", start: "top 75%" }
+})
+.from(".setup-big-title",   { x: -80, autoAlpha: 0, duration: 1.2 })
+.from(".setup-description", { y: 30,  autoAlpha: 0, duration: 1   }, "<0.2");
 
-        const PARALLAX_RANGE = 120; // px máximo de desplazamiento vertical
+// ── 5b. Figuras: entrada en stagger desde el centro ─────────
+const shapes = gsap.utils.toArray(".setup-shape");
 
-        // ── 5a. Título y subtítulo: entran al hacer scroll ──────
-        gsap.timeline({
-            defaults: { ease: "expo.out" },
-            scrollTrigger: { trigger: ".setup-section", start: "top 80%" }
-        })
-        .from(".setup-big-title", { y: 50, autoAlpha: 0, duration: 1.2 })
-        .from(".setup-subtitle",  { y: 25, autoAlpha: 0, duration: 0.9 }, "<0.2");
-
-        // ── 5b. Figuras: entrada en stagger desde el centro ─────
-        const shapes = gsap.utils.toArray(".setup-shape");
-
-        gsap.from(shapes, {
-            scrollTrigger: {
-                trigger: ".setup-shapes-row",
-                start: "top 85%"
-            },
-            y: 70,
-            autoAlpha: 0,
-            scale: 0.75,
-            stagger: { each: 0.07, from: "center" }, // las del centro primero
-            duration: 1.1,
-            ease: "expo.out",
-            onComplete() {
-                // Los labels aparecen después de que las figuras aterrizan
-                gsap.to(".shape-label", {
-                    autoAlpha: 1,
-                    stagger: { each: 0.05, from: "center" },
-                    duration: 0.5,
-                    ease: "power2.out"
-                });
-            }
+gsap.from(shapes, {
+    scrollTrigger: {
+        trigger: ".setup-shapes-row",
+        start: "top 85%"
+    },
+    y: 60,
+    autoAlpha: 0,
+    scale: 0.8,
+    stagger: { each: 0.07, from: "center" },
+    duration: 1.0,
+    ease: "expo.out",
+    onComplete() {
+        // Labels aparecen después de que las figuras aterrizan
+        gsap.to(".shape-label", {
+            autoAlpha: 1,
+            stagger: { each: 0.05, from: "center" },
+            duration: 0.5,
+            ease: "power2.out"
         });
-
-        // ── 5c. Parallax por figura ──────────────────────────────
-        shapes.forEach((shape) => {
-            const raw   = shape.dataset.speed || "1";
-            // Extrae el número: "clamp(1.25)" → 1.25 | "0.8" → 0.8
-            const speed = parseFloat(raw.replace(/[^0-9.]/g, ""));
-            const delta = speed - 1;
-
-            // Speed = 1 exacto: sin tween, ahorramos recursos
-            if (Math.abs(delta) < 0.01) return;
-
-            gsap.to(shape, {
-                y: -(delta * PARALLAX_RANGE),
-                ease: "none", // CRÍTICO con scrub: directo 1:1 al scroll
-                scrollTrigger: {
-                    trigger: ".setup-section",
-                    start:   "top bottom",  // cuando la sección entra al viewport
-                    end:     "bottom top",  // cuando la sección sale
-                    scrub:   true           // ligado directamente al scroll
-                }
-            });
-        });
-
+    }
+});
 
         // ========================================================
         //  6. VIDEOS — Reveal en stagger

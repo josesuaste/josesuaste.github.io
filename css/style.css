@@ -187,8 +187,23 @@ body {
         max-width: 90%;
     }
 }
-
-
+/* clase que engloba sobremi, estadisticas, set up*/
+.section-grid {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+    align-items: end;
+}
+ 
+@media (max-width: 768px) {
+    .section-grid {
+        grid-template-columns: 1fr;
+        align-items: start;
+    }
+}
 /* ===========================
    SOBRE MÍ
    =========================== */
@@ -197,39 +212,43 @@ body {
     padding: 120px 40px;
     display: flex;
     justify-content: center;
+    color: white;
 }
-
+ 
+/* .about-flex ahora solo hereda .section-grid desde el HTML */
 .about-flex {
-    max-width: 1600px;
-    width: 100%;
-    color: white;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 20px;
-    align-items: end;
+    /* vacío — toda la lógica de grid está en .section-grid */
 }
-
+ 
 .big-title {
-    color: white;
     font-family: 'Inter', sans-serif;
     font-size: clamp(6rem, 18vw, 15rem);
     font-weight: 900;
     line-height: 0.75;
     letter-spacing: -0.07em;
+    color: var(--white);
     text-transform: lowercase;
     margin: 0;
-    position: relative;
-    z-index: 2;
     pointer-events: none;
 }
-
+ 
 .about-right {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-bottom: 2rem;
 }
-
+ 
+/* Clase utilitaria de descripción — compartida por about y setup */
+.section-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 450px;
+    margin: 0;
+}
+ 
 .sub-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
@@ -238,24 +257,10 @@ body {
     font-weight: 700;
     letter-spacing: -0.02em;
 }
-
-.about-description {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.4;
-    margin: 0;
-    max-width: 450px;
-    opacity: 0.9;
-}
-
+ 
 @media (max-width: 768px) {
-    .about-flex {
-        grid-template-columns: 1fr;
-        align-items: start;
-    }
-    .about-right {
-        margin-top: 40px;
-    }
+    .about-right { margin-top: 40px; }
+    .section-description { max-width: 100%; }
 }
 
 
@@ -267,27 +272,26 @@ body {
     padding: 100px 5%;
     overflow: hidden;
 }
-
+ 
+/* .stats-grid hereda .section-grid — solo sobreescribimos
+   lo que es diferente: proporciones y alineación */
 .stats-grid {
+    grid-template-columns: 1fr 1fr;  /* mitad y mitad, distinto a 1.5/1 */
+    align-items: center;             /* centrado vertical, no end */
     max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
 }
-
+ 
 .stats-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
-
+ 
 .stat-item {
     display: flex;
     flex-direction: column;
 }
-
+ 
 .stat-number {
     font-family: 'Fraunces', serif;
     font-size: clamp(3rem, 8vw, 6rem);
@@ -296,7 +300,7 @@ body {
     line-height: 1;
     letter-spacing: -2px;
 }
-
+ 
 .stat-label {
     font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
@@ -305,11 +309,11 @@ body {
     color: rgba(255, 255, 255, 0.8);
     font-weight: 700;
 }
-
+ 
 .stats-title-container {
     text-align: right;
 }
-
+ 
 .stats-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(5rem, 12vw, 12rem);
@@ -320,124 +324,91 @@ body {
     text-transform: lowercase;
     margin: 0;
 }
-
+ 
 @media (max-width: 992px) {
-    .stats-grid { grid-template-columns: 1fr; }
-    .stats-title-container { grid-row: 1; text-align: left; margin-bottom: 50px; }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stats-title-container {
+        grid-row: 1;
+        text-align: left;
+        margin-bottom: 50px;
+    }
     .stats-big-title { font-size: clamp(4rem, 15vw, 8rem); }
 }
-
+ 
 @media (max-width: 480px) {
     .stats-content { grid-template-columns: 1fr; }
 }
-
+ 
 
 /* ===========================
    5. SET UP — Parallax figuras
-   ===========================
+   ===========================*/
    
-   .setup-section tiene height: 200vh para que el usuario tenga
-   recorrido de scroll suficiente y el efecto de parallax sea visible.
-   
-   .setup-sticky usa position: sticky + top: 0 + height: 100vh para
-   que el contenido quede "pegado" al viewport mientras se hace scroll
-   dentro de la sección. Esta es la técnica que usa el ejemplo de
-   GreenSock con ScrollSmoother, pero sin necesitar ese plugin.
-   
-   Cada .setup-shape tiene will-change: transform porque GSAP va a
-   animar su propiedad y en cada frame del scroll.
-*/
 .setup-section {
     background-color: var(--blue);
-    /* 200vh = espacio de scroll para que el parallax se vea completo */
-    height: 200vh;
-    position: relative;
+    padding: 120px 5%;
 }
-
-.setup-sticky {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 60px 5%;
-}
-
-/* Título y subtítulo del setup */
+ 
+/* .setup-header hereda .section-grid — nada que sobreescribir,
+   usa exactamente las mismas proporciones 1.5fr / 1fr */
 .setup-header {
-    text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
 }
-
+ 
 .setup-big-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(4rem, 12vw, 10rem);
+    font-size: clamp(6rem, 18vw, 15rem);
     font-weight: 900;
-    line-height: 0.85;
-    letter-spacing: -0.05em;
+    line-height: 0.75;
+    letter-spacing: -0.07em;
     color: var(--white);
     text-transform: lowercase;
-    margin: 0 0 16px 0;
-}
-
-.setup-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(0.8rem, 1.2vw, 1rem);
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.65);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
     margin: 0;
 }
-
+ 
+.setup-header-right {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+}
+ 
 /* Fila de figuras */
 .setup-shapes-row {
+    max-width: 1600px;
+    margin: 0 auto;
     display: flex;
-    align-items: flex-end;      /* base de figuras alineada abajo */
-    justify-content: center;
-    gap: clamp(16px, 3vw, 48px);
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: clamp(12px, 2vw, 32px);
     width: 100%;
-    max-width: 1200px;
 }
-
-/* Wrapper individual — GSAP anima el y de este elemento */
+ 
 .setup-shape {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    flex: 0 0 auto;
-    /*
-     * will-change: transform → promueve el layer para el parallax.
-     * Solo se aplica a los elementos que realmente animan.
-     */
-    will-change: transform;
+    flex: 1 1 0;
     user-select: none;
 }
-
-/* La imagen/figura en sí */
+ 
 .setup-shape img {
-    /*
-     * Tamaño grande, similar a las figuras naranjas de la referencia.
-     * clamp escala según el viewport manteniendo proporciones.
-     */
-    width: clamp(120px, 16vw, 220px);
-    height: clamp(120px, 16vw, 220px);
+    width: 100%;
+    max-width: clamp(100px, 14vw, 200px);
+    height: clamp(100px, 14vw, 200px);
     object-fit: contain;
     display: block;
-    /* GSAP es dueño de transform; CSS solo hace transition del filtro */
-    transition: filter 0.35s ease;
+    transition: filter 0.35s ease, transform 0.35s ease;
     pointer-events: none;
 }
-
+ 
 .setup-shape:hover img {
-    filter: brightness(1.1) saturate(1.2);
+    filter: brightness(1.12) saturate(1.2);
+    transform: translateY(-6px);
 }
-
-/* Label con el nombre del equipo */
+ 
 .shape-label {
     font-family: 'Fraunces', serif;
     font-size: clamp(0.7rem, 1vw, 0.95rem);
@@ -446,44 +417,25 @@ body {
     text-align: center;
     white-space: nowrap;
     letter-spacing: 0.02em;
-    /*
-     * Empieza invisible; GSAP lo revela en el onComplete
-     * de la animación de entrada de las figuras.
-     */
     opacity: 0;
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-    .setup-section {
-        /* En móvil reducimos el recorrido de scroll */
-        height: 180vh;
-    }
-    .setup-shapes-row {
-        flex-wrap: wrap;
-        gap: 24px;
-        justify-content: center;
-    }
-    .setup-shape {
-        flex: 0 0 calc(33% - 16px);
-    }
-    .setup-shape img {
-        width: clamp(80px, 20vw, 140px);
-        height: clamp(80px, 20vw, 140px);
-    }
+ 
+@media (max-width: 992px) {
+    .setup-header { margin-bottom: 60px; }
+    .setup-header-right { margin-top: 30px; padding-bottom: 0; }
+    .setup-shapes-row { flex-wrap: wrap; justify-content: center; gap: 24px; }
+    .setup-shape { flex: 0 0 calc(33% - 16px); }
 }
-
+ 
 @media (max-width: 480px) {
-    .setup-section { height: 160vh; }
-    .setup-header { margin-bottom: 40px; }
+    .setup-section { padding: 80px 5%; }
     .setup-shape { flex: 0 0 calc(45% - 12px); }
     .setup-shape img {
-        width: clamp(70px, 22vw, 110px);
+        max-width: clamp(70px, 22vw, 110px);
         height: clamp(70px, 22vw, 110px);
     }
 }
-
-
+   
 /* ===========================
    VIDEOS DESTACADOS
    =========================== */
@@ -736,7 +688,6 @@ body {
     color: var(--blue);
     transform: translateY(-2px);
 }
-
 
 /* ===========================
    RESPONSIVE GENERAL
