@@ -79,7 +79,7 @@ mm.add(
         })
         .from(".big-title",         { x: -100, autoAlpha: 0, duration: 1.2 })
         .from(".sub-title",         { y: 40,   autoAlpha: 0, duration: 1   }, "<0.2")
-        .from(".about-description", { y: 30,   autoAlpha: 0, duration: 1   }, "<0.15");
+        .from(".about-section .section-description", { y: 30, autoAlpha: 0, duration: 1 }, "<0.15");
 
 
         // ========================================================
@@ -108,14 +108,13 @@ mm.add(
 
 
         // ========================================================
-        //  5. SETUP — Parallax diferencial con data-speed
-        // ── 5a. Título y descripción: entran al hacer scroll ────────
+        // ── 5 SEt ────────
 gsap.timeline({
     defaults: { ease: "expo.out" },
     scrollTrigger: { trigger: ".setup-section", start: "top 75%" }
 })
 .from(".setup-big-title",   { x: -80, autoAlpha: 0, duration: 1.2 })
-.from(".setup-description", { y: 30,  autoAlpha: 0, duration: 1   }, "<0.2");
+.from(".setup-section .section-description", { y: 30, autoAlpha: 0, duration: 1 }, "<0.2");
 
 // ── 5b. Figuras: entrada en stagger desde el centro ─────────
 const shapes = gsap.utils.toArray(".setup-shape");
