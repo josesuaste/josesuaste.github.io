@@ -663,11 +663,7 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
-.social-pills span:hover {
-    background: #2a78f6;
-    color: var(--bg-cream);
-    transform: translateY(-2px);
-} /* ← este cierre faltaba */
+
 /* ===========================
    RESPONSIVE GENERAL
    =========================== */
