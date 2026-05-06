@@ -521,8 +521,6 @@ body {
     border-bottom-color: var(--blue);
     color: var(--blue);
 }
-
-
 /* ===========================
    CONTACTO
    =========================== */
@@ -530,7 +528,6 @@ body {
     background: var(--bg-cream);
     padding: 120px 5%;
 }
-
 .contact-grid {
     max-width: 1400px;
     margin: 0 auto;
@@ -539,7 +536,6 @@ body {
     gap: 80px;
     align-items: start;
 }
-
 .contact-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(4rem, 10vw, 8rem);
@@ -551,7 +547,6 @@ body {
     position: sticky;
     top: 100px;
 }
-
 .contact-intro {
     font-size: 1.1rem;
     line-height: 1.6;
@@ -559,13 +554,11 @@ body {
     margin-bottom: 40px;
     max-width: 500px;
 }
-
 .minimal-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
-
 .form-field input,
 .form-field textarea {
     width: 100%;
@@ -578,7 +571,6 @@ body {
     color: var(--black);
     transition: border-color 0.3s ease;
 }
-
 .form-field input::placeholder,
 .form-field textarea::placeholder { color: #2a78f6; }
 
@@ -602,11 +594,9 @@ body {
     align-items: center;
     gap: 10px;
 }
-
 .minimal-submit:hover {
     transform: translateY(-2px);
 }
-
 .minimal-submit span { transition: transform 0.3s ease; }
 .minimal-submit:hover span { transform: translateX(5px); }
 
@@ -618,7 +608,6 @@ body {
     border-bottom: 1px solid #2a78f6;
     transition: opacity 0.3s ease;
 }
-
 .contact-footer a:hover { opacity: 0.7; }
 
 @media (max-width: 992px) {
@@ -630,7 +619,6 @@ body {
     .contact-big-title { font-size: clamp(3rem, 12vw, 6rem); }
     .contact-intro { font-size: 1rem; }
 }
-
 /* ===========================
    FOOTER
    =========================== */
@@ -675,8 +663,11 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
-
-
+.social-pills span:hover {
+    background: #2a78f6;
+    color: var(--bg-cream);
+    transform: translateY(-2px);
+} /* ← este cierre faltaba */
 /* ===========================
    RESPONSIVE GENERAL
    =========================== */

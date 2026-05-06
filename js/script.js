@@ -5,7 +5,7 @@
 // ============================================================
 
 // ── 0. REGISTRO Y DEFAULTS ──────────────────────────────────
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText, MorphSVGPlugin);
 
 gsap.defaults({
     ease: "expo.out",
