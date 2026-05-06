@@ -1,7 +1,6 @@
 :root {
     --blue: #2a78f6;
     --orange: #ff7d61;
-    --black: #1a1a1a;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
 }
@@ -605,18 +604,16 @@ body {
 }
 
 .minimal-submit:hover {
-    background: var(--black);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .minimal-submit span { transition: transform 0.3s ease; }
 .minimal-submit:hover span { transform: translateX(5px); }
 
-.contact-footer { margin-top: 40px; font-size: 0.9rem; color: rgb(255, 255, 255); }
+.contact-footer { margin-top: 40px; font-size: 0.9rem; color: #2a78f6; }
 
 .contact-footer a {
-    color: var(--bg-cream);
+    color: #2a78f6;
     text-decoration: none;
     border-bottom: 1px solid #2a78f6;
     transition: opacity 0.3s ease;
@@ -633,7 +630,6 @@ body {
     .contact-big-title { font-size: clamp(3rem, 12vw, 6rem); }
     .contact-intro { font-size: 1rem; }
 }
-
 
 /* ===========================
    FOOTER
@@ -680,11 +676,6 @@ body {
     cursor: pointer;
 }
 
-.social-pills span:hover {
-    background: white;
-    color: var(--blue);
-    transform: translateY(-2px);
-}
 
 /* ===========================
    RESPONSIVE GENERAL
