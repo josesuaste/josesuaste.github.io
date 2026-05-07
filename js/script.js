@@ -1,4 +1,41 @@
 // ============================================================
+//  CONTROL DE MENÚ MÓVIL
+// ============================================================
+const menuToggle = document.querySelector('.menu-toggle');
+const navLinksContainer = document.querySelector('.nav-links');
+const navLinksItems = document.querySelectorAll('.nav-links a');
+
+menuToggle.addEventListener('click', () => {
+    const isActive = navLinksContainer.classList.toggle('is-active');
+    menuToggle.classList.toggle('is-active');
+
+    if (isActive) {
+        // Animación de entrada de los enlaces
+        gsap.from(navLinksItems, {
+            x: 50,
+            autoAlpha: 0,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: "power2.out"
+        });
+        document.body.style.overflow = 'hidden'; // Bloquea scroll al estar abierto
+    } else {
+        document.body.style.overflow = 'auto';
+    }
+});
+
+// Cerrar menú al hacer click en un enlace
+navLinksItems.forEach(link => {
+    link.addEventListener('click', () => {
+        navLinksContainer.classList.remove('is-active');
+        menuToggle.classList.remove('is-active');
+        document.body.style.overflow = 'auto';
+    });
+});
+
+
+
+// ============================================================
 //  script.js — José Suaste | ERROR 404
 //  GSAP 3.12.5 + ScrollTrigger — Vanilla JS
 //  v3 — Setup: parallax diferencial con data-speed por figura

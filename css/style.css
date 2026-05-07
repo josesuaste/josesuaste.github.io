@@ -713,3 +713,66 @@ body {
 @media (max-width: 480px) {
     .profile-img { width: 250px; }
 }
+
+/* ===========================
+   MENÚ HAMBURGUESA (MÓVIL)
+   =========================== */
+
+/* Oculto por defecto en desktop */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--blue);
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Aparece solo en móvil */
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Escondido a la derecha */
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-cream);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: right 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 90;
+    }
+
+    .nav-links.is-active {
+        right: 0; /* Desliza hacia adentro */
+    }
+
+    .nav-links a {
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    /* Animación X de la hamburguesa */
+    .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+    .menu-toggle.is-active .bar:nth-child(2) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
