@@ -68,7 +68,7 @@
 
 <!-- 2. ELEMENTOS DE LAS ESQUINAS EN LA PARTE INFERIOR -->
     <div class="header-corner left">
-        <p>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and.</p>
+        <p>La tecnología debe ser una extensión de tu capacidad, no una carga para tu bolsillo, Compra menos, elige mejor y domina tus herramientas.</p>
     </div>
 
     <a href="https://www.youtube.com/@josesuaste-tech?sub_confirmation=1" target="_blank" class="bottom-sub-btn">
@@ -76,9 +76,9 @@
     </a>
 
     <div class="header-corner right">
-        <p>is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and.</p>
+        <p>Un espacio dedicado al análisis de herramientas digitales desde la utilidad real, No reviso gadgets, evaluo su impacto en tu flujo de trabajo.</p>
     </div>
-    </header>
+</header>
     
 
     <!-- 3. SOBRE MI -->
@@ -173,7 +173,7 @@
     <section class="videos-section" id="videos">
     <h2 class="section-title">Últimos Videos</h2>
     <p class="section-subtitle">
-        Contenido reciente sobre el ecosistema Apple
+        Contenido reciente sobre tecnologia
     </p>
     
     <div class="videos-grid">
@@ -189,12 +189,10 @@
 <!-- 7. FORMULARIO -->
 <section class="contact-section-minimal" id="contact">
     <div class="contact-grid">
-        <!-- Columna izquierda: Título grande -->
         <div class="contact-left">
             <h2 class="contact-big-title">colabora<br>conmigo.</h2>
         </div>
         
-        <!-- Columna derecha: Formulario limpio -->
         <div class="contact-right">
             <p class="contact-intro">
                 ¿Tienes un producto para review? ¿Una propuesta de colaboración? 
@@ -202,25 +200,33 @@
             </p>
             
             <form class="minimal-form" action="#" method="POST">
-                <div class="form-field">
-                    <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+                <div class="form-row">
+                    <div class="form-field">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="hola@correo.com" required>
+                    </div>
                 </div>
                 
                 <div class="form-field">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <label for="empresa">Empresa</label>
+                    <input type="text" id="empresa" name="empresa" placeholder="Marca u organización">
                 </div>
                 
                 <div class="form-field">
-                    <input type="text" id="empresa" name="empresa" placeholder="Empresa / Marca (opcional)">
+                    <label for="mensaje">Cuéntame sobre tu propuesta</label>
+                    <textarea id="mensaje" name="mensaje" rows="1" placeholder="Escribe aquí..." required></textarea>
                 </div>
                 
-                <div class="form-field">
-                    <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntame sobre tu propuesta..." required></textarea>
+                <div class="form-actions">
+                    <button type="submit" class="minimal-submit">
+                        <span class="btn-dot"></span>
+                        Enviar mensaje
+                    </button>
                 </div>
-                
-                <button type="submit" class="minimal-submit">
-                    Enviar mensaje <span>→</span>
-                </button>
             </form>
             
             <div class="contact-footer">

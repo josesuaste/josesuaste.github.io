@@ -126,7 +126,7 @@ body {
 
 .bottom-sub-btn:hover {
     transform: translateX(-50%) translateY(-5px);
-    box-shadow: 0 10px 20px rgba(218, 218, 218, 0.4);
+    box-shadow: 0 10px 20px rgba(245, 141, 50, 0.4);
 }
 
 /* ESQUINAS */
@@ -152,7 +152,6 @@ body {
     text-align: right;
     text-transform: uppercase;
     font-weight: 800;
-    border-top: 1px solid var(--blue);
     color: var(--blue);
 }
 
