@@ -126,7 +126,7 @@ body {
 
 .bottom-sub-btn:hover {
     transform: translateX(-50%) translateY(-5px);
-    box-shadow: 0 10px 20px rgba(42, 120, 246, 0.4);
+    box-shadow: 0 10px 20px rgba(218, 218, 218, 0.4);
 }
 
 /* ESQUINAS */
@@ -292,7 +292,7 @@ body {
 }
 
 .stat-number {
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
     color: var(--blue);
@@ -440,7 +440,7 @@ body {
 .section-title {
     color: var(--blue);
     text-align: center;
-    font-family: 'Fraunces', serif;
+    font-family: 'Inter', serif;
     font-size: clamp(2.8rem, 7vw, 5rem);
     margin-bottom: 0.3rem;
     letter-spacing: -2px;
