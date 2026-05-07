@@ -4,8 +4,9 @@
     --white: #ffffff;
     --bg-cream: #f4f1ea;
 }
+
 @font-face {
-  font-family: "Necto-Mono-Regular"; /* El nombre que tú elijas */
+  font-family: "Necto-Mono-Regular";
   src: url("../fonts/NectoMono-Regular.woff2") format("woff2"),
        url("../fonts/NectoMono-Regular.woff2") format("woff2");
   font-weight: normal;
@@ -26,7 +27,7 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-cream);
-    color: #2a78f6;
+    color: var(--blue);
     overflow-x: hidden;
 }
 
@@ -59,17 +60,18 @@ body {
     transition: color 0.3s ease;
 }
 
+/* FIX 1: var(--black) no existía en :root → cambiado a var(--blue) */
 .nav-links a {
     text-decoration: none;
-    color: var(--black);
+    color: var(--blue);
     margin-left: 20px;
     font-size: 0.9rem;
     font-weight: 600;
-    transition: color 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--blue);
+    opacity: 0.6;
 }
 
 .hero-content {
@@ -77,7 +79,7 @@ body {
 }
 
 .giant-title {
-    font-family: 'Inter', serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(4rem, 15vw, 12rem);
     line-height: 0.8;
     letter-spacing: -4px;
@@ -108,10 +110,6 @@ body {
     position: absolute;
     bottom: 40px;
     left: 50%;
-    /*
-     * FIX: translateX(-50%) centra el botón. GSAP NO anima x/y sobre
-     * este elemento (solo autoAlpha) para no sobreescribir este transform.
-     */
     transform: translateX(-50%);
     background-color: var(--orange);
     color: var(--white);
@@ -128,7 +126,7 @@ body {
 
 .bottom-sub-btn:hover {
     transform: translateX(-50%) translateY(-5px);
-    box-shadow: 0 10px 20px rgba(59, 89, 255, 0.4);
+    box-shadow: 0 10px 20px rgba(42, 120, 246, 0.4);
 }
 
 /* ESQUINAS */
@@ -154,8 +152,8 @@ body {
     text-align: right;
     text-transform: uppercase;
     font-weight: 800;
-    border-top: 1px solid #2a78f6;
-    color:#2a78f6;
+    border-top: 1px solid var(--blue);
+    color: var(--blue);
 }
 
 @media (max-width: 992px) {
@@ -183,7 +181,12 @@ body {
         max-width: 90%;
     }
 }
-/* clase que engloba sobremi, estadisticas, set up*/
+
+
+/* ===========================
+   CLASE COMPARTIDA — section-grid
+   Usada por: about, stats, setup
+   =========================== */
 .section-grid {
     max-width: 1600px;
     width: 100%;
@@ -193,13 +196,15 @@ body {
     gap: 20px;
     align-items: end;
 }
- 
+
 @media (max-width: 768px) {
     .section-grid {
         grid-template-columns: 1fr;
         align-items: start;
     }
 }
+
+
 /* ===========================
    SOBRE MÍ
    =========================== */
@@ -208,43 +213,42 @@ body {
     padding: 120px 40px;
     display: flex;
     justify-content: center;
-    color: #2a78f6; 
+    color: var(--blue);
 }
- 
-/* .about-flex ahora solo hereda .section-grid desde el HTML */
+
 .about-flex {
     /* vacío — toda la lógica de grid está en .section-grid */
 }
- 
+
 .big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(6rem, 18vw, 15rem);
     font-weight: 900;
     line-height: 0.75;
     letter-spacing: -0.07em;
-    color: #2a78f6;
+    color: var(--blue);
     text-transform: lowercase;
     margin: 0;
     pointer-events: none;
 }
- 
+
 .about-right {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-bottom: 2rem;
 }
- 
+
 /* Clase utilitaria de descripción — compartida por about y setup */
 .section-description {
     font-family: 'Inter', sans-serif;
     font-size: 1.1rem;
     line-height: 1.5;
-    color: #2a78f6;
+    color: var(--blue);
     max-width: 450px;
     margin: 0;
 }
- 
+
 .sub-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2.5rem);
@@ -252,8 +256,9 @@ body {
     margin: 0 0 10px 0;
     font-weight: 700;
     letter-spacing: -0.02em;
+    color: var(--blue);
 }
- 
+
 @media (max-width: 768px) {
     .about-right { margin-top: 40px; }
     .section-description { max-width: 100%; }
@@ -268,108 +273,98 @@ body {
     padding: 100px 5%;
     overflow: hidden;
 }
- 
-/* .stats-grid hereda .section-grid — solo sobreescribimos
-   lo que es diferente: proporciones y alineación */
+
 .stats-grid {
-    grid-template-columns: 1fr 1fr;  /* mitad y mitad, distinto a 1.5/1 */
-    align-items: center;             /* centrado vertical, no end */
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
     max-width: 1400px;
 }
- 
+
 .stats-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
- 
+
 .stat-item {
     display: flex;
     flex-direction: column;
 }
- 
+
 .stat-number {
-    font-family: 'Inter', serif;
+    font-family: 'Fraunces', serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
-    color: #2a78f6;
+    color: var(--blue);
     line-height: 1;
     letter-spacing: -2px;
 }
- 
+
 .stat-label {
     font-family: 'Inter', sans-serif;
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #2a78f6;
+    color: var(--blue);
     font-weight: 700;
+    opacity: 0.6;
 }
- 
+
 .stats-title-container {
     text-align: right;
 }
- 
+
 .stats-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(5rem, 12vw, 12rem);
     font-weight: 900;
     line-height: 0.8;
     letter-spacing: -0.05em;
-    color: #2a78f6;
+    color: var(--blue);
     text-transform: lowercase;
     margin: 0;
 }
- 
+
 @media (max-width: 992px) {
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    .stats-title-container {
-        grid-row: 1;
-        text-align: left;
-        margin-bottom: 50px;
-    }
+    .stats-grid { grid-template-columns: 1fr; }
+    .stats-title-container { grid-row: 1; text-align: left; margin-bottom: 50px; }
     .stats-big-title { font-size: clamp(4rem, 15vw, 8rem); }
 }
- 
+
 @media (max-width: 480px) {
     .stats-content { grid-template-columns: 1fr; }
 }
- 
+
 
 /* ===========================
-   5. SET UP — Parallax figuras
-   ===========================*/
-   
+   5. SET UP
+   =========================== */
 .setup-section {
     background-color: var(--bg-cream);
     padding: 120px 5%;
 }
- 
-/* .setup-header hereda .section-grid — nada que sobreescribir,
-   usa exactamente las mismas proporciones 1.5fr / 1fr */
+
 .setup-header {
     margin-bottom: 80px;
 }
- 
+
 .setup-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(6rem, 18vw, 15rem);
     font-weight: 900;
     line-height: 0.75;
     letter-spacing: -0.07em;
-    color: #2a78f6;
+    color: var(--blue);
     text-transform: lowercase;
     margin: 0;
 }
- 
+
 .setup-header-right {
     display: flex;
     align-items: flex-end;
     padding-bottom: 1rem;
 }
- 
+
 /* Fila de figuras */
 .setup-shapes-row {
     max-width: 1600px;
@@ -380,7 +375,7 @@ body {
     gap: clamp(12px, 2vw, 32px);
     width: 100%;
 }
- 
+
 .setup-shape {
     display: flex;
     flex-direction: column;
@@ -389,7 +384,7 @@ body {
     flex: 1 1 0;
     user-select: none;
 }
- 
+
 .setup-shape img {
     width: 100%;
     max-width: clamp(100px, 14vw, 200px);
@@ -399,30 +394,30 @@ body {
     transition: filter 0.35s ease, transform 0.35s ease;
     pointer-events: none;
 }
- 
+
 .setup-shape:hover img {
     filter: brightness(1.12) saturate(1.2);
     transform: translateY(-6px);
 }
- 
+
 .shape-label {
-    font-family: 'Inter', serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(0.7rem, 1vw, 0.95rem);
     font-weight: 500;
-    color: #2a78f6;
+    color: var(--blue);
     text-align: center;
     white-space: nowrap;
     letter-spacing: 0.02em;
-    opacity: 0;
+    opacity: 0; /* GSAP lo revela en onComplete */
 }
- 
+
 @media (max-width: 992px) {
     .setup-header { margin-bottom: 60px; }
     .setup-header-right { margin-top: 30px; padding-bottom: 0; }
     .setup-shapes-row { flex-wrap: wrap; justify-content: center; gap: 24px; }
     .setup-shape { flex: 0 0 calc(33% - 16px); }
 }
- 
+
 @media (max-width: 480px) {
     .setup-section { padding: 80px 5%; }
     .setup-shape { flex: 0 0 calc(45% - 12px); }
@@ -431,7 +426,8 @@ body {
         height: clamp(70px, 22vw, 110px);
     }
 }
-   
+
+
 /* ===========================
    VIDEOS DESTACADOS
    =========================== */
@@ -442,9 +438,9 @@ body {
 }
 
 .section-title {
-    color: #2a78f6;
+    color: var(--blue);
     text-align: center;
-    font-family: 'Inter', serif;
+    font-family: 'Fraunces', serif;
     font-size: clamp(2.8rem, 7vw, 5rem);
     margin-bottom: 0.3rem;
     letter-spacing: -2px;
@@ -452,7 +448,8 @@ body {
 
 .section-subtitle {
     text-align: center;
-    color: #2a78f6;
+    color: var(--blue);
+    opacity: 0.7;
     margin-bottom: 60px;
 }
 
@@ -486,7 +483,7 @@ body {
 
 .video-card:hover { transform: translateY(-4px); }
 
-.video-link { text-decoration: none; color: #2a78f6; }
+.video-link { text-decoration: none; color: var(--blue); }
 
 .video-info h3 {
     font-family: 'Inter', sans-serif;
@@ -494,13 +491,14 @@ body {
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #2a78f6;
+    color: var(--blue);
     margin-bottom: 0.3rem;
     max-width: 500px;
 }
 
 .video-info p {
     font-size: 0.9rem;
+    color: var(--blue);
     opacity: 0.7;
     font-weight: 300;
     max-width: 400px;
@@ -509,18 +507,19 @@ body {
 .view-all-btn {
     display: inline-block;
     margin-top: 40px;
-    border-bottom: 2px solid #2a78f6;
+    border-bottom: 2px solid var(--blue);
     text-decoration: none;
     font-weight: 600;
-    color: #2a78f6;
+    color: var(--blue);
     padding-bottom: 4px;
-    transition: all 0.2s;
+    transition: opacity 0.2s ease;
 }
 
 .view-all-btn:hover {
-    border-bottom-color: var(--blue);
-    color: var(--blue);
+    opacity: 0.6;
 }
+
+
 /* ===========================
    CONTACTO
    =========================== */
@@ -528,6 +527,7 @@ body {
     background: var(--bg-cream);
     padding: 120px 5%;
 }
+
 .contact-grid {
     max-width: 1400px;
     margin: 0 auto;
@@ -536,54 +536,66 @@ body {
     gap: 80px;
     align-items: start;
 }
+
 .contact-big-title {
     font-family: 'Inter', sans-serif;
     font-size: clamp(4rem, 10vw, 8rem);
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.03em;
-    color: #2a78f6;
+    color: var(--blue);
     text-transform: lowercase;
     position: sticky;
     top: 100px;
 }
+
 .contact-intro {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #2a78f6;
+    color: var(--blue);
     margin-bottom: 40px;
     max-width: 500px;
 }
+
 .minimal-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
+
+/* FIX 2: border-bottom era rgb(255,255,255) — invisible sobre cream */
 .form-field input,
 .form-field textarea {
     width: 100%;
     padding: 15px 0;
     border: none;
-    border-bottom: 1px solid rgb(255, 255, 255);
+    border-bottom: 1px solid var(--blue);
     background: transparent;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
-    color: var(--black);
+    color: var(--blue);
     transition: border-color 0.3s ease;
 }
+
 .form-field input::placeholder,
-.form-field textarea::placeholder { color: #2a78f6; }
+.form-field textarea::placeholder {
+    color: var(--blue);
+    opacity: 0.5;
+}
 
 .form-field input:focus,
-.form-field textarea:focus { outline: none; border-bottom-color: var(--white); }
+.form-field textarea:focus {
+    outline: none;
+    border-bottom-color: var(--orange);
+}
 
 .form-field textarea { resize: vertical; min-height: 100px; }
 
 .minimal-submit {
     align-self: flex-start;
     padding: 15px 40px;
-    background: #2a78f6;
-    color: white;
+    background: var(--blue);
+    color: var(--white);
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
@@ -594,21 +606,30 @@ body {
     align-items: center;
     gap: 10px;
 }
+
 .minimal-submit:hover {
+    background: var(--orange);
     transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(42, 120, 246, 0.2);
 }
+
 .minimal-submit span { transition: transform 0.3s ease; }
 .minimal-submit:hover span { transform: translateX(5px); }
 
-.contact-footer { margin-top: 40px; font-size: 0.9rem; color: #2a78f6; }
+.contact-footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: var(--blue);
+}
 
 .contact-footer a {
-    color: #2a78f6;
+    color: var(--blue);
     text-decoration: none;
-    border-bottom: 1px solid #2a78f6;
+    border-bottom: 1px solid var(--blue);
     transition: opacity 0.3s ease;
 }
-.contact-footer a:hover { opacity: 0.7; }
+
+.contact-footer a:hover { opacity: 0.6; }
 
 @media (max-width: 992px) {
     .contact-grid { grid-template-columns: 1fr; gap: 50px; }
@@ -619,12 +640,14 @@ body {
     .contact-big-title { font-size: clamp(3rem, 12vw, 6rem); }
     .contact-intro { font-size: 1rem; }
 }
+
+
 /* ===========================
    FOOTER
    =========================== */
 .massive-footer {
     background: var(--bg-cream);
-    color: #2a78f6;
+    color: var(--blue);
     padding: 80px 20px 60px;
     text-align: center;
 }
@@ -635,26 +658,31 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     text-align: left;
-    border-top: 1px solid #2a78f6;
+    border-top: 1px solid var(--blue);
     padding-top: 30px;
     gap: 40px;
 }
 
 .footer-col h4 {
     font-size: 0.8rem;
-    opacity: 0.7;
+    opacity: 0.5;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--blue);
 }
 
 .footer-col p,
-.footer-col a { color: #2a78f6; text-decoration: none; opacity: 0.9; }
+.footer-col a {
+    color: var(--blue);
+    text-decoration: none;
+    opacity: 0.9;
+}
 
 .footer-col a:hover { opacity: 1; text-decoration: underline; }
 
 .social-pills span {
-    border: 1px solid #2a78f6;
+    border: 1px solid var(--blue);
     padding: 5px 12px;
     border-radius: 50px;
     margin-right: 5px;
@@ -663,6 +691,14 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
+
+/* FIX 3: bloque hover estaba sin cierre } */
+.social-pills span:hover {
+    background: var(--blue);
+    color: var(--bg-cream);
+    transform: translateY(-2px);
+}
+
 
 /* ===========================
    RESPONSIVE GENERAL
