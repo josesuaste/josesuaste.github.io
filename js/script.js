@@ -23,7 +23,6 @@ menuToggle.addEventListener('click', () => {
         document.body.style.overflow = 'auto';
     }
 });
-
 // Cerrar menú al hacer click en un enlace
 navLinksItems.forEach(link => {
     link.addEventListener('click', () => {
@@ -32,8 +31,6 @@ navLinksItems.forEach(link => {
         document.body.style.overflow = 'auto';
     });
 });
-
-
 
 // ============================================================
 //  script.js — José Suaste | ERROR 404
@@ -60,7 +57,7 @@ const mm = gsap.matchMedia();
 mm.add(
     {
         motion:        "(prefers-reduced-motion: no-preference)",
-        reducedMotion: "(prefers-reduced-motion: reduce)"
+        reducedMotion: "(prefers-reduced-motion: reduce )"
     },
     (ctx) => {
         const { motion } = ctx.conditions;
@@ -68,7 +65,7 @@ mm.add(
         // Movimiento reducido: hacemos todo visible directamente
         if (!motion) {
             gsap.set([
-                ".logo", ".nav-links a", ".giant-title", ".profile-img",
+                ".logo", ".hero .nav-links a", ".giant-title", ".profile-img",
                 ".header-corner.left", ".header-corner.right",
                 ".bottom-sub-btn", ".blue-arc",
                 ".setup-big-title", ".setup-subtitle",
@@ -84,7 +81,7 @@ mm.add(
         // ========================================================
         gsap.timeline({ defaults: { ease: "expo.out", duration: 1 } })
             .from(".logo",          { y: -30, autoAlpha: 0, duration: 0.8 })
-            .from(".nav-links a",   { y: -20, autoAlpha: 0, stagger: 0.08, duration: 0.6 }, "<0.1")
+            .from(".hero .nav-links a", { y: -20, autoAlpha: 0, stagger: 0.08, duration: 0.6 }, "<0.1")
             .from(".giant-title",   { y: 120, autoAlpha: 0, duration: 1.4 }, "-=0.4")
             .from(".profile-img",   { scale: 0.85, autoAlpha: 0, duration: 1.2, ease: "back.out(1.4)" }, "-=0.8")
             .from(".header-corner.left, .header-corner.right",
@@ -92,7 +89,7 @@ mm.add(
             // Solo autoAlpha: este botón usa translateX(-50%) en CSS
             // para centrarse; animar x/y rompería ese posicionamiento.
             .from(".bottom-sub-btn",{ autoAlpha: 0, duration: 0.8 }, "<")
-            .from(".blue-arc",      { y: 200, duration: 1.4, ease: "expo.out" }, "-=1.8");
+            .set(".hero .nav-links a", { clearProps: "all" });
 
 
         // ========================================================
@@ -145,7 +142,7 @@ mm.add(
 
 
         // ========================================================
-        // ── 5 SEt ────────
+        // ── 5 SET UP ────────
 gsap.timeline({
     defaults: { ease: "expo.out" },
     scrollTrigger: { trigger: ".setup-section", start: "top 75%" }
@@ -177,7 +174,6 @@ gsap.from(shapes, {
         });
     }
 });
-
         // ========================================================
         //  6. VIDEOS — Reveal en stagger
         // ========================================================
@@ -211,8 +207,6 @@ gsap.from(shapes, {
             { y: 30, autoAlpha: 0, stagger: 0.1, duration: 0.8 },
             "<0.2"
         );
-
-
         // ========================================================
         //  8. FOOTER
         // ========================================================
@@ -220,8 +214,6 @@ gsap.from(shapes, {
             scrollTrigger: { trigger: ".massive-footer", start: "top 90%" },
             y: 20, autoAlpha: 0, stagger: 0.12, duration: 0.8
         });
-
-
         // ========================================================
         //  9. MICRO-INTERACCIONES — Hover logo
         // ========================================================
@@ -236,8 +228,6 @@ gsap.from(shapes, {
 
     } // fin mm.add
 );
-
-
 // ============================================================
 //  SMOOTH SCROLL — Fuera de matchMedia (no depende de motion)
 // ============================================================
@@ -254,8 +244,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         });
     });
 });
-
-
 // ============================================================
 //  NOTA — Videos dinámicos (YouTube Data API)
 //  fetch(ytApiUrl)

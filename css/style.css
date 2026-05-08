@@ -44,38 +44,210 @@ body {
     overflow: hidden;
     padding-top: 30px;
 }
-
 .navbar {
+    position: relative;          /* necesario para el absolute de nav-links */
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     padding: 0 50px;
-    z-index: 10;
+    height: 64px;
+    z-index: 100;
     font-weight: 900;
 }
+ 
+/* Clase que agrega el JS al hacer scroll */
+.navbar--scrolled {
+    box-shadow: 0 2px 20px rgba(42, 120, 246, 0.08);
+}
 
+/* ── Logo: izquierda ──────────────────────────────────────── */
+.logo {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: var(--blue);
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+}
+ 
+.logo:hover { opacity: 0.7; }
+ 
+/* ── Links: centrados con absolute ───────────────────────── */
+/*
+ * position: absolute + left: 50% + transform: translateX(-50%)
+ * centra los links respecto al navbar completo sin afectar
+ * el logo ni el botón de los extremos.
+ */
+.nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+ 
+.nav-links a {
+    text-decoration: none;
+    color: var(--blue);
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+    opacity: 1;           /* ← asegura visibilidad por defecto */
+    visibility: visible;  /* ← GSAP usa autoAlpha que cambia ambas */
+}
+ 
+.nav-links a:hover {
+    background-color: rgba(42, 120, 246, 0.08);
+}
+ 
+/* Link de sección activa — lo maneja el JS con ScrollTrigger */
+.nav-links a.active {
+    background-color: var(--blue);
+    color: var(--bg-cream);
+}
+ 
+/* ── Derecha: botón PayPal + hamburguesa ─────────────────── */
+.nav-right {
+    margin-left: auto;           /* empuja todo a la derecha */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+ 
+/* Botón PayPal */
+.nav-paypal-btn {
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--bg-cream);
+    background-color: var(--blue);
+    padding: 8px 20px;
+    border-radius: 50px;
+    letter-spacing: 0.02em;
+    transition: background-color 0.25s ease, transform 0.25s ease;
+    white-space: nowrap;
+}
+ 
+.nav-paypal-btn:hover {
+    background-color: var(--orange);
+    transform: translateY(-2px);
+}
+ 
+/* ── Hamburguesa: oculto en desktop ─────────────────────── */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 200;
+    padding: 0;
+}
+ 
+.menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--blue);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center;
+}
+ 
+/* ── Menú móvil ─────────────────────────────────────────── */
+@media (max-width: 768px) {
+ 
+    .navbar {
+        padding: 0 20px;
+    }
+ 
+    /* Muestra el hamburguesa */
+    .menu-toggle {
+        display: flex;
+    }
+ 
+    /* Oculta el botón PayPal en móvil — aparece dentro del menú */
+    .nav-paypal-btn {
+        display: none;
+    }
+ 
+    /* Panel full-screen desde la derecha */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        left: auto;
+        transform: none;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: right 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 150;
+    }
+ 
+    .nav-links.is-active {
+        right: 0;
+    }
+ 
+    .nav-links a {
+        font-size: 2rem;
+        font-weight: 900;
+        padding: 8px 20px;
+        border-radius: 0;
+        /* Forzar visibilidad de los enlaces del menú principal */
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+ 
+    .nav-links a:hover {
+        background-color: transparent;
+        opacity: 0.6;
+    }
+ 
+    /* Animación X de la hamburguesa */
+    .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.is-active .bar:nth-child(2) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+/* Enlace PayPal dentro del menú hamburguesa */
+.nav-paypal-link {
+    display: none;               /* oculto en escritorio */
+}
+
+@media (max-width: 768px) {
+    .nav-paypal-link {
+        display: block;          /* visible solo en móvil */
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--blue);
+        text-decoration: none;
+        padding: 8px 20px;
+    }
+}
+ 
+.hero-content {
+    z-index: 5;
+}
 .logo {
     font-size: 1.2rem;
     cursor: pointer;
     transition: color 0.3s ease;
-}
-
-/* FIX 1: var(--black) no existía en :root → cambiado a var(--blue) */
-.nav-links a {
-    text-decoration: none;
-    color: var(--blue);
-    margin-left: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: opacity 0.3s ease;
-}
-
-.nav-links a:hover {
-    opacity: 0.6;
-}
-
-.hero-content {
-    z-index: 5;
 }
 
 .giant-title {
@@ -104,7 +276,6 @@ body {
 .profile-img:hover {
     filter: grayscale(0%);
 }
-
 /* BOTÓN SUSCRIBIRSE */
 .bottom-sub-btn {
     position: absolute;
@@ -698,81 +869,16 @@ body {
     transform: translateY(-2px);
 }
 
-
 /* ===========================
    RESPONSIVE GENERAL
    =========================== */
 @media (max-width: 768px) {
-    .navbar { padding: 0 20px; }
-    .nav-links { display: flex; flex-wrap: wrap; gap: 10px; }
-    .nav-links a { margin-left: 0; font-size: 0.8rem; }
-    .footer-bottom { flex-direction: column; gap: 30px; }
-    .footer-col { text-align: center; }
-}
-
-@media (max-width: 480px) {
-    .profile-img { width: 250px; }
-}
-
-/* ===========================
-   MENÚ HAMBURGUESA (MÓVIL)
-   =========================== */
-
-/* Oculto por defecto en desktop */
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 100;
-}
-
-.menu-toggle .bar {
-    width: 100%;
-    height: 2px;
-    background-color: var(--blue);
-    transition: all 0.3s ease;
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex; /* Aparece solo en móvil */
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%; /* Escondido a la derecha */
-        width: 100%;
-        height: 100vh;
-        background-color: var(--bg-cream);
-        display: flex;
+    /* Solo conserva el footer, no toques .nav-links */
+    .footer-bottom {
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
         gap: 30px;
-        transition: right 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
-        z-index: 90;
     }
-
-    .nav-links.is-active {
-        right: 0; /* Desliza hacia adentro */
-    }
-
-    .nav-links a {
-        font-size: 2rem;
-        margin: 0;
-    }
-
-    /* Animación X de la hamburguesa */
-    .menu-toggle.is-active .bar:nth-child(1) {
-        transform: translateY(9px) rotate(45deg);
-    }
-    .menu-toggle.is-active .bar:nth-child(2) {
-        transform: translateY(-9px) rotate(-45deg);
+    .footer-col {
+        text-align: center;
     }
 }

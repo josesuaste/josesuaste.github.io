@@ -51,20 +51,32 @@
     <!-- 1. HEADER -->
     <header class="hero">
         <nav class="navbar">
+    <!-- Izquierda: logo -->
     <span class="logo">ERROR404</span>
-    
-    <button class="menu-toggle" aria-label="Abrir menú">
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </button>
-
-    <div class="nav-links">
+    <!-- Centro: links (posicionados con absolute en desktop) -->
+    <div class="nav-links" id="nav-links">
         <a href="#about">Sobre mí</a>
         <a href="#setup">Set up</a>
         <a href="#videos">Contenido</a>
-        <a href="#contact">Contacto</a> </div>
+        <a href="#contact">Contacto</a>
+    </div>
+    <!-- Derecha: botón PayPal + hamburguesa -->
+    <div class="nav-right">
+        <!-- Botón PayPal — abre PayPal.me en nueva pestaña -->
+        <!-- Cambia la URL a tu link de PayPal real -->
+        <a href="https://www.paypal.com/paypalme/josesuaste"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="nav-paypal-btn">
+            paypal
+        </a>
+        <!-- Hamburguesa: solo en móvil -->
+        <button class="menu-toggle" aria-label="Abrir menú">
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
 </nav>
-        
         <div class="hero-content">
             <h1 class="giant-title">José Suaste</h1>
             <div class="profile-wrapper">
@@ -189,9 +201,6 @@
             Ver todos los videos →
         </a>
     </section>
-
-  
-
 <!-- 7. FORMULARIO -->
 <section class="contact-section-minimal" id="contact">
     <div class="contact-grid">
