@@ -28,6 +28,8 @@
     <link rel="apple-touch-icon" href="images/favicon/favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- FIX: faltaba el link de Inter — sin esto la fuente nunca cargaba -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;900&display=swap">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -50,7 +52,7 @@
             <a href="https://www.paypal.com/paypalme/josesuaste"
                target="_blank" rel="noopener noreferrer"
                class="nav-paypal-btn">Paypal</a>
-            <button class="menu-toggle" aria-label="Abrir menú">
+            <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
                 <span class="bar"></span>
                 <span class="bar"></span>
             </button>
@@ -61,7 +63,15 @@
     <div class="hero-content">
         <h1 class="giant-title">José Suaste</h1>
         <div class="profile-wrapper">
-            <img src="images/img/ejemplo.png" alt="José Suaste" class="profile-img">
+            <!-- FIX: width/height previenen CLS; fetchpriority="high" optimiza LCP (esta es la imagen más grande del viewport) -->
+            <img src="images/img/ejemplo.png"
+                 alt="José Suaste"
+                 class="profile-img"
+                 width="600"
+                 height="600"
+                 loading="eager"
+                 fetchpriority="high"
+                 decoding="async">
         </div>
     </div>
 
@@ -122,12 +132,12 @@
             </div>
         </div>
         <div class="setup-shapes-row">
-            <div class="setup-shape"><img src="images/svg/flower.svg" alt="Mac mini M4" draggable="false"><span class="shape-label">Mac mini M4</span></div>
-            <div class="setup-shape"><img src="images/svg/medio-asterisco.svg" alt="Logitech K380s" draggable="false"><span class="shape-label">Logitech K380s</span></div>
-            <div class="setup-shape"><img src="images/svg/diamante.svg" alt="iPad Pro M2" draggable="false"><span class="shape-label">iPad Pro M2</span></div>
-            <div class="setup-shape"><img src="images/svg/pill.svg" alt="MX Vertical" draggable="false"><span class="shape-label">MX Vertical</span></div>
-            <div class="setup-shape"><img src="images/svg/arco.svg" alt="DJI Mic Mini" draggable="false"><span class="shape-label">DJI Mic Mini</span></div>
-            <div class="setup-shape"><img src="images/svg/sun.svg" alt="Xiaomi Light Bar" draggable="false"><span class="shape-label">Xiaomi Light Bar</span></div>
+            <div class="setup-shape"><img src="images/svg/flower.svg" alt="Mac mini M4" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">Mac mini M4</span></div>
+            <div class="setup-shape"><img src="images/svg/medio-asterisco.svg" alt="Logitech K380s" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">Logitech K380s</span></div>
+            <div class="setup-shape"><img src="images/svg/diamante.svg" alt="iPad Pro M2" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">iPad Pro M2</span></div>
+            <div class="setup-shape"><img src="images/svg/pill.svg" alt="MX Vertical" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">MX Vertical</span></div>
+            <div class="setup-shape"><img src="images/svg/arco.svg" alt="DJI Mic Mini" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">DJI Mic Mini</span></div>
+            <div class="setup-shape"><img src="images/svg/sun.svg" alt="Xiaomi Light Bar" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">Xiaomi Light Bar</span></div>
         </div>
     </section>
 
@@ -170,7 +180,12 @@
             <h2 class="big-title">colabora-<br>ciones.</h2>
         </div>
         <div class="about-right">
-            <form class="minimal-form" action="#" method="POST">
+            <!-- FIX: action="#" no enviaba nada — integrado con Web3Forms (gratis, sin backend)
+                 Obtén tu access_key gratis en https://web3forms.com y reemplaza el valor -->
+            <form class="minimal-form" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <input type="hidden" name="subject" value="Nueva colaboración desde josesuaste.github.io">
+                <input type="hidden" name="from_name" value="ERROR404 — Web">
                 <div class="form-row">
                     <div class="form-field">
                         <label for="nombre">Nombre</label>
@@ -202,7 +217,11 @@
 
     <footer class="massive-footer">
         <div class="footer-bottom">
-            <div class="footer-col"><h4>Social</h4><div class="social-pills"><span>IG</span> <span>YT</span></div></div>
+            <div class="footer-col"><h4>Social</h4><div class="social-pills">
+                <!-- FIX: <span> sin enlace → <a> accesible con destino real -->
+                <a href="https://www.instagram.com/josesuaste" target="_blank" rel="noopener noreferrer" aria-label="Instagram de José Suaste">IG</a>
+                <a href="https://www.youtube.com/@josesuaste-tech" target="_blank" rel="noopener noreferrer" aria-label="YouTube de José Suaste">YT</a>
+            </div></div>
             <div class="footer-col"><h4>Contacto</h4><p>ERROR404@icloud.com</p></div>
             <div class="footer-col"><h4>GitHub</h4><p><a href="https://github.com/josesuaste" target="_blank">@josesuaste</a></p></div>
         </div>
