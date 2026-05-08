@@ -48,22 +48,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 // ─────────────────────────────────────────────────────────────
 //  Navbar glassmorphism al hacer scroll
-//  FIX: reemplazado scroll listener (se dispara en cada frame)
-//  por IntersectionObserver (solo cuando el elemento cambia de estado)
-//  → más eficiente en battery y CPU en móviles
+//  Usamos un sentinel de 1px al inicio del about-section.
+//  Cuando ese punto sale del viewport → navbar activa glassmorphism.
+//  Más preciso y eficiente que un scroll listener por frames.
 // ─────────────────────────────────────────────────────────────
 const navbar = document.querySelector('.navbar');
-const heroContent = document.querySelector('.hero-content');
 
-if (heroContent && navbar) {
+// Crear un sentinel invisible justo al inicio del about-section
+const sentinel = document.createElement('div');
+sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;';
+const aboutSection = document.querySelector('#about');
+
+if (aboutSection && navbar) {
+    aboutSection.insertAdjacentElement('beforebegin', sentinel);
+
     const navObserver = new IntersectionObserver(
         ([entry]) => {
             navbar.classList.toggle('navbar--scrolled', !entry.isIntersecting);
         },
-        {
-            threshold: 0,
-            rootMargin: '-64px 0px 0px 0px' // compensar altura del navbar
-        }
+        { threshold: 0, rootMargin: '0px' }
     );
-    navObserver.observe(heroContent);
+    navObserver.observe(sentinel);
 }
