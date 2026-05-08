@@ -21,6 +21,7 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+
 }
 
 body {
@@ -28,6 +29,7 @@ body {
     background-color: var(--bg-cream);
     color: var(--blue);
     overflow-x: hidden;
+    padding-top: 10px; 
 }
 
 /* ===========================
@@ -152,7 +154,27 @@ body {
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform-origin: center;
 }
+/* Ocultar el enlace de PayPal en escritorio */
+.nav-paypal-link {
+    display: none;
+}
 
+/* Mostrarlo solo en móvil */
+@media (max-width: 768px) {
+    .nav-paypal-link {
+        display: block;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--blue);
+        text-decoration: none;
+        padding: 8px 20px;
+        border-radius: 0;
+    }
+    .nav-paypal-link:hover {
+        background-color: transparent;
+        opacity: 0.6;
+    }
+}
 /* ── Menú móvil ─────────────────────────────────────────── */
 @media (max-width: 768px) {
     .navbar { padding: 0 20px; }
@@ -789,3 +811,4 @@ body {
         text-align: center;
     }
 }
+
