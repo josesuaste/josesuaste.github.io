@@ -567,44 +567,37 @@ body {
         height: clamp(70px, 22vw, 110px);
     }
 }
-
 /* ===========================
    VIDEOS
    =========================== */
 .videos-section {
-    padding: 100px 20px;
     background: var(--bg-cream);
-    overflow: hidden;
+    padding: 120px 5%;
 }
 
-.section-title {
-    color: var(--blue);
-    text-align: center;
-    font-family: 'Inter', serif;
-    font-size: clamp(2.8rem, 7vw, 5rem);
-    margin-bottom: 0.3rem;
-    letter-spacing: -2px;
+.videos-flex {
+    /* usa .section-grid */
 }
 
-.section-subtitle {
-    text-align: center;
-    color: var(--blue);
-    opacity: 0.7;
-    margin-bottom: 60px;
+.videos-section .section-description {
+    margin-bottom: 40px;
 }
 
 .videos-grid {
     display: flex;
-    gap: 4rem;
+    gap: 2rem;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding: 20px 0 40px;
+    padding: 10px 0 30px;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
+    margin-bottom: 20px;
 }
 
-.videos-grid::-webkit-scrollbar { display: none; }
+.videos-grid::-webkit-scrollbar {
+    display: none;
+}
 
 .video-card {
     flex: 0 0 auto;
@@ -614,25 +607,29 @@ body {
     display: inline-flex;
     flex-direction: column;
     align-items: flex-start;
-    max-width: 600px;
+    max-width: 400px;
     white-space: normal;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.video-card:hover { transform: translateY(-4px); }
+.video-card:hover {
+    transform: translateY(-4px);
+}
 
-.video-link { text-decoration: none; color: var(--blue); }
+.video-link {
+    text-decoration: none;
+    color: var(--blue);
+}
 
 .video-info h3 {
     font-family: 'Inter', sans-serif;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.2;
     letter-spacing: -0.02em;
     color: var(--blue);
-    margin-bottom: 0.3rem;
-    max-width: 500px;
+    margin: 12px 0 6px;
 }
 
 .video-info p {
@@ -640,21 +637,35 @@ body {
     color: var(--blue);
     opacity: 0.7;
     font-weight: 300;
-    max-width: 400px;
 }
 
 .view-all-btn {
     display: inline-block;
-    margin-top: 40px;
     border-bottom: 2px solid var(--blue);
     text-decoration: none;
     font-weight: 600;
     color: var(--blue);
     padding-bottom: 4px;
     transition: opacity 0.2s ease;
+    margin-top: 10px;
 }
 
-.view-all-btn:hover { opacity: 0.6; }
+.view-all-btn:hover {
+    opacity: 0.6;
+}
+
+/* Aseguramos que en móvil la columna derecha no tenga scroll lateral raro */
+@media (max-width: 768px) {
+    .videos-section {
+        padding: 80px 5%;
+    }
+    .videos-section .section-description {
+        margin-top: 40px;  /* porque el grid se apila */
+    }
+    .videos-grid {
+        gap: 1.5rem;
+    }
+}
 
 /* ===========================
    CONTACTO
@@ -675,7 +686,7 @@ body {
 
 .contact-big-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(4rem, 10vw, 8rem);
+    font-size: clamp(4rem, 15vw, 12rem);
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.03em;
