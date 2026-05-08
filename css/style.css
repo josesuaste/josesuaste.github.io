@@ -260,11 +260,19 @@ body {
 .profile-img {
     width: 600px;
     max-width: 90vw;
+    /* FIX: height: auto evita que el atributo height="600" del HTML
+       distorsione la imagen en móvil — el CSS siempre gana al atributo */
+    height: auto;
     filter: grayscale(100%);
     border-radius: 50%;
     transition: filter 0.4s ease;
-    /* FIX: will-change avisa al compositor con anticipación → repaint más eficiente */
     will-change: filter;
+}
+
+@media (max-width: 768px) {
+    .profile-img {
+        width: clamp(220px, 75vw, 380px);
+    }
 }
 
 .profile-img:hover { filter: grayscale(0%); }
@@ -350,9 +358,7 @@ body {
     }
 }
 
-@media (max-width: 480px) {
-    .profile-img { width: 250px; }
-}
+
 
 /* ===========================
    CLASE COMPARTIDA (TODAS LAS SECCIONES)
@@ -828,4 +834,3 @@ body {
         text-align: center;
     }
 }
-
