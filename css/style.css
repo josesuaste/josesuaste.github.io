@@ -3,12 +3,6 @@
     --orange: #ff7d61;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
-
-    /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
-    --text-primary: var(--blue);
-    --text-muted: #5a7ab8;        /* color fijo, no opacity — mejor contraste WCAG */
-    --transition-base: 0.3s ease;
-    --radius-pill: 50px;
 }
 
 @font-face {
@@ -16,8 +10,6 @@
     src: url("../fonts/NectoMono-Regular.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
-    /* FIX: sin font-display el texto era invisible mientras cargaba (FOIT) */
-    font-display: swap;
 }
 
 * {
@@ -45,18 +37,13 @@ body {
    =========================== */
 .hero {
     position: relative;
-    height: 100svh;
     height: 100vh;
-    height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    overflow: visible;
-    padding-top: 0;
-    /* FIX: isolation:isolate evita que los z-index internos del hero
-       compitan con el overlay del menú en Android Chrome */
-    isolation: isolate;
+    overflow: visible;   /* para evitar recortes */
+    padding-top: 0; 
 }
 
 .navbar {
@@ -67,9 +54,10 @@ body {
     align-items: center;
     padding: 0 50px;
     height: 64px;
-    /* FIX Android: z-index del navbar por debajo del overlay del menú */
-    z-index: 90;
+    z-index: 100;
     font-weight: 900;
+
+    /* Fondo inicial transparente, se animará al hacer scroll */
     background-color: transparent;
     backdrop-filter: blur(0px);
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
@@ -154,10 +142,8 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    /* FIX: z-index por encima del overlay del menú para que el botón X sea siempre clicable */
-    z-index: 1001;
+    z-index: 200;
     padding: 0;
-    position: relative;
 }
 
 .menu-toggle .bar {
@@ -194,42 +180,26 @@ body {
     .navbar { padding: 0 20px; }
     .menu-toggle { display: flex; }
     .nav-paypal-btn { display: none; }
+    
 
     .nav-links {
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
+        right: -100%;
+        left: auto;
+        transform: none;
+        width: 100%;
         height: 100vh;
-        height: 100dvh;
-        transform: translateX(100%);
-        z-index: 1000;
         background-color: var(--bg-cream);
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 30px;
-        will-change: transform;
-        visibility: hidden;
-        /* Sin transition aquí — se agrega solo cuando JS está listo
-           para evitar el flash al redimensionar la ventana */
+        transition: right 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 150;
     }
 
-    /* La transición solo existe cuando JS ha inicializado el menú */
-    .menu-ready .nav-links {
-        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1),
-                    visibility 0s linear 0.45s;
-    }
-
-    .nav-links.is-active {
-        transform: translateX(0);
-        visibility: visible;
-    }
-
-    .menu-ready .nav-links.is-active {
-        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1),
-                    visibility 0s linear 0s;
-    }
+    .nav-links.is-active { right: 0; }
 
     .nav-links a {
         font-size: 2rem;
@@ -278,19 +248,9 @@ body {
 .profile-img {
     width: 600px;
     max-width: 90vw;
-    /* FIX: height: auto evita que el atributo height="600" del HTML
-       distorsione la imagen en móvil — el CSS siempre gana al atributo */
-    height: auto;
     filter: grayscale(100%);
     border-radius: 50%;
     transition: filter 0.4s ease;
-    will-change: filter;
-}
-
-@media (max-width: 768px) {
-    .profile-img {
-        width: clamp(220px, 75vw, 380px);
-    }
 }
 
 .profile-img:hover { filter: grayscale(0%); }
@@ -347,29 +307,20 @@ body {
 
 @media (max-width: 992px) {
     .hero {
-        height: 100svh;
-        height: 100vh;
-        height: 100svh;
-        padding-bottom: 0;
+        height: auto;
+        padding-bottom: 60px;
         overflow: visible;
-        /* Distribuir contenido verticalmente para aprovechar todo el espacio */
-        justify-content: space-between;
     }
 
-    .hero-content {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+    .hero-content { flex: none; }
 
     .hero-footer {
         position: static;
         flex-direction: column;
         align-items: center;
-        padding: 0 20px 40px;
-        gap: 20px;
+        padding: 0 20px;
+        gap: 24px;
+        margin-top: 40px;
         width: 100%;
     }
 
@@ -385,7 +336,9 @@ body {
     }
 }
 
-
+@media (max-width: 480px) {
+    .profile-img { width: 250px; }
+}
 
 /* ===========================
    CLASE COMPARTIDA (TODAS LAS SECCIONES)
@@ -487,7 +440,7 @@ body {
 }
 
 .stat-number {
-    font-family: 'Inter', sans-serif; /* FIX: era 'serif' — typo que rompía el fallback */
+    font-family: 'Inter', serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
     color: var(--blue);
@@ -499,9 +452,9 @@ body {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    /* FIX: opacity en texto pequeño falla WCAG AA — color fijo con mejor contraste */
-    color: var(--text-muted);
+    color: var(--blue);
     font-weight: 700;
+    opacity: 0.6;
 }
 
 .stats-title-container {
@@ -816,11 +769,11 @@ body {
 
 .footer-col h4 {
     font-size: 0.8rem;
-    /* FIX: opacity en texto pequeño → color fijo para mejor contraste WCAG */
-    color: var(--text-muted);
+    opacity: 0.5;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: var(--blue);
 }
 
 .footer-col p,
@@ -832,21 +785,18 @@ body {
 
 .footer-col a:hover { opacity: 1; text-decoration: underline; }
 
-/* FIX: eran <span> decorativos → ahora son <a> — se actualiza el selector */
-.social-pills a {
+.social-pills span {
     border: 1px solid var(--blue);
     padding: 5px 12px;
     border-radius: 50px;
     margin-right: 5px;
     font-size: 0.8rem;
     display: inline-block;
-    text-decoration: none;
-    color: var(--blue);
-    transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
     cursor: pointer;
 }
 
-.social-pills a:hover {
+.social-pills span:hover {
     background: var(--blue);
     color: var(--bg-cream);
     transform: translateY(-2px);
@@ -861,4 +811,3 @@ body {
         text-align: center;
     }
 }
-
