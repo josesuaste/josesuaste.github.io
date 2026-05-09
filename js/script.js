@@ -1,6 +1,5 @@
 // ─────────────────────────────────────────────────────────────
 //  Menú móvil
-//  FIX: agregado aria-expanded y aria-label dinámico
 // ─────────────────────────────────────────────────────────────
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinksContainer = document.querySelector('.nav-links');
@@ -11,7 +10,6 @@ menuToggle.addEventListener('click', () => {
     menuToggle.classList.toggle('is-active');
     document.body.style.overflow = isOpen ? 'hidden' : '';
 
-    // FIX: actualizar aria-expanded para screen readers
     menuToggle.setAttribute('aria-expanded', isOpen);
     menuToggle.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
 });
@@ -28,9 +26,7 @@ navLinksItems.forEach(link => {
 });
 
 // ─────────────────────────────────────────────────────────────
-//  Scroll suave para enlaces internos
-//  El CSS ya maneja scroll-behavior: smooth en html {}.
-//  Este bloque JS añade el offset del navbar sticky.
+//  Scroll suave (offset del navbar con JS)
 // ─────────────────────────────────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -39,34 +35,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         e.preventDefault();
         const target = document.querySelector(href);
         if (!target) return;
-        window.scrollTo({
-            top: target.getBoundingClientRect().top + window.pageYOffset - 80,
-            behavior: 'smooth'
-        });
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
     });
 });
 
 // ─────────────────────────────────────────────────────────────
-//  Navbar glassmorphism al hacer scroll
-//  Usamos un sentinel de 1px al inicio del about-section.
-//  Cuando ese punto sale del viewport → navbar activa glassmorphism.
-//  Más preciso y eficiente que un scroll listener por frames.
+//  Navbar glassmorphism (IntersectionObserver con sentinel)
 // ─────────────────────────────────────────────────────────────
 const navbar = document.querySelector('.navbar');
-
-// Crear un sentinel invisible justo al inicio del about-section
-const sentinel = document.createElement('div');
-sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;';
 const aboutSection = document.querySelector('#about');
 
 if (aboutSection && navbar) {
-    aboutSection.insertAdjacentElement('beforebegin', sentinel);
+    // Crear sentinel como primer hijo de #about
+    const sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;';
+    // Aseguramos que #about tenga position: relative (agregado en CSS)
+    aboutSection.prepend(sentinel);
 
     const navObserver = new IntersectionObserver(
         ([entry]) => {
             navbar.classList.toggle('navbar--scrolled', !entry.isIntersecting);
         },
-        { threshold: 0, rootMargin: '0px' }
+        { threshold: 0 }
     );
     navObserver.observe(sentinel);
 }

@@ -3,21 +3,10 @@
     --orange: #ff7d61;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
-
-    /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
     --text-primary: var(--blue);
-    --text-muted: #5a7ab8;        /* color fijo, no opacity — mejor contraste WCAG */
+    --text-muted: #5a7ab8;
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
-}
-
-@font-face {
-    font-family: "Necto-Mono-Regular";
-    src: url("../fonts/NectoMono-Regular.woff2") format("woff2");
-    font-weight: normal;
-    font-style: normal;
-    /* FIX: sin font-display el texto era invisible mientras cargaba (FOIT) */
-    font-display: swap;
 }
 
 * {
@@ -29,7 +18,6 @@
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-
 }
 
 body {
@@ -37,7 +25,7 @@ body {
     background-color: var(--bg-cream);
     color: var(--blue);
     overflow-x: hidden;
-    padding-top: 10px; 
+    padding-top: 10px;
 }
 
 /* ===========================
@@ -45,10 +33,8 @@ body {
    =========================== */
 .hero {
     position: relative;
-    /* FIX: 100vh ignora la barra de URL dinámica en iOS Safari → 100svh es preciso */
     height: 100svh;
-    /* Fallback para browsers sin soporte svh */
-    height: 100vh;
+    height: 100vh; /* fallback */
     height: 100svh;
     display: flex;
     flex-direction: column;
@@ -58,6 +44,7 @@ body {
     padding-top: 0;
 }
 
+/* Navbar */
 .navbar {
     position: sticky;
     top: 0;
@@ -68,28 +55,24 @@ body {
     height: 64px;
     z-index: 100;
     font-weight: 900;
-
-    /* Fondo inicial transparente, se animará al hacer scroll */
     background-color: transparent;
     backdrop-filter: blur(0px);
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar--scrolled {
-    background-color: rgba(244, 241, 234, 0.75); /* tu --bg-cream semitransparente */
+    background-color: rgba(244, 241, 234, 0.75);
     backdrop-filter: blur(12px);
     box-shadow: 0 2px 20px rgba(42, 120, 246, 0.08);
-
 }
 
 .logo {
     font-size: 1.2rem;
     font-weight: 900;
     color: var(--blue);
-    cursor: pointer;
+    text-decoration: none;
     flex-shrink: 0;
 }
-
 .logo:hover { opacity: 0.7; }
 
 .nav-links {
@@ -113,7 +96,6 @@ body {
 }
 
 .nav-links a:hover { background-color: rgba(42, 120, 246, 0.08); }
-
 .nav-links a.active {
     background-color: var(--blue);
     color: var(--bg-cream);
@@ -145,6 +127,26 @@ body {
     transform: translateY(-2px);
 }
 
+/* PayPal enlace móvil (oculto por defecto) */
+.nav-paypal-link { display: none; }
+
+@media (max-width: 768px) {
+    .nav-paypal-link {
+        display: block;
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--blue);
+        text-decoration: none;
+        padding: 8px 20px;
+        border-radius: 0;
+    }
+    .nav-paypal-link:hover {
+        background-color: transparent;
+        opacity: 0.6;
+    }
+}
+
+/* Menú hamburguesa */
 .menu-toggle {
     display: none;
     flex-direction: column;
@@ -166,40 +168,17 @@ body {
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform-origin: center;
 }
-/* Ocultar el enlace de PayPal en escritorio */
-.nav-paypal-link {
-    display: none;
-}
 
-/* Mostrarlo solo en móvil */
-@media (max-width: 768px) {
-    .nav-paypal-link {
-        display: block;
-        font-size: 2rem;
-        font-weight: 900;
-        color: var(--blue);
-        text-decoration: none;
-        padding: 8px 20px;
-        border-radius: 0;
-    }
-    .nav-paypal-link:hover {
-        background-color: transparent;
-        opacity: 0.6;
-    }
-}
 /* ── Menú móvil ─────────────────────────────────────────── */
 @media (max-width: 768px) {
     .navbar { padding: 0 20px; }
     .menu-toggle { display: flex; }
     .nav-paypal-btn { display: none; }
-    
 
     .nav-links {
         position: fixed;
         top: 0;
-        right: -100%;
-        left: auto;
-        transform: none;
+        right: 0;
         width: 100%;
         height: 100vh;
         background-color: var(--bg-cream);
@@ -207,11 +186,13 @@ body {
         align-items: center;
         justify-content: center;
         gap: 30px;
-        transition: right 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
         z-index: 150;
+        will-change: transform;
     }
 
-    .nav-links.is-active { right: 0; }
+    .nav-links.is-active { transform: translateX(0); }
 
     .nav-links a {
         font-size: 2rem;
@@ -233,7 +214,7 @@ body {
     }
 }
 
-/* HERO */
+/* HERO CONTENT */
 .hero-content {
     z-index: 5;
     flex: 1;
@@ -260,8 +241,6 @@ body {
 .profile-img {
     width: 600px;
     max-width: 90vw;
-    /* FIX: height: auto evita que el atributo height="600" del HTML
-       distorsione la imagen en móvil — el CSS siempre gana al atributo */
     height: auto;
     filter: grayscale(100%);
     border-radius: 50%;
@@ -270,9 +249,7 @@ body {
 }
 
 @media (max-width: 768px) {
-    .profile-img {
-        width: clamp(220px, 75vw, 380px);
-    }
+    .profile-img { width: clamp(220px, 75vw, 380px); }
 }
 
 .profile-img:hover { filter: grayscale(0%); }
@@ -317,15 +294,8 @@ body {
     font-weight: 800;
 }
 
-.header-corner.left {
-    text-align: left;
-    padding-top: 10px;
-}
-
-.header-corner.right {
-    text-align: right;
-    color: var(--blue);
-}
+.header-corner.left { text-align: left; padding-top: 10px; }
+.header-corner.right { text-align: right; color: var(--blue); }
 
 @media (max-width: 992px) {
     .hero {
@@ -334,7 +304,6 @@ body {
         height: 100svh;
         padding-bottom: 0;
         overflow: visible;
-        /* Distribuir contenido verticalmente para aprovechar todo el espacio */
         justify-content: space-between;
     }
 
@@ -367,10 +336,8 @@ body {
     }
 }
 
-
-
 /* ===========================
-   CLASE COMPARTIDA (TODAS LAS SECCIONES)
+   CLASE COMPARTIDA (SECCIONES)
    =========================== */
 .section-grid {
     max-width: 1600px;
@@ -383,19 +350,13 @@ body {
 }
 
 @media (max-width: 768px) {
-    .section-grid {
-        grid-template-columns: 1fr;
-        align-items: start;
-    }
+    .section-grid { grid-template-columns: 1fr; align-items: start; }
 }
 
-/* Ajuste opcional para contacto (formulario arriba) */
-.contact-grid {
-    align-items: start;
-}
+.contact-grid { align-items: start; }
 
 /* ===========================
-   TÍTULO GRANDE (UNIFICADO)
+   TÍTULO GRANDE
    =========================== */
 .big-title {
     font-family: 'Inter', sans-serif;
@@ -417,6 +378,7 @@ body {
     display: flex;
     justify-content: center;
     color: var(--blue);
+    position: relative; /* para el sentinel */
 }
 
 .about-right {
@@ -463,13 +425,10 @@ body {
     gap: 30px;
 }
 
-.stat-item {
-    display: flex;
-    flex-direction: column;
-}
+.stat-item { display: flex; flex-direction: column; }
 
 .stat-number {
-    font-family: 'Inter', sans-serif; /* FIX: era 'serif' — typo que rompía el fallback */
+    font-family: 'Inter', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
     color: var(--blue);
@@ -481,14 +440,11 @@ body {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    /* FIX: opacity en texto pequeño falla WCAG AA — color fijo con mejor contraste */
     color: var(--text-muted);
     font-weight: 700;
 }
 
-.stats-title-container {
-    text-align: right;
-}
+.stats-title-container { text-align: right; }
 
 @media (max-width: 992px) {
     .stats-title-container {
@@ -499,9 +455,7 @@ body {
 }
 
 @media (max-width: 480px) {
-    .stats-content {
-        grid-template-columns: 1fr;
-    }
+    .stats-content { grid-template-columns: 1fr; }
 }
 
 /* ===========================
@@ -512,9 +466,7 @@ body {
     padding: 120px 5%;
 }
 
-.setup-header {
-    margin-bottom: 80px;
-}
+.setup-header { margin-bottom: 80px; }
 
 .setup-header-right {
     display: flex;
@@ -590,9 +542,7 @@ body {
     padding: 120px 5%;
 }
 
-.videos-section .section-description {
-    margin-bottom: 40px;
-}
+.videos-section .section-description { margin-bottom: 40px; }
 
 .videos-grid {
     display: flex;
@@ -606,9 +556,7 @@ body {
     margin-bottom: 20px;
 }
 
-.videos-grid::-webkit-scrollbar {
-    display: none;
-}
+.videos-grid::-webkit-scrollbar { display: none; }
 
 .video-card {
     flex: 0 0 auto;
@@ -624,9 +572,7 @@ body {
     transition: transform 0.3s ease;
 }
 
-.video-card:hover {
-    transform: translateY(-4px);
-}
+.video-card:hover { transform: translateY(-4px); }
 
 .video-link {
     text-decoration: none;
@@ -661,20 +607,12 @@ body {
     margin-top: 10px;
 }
 
-.view-all-btn:hover {
-    opacity: 0.6;
-}
+.view-all-btn:hover { opacity: 0.6; }
 
 @media (max-width: 768px) {
-    .videos-section {
-        padding: 80px 5%;
-    }
-    .videos-section .section-description {
-        margin-top: 40px;
-    }
-    .videos-grid {
-        gap: 1.5rem;
-    }
+    .videos-section { padding: 80px 5%; }
+    .videos-section .section-description { margin-top: 40px; }
+    .videos-grid { gap: 1.5rem; }
 }
 
 /* ===========================
@@ -766,14 +704,8 @@ body {
 
 .contact-footer a:hover { opacity: 0.6; }
 
-@media (max-width: 992px) {
-    .contact-section-minimal { padding: 80px 5%; }
-    .contact-intro { margin-top: 30px; }
-}
-
-@media (max-width: 768px) {
-    .contact-intro { font-size: 1rem; }
-}
+@media (max-width: 992px) { .contact-section-minimal { padding: 80px 5%; } }
+@media (max-width: 768px) { .contact-intro { font-size: 1rem; } }
 
 /* ===========================
    FOOTER
@@ -798,7 +730,6 @@ body {
 
 .footer-col h4 {
     font-size: 0.8rem;
-    /* FIX: opacity en texto pequeño → color fijo para mejor contraste WCAG */
     color: var(--text-muted);
     margin-bottom: 10px;
     text-transform: uppercase;
@@ -814,7 +745,6 @@ body {
 
 .footer-col a:hover { opacity: 1; text-decoration: underline; }
 
-/* FIX: eran <span> decorativos → ahora son <a> — se actualiza el selector */
 .social-pills a {
     border: 1px solid var(--blue);
     padding: 5px 12px;
@@ -835,12 +765,20 @@ body {
 }
 
 @media (max-width: 768px) {
-    .footer-bottom {
-        flex-direction: column;
-        gap: 30px;
-    }
-    .footer-col {
-        text-align: center;
-    }
+    .footer-bottom { flex-direction: column; gap: 30px; }
+    .footer-col { text-align: center; }
 }
 
+/* ===========================
+   REDUCED MOTION (Accesibilidad)
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
