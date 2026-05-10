@@ -31,15 +31,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;900&display=swap">
     <!-- Bootstrap 5 CSS desde CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Tu CSS personalizado (modificado para convivir con Bootstrap) -->
+    <!-- Tu CSS personalizado -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <!-- ===========================
-         NAVBAR (Bootstrap + glassmorfismo)
+         NAVBAR (sticky-top + glassmorfismo)
          =========================== -->
-    <nav class="navbar navbar-expand-lg fixed-top custom-navbar">
+    <nav class="navbar navbar-expand-lg sticky-top custom-navbar">
         <div class="container-fluid px-3 px-md-5">
             <a href="/" class="navbar-brand logo">ERROR404</a>
 
@@ -93,7 +93,7 @@
          =========================== -->
     <section class="about-section" id="about">
         <div class="container-fluid px-3 px-md-5">
-            <div class="row align-items-end">
+            <div class="row align-items-start align-items-lg-end">
                 <div class="col-lg-7">
                     <h2 class="big-title">acerca<br>de mi.</h2>
                 </div>
@@ -110,8 +110,8 @@
          =========================== -->
     <section class="stats-section" id="stats">
         <div class="container-fluid px-3 px-md-5">
-            <div class="row align-items-end">
-                <!-- Contenido: en móvil queremos que el título aparezca antes que los números, por eso usamos order -->
+            <div class="row align-items-start align-items-lg-end">
+                <!-- Contenido: en móvil queremos que el título aparezca antes que los números -->
                 <div class="col-lg-7 order-2 order-lg-1">
                     <div class="stats-content">
                         <div class="stat-item"><span class="stat-number">150</span><span class="stat-label">Suscriptores</span></div>
@@ -132,7 +132,7 @@
          =========================== -->
     <section class="setup-section" id="setup">
         <div class="container-fluid px-3 px-md-5">
-            <div class="row align-items-end mb-5">
+            <div class="row align-items-start align-items-lg-end mb-5">
                 <div class="col-lg-7">
                     <h2 class="big-title">mi<br>setup</h2>
                 </div>
@@ -141,7 +141,7 @@
                 </div>
             </div>
             <div class="setup-shapes-row">
-                <!-- Las formas se mantienen exactamente igual, solo las envuelvo en el nuevo contexto -->
+                <!-- Las formas se mantienen exactamente igual -->
                 <div class="setup-shape"><img src="images/svg/flower.svg" alt="Mac mini M4" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">Mac mini M4</span></div>
                 <div class="setup-shape"><img src="images/svg/medio-asterisco.svg" alt="Logitech K380s" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">Logitech K380s</span></div>
                 <div class="setup-shape"><img src="images/svg/diamante.svg" alt="iPad Pro M2" draggable="false" loading="lazy" width="200" height="200"><span class="shape-label">iPad Pro M2</span></div>
@@ -157,10 +157,7 @@
          =========================== -->
     <section class="videos-section" id="videos">
         <div class="container-fluid px-3 px-md-5">
-            <div class="row">
-                <!-- En tu diseño original la descripción va a la izquierda y el título a la derecha.
-                     En móvil la descripción debe aparecer después o antes? Mantengo la lógica anterior: título abajo en escritorio, pero aquí la descripción está en about-right.
-                     Respeto la estructura de tu HTML original: about-right (descripción + tarjetas) a la izquierda, big-title a la derecha. -->
+            <div class="row align-items-start align-items-lg-end">
                 <div class="col-lg-8 order-2 order-lg-1">
                     <p class="section-description mb-4">Contenido reciente sobre tecnología. Tutoriales, reviews, unboxings y tips para tu día a día.</p>
                     <div class="videos-grid">
@@ -182,7 +179,7 @@
          =========================== -->
     <section class="contact-section-minimal" id="contact">
         <div class="container-fluid px-3 px-md-5">
-            <div class="row align-items-start">
+            <div class="row align-items-start align-items-lg-end">
                 <div class="col-lg-7">
                     <h2 class="big-title">colabora-<br>ciones.</h2>
                 </div>

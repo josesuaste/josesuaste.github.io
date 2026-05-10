@@ -15,11 +15,11 @@ const navObserver = new IntersectionObserver(
 navObserver.observe(sentinel);
 
 /* ===========================
-   CIERRE DEL MENÚ AL HACER CLIC EN UN ENLACE (complemento a Bootstrap)
+   CIERRE DEL MENÚ AL HACER CLIC EN UN ENLACE
    =========================== */
 const navLinks = document.querySelectorAll('#navbarCollapse .nav-link');
 const navbarCollapse = document.getElementById('navbarCollapse');
-const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
+const bsCollapse = bootstrap.Collipse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
 
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
@@ -30,7 +30,7 @@ navLinks.forEach(link => {
 });
 
 /* ===========================
-   SCROLL SUAVE PARA ANCLAS (mismo comportamiento pero sin interferir)
+   SCROLL SUAVE PARA ANCLAS
    =========================== */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

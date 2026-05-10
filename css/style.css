@@ -443,15 +443,18 @@ body {
 }
 
 /* ===========================
-   MEDIA QUERIES (solo ajustes finos, la rejilla de Bootstrap ya es responsive)
+   MEDIA QUERIES (ajustes finos)
    =========================== */
-@media (max-width: 992px) {
-    .giant-title {
-        font-size: clamp(3.5rem, 12vw, 6.5rem);
-        letter-spacing: -2px;
-    }
+
+/* Tablet: reducción de títulos gigantes para evitar desbordamientos */
+@media (max-width: 991.98px) {
     .big-title {
-        font-size: clamp(4.5rem, 15vw, 7.5rem);
+        font-size: clamp(3.5rem, 10vw, 5.5rem);
+        line-height: 0.8;
+    }
+    .giant-title {
+        font-size: clamp(3rem, 12vw, 5rem);
+        letter-spacing: -2px;
     }
     .hero {
         height: auto;
@@ -465,6 +468,11 @@ body {
     }
     .setup-shape {
         flex: 0 0 calc(33% - 16px);
+    }
+    .about-section,
+    .setup-section,
+    .contact-section-minimal {
+        padding: 80px 0;
     }
 }
 
