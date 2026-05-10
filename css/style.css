@@ -789,7 +789,15 @@ body {
 @media (max-width: 768px) {
     .contact-intro { font-size: 1rem; }
 }
+@media (max-width: 1366px) and (min-width: 769px) {
+    .contact-grid {
+        grid-template-columns: 1fr 1.2fr;
+    }
 
+    .contact-grid .big-title {
+        font-size: clamp(3rem, 10vw, 6rem);
+    }
+}
 /* ===========================
    FOOTER
    =========================== */
