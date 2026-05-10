@@ -60,12 +60,13 @@ body {
     align-items: center;
     text-align: center;
     overflow: visible;
-    padding-top: 0;
+    padding-top: 64px; /* compensa el navbar fixed */
 }
 
 .navbar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
     display: flex;
     align-items: center;

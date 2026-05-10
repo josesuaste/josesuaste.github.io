@@ -33,9 +33,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="hero">
-
-    <!-- Navbar -->
+    <!-- Navbar fuera del hero para que el fixed funcione en todo el scroll -->
     <nav class="navbar">
         <span class="logo">ERROR404</span>
         <div class="nav-links" id="nav-links">
@@ -43,10 +41,10 @@
             <a href="#setup">Set up</a>
             <a href="#videos">Contenido</a>
             <a href="#contact">Contacto</a>
-                    <!-- Enlace solo visible en móvil -->
-        <a href="https://www.paypal.com/paypalme/josesuaste"
-           target="_blank" rel="noopener noreferrer"
-           class="nav-paypal-link">Paypal</a>
+            <!-- Enlace solo visible en móvil -->
+            <a href="https://www.paypal.com/paypalme/josesuaste"
+               target="_blank" rel="noopener noreferrer"
+               class="nav-paypal-link">Paypal</a>
         </div>
         <div class="nav-right">
             <a href="https://www.paypal.com/paypalme/josesuaste"
@@ -58,6 +56,8 @@
             </button>
         </div>
     </nav>
+
+    <header class="hero">
 
     <!-- Contenido central: título + foto -->
     <div class="hero-content">
