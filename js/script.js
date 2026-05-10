@@ -15,13 +15,12 @@ const navObserver = new IntersectionObserver(
 navObserver.observe(sentinel);
 
 /* ===========================
-   CIERRE DEL MENÚ AL HACER CLIC EN UN ENLACE
+   CIERRE DEL MENÚ COLAPSABLE AL HACER CLIC EN UN ENLACE (móvil)
    =========================== */
-const navLinks = document.querySelectorAll('#navbarCollapse .nav-link');
 const navbarCollapse = document.getElementById('navbarCollapse');
-const bsCollapse = bootstrap.Collipse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
+const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse, { toggle: false });
 
-navLinks.forEach(link => {
+document.querySelectorAll('#navbarCollapse .custom-nav-link').forEach(link => {
     link.addEventListener('click', () => {
         if (navbarCollapse.classList.contains('show')) {
             bsCollapse.hide();
