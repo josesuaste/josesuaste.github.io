@@ -25,6 +25,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+body.no-transition * {
+    transition: none !important;
+}
 
 html {
     scroll-behavior: smooth;
