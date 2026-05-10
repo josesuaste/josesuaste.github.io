@@ -28,27 +28,21 @@ body {
     background-color: var(--bg-cream);
     color: var(--blue);
     overflow-x: hidden;
-    padding-top: 0px;
+    padding-top: 0;
 }
 
 /* ===========================
-   NAVBAR (ESCRITORIO)
+   NAVBAR (estilo personalizado sobre Bootstrap)
    =========================== */
-.navbar {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 50px;
-    height: 64px;
-    z-index: 100;
-    font-weight: 900;
+.custom-navbar {
     background-color: transparent;
     backdrop-filter: blur(0px);
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
 }
-.navbar--scrolled {
+/* Clase que se añade con JS al hacer scroll */
+.custom-navbar.navbar--scrolled {
     background-color: rgba(244, 241, 234, 0.75);
     backdrop-filter: blur(12px);
     box-shadow: 0 2px 20px rgba(42, 120, 246, 0.08);
@@ -57,49 +51,33 @@ body {
 .logo {
     font-size: 1.2rem;
     font-weight: 900;
-    color: var(--blue);
+    color: var(--blue) !important;
     text-decoration: none;
-    flex-shrink: 0;
 }
 .logo:hover { opacity: 0.7; }
 
-/* Menú escritorio */
-.nav-links {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-.nav-links a {
+/* Enlaces del menú colapsable (centrados) */
+#navbarCollapse .nav-link {
     text-decoration: none;
     color: var(--blue);
-    padding: 6px 14px;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
     font-weight: 600;
     border-radius: 50px;
-    white-space: nowrap;
     transition: background-color 0.2s ease;
 }
-.nav-links a:hover { background-color: rgba(42, 120, 246, 0.08); }
-
-.nav-right {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
+#navbarCollapse .nav-link:hover {
+    background-color: rgba(42, 120, 246, 0.08);
 }
 
-/* Botón Suscribirse (escritorio) */
+/* Suscribirse escritorio */
 .nav-subscribe-btn {
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--bg-cream);
     background-color: var(--blue);
-    padding: 8px 20px;
+    padding: 0.5rem 1.25rem;
     border-radius: 50px;
     letter-spacing: 0.02em;
     white-space: nowrap;
@@ -110,20 +88,20 @@ body {
     transform: translateY(-2px);
 }
 
-/* Ocultar Suscribirse del menú central en escritorio */
-.nav-subscribe-link { display: none; }
+/* Suscribirse dentro del menú móvil */
+.nav-subscribe-link {
+    display: block;  /* Bootstrap lo oculta en lg con d-lg-none */
+}
 
-/* Botón hamburguesa (oculto en escritorio) */
+/* Botón hamburguesa personalizado */
 .menu-toggle {
-    display: none;
+    border: none;
+    background: transparent;
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 28px;
     height: 18px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 200;
     padding: 0;
 }
 .menu-toggle .bar {
@@ -134,14 +112,21 @@ body {
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform-origin: center;
 }
+/* Animación al abrir (controlada por Bootstrap + clase is-active) */
+.menu-toggle[aria-expanded="true"] .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .bar:nth-child(2) {
+    transform: translateY(-8px) rotate(-45deg);
+}
 
 /* ===========================
-   HERO (ESCRITORIO)
+   HERO (sin cambios relevantes)
    =========================== */
 .hero {
     position: relative;
     height: 100svh;
-    height: 100vh; /* fallback */
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -181,52 +166,16 @@ body {
 .profile-img:hover { filter: grayscale(0%); }
 
 /* ===========================
-   SECCIONES COMUNES (GRID, TÍTULO GRANDE)
+   TIPOGRAFÍA GRANDE Y SECCIONES
    =========================== */
-.section-grid {
-    max-width: 1600px;
-    width: 100%;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 20px;
-    align-items: end;
-}
-.contact-grid { align-items: start; }
-
 .big-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(6rem, 18vw, 15rem);
+    font-size: clamp(5rem, 15vw, 12rem);
     font-weight: 900;
     line-height: 0.75;
     letter-spacing: -0.07em;
     color: var(--blue);
     text-transform: lowercase;
-    margin: 0;
-}
-
-/* ===========================
-   SOBRE MÍ (ESCRITORIO)
-   =========================== */
-.about-section {
-    background-color: var(--bg-cream);
-    padding: 120px 40px;
-    display: flex;
-    justify-content: center;
-    color: var(--blue);
-    position: relative;
-}
-.about-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-bottom: 2rem;
-}
-.section-description {
-    font-size: 1.1rem;
-    line-height: 1.5;
-    color: var(--blue);
-    max-width: 450px;
     margin: 0;
 }
 .sub-title {
@@ -237,21 +186,38 @@ body {
     letter-spacing: -0.02em;
     color: var(--blue);
 }
+.section-description {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--blue);
+    max-width: 450px;
+    margin: 0;
+}
 
 /* ===========================
-   ESTADÍSTICAS (ESCRITORIO)
+   SOBRE MÍ, SETUP, CONTACTO (padding común)
+   =========================== */
+.about-section,
+.setup-section,
+.contact-section-minimal {
+    padding: 120px 0;
+}
+
+/* ===========================
+   ESTADÍSTICAS
    =========================== */
 .stats-section {
-    background: var(--bg-cream);
-    padding: 100px 5%;
-    overflow: hidden;
+    padding: 100px 0;
 }
 .stats-content {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
 }
-.stat-item { display: flex; flex-direction: column; }
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
 .stat-number {
     font-family: 'Inter', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
@@ -267,29 +233,21 @@ body {
     color: var(--text-muted);
     font-weight: 700;
 }
-.stats-title-container { text-align: right; }
 
 /* ===========================
-   SETUP (ESCRITORIO)
+   SETUP (formas)
    =========================== */
-.setup-section {
-    background-color: var(--bg-cream);
-    padding: 120px 5%;
-}
-.setup-header { margin-bottom: 80px; }
-.setup-header-right {
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 1rem;
+.setup-header {
+    margin-bottom: 80px;
 }
 .setup-shapes-row {
-    max-width: 1600px;
-    margin: 0 auto;
+    max-width: 100%;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: clamp(12px, 2vw, 32px);
     width: 100%;
+    flex-wrap: wrap;
 }
 .setup-shape {
     display: flex;
@@ -298,6 +256,7 @@ body {
     gap: 14px;
     flex: 1 1 0;
     user-select: none;
+    min-width: 100px;
 }
 .setup-shape img {
     width: 100%;
@@ -323,13 +282,11 @@ body {
 }
 
 /* ===========================
-   VIDEOS (ESCRITORIO)
+   VIDEOS (scroll horizontal)
    =========================== */
 .videos-section {
-    background: var(--bg-cream);
-    padding: 120px 5%;
+    padding: 120px 0;
 }
-.videos-section .section-description { margin-bottom: 40px; }
 .videos-grid {
     display: flex;
     gap: 2rem;
@@ -385,31 +342,35 @@ body {
 .view-all-btn:hover { opacity: 0.6; }
 
 /* ===========================
-   CONTACTO (ESCRITORIO)
+   FORMULARIO (estilo personalizado)
    =========================== */
-.contact-section-minimal {
-    background: var(--bg-cream);
-    padding: 120px 5%;
+.minimal-form .form-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    opacity: 0.7;
 }
-.minimal-form { display: flex; flex-direction: column; gap: 25px; }
-.form-field input,
-.form-field textarea {
-    width: 100%;
-    padding: 15px 0;
+.minimal-form .form-control {
+    background: transparent;
     border: none;
     border-bottom: 1px solid var(--blue);
-    background: transparent;
+    border-radius: 0;
+    padding: 0.75rem 0;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     color: var(--blue);
 }
-.form-field input::placeholder,
-.form-field textarea::placeholder { color: var(--blue); opacity: 0.5; }
-.form-field input:focus,
-.form-field textarea:focus { outline: none; border-bottom-color: var(--orange); }
-.form-field textarea { resize: vertical; min-height: 100px; }
+.minimal-form .form-control::placeholder {
+    color: var(--blue);
+    opacity: 0.5;
+}
+.minimal-form .form-control:focus {
+    box-shadow: none;
+    border-bottom-color: var(--orange);
+}
 .minimal-submit {
-    align-self: flex-start;
+    margin-top: 1rem;
     padding: 15px 40px;
     background: var(--blue);
     color: var(--white);
@@ -428,37 +389,42 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px rgba(42, 120, 246, 0.2);
 }
-.minimal-submit span { transition: transform 0.3s ease; }
-.minimal-submit:hover span { transform: translateX(5px); }
+.minimal-submit .btn-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--white);
+    border-radius: 50%;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+.minimal-submit:hover .btn-dot {
+    transform: translateX(5px);
+}
 
 /* ===========================
-   FOOTER (ESCRITORIO)
+   FOOTER
    =========================== */
 .massive-footer {
-    background: var(--bg-cream);
-    color: var(--blue);
-    padding: 80px 20px 60px;
-    text-align: center;
-}
-.footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: left;
+    padding: 80px 0 60px;
     border-top: 1px solid var(--blue);
-    padding-top: 30px;
-    gap: 40px;
 }
-.footer-col h4 {
+.massive-footer h4 {
     font-size: 0.8rem;
     color: var(--text-muted);
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-.footer-col p, .footer-col a { color: var(--blue); text-decoration: none; opacity: 0.9; }
-.footer-col a:hover { opacity: 1; text-decoration: underline; }
+.massive-footer p,
+.massive-footer a {
+    color: var(--blue);
+    text-decoration: none;
+    opacity: 0.9;
+}
+.massive-footer a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
 .social-pills a {
     border: 1px solid var(--blue);
     padding: 5px 12px;
@@ -468,7 +434,6 @@ body {
     display: inline-block;
     text-decoration: none;
     color: var(--blue);
-    cursor: pointer;
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
 }
 .social-pills a:hover {
@@ -478,134 +443,45 @@ body {
 }
 
 /* ===========================
-   MEDIA QUERY – MÓVIL (max-width: 768px)
+   MEDIA QUERIES (solo ajustes finos, la rejilla de Bootstrap ya es responsive)
    =========================== */
-@media (max-width: 768px) {
-
-    /* --- GLOBAL --- */
-    body {
-        overflow-x: hidden;
-        position: relative;
-    }
-
-    /* --- TITLES (Reducidos para evitar desbordamiento) --- */
+@media (max-width: 992px) {
     .giant-title {
         font-size: clamp(3.5rem, 12vw, 6.5rem);
         letter-spacing: -2px;
     }
-
     .big-title {
         font-size: clamp(4.5rem, 15vw, 7.5rem);
-        line-height: 0.8;
     }
-
-    /* --- NAV --- */
-    .navbar { padding: 0 20px; }
-    .nav-subscribe-btn { display: none; }
-    .menu-toggle { display: flex; }
-
-    .nav-subscribe-link {
-        display: block;
-    }
-
-    /* FIX DEL MENÚ HAMBURGUESA */
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: auto; /* IMPORTANTE: Cancela el centrado de escritorio */
-        width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        background-color: var(--bg-cream);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-        transform: translateX(100%);
-        visibility: hidden;
-        z-index: 150;
-        will-change: transform;
-        padding: 50px 0;
-    }
-    .nav-links.animate {
-        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1), visibility 0s 0.45s;
-    }
-    .nav-links.animate.is-active {
-        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1), visibility 0s 0s;
-    }
-    .nav-links.is-active { 
-        transform: translateX(0); 
-        visibility: visible; 
-    }
-
-    .nav-links a {
-        font-size: 1.5rem;
-        font-weight: 900;
-        padding: 10px 20px;
-        border-radius: 0;
-        white-space: normal;
-        word-break: break-word;
-        display: block;
-        width: 100%;
-        text-align: center;
-        color: var(--blue);
-        text-decoration: none;
-        line-height: 1.2;
-    }
-    .nav-links a:hover { background-color: transparent; opacity: 0.6; }
-
-    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    .menu-toggle.is-active .bar:nth-child(2) { transform: translateY(-8px) rotate(-45deg); }
-
-    /* --- GRID GENERAL --- */
-    .section-grid { grid-template-columns: 1fr; align-items: start; }
-    .about-right { margin-top: 40px; }
-    .section-description { max-width: 100%; }
-
-    .profile-img { width: clamp(220px, 75vw, 380px); }
-
-    /* --- VIDEOS --- */
-    .videos-section { padding: 80px 5%; }
-    .videos-section .section-description { margin-top: 40px; }
-    .videos-grid { gap: 1.5rem; }
-
-    /* --- FOOTER --- */
-    .footer-bottom { flex-direction: column; gap: 30px; }
-    .footer-col { text-align: center; }
-}
-
-/* ===========================
-   MEDIA QUERY – TABLET (max-width: 992px)
-   =========================== */
-@media (max-width: 992px) {
     .hero {
         height: auto;
         padding-bottom: 40px;
-        justify-content: space-between;
     }
-    .hero-content { flex: 1; display: flex; align-items: center; justify-content: center; }
-
-    .stats-title-container { grid-row: 1; text-align: left; margin-bottom: 50px; }
-
-    .setup-header { margin-bottom: 60px; }
-    .setup-header-right { margin-top: 30px; padding-bottom: 0; }
-    .setup-shapes-row { flex-wrap: wrap; justify-content: center; gap: 24px; }
-    .setup-shape { flex: 0 0 calc(33% - 16px); }
-
-    .contact-section-minimal { padding: 80px 5%; }
+    .section-description {
+        max-width: 100%;
+    }
+    .setup-shapes-row {
+        justify-content: center;
+    }
+    .setup-shape {
+        flex: 0 0 calc(33% - 16px);
+    }
 }
 
-/* ===========================
-   MEDIA QUERY – PEQUEÑO (max-width: 480px)
-   =========================== */
+@media (max-width: 768px) {
+    .profile-img {
+        width: clamp(220px, 75vw, 380px);
+    }
+    .stats-content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media (max-width: 480px) {
-    .profile-img { width: 250px; }
-    .stats-content { grid-template-columns: 1fr; }
-    .setup-section { padding: 80px 5%; }
-    .setup-shape { flex: 0 0 calc(45% - 12px); }
-    .setup-shape img {
-        max-width: clamp(70px, 22vw, 110px);
-        height: clamp(70px, 22vw, 110px);
+    .stats-content {
+        grid-template-columns: 1fr;
+    }
+    .setup-shape {
+        flex: 0 0 calc(45% - 12px);
     }
 }
