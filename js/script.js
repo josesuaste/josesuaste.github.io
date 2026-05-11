@@ -158,6 +158,44 @@ function markDone(elements) {
         .from('.header-corner', { autoAlpha: 0, y: 15, stagger: 0.15, duration: 0.6 }, "-=0.4");
 })();
 
+// ─────────────────────────────────────────────────────────────
+//  Contador animado — corre una sola vez, independiente del breakpoint
+//  Fuera de matchMedia para que el resize no lo destruya ni resetee
+// ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.stat-number').forEach(el => {
+    const raw = el.textContent.trim().replace(/,/g, '');
+    const target = parseFloat(raw);
+    const hasComma = el.textContent.includes(',');
+    if (isNaN(target)) return;
+
+    // Guardar el valor original para restaurarlo si el trigger no llega
+    el.dataset.originalValue = el.textContent.trim();
+
+    ScrollTrigger.create({
+        trigger: el,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+            const proxy = { value: 0 };
+            gsap.to(proxy, {
+                value: target,
+                duration: 1.8,
+                ease: "power2.out",
+                onUpdate() {
+                    el.textContent = hasComma
+                        ? Math.round(proxy.value).toLocaleString('es-MX')
+                        : Math.round(proxy.value).toString();
+                },
+                onComplete() {
+                    el.textContent = hasComma
+                        ? target.toLocaleString('es-MX')
+                        : target.toString();
+                }
+            });
+        }
+    });
+});
+
 // ── Animaciones de scroll ─────────────────────────────────────
 gsap.matchMedia().add(
     {
@@ -211,41 +249,6 @@ gsap.matchMedia().add(
             { selector: '#stats .stat-item',
               vars: { autoAlpha: 0, y: 40, stagger: 0.12, duration: 0.7 }, position: "-=0.5" }
         ]);
-
-        // Contador animado — proxy object, seguro contra NaN
-        document.querySelectorAll('.stat-number').forEach(el => {
-            if (el.dataset.counted) return; // ya contó, no repetir
-            const raw = el.textContent.trim().replace(/,/g, '');
-            const target = parseFloat(raw);
-            const hasComma = el.textContent.includes(',');
-            if (isNaN(target)) return;
-
-            el.dataset.counted = 'true'; // marcar antes de crear el trigger
-
-            ScrollTrigger.create({
-                trigger: el,
-                start: 'top 85%',
-                once: true,
-                onEnter: () => {
-                    const proxy = { value: 0 };
-                    gsap.to(proxy, {
-                        value: target,
-                        duration: 1.8,
-                        ease: "power2.out",
-                        onUpdate() {
-                            el.textContent = hasComma
-                                ? Math.round(proxy.value).toLocaleString('es-MX')
-                                : Math.round(proxy.value).toString();
-                        },
-                        onComplete() {
-                            el.textContent = hasComma
-                                ? target.toLocaleString('es-MX')
-                                : target.toString();
-                        }
-                    });
-                }
-            });
-        });
 
         // ── 4. SETUP ──────────────────────────────────────────────
         sectionTimeline('#setup', 'top 80%', [
