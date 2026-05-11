@@ -405,7 +405,7 @@ body {
    =========================== */
 .big-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(6rem, 18vw, 15rem);
+    font-size: clamp(6rem, 11vw, 15rem);
     font-weight: 900;
     line-height: 0.75;
     letter-spacing: -0.07em;
@@ -481,6 +481,8 @@ body {
     color: var(--blue);
     line-height: 1;
     letter-spacing: -2px;
+    display: block;
+    min-height: 1lh; /* reserva el espacio antes de que el contador arranque */
 }
 
 .stat-label {
@@ -494,6 +496,17 @@ body {
 
 .stats-title-container {
     text-align: right;
+}
+
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .stats-title-container {
+        text-align: left;
+        margin-bottom: 40px;
+        grid-row: 1;
+    }
 }
 
 @media (max-width: 992px) {
@@ -781,6 +794,12 @@ body {
 
 .contact-footer a:hover { opacity: 0.6; }
 
+@media (max-width: 1100px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 992px) {
     .contact-section-minimal { padding: 80px 5%; }
     .contact-intro { margin-top: 30px; }
@@ -789,15 +808,7 @@ body {
 @media (max-width: 768px) {
     .contact-intro { font-size: 1rem; }
 }
-@media (max-width: 1366px) and (min-width: 769px) {
-    .contact-grid {
-        grid-template-columns: 1fr 1.2fr;
-    }
 
-    .contact-grid .big-title {
-        font-size: clamp(3rem, 10vw, 6rem);
-    }
-}
 /* ===========================
    FOOTER
    =========================== */
