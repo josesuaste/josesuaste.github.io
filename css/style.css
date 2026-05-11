@@ -51,7 +51,6 @@ body {
 .hero {
     position: relative;
     /* FIX: 100vh ignora la barra de URL dinámica en iOS Safari → 100svh es preciso */
-    height: 100svh;
     /* Fallback para browsers sin soporte svh */
     height: 100vh;
     height: 100svh;
@@ -509,14 +508,6 @@ body {
     }
 }
 
-@media (max-width: 992px) {
-    .stats-title-container {
-        grid-row: 1;
-        text-align: left;
-        margin-bottom: 50px;
-    }
-}
-
 @media (max-width: 480px) {
     .stats-content {
         grid-template-columns: 1fr;
@@ -719,6 +710,16 @@ body {
     color: var(--blue);
     margin-bottom: 40px;
     max-width: 500px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+@media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
 }
 
 .minimal-form {

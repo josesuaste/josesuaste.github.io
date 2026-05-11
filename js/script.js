@@ -82,6 +82,30 @@ window.addEventListener('resize', () => {
 });
 
 // ─────────────────────────────────────────────────────────────
+//  Nav link activo al hacer scroll
+// ─────────────────────────────────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+const sectionObserver = new IntersectionObserver(
+    (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.toggle(
+                        'active',
+                        link.getAttribute('href') === `#${entry.target.id}`
+                    );
+                });
+            }
+        });
+    },
+    { threshold: 0.4 }
+);
+
+sections.forEach(section => sectionObserver.observe(section));
+
+// ─────────────────────────────────────────────────────────────
 //  GSAP
 //
 //  Estrategia anti-resize:
@@ -93,33 +117,6 @@ window.addEventListener('resize', () => {
 //  - La animación del hero corre UNA sola vez al cargar la página,
 //    fuera de matchMedia, para que el resize nunca la reescriba.
 // ─────────────────────────────────────────────────────────────
-
-// ─────────────────────────────────────────────────────────────
-//  Marcar como ya-animados los elementos visibles al cargar
-//  En móvil muchas secciones ya están en el viewport inicial —
-//  sin esto GSAP las animaría todas de golpe al registrar los triggers
-// ─────────────────────────────────────────────────────────────
-function preMarkVisible() {
-    const selectors = [
-        '#about .big-title', '#about .sub-title', '#about .section-description',
-        '#stats .big-title', '#stats .stat-item',
-        '.setup-header .big-title', '.setup-header .section-description', '.setup-shape',
-        '#videos .big-title', '#videos .section-description',
-        '#contact .big-title', '#contact .form-field', '#contact .minimal-submit',
-        '.footer-col'
-    ];
-
-    selectors.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-            const rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                el.dataset.animated = 'true';
-            }
-        });
-    });
-}
-
-preMarkVisible();
 
 // Helper: devuelve solo los elementos que no han sido animados aún
 function unAnimated(selector) {
@@ -171,12 +168,8 @@ gsap.matchMedia().add(
         const { reduceMotion, isDesktop } = context.conditions;
         if (reduceMotion) return;
 
-        // ── Helper interno: from() solo si el elemento no fue animado ──
-        function animateIfNew(selector, vars, position) {
-            const els = unAnimated(selector);
-            if (!els.length) return null;
-            return { els, vars, position };
-        }
+        // En móvil solo se ve la animación del hero — sin scroll triggers
+        if (!isDesktop) return;
 
         // ── Función para construir timeline de sección ──
         function sectionTimeline(trigger, start, items) {
