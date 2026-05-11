@@ -94,6 +94,33 @@ window.addEventListener('resize', () => {
 //    fuera de matchMedia, para que el resize nunca la reescriba.
 // ─────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────
+//  Marcar como ya-animados los elementos visibles al cargar
+//  En móvil muchas secciones ya están en el viewport inicial —
+//  sin esto GSAP las animaría todas de golpe al registrar los triggers
+// ─────────────────────────────────────────────────────────────
+function preMarkVisible() {
+    const selectors = [
+        '#about .big-title', '#about .sub-title', '#about .section-description',
+        '#stats .big-title', '#stats .stat-item',
+        '.setup-header .big-title', '.setup-header .section-description', '.setup-shape',
+        '#videos .big-title', '#videos .section-description',
+        '#contact .big-title', '#contact .form-field', '#contact .minimal-submit',
+        '.footer-col'
+    ];
+
+    selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.dataset.animated = 'true';
+            }
+        });
+    });
+}
+
+preMarkVisible();
+
 // Helper: devuelve solo los elementos que no han sido animados aún
 function unAnimated(selector) {
     return [...document.querySelectorAll(selector)].filter(
@@ -133,33 +160,6 @@ function markDone(elements) {
         .from('.bottom-sub-btn', { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.4")
         .from('.header-corner', { autoAlpha: 0, y: 15, stagger: 0.15, duration: 0.6 }, "-=0.4");
 })();
-
-// ─────────────────────────────────────────────────────────────
-//  Marcar como ya-animados los elementos visibles al cargar
-//  Esto evita que en móvil todo aparezca de golpe o se salte
-// ─────────────────────────────────────────────────────────────
-function preMarkVisible() {
-    const selectors = [
-        '#about .big-title', '#about .sub-title', '#about .section-description',
-        '#stats .big-title', '#stats .stat-item',
-        '.setup-header .big-title', '.setup-header .section-description', '.setup-shape',
-        '#videos .big-title', '#videos .section-description',
-        '#contact .big-title', '#contact .form-field', '#contact .minimal-submit',
-        '.footer-col'
-    ];
-
-    selectors.forEach(sel => {
-        document.querySelectorAll(sel).forEach(el => {
-            const rect = el.getBoundingClientRect();
-            // Si el elemento ya está visible en el viewport al cargar, marcarlo
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                el.dataset.animated = 'true';
-            }
-        });
-    });
-}
-
-preMarkVisible();
 
 // ── Animaciones de scroll ─────────────────────────────────────
 gsap.matchMedia().add(
