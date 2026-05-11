@@ -810,6 +810,16 @@ body {
     .contact-intro { font-size: 1rem; }
 }
 
+@media (max-width: 768px) {
+    .about-section,
+    .stats-section,
+    .setup-section,
+    .videos-section,
+    .contact-section-minimal {
+        padding: 60px 5%;
+    }
+}
+
 /* ===========================
    FOOTER
    =========================== */
