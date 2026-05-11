@@ -134,6 +134,33 @@ function markDone(elements) {
         .from('.header-corner', { autoAlpha: 0, y: 15, stagger: 0.15, duration: 0.6 }, "-=0.4");
 })();
 
+// ─────────────────────────────────────────────────────────────
+//  Marcar como ya-animados los elementos visibles al cargar
+//  Esto evita que en móvil todo aparezca de golpe o se salte
+// ─────────────────────────────────────────────────────────────
+function preMarkVisible() {
+    const selectors = [
+        '#about .big-title', '#about .sub-title', '#about .section-description',
+        '#stats .big-title', '#stats .stat-item',
+        '.setup-header .big-title', '.setup-header .section-description', '.setup-shape',
+        '#videos .big-title', '#videos .section-description',
+        '#contact .big-title', '#contact .form-field', '#contact .minimal-submit',
+        '.footer-col'
+    ];
+
+    selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => {
+            const rect = el.getBoundingClientRect();
+            // Si el elemento ya está visible en el viewport al cargar, marcarlo
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.dataset.animated = 'true';
+            }
+        });
+    });
+}
+
+preMarkVisible();
+
 // ── Animaciones de scroll ─────────────────────────────────────
 gsap.matchMedia().add(
     {
