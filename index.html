@@ -24,13 +24,11 @@
     <meta name="twitter:title" content="José Suaste — Creador Mac & Apple">
     <meta name="twitter:description" content="Tutoriales y contenido sobre el ecosistema Apple en español.">
     <meta name="twitter:image" content="https://josesuaste.github.io/og-image.png">
-    <link rel="icon" type="image/svg+xml" href="images/favicon/hojas.svg">
+    <link rel="icon" type="image/svg+xml" href="images/favicon/circulo.svg">
     <link rel="apple-touch-icon" href="images/favicon/favicon.png">
-    <!-- FIX: faltaba el link de Inter — sin esto la fuente nunca cargaba -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Navbar fuera del hero para que el fixed funcione en todo el scroll -->
     <nav class="navbar">
         <span class="logo">ERROR404</span>
         <div class="nav-links" id="nav-links">
@@ -38,15 +36,16 @@
             <a href="#setup">Set up</a>
             <a href="#videos">Contenido</a>
             <a href="#contact">Contacto</a>
-            <!-- Enlace solo visible en móvil -->
             <a href="#"
                target="_blank" rel="noopener noreferrer"
-               class="nav-mediakit-link">Media Kit</a>
+               class="nav-mediakit-link"
+               data-umami-event="Click-MediaKit-Nav-Movil">Media Kit</a>
         </div>
         <div class="nav-right">
             <a href="#"
                target="_blank" rel="noopener noreferrer"
-               class="nav-mediakit-btn">Media Kit</a>
+               class="nav-mediakit-btn"
+               data-umami-event="Click-MediaKit-Nav-Desktop">Media Kit</a>
             <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -55,43 +54,37 @@
     </nav>
 
     <header class="hero">
-
-    <!-- Contenido central: título + foto -->
-    <div class="hero-content">
-        <h1 class="giant-title">José Suaste</h1>
-        <div class="profile-wrapper">
-            <!-- FIX: width/height previenen CLS; fetchpriority="high" optimiza LCP (esta es la imagen más grande del viewport) -->
-            <img src="images/img/ejemplo.png"
-                 alt="José Suaste"
-                 class="profile-img"
-                 width="600"
-                 height="600"
-                 loading="eager"
-                 fetchpriority="high"
-                 decoding="async">
-        </div>
-    </div>
-
-    <!-- Footer del hero: botón + corners
-         En desktop: absolute bottom, con los tres elementos
-         posicionados dentro de este contenedor.
-         En móvil: flujo normal, columna centrada. -->
-    <div class="hero-footer">
-        <div class="header-corner left">
-            <p>Un espacio dedicado al análisis de herramientas digitales desde la utilidad real, No reviso gadgets, evalúo su impacto en tu flujo de trabajo.</p>
+        <div class="hero-content">
+            <h1 class="giant-title">José Suaste</h1>
+            <div class="profile-wrapper">
+                <img src="images/img/ejemplo.png"
+                     alt="José Suaste"
+                     class="profile-img"
+                     width="600"
+                     height="600"
+                     loading="eager"
+                     fetchpriority="high"
+                     decoding="async">
+            </div>
         </div>
 
-        <a href="https://www.youtube.com/@josesuaste-tech?sub_confirmation=1"
-           target="_blank" class="bottom-sub-btn">
-            SUSCRIBETE
-        </a>
+        <div class="hero-footer">
+            <div class="header-corner left">
+                <p>Un espacio dedicado al análisis de herramientas digitales desde la utilidad real, No reviso gadgets, evalúo su impacto en tu flujo de trabajo.</p>
+            </div>
 
-        <div class="header-corner right">
-            <p>La tecnología debe ser una extensión de tu capacidad, Transformar el consumo impulsivo en dominio tecnológico, Una curaduría de apps, hardware y minimalismo digital.</p>
+            <a href="https://www.youtube.com/@josesuaste-tech?sub_confirmation=1"
+               target="_blank" 
+               class="bottom-sub-btn"
+               data-umami-event="Click-Suscripcion-Hero">
+                SUSCRIBETE
+            </a>
+
+            <div class="header-corner right">
+                <p>La tecnología debe ser una extensión de tu capacidad, Transformar el consumo impulsivo en dominio tecnológico, Una curaduría de apps, hardware y minimalismo digital.</p>
+            </div>
         </div>
-    </div>
-
-</header>
+    </header>
 
     <section class="about-section" id="about">
         <div class="about-flex section-grid">
@@ -139,82 +132,84 @@
     </section>
 
     <section class="videos-section" id="videos">
-    <div class="videos-flex section-grid">
-        <!-- Contenido (columna izquierda del grid) -->
-        <div class="about-right">
-            <p class="section-description">
-                Contenido reciente sobre tecnología. Tutoriales, reviews, unboxings y tips para tu día a día.
-            </p>
-            <div class="videos-grid">
-                <!-- Las tarjetas de video se insertarán aquí -->
+        <div class="videos-flex section-grid">
+            <div class="about-right">
+                <p class="section-description">
+                    Contenido reciente sobre tecnología. Tutoriales, reviews, unboxings y tips para tu día a día.
+                </p>
+                <div class="videos-grid">
+                    </div>
+                <a href="https://www.youtube.com/@josesuaste-tech" 
+                   target="_blank" 
+                   class="view-all-btn"
+                   data-umami-event="Click-VerTodosVideos">
+                    Ver todos los videos →
+                </a>
             </div>
-            <a href="https://www.youtube.com/@josesuaste-tech" target="_blank" class="view-all-btn">
-                Ver todos los videos →
-            </a>
+            <div class="about-left" style="text-align: right;">
+                <h2 class="big-title">videos</h2>
+            </div>
         </div>
-        <!-- Título (columna derecha del grid) -->
-        <div class="about-left" style="text-align: right;">
-            <h2 class="big-title">videos</h2>
-        </div>
-    </div>
-</section>
+    </section>
 
     <section class="contact-section-minimal" id="contact">
-    <div class="section-grid contact-grid">
-        <div class="about-left">
-            <h2 class="big-title">colabora-<br>ciones.</h2>
-        </div>
-        <div class="about-right">
-            <!-- FIX: action="#" no enviaba nada — integrado con Web3Forms (gratis, sin backend)
-                 Obtén tu access_key gratis en https://web3forms.com y reemplaza el valor -->
-            <form class="minimal-form" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
-                <input type="hidden" name="subject" value="Nueva colaboración desde josesuaste.github.io">
-                <input type="hidden" name="from_name" value="ERROR404 — Web">
-                <div class="form-row">
-                    <div class="form-field">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        <div class="section-grid contact-grid">
+            <div class="about-left">
+                <h2 class="big-title">colabora-<br>ciones.</h2>
+            </div>
+            <div class="about-right">
+                <form class="minimal-form" action="https://api.web3forms.com/submit" method="POST" data-umami-event="Envio-Formulario-Contacto">
+                    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                    <input type="hidden" name="subject" value="Nueva colaboración desde josesuaste.github.io">
+                    <input type="hidden" name="from_name" value="ERROR404 — Web">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="hola@correo.com" required>
+                        </div>
                     </div>
                     <div class="form-field">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="hola@correo.com" required>
+                        <label for="empresa">Empresa</label>
+                        <input type="text" id="empresa" name="empresa" placeholder="Marca u organización">
                     </div>
-                </div>
-                <div class="form-field">
-                    <label for="empresa">Empresa</label>
-                    <input type="text" id="empresa" name="empresa" placeholder="Marca u organización">
-                </div>
-                <div class="form-field">
-                    <label for="mensaje">Cuéntame sobre tu propuesta</label>
-                    <textarea id="mensaje" name="mensaje" rows="1" placeholder="Escribe aquí..." required></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="submit" class="minimal-submit">
-                        <span class="btn-dot"></span>
-                        Enviar mensaje
-                    </button>
-                </div>
-            </form>
+                    <div class="form-field">
+                        <label for="mensaje">Cuéntame sobre tu propuesta</label>
+                        <textarea id="mensaje" name="mensaje" rows="1" placeholder="Escribe aquí..." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="minimal-submit">
+                            <span class="btn-dot"></span>
+                            Enviar mensaje
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <footer class="massive-footer">
         <div class="footer-bottom">
-            <div class="footer-col"><h4>Social</h4><div class="social-pills">
-                <!-- FIX: <span> sin enlace → <a> accesible con destino real -->
-                <a href="https://www.instagram.com/josesuaste" target="_blank" rel="noopener noreferrer" aria-label="Instagram de José Suaste">IG</a>
-                <a href="https://www.youtube.com/@josesuaste-tech" target="_blank" rel="noopener noreferrer" aria-label="YouTube de José Suaste">YT</a>
-            </div></div>
+            <div class="footer-col">
+                <h4>Social</h4>
+                <div class="social-pills">
+                    <a href="https://www.instagram.com/josesuaste" target="_blank" rel="noopener noreferrer" aria-label="Instagram de José Suaste" data-umami-event="Click-Social-Instagram">IG</a>
+                    <a href="https://www.youtube.com/@josesuaste-tech" target="_blank" rel="noopener noreferrer" aria-label="YouTube de José Suaste" data-umami-event="Click-Social-YouTube">YT</a>
+                </div>
+            </div>
             <div class="footer-col"><h4>Contacto</h4><p>ERROR404@icloud.com</p></div>
-            <div class="footer-col"><h4>GitHub</h4><p><a href="https://github.com/josesuaste" target="_blank">@josesuaste</a></p></div>
+            <div class="footer-col">
+                <h4>GitHub</h4>
+                <p><a href="https://github.com/josesuaste" target="_blank" data-umami-event="Click-Social-GitHub">@josesuaste</a></p>
+            </div>
         </div>
     </footer>
     
-
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
