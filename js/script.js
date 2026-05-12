@@ -3,9 +3,6 @@
 // ─────────────────────────────────────────────────────────────
 gsap.registerPlugin(ScrollTrigger);
 
-// ─────────────────────────────────────────────────────────────
-//  Defaults globales
-// ─────────────────────────────────────────────────────────────
 gsap.defaults({ ease: "power3.out" });
 
 // ─────────────────────────────────────────────────────────────
@@ -106,40 +103,15 @@ const sectionObserver = new IntersectionObserver(
 sections.forEach(section => sectionObserver.observe(section));
 
 // ─────────────────────────────────────────────────────────────
-//  GSAP
-//
-//  Estrategia anti-resize:
-//  - Las animaciones de scroll usan toggleActions "play none none none"
-//    (no reverse) y marcan cada elemento con data-animated="true" al
-//    completarse. Si matchMedia re-ejecuta el bloque al cruzar un
-//    breakpoint, los elementos ya marcados se saltan — nunca
-//    desaparecen ni vuelven a animarse.
-//  - La animación del hero corre UNA sola vez al cargar la página,
-//    fuera de matchMedia, para que el resize nunca la reescriba.
+//  GSAP — Hero
+//  Corre una sola vez al cargar, no se repite al hacer resize
 // ─────────────────────────────────────────────────────────────
-
-// Helper: devuelve solo los elementos que no han sido animados aún
-function unAnimated(selector) {
-    return [...document.querySelectorAll(selector)].filter(
-        el => !el.dataset.animated
-    );
-}
-
-// Helper: marca elementos como animados al completar
-function markDone(elements) {
-    const els = elements instanceof Element ? [elements] : [...elements];
-    els.forEach(el => (el.dataset.animated = 'true'));
-}
-
-// ── Hero: corre una sola vez al cargar, independiente del breakpoint ──
 (function heroEntrance() {
-    // Si ya corrió (recarga con bfcache), salir
     if (document.querySelector('.navbar')?.dataset.animated) return;
 
     const heroTl = gsap.timeline({
         defaults: { duration: 0.9, ease: "power3.out" },
         onComplete() {
-            // Marcar todos para que el resize no los resetee
             ['.navbar', '.giant-title', '.profile-img',
              '.bottom-sub-btn', '.header-corner'
             ].forEach(sel => {
@@ -151,25 +123,22 @@ function markDone(elements) {
     });
 
     heroTl
-        .from('.navbar', { autoAlpha: 0, y: -20, duration: 0.6 })
-        .from('.giant-title', { autoAlpha: 0, y: 60, duration: 1, ease: "power4.out" }, "-=0.3")
-        .from('.profile-img', { autoAlpha: 0, scale: 0.92, duration: 1 }, "-=0.6")
+        .from('.navbar',         { autoAlpha: 0, y: -20, duration: 0.6 })
+        .from('.giant-title',    { autoAlpha: 0, y: 60, duration: 1, ease: "power4.out" }, "-=0.3")
+        .from('.profile-img',    { autoAlpha: 0, scale: 0.92, duration: 1 }, "-=0.6")
         .from('.bottom-sub-btn', { autoAlpha: 0, y: 20, duration: 0.6 }, "-=0.4")
-        .from('.header-corner', { autoAlpha: 0, y: 15, stagger: 0.15, duration: 0.6 }, "-=0.4");
+        .from('.header-corner',  { autoAlpha: 0, y: 15, stagger: 0.15, duration: 0.6 }, "-=0.4");
 })();
 
 // ─────────────────────────────────────────────────────────────
-//  Contador animado — corre una sola vez, independiente del breakpoint
-//  Fuera de matchMedia para que el resize no lo destruya ni resetee
+//  GSAP — Contador de estadísticas
+//  Fuera de matchMedia — corre una sola vez en cualquier dispositivo
 // ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.stat-number').forEach(el => {
     const raw = el.textContent.trim().replace(/,/g, '');
     const target = parseFloat(raw);
     const hasComma = el.textContent.includes(',');
     if (isNaN(target)) return;
-
-    // Guardar el valor original para restaurarlo si el trigger no llega
-    el.dataset.originalValue = el.textContent.trim();
 
     ScrollTrigger.create({
         trigger: el,
@@ -196,89 +165,127 @@ document.querySelectorAll('.stat-number').forEach(el => {
     });
 });
 
-// ── Animaciones de scroll ─────────────────────────────────────
-gsap.matchMedia().add(
+// ─────────────────────────────────────────────────────────────
+//  GSAP — Animaciones de scroll (solo desktop)
+//
+//  Estrategia: fromTo() + clearProps: "all" en toVars
+//  Cuando matchMedia revierte el bloque al cruzar a móvil,
+//  clearProps garantiza que los estilos inline se limpien
+//  y los elementos queden en su estado CSS natural — visibles.
+// ─────────────────────────────────────────────────────────────
+const mm = gsap.matchMedia();
+
+mm.add(
     {
-        reduceMotion: "(prefers-reduced-motion: reduce)",
-        isDesktop: "(min-width: 769px)"
+        isDesktop: "(min-width: 769px)",
+        reduceMotion: "(prefers-reduced-motion: reduce)"
     },
     (context) => {
-        const { reduceMotion, isDesktop } = context.conditions;
-        if (reduceMotion) return;
+        const { isDesktop, reduceMotion } = context.conditions;
+        if (!isDesktop || reduceMotion) return;
 
-        // En móvil solo se ve la animación del hero — sin scroll triggers
-        if (!isDesktop) return;
-
-        // ── Función para construir timeline de sección ──
-        function sectionTimeline(trigger, start, items) {
-            // Filtrar items cuyos elementos ya fueron animados
-            const pending = items.filter(item => {
-                if (!item) return false;
-                return unAnimated(item.selector).length > 0;
-            });
-            if (!pending.length) return;
-
+        // Helper: construye un timeline de sección con fromTo + clearProps
+        function buildTimeline(trigger, start, items) {
             const tl = gsap.timeline({
                 scrollTrigger: { trigger, start, once: true },
                 defaults: { ease: "power3.out" }
             });
 
-            pending.forEach(({ selector, vars, position }) => {
-                const els = unAnimated(selector);
-                tl.from(els, {
-                    ...vars,
-                    onComplete() { markDone(els); }
-                }, position);
+            items.forEach(({ selector, fromVars, toVars, position }) => {
+                const els = document.querySelectorAll(selector);
+                if (!els.length) return;
+                tl.fromTo(
+                    els,
+                    fromVars,
+                    { ...toVars, clearProps: "all" },
+                    position
+                );
             });
+
+            return tl;
         }
 
-        // ── 2. SOBRE MÍ ──────────────────────────────────────────
-        sectionTimeline('#about', 'top 80%', [
-            { selector: '#about .big-title',
-              vars: { autoAlpha: 0, x: isDesktop ? -60 : 0, y: isDesktop ? 0 : 40, duration: 1 } },
-            { selector: '#about .sub-title',
-              vars: { autoAlpha: 0, y: 30, duration: 0.7 }, position: "-=0.5" },
-            { selector: '#about .section-description',
-              vars: { autoAlpha: 0, y: 20, duration: 0.7 }, position: "-=0.4" }
+        // ── Sobre mí ──────────────────────────────────────────
+        buildTimeline('#about', 'top 80%', [
+            {
+                selector: '#about .big-title',
+                fromVars: { autoAlpha: 0, x: -60 },
+                toVars:   { autoAlpha: 1, x: 0, duration: 1 }
+            },
+            {
+                selector: '#about .sub-title',
+                fromVars: { autoAlpha: 0, y: 30 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 0.7 },
+                position: "-=0.5"
+            },
+            {
+                selector: '#about .section-description',
+                fromVars: { autoAlpha: 0, y: 20 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 0.7 },
+                position: "-=0.4"
+            }
         ]);
 
-        // ── 3. ESTADÍSTICAS ───────────────────────────────────────
-        sectionTimeline('#stats', 'top 75%', [
-            { selector: '#stats .big-title',
-              vars: { autoAlpha: 0, x: isDesktop ? 60 : 0, y: isDesktop ? 0 : 40, duration: 1 } },
-            { selector: '#stats .stat-item',
-              vars: { autoAlpha: 0, y: 40, stagger: 0.12, duration: 0.7 }, position: "-=0.5" }
+        // ── Estadísticas ──────────────────────────────────────
+        buildTimeline('#stats', 'top 75%', [
+            {
+                selector: '#stats .big-title',
+                fromVars: { autoAlpha: 0, x: 60 },
+                toVars:   { autoAlpha: 1, x: 0, duration: 1 }
+            },
+            {
+                selector: '#stats .stat-item',
+                fromVars: { autoAlpha: 0, y: 40 },
+                toVars:   { autoAlpha: 1, y: 0, stagger: 0.12, duration: 0.7 },
+                position: "-=0.5"
+            }
         ]);
 
-        // ── 4. SETUP ──────────────────────────────────────────────
-        sectionTimeline('#setup', 'top 80%', [
-            { selector: '.setup-header .big-title',
-              vars: { autoAlpha: 0, y: 50, duration: 1 } },
-            { selector: '.setup-header .section-description',
-              vars: { autoAlpha: 0, y: 30, duration: 0.8 }, position: "-=0.5" }
+        // ── Setup ─────────────────────────────────────────────
+        buildTimeline('#setup', 'top 80%', [
+            {
+                selector: '.setup-header .big-title',
+                fromVars: { autoAlpha: 0, y: 50 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 1 }
+            },
+            {
+                selector: '.setup-header .section-description',
+                fromVars: { autoAlpha: 0, y: 30 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 0.8 },
+                position: "-=0.5"
+            }
         ]);
 
-        const newShapes = unAnimated('.setup-shape');
-        if (newShapes.length) {
-            ScrollTrigger.batch(newShapes, {
-                start: 'top 88%',
-                once: true,
-                onEnter: (elements) => {
-                    gsap.from(elements, {
-                        autoAlpha: 0, y: 50, scale: 0.88,
-                        stagger: 0.1, duration: 0.8, ease: "back.out(1.4)",
-                        onComplete() { markDone(elements); }
-                    });
-                }
-            });
-        }
+        ScrollTrigger.batch('.setup-shape', {
+            start: 'top 88%',
+            once: true,
+            onEnter: (elements) => {
+                gsap.fromTo(
+                    elements,
+                    { autoAlpha: 0, y: 50, scale: 0.88 },
+                    {
+                        autoAlpha: 1, y: 0, scale: 1,
+                        stagger: 0.1, duration: 0.8,
+                        ease: "back.out(1.4)",
+                        clearProps: "all"
+                    }
+                );
+            }
+        });
 
-        // ── 5. VIDEOS ─────────────────────────────────────────────
-        sectionTimeline('#videos', 'top 80%', [
-            { selector: '#videos .big-title',
-              vars: { autoAlpha: 0, x: isDesktop ? 60 : 0, y: isDesktop ? 0 : 40, duration: 1 } },
-            { selector: '#videos .section-description',
-              vars: { autoAlpha: 0, y: 25, duration: 0.7 }, position: "-=0.5" }
+        // ── Videos ────────────────────────────────────────────
+        buildTimeline('#videos', 'top 80%', [
+            {
+                selector: '#videos .big-title',
+                fromVars: { autoAlpha: 0, x: 60 },
+                toVars:   { autoAlpha: 1, x: 0, duration: 1 }
+            },
+            {
+                selector: '#videos .section-description',
+                fromVars: { autoAlpha: 0, y: 25 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 0.7 },
+                position: "-=0.5"
+            }
         ]);
 
         // Tarjetas de video insertadas dinámicamente
@@ -288,29 +295,51 @@ gsap.matchMedia().add(
             const cardObserver = new MutationObserver(() => {
                 const cards = videosGrid.querySelectorAll('.video-card:not(.gsap-animated)');
                 if (cards.length) {
-                    gsap.from(cards, {
-                        autoAlpha: 0, y: 40, stagger: 0.12, duration: 0.7,
-                        onComplete() { cards.forEach(c => c.classList.add('gsap-animated')); }
-                    });
+                    gsap.fromTo(
+                        cards,
+                        { autoAlpha: 0, y: 40 },
+                        {
+                            autoAlpha: 1, y: 0,
+                            stagger: 0.12, duration: 0.7,
+                            clearProps: "all",
+                            onComplete() {
+                                cards.forEach(c => c.classList.add('gsap-animated'));
+                            }
+                        }
+                    );
                 }
             });
             cardObserver.observe(videosGrid, { childList: true });
         }
 
-        // ── 6. COLABORACIONES ─────────────────────────────────────
-        sectionTimeline('#contact', 'top 80%', [
-            { selector: '#contact .big-title',
-              vars: { autoAlpha: 0, x: isDesktop ? -60 : 0, y: isDesktop ? 0 : 40, duration: 1 } },
-            { selector: '#contact .form-field',
-              vars: { autoAlpha: 0, y: 25, stagger: 0.1, duration: 0.6 }, position: "-=0.5" },
-            { selector: '#contact .minimal-submit',
-              vars: { autoAlpha: 0, y: 15, duration: 0.5 }, position: "-=0.2" }
+        // ── Colaboraciones ────────────────────────────────────
+        buildTimeline('#contact', 'top 80%', [
+            {
+                selector: '#contact .big-title',
+                fromVars: { autoAlpha: 0, x: -60 },
+                toVars:   { autoAlpha: 1, x: 0, duration: 1 }
+            },
+            {
+                selector: '#contact .form-field',
+                fromVars: { autoAlpha: 0, y: 25 },
+                toVars:   { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.6 },
+                position: "-=0.5"
+            },
+            {
+                selector: '#contact .minimal-submit',
+                fromVars: { autoAlpha: 0, y: 15 },
+                toVars:   { autoAlpha: 1, y: 0, duration: 0.5 },
+                position: "-=0.2"
+            }
         ]);
 
-        // ── 7. FOOTER ─────────────────────────────────────────────
-        sectionTimeline('.massive-footer', 'top 90%', [
-            { selector: '.footer-col',
-              vars: { autoAlpha: 0, y: 30, stagger: 0.15, duration: 0.7 } }
+        // ── Footer ────────────────────────────────────────────
+        buildTimeline('.massive-footer', 'top 90%', [
+            {
+                selector: '.footer-col',
+                fromVars: { autoAlpha: 0, y: 30 },
+                toVars:   { autoAlpha: 1, y: 0, stagger: 0.15, duration: 0.7 }
+            }
         ]);
     }
 );
