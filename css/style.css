@@ -132,7 +132,7 @@ body {
     flex-shrink: 0;
 }
 
-.nav-paypal-btn {
+.nav-mediakit-btn {
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 700;
@@ -145,7 +145,7 @@ body {
     white-space: nowrap;
 }
 
-.nav-paypal-btn:hover {
+.nav-mediakit-btn:hover {
     background-color: var(--orange);
     transform: translateY(-2px);
 }
@@ -172,13 +172,13 @@ body {
     transform-origin: center;
 }
 /* Ocultar el enlace de PayPal en escritorio */
-.nav-paypal-link {
+.nav-mediakit-link {
     display: none;
 }
 
 /* Mostrarlo solo en móvil */
 @media (max-width: 768px) {
-    .nav-paypal-link {
+    .nav-mediakit-link {
         display: block;
         font-size: 2rem;
         font-weight: 900;
@@ -187,7 +187,7 @@ body {
         padding: 8px 20px;
         border-radius: 0;
     }
-    .nav-paypal-link:hover {
+    .nav-mediakit-link:hover {
         background-color: transparent;
         opacity: 0.6;
     }
@@ -196,7 +196,7 @@ body {
 @media (max-width: 768px) {
     .navbar { padding: 0 20px; }
     .menu-toggle { display: flex; }
-    .nav-paypal-btn { display: none; }
+    .nav-mediakit-btn { display: none; }
     
 
     .nav-links {
@@ -857,7 +857,7 @@ body {
     opacity: 0.9;
 }
 
-.footer-col a:hover { opacity: 1; text-decoration: underline; }
+.footer-col a:hover { opacity: 1; text-decoration: none; }
 
 /* FIX: eran <span> decorativos → ahora son <a> — se actualiza el selector */
 .social-pills a {
