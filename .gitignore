@@ -33,7 +33,5 @@ logs
 # Design Studio Trial Fonts (as discussed in previous context)
 *.otf
 *.ttf
-*.woff
-*.woff2
 # Un-comment the next line if you want to allow Google Fonts specifically
 # !/fonts/google-fonts/*

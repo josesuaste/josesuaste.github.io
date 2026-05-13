@@ -1,5 +1,5 @@
 :root {
-    --blue: #2874ed;
+    --blue: #256ff8;
     --orange: #ff7d61;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
@@ -21,7 +21,7 @@
 }
 @font-face {
     font-family: 'Inter';
-    src: url('../fonts/InterVariable.woff2') format('woff2');
+    src: url('../fonts/InterVariable.woff2') format('woff2-variations');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
@@ -707,14 +707,14 @@ body {
    CONTACTO
    =========================== */
 .contact-section-minimal {
-    background: var(--bg-cream);
-    padding: 120px 5%;
+    background: var(--blue);
+    padding: 140px 5%;
 }
 
 .contact-intro {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: var(--blue);
+    color: var(--bg-cream);
     margin-bottom: 40px;
     max-width: 500px;
 }
@@ -735,53 +735,72 @@ body {
     gap: 25px;
 }
 
+/* Etiquetas del formulario en cream */
+.form-field label {
+    color: var(--bg-cream);
+    opacity: 0.7;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+}
+
 .form-field input,
 .form-field textarea {
     width: 100%;
     padding: 15px 0;
     border: none;
-    border-bottom: 1px solid var(--blue);
+    border-bottom: 1px solid rgba(244, 241, 234, 0.4);
     background: transparent;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
-    color: var(--blue);
+    color: var(--bg-cream);
     transition: border-color 0.3s ease;
 }
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-    color: var(--blue);
-    opacity: 0.5;
+    color: var(--bg-cream);
+    opacity: 0.35;
 }
 
 .form-field input:focus,
 .form-field textarea:focus {
     outline: none;
-    border-bottom-color: var(--orange);
+    border-bottom-color: var(--bg-cream);
 }
 
 .form-field textarea { resize: vertical; min-height: 100px; }
 
+/* Título big-title en cream dentro del bloque azul */
+.contact-section-minimal .big-title {
+    color: var(--bg-cream);
+}
+
 .minimal-submit {
     align-self: flex-start;
-    padding: 15px 40px;
-    background: var(--blue);
-    color: var(--white);
+    padding: 16px 40px;
+    background: var(--bg-cream);
+    color: var(--blue);
     border: none;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
+    border-radius: 4px;
 }
 
 .minimal-submit:hover {
     background: var(--orange);
+    color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(42, 120, 246, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .minimal-submit span { transition: transform 0.3s ease; }
@@ -790,13 +809,13 @@ body {
 .contact-footer {
     margin-top: 40px;
     font-size: 0.9rem;
-    color: var(--blue);
+    color: var(--bg-cream);
 }
 
 .contact-footer a {
-    color: var(--blue);
+    color: var(--bg-cream);
     text-decoration: none;
-    border-bottom: 1px solid var(--blue);
+    border-bottom: 1px solid var(--bg-cream);
     transition: opacity 0.3s ease;
 }
 
@@ -809,7 +828,7 @@ body {
 }
 
 @media (max-width: 992px) {
-    .contact-section-minimal { padding: 80px 5%; }
+    .contact-section-minimal { padding: 100px 5%; }
     .contact-intro { margin-top: 30px; }
 }
 
@@ -821,9 +840,11 @@ body {
     .about-section,
     .stats-section,
     .setup-section,
-    .videos-section,
-    .contact-section-minimal {
+    .videos-section {
         padding: 60px 5%;
+    }
+    .contact-section-minimal {
+        padding: 80px 5%;
     }
 }
 
@@ -831,10 +852,9 @@ body {
    FOOTER
    =========================== */
 .massive-footer {
-    background: var(--bg-cream);
-    color: var(--blue);
-    padding: 80px 20px 60px;
-    text-align: center;
+    background: var(--blue);
+    color: var(--bg-cream);
+    padding: 60px 5%;
 }
 
 .footer-bottom {
@@ -843,46 +863,46 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     text-align: left;
-    border-top: 1px solid var(--blue);
-    padding-top: 30px;
+    border-top: 1px solid rgba(244, 241, 234, 0.2);
+    padding-top: 40px;
     gap: 40px;
 }
 
 .footer-col h4 {
     font-size: 0.8rem;
-    /* FIX: opacity en texto pequeño → color fijo para mejor contraste WCAG */
-    color: var(--text-muted);
-    margin-bottom: 10px;
+    color: var(--bg-cream);
+    opacity: 0.5;
+    margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .footer-col p,
 .footer-col a {
-    color: var(--blue);
+    color: var(--bg-cream);
     text-decoration: none;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .footer-col a:hover { opacity: 1; text-decoration: none; }
 
-/* FIX: eran <span> decorativos → ahora son <a> — se actualiza el selector */
 .social-pills a {
-    border: 1px solid var(--blue);
-    padding: 5px 12px;
+    border: 1px solid rgba(244, 241, 234, 0.4);
+    padding: 6px 14px;
     border-radius: 50px;
     margin-right: 5px;
     font-size: 0.8rem;
     display: inline-block;
     text-decoration: none;
-    color: var(--blue);
-    transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+    color: var(--bg-cream);
+    transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
 }
 
 .social-pills a:hover {
-    background: var(--blue);
-    color: var(--bg-cream);
+    background: var(--bg-cream);
+    color: var(--blue);
+    border-color: var(--bg-cream);
     transform: translateY(-2px);
 }
 
