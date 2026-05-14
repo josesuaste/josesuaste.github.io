@@ -26,7 +26,7 @@ jobs:
           feed_list: "https://www.youtube.com/feeds/videos.xml?channel_id=UCue5K1mHzM6JWRuG-xcyVtQ"
           max_post_count: 3
           template: |
-            <div class="video-card" data-aos="fade-up">
+            <div class="video-card">
                 <a href="$url" target="_blank" rel="noopener noreferrer" class="video-link">
                     <div class="video-thumbnail">
                         <img src="$thumbnail" alt="$title" loading="lazy">
