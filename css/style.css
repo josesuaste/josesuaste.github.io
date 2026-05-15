@@ -53,6 +53,11 @@ body {
     max-width: 100%;
     padding-top: 10px; 
 }
+/* ── NUEVO: foco visible accesible ── */
+:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
 
 /* ===========================
    HEADER
@@ -485,7 +490,8 @@ body {
     line-height: 1;
     letter-spacing: -2px;
     display: block;
-    min-height: 1lh; /* reserva el espacio antes de que el contador arranque */
+    min-height: 1em;   /* fallback para navegadores que no entienden lh */
+    min-height: 1lh;   /* reserva el espacio antes de que el contador arranque */
 }
 
 .stat-label {
