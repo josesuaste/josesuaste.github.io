@@ -37,6 +37,11 @@
 body.no-transition * {
     transition: none !important;
 }
+/* ── NUEVO: foco visible accesible ── */
+:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
 
 html {
     scroll-behavior: smooth;
@@ -52,11 +57,6 @@ body {
     overflow-x: hidden;
     max-width: 100%;
     padding-top: 10px; 
-}
-/* ── NUEVO: foco visible accesible ── */
-:focus-visible {
-    outline: 2px solid var(--orange);
-    outline-offset: 2px;
 }
 
 /* ===========================
