@@ -653,7 +653,7 @@ body {
 
 .video-link {
     text-decoration: none;
-    color: var(--blue);
+    color: var(--text-primary);
 }
 
 .video-info h3 {
@@ -753,7 +753,7 @@ body {
 .form-field input::placeholder,
 .form-field textarea::placeholder {
     color: var(--bg-cream);
-    opacity: 0.35;
+    opacity: 0.55;
 }
 
 .form-field input:focus,
