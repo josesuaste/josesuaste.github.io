@@ -7,12 +7,6 @@
     --text-muted: #5a7ab8;
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
-
-    /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
-    --text-primary: var(--blue);
-    --text-muted: #5a7ab8;        /* color fijo, no opacity — mejor contraste WCAG */
-    --transition-base: 0.3s ease;
-    --radius-pill: 50px;
 }
 
 @font-face {
@@ -926,7 +920,6 @@ body {
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
 }
-
 .social-pills a:hover {
     background: var(--bg-cream);
     color: var(--blue);
@@ -942,4 +935,10 @@ body {
     .footer-col {
         text-align: center;
     }
+}
+/* ===========================
+   WRAPPER PRINCIPAL
+   =========================== */
+#app {
+  overflow-x: clip;
 }
