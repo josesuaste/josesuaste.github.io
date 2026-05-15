@@ -3,6 +3,7 @@
     --orange: #ff7d61;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
+    
 
     /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
     --text-primary: var(--blue);
