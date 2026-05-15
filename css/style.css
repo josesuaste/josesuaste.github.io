@@ -1,9 +1,12 @@
 :root {
-    --blue: #2874ed;
+    --blue: #2874ed;             /* para fondos, botones, gráficos */
+    --text-primary: #1a5ed4;     /* para texto sobre fondo crema (contraste 5.1:1) */
     --orange: #ff7d61;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
-    
+    --text-muted: #5a7ab8;
+    --transition-base: 0.3s ease;
+    --radius-pill: 50px;
 
     /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
     --text-primary: var(--blue);
