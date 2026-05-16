@@ -1,6 +1,6 @@
 :root {
     --blue: #1a5ed4; 
-    --orange: #ff7d61;
+   --orange: #c94420;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
 
@@ -872,7 +872,7 @@ body {
 
 .footer-col h4 {
     font-size: 0.8rem;
-    color: var(--bg-cream);
+    color: #dde4f7;
     opacity: 0.5;
     margin-bottom: 12px;
     text-transform: uppercase;
