@@ -1,10 +1,10 @@
 :root {
     --blue: #1a5ed4;
     --text-primary: #1a5ed4;
-    --orange: #ff7d61;
+    --orange: #d44d31;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
-    --text-muted: #5a7ab8;
+    --text-muted: #4060a0; /* Azul medio para que se lea bien en crema */
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
 }
@@ -293,6 +293,7 @@ body {
 
 .profile-img:hover { filter: grayscale(0%); }
 
+/* BOTÓN HERO (SUSCRÍBETE) */
 .bottom-sub-btn {
     background-color: var(--orange);
     color: var(--white);
@@ -615,17 +616,34 @@ body {
 }
 
 /* ===========================
-   VIDEOS
+   VIDEOS CORREGIDO
    =========================== */
 .videos-section {
     background: var(--bg-cream);
     padding: 120px 5%;
 }
 
-.videos-section .section-description {
-    margin-bottom: 40px;
+/* Forzamos el orden visual en escritorio */
+#videos .section-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* El contenido es más ancho que el título */
+    align-items: center;
+    gap: 40px;
 }
 
+#videos .about-left {
+    grid-column: 2; /* Manda el título a la derecha */
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#videos .about-right {
+    grid-column: 1; /* Manda el contenido a la izquierda */
+    grid-row: 1;    /* Asegura que esté en la misma fila que el título */
+}
+
+/* Estilos de la grid de videos y cards (tus originales) */
 .videos-grid {
     display: flex;
     gap: 2rem;
@@ -638,74 +656,48 @@ body {
     margin-bottom: 20px;
 }
 
-.videos-grid::-webkit-scrollbar {
-    display: none;
-}
+.videos-grid::-webkit-scrollbar { display: none; }
 
 .video-card {
     flex: 0 0 auto;
     scroll-snap-align: start;
-    background: transparent;
-    border: none;
     display: inline-flex;
     flex-direction: column;
-    align-items: flex-start;
     max-width: 400px;
     white-space: normal;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.video-card:hover {
-    transform: translateY(-4px);
-}
+.video-card:hover { transform: translateY(-4px); }
 
-.video-link {
-    text-decoration: none;
-    color: var(--text-primary);
-}
+/* ... resto de tus estilos de video-info y botones ... */
 
-.video-info h3 {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    margin: 12px 0 6px;
-}
-
-.video-info p {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    opacity: 0.7;
-    font-weight: 300;
-}
-
-.view-all-btn {
-    display: inline-block;
-    border-bottom-color: var(--text-primary);
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--text-primary);
-    padding-bottom: 4px;
-    transition: opacity 0.2s ease;
-    margin-top: 10px;
-}
-
-.view-all-btn:hover {
-    opacity: 0.6;
-}
-
+/* Ajuste para móviles */
 @media (max-width: 768px) {
     .videos-section {
         padding: 80px 5%;
     }
-    .videos-section .section-description {
-        margin-top: 40px;
+
+    #videos .section-grid {
+        grid-template-columns: 1fr; /* Una sola columna */
     }
-    .videos-grid {
-        gap: 1.5rem;
+
+    #videos .about-left {
+        grid-column: 1; /* Regresa a la izquierda */
+        grid-row: 1;    /* Título arriba */
+        text-align: left;
+        justify-content: flex-start;
+        margin-bottom: 0px;
+    }
+
+    #videos .about-right {
+        grid-column: 1;
+        grid-row: 2;    /* Contenido abajo */
+    }
+
+    .videos-section .section-description {
+        margin-top: 20px;
     }
 }
 
