@@ -343,3 +343,56 @@ mm.add(
         ]);
     }
 );
+
+// ─────────────────────────────────────────────────────────────
+//  Formulario: feedback visual al enviar (spinner + redirección)
+// ─────────────────────────────────────────────────────────────
+const contactForm = document.querySelector('.minimal-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Evita el envío normal para mostrar el spinner
+
+        const btn = contactForm.querySelector('.minimal-submit');
+        const redirectInput = contactForm.querySelector('[name="redirect"]');
+        const redirectUrl = redirectInput ? redirectInput.value : 'https://josesuaste.github.io/gracias.html';
+
+        // Estado "Enviando..."
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<span class="spinner"></span> Enviando...';
+        btn.disabled = true;
+
+        try {
+            const formData = new FormData(contactForm);
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Éxito: muestra check y redirige
+                btn.innerHTML = '<span class="btn-dot"></span> ✓ Enviado';
+                btn.style.background = 'var(--orange)';
+                btn.style.color = 'var(--white)';
+
+                // Dispara el evento de Umami manualmente si existe
+                if (typeof umami !== 'undefined' && umami.track) {
+                    umami.track('Envio-Formulario-Contacto');
+                }
+
+                setTimeout(() => {
+                    window.location.href = redirectUrl;
+                }, 1500);
+            } else {
+                // Error del servidor
+                btn.innerHTML = '<span class="btn-dot"></span> Error. Intenta de nuevo';
+                btn.disabled = false;
+            }
+        } catch (error) {
+            // Error de conexión
+            btn.innerHTML = '<span class="btn-dot"></span> Error de conexión';
+            btn.disabled = false;
+        }
+    });
+}

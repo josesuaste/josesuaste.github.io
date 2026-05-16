@@ -942,7 +942,23 @@ body {
         text-align: center;
     }
 }
-
 /* ===========================
    WRAPPER PRINCIPAL
    =========================== */
+#app {
+  overflow-x: clip;
+}
+/* ── Spinner para el botón de envío ── */
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: var(--white);
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    display: inline-block;
+    flex-shrink: 0;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
