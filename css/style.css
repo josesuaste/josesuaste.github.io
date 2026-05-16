@@ -90,6 +90,7 @@ body {
 
 .navbar--scrolled {
     background-color: rgba(244, 241, 234, 0.75); /* tu --bg-cream semitransparente */
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     box-shadow: 0 2px 20px rgba(42, 120, 246, 0.08);
 
