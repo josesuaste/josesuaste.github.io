@@ -345,6 +345,7 @@ body {
 
 @media (max-width: 992px) {
     .hero {
+        height: 100vh;
         height: 100svh;
         padding-bottom: 0;
         overflow: visible;
@@ -433,7 +434,7 @@ body {
    =========================== */
 .about-section {
     background-color: var(--bg-cream);
-    padding: 120px 40px;
+    padding: 120px 5%;
     display: flex;
     justify-content: center;
     color: var(--text-primary);
@@ -473,7 +474,7 @@ body {
    =========================== */
 .stats-section {
     background: var(--bg-cream);
-    padding: 100px 5%;
+    padding: 120px 5%;
     overflow: hidden;
 }
 
@@ -945,6 +946,3 @@ body {
 /* ===========================
    WRAPPER PRINCIPAL
    =========================== */
-#app {
-  overflow-x: clip;
-}
