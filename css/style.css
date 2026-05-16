@@ -1,7 +1,7 @@
 :root {
     --blue: #1a5ed4;
     --text-primary: #1a5ed4;
-    --orange: #d44d31;
+    --orange: #c94420;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
     --text-muted: #4060a0; /* Azul medio para que se lea bien en crema */
@@ -758,7 +758,7 @@ body {
 .form-field input:focus,
 .form-field textarea:focus {
     outline: none;
-    border-bottom-color: var(--bg-cream);
+    border-bottom: 2px solid var(--bg-cream);
 }
 
 .form-field textarea { resize: vertical; min-height: 100px; }
