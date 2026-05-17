@@ -891,6 +891,9 @@ body {
         text-align: center;
     }
 }
+/* ===========================
+   SKIP LINK
+   =========================== */
 .skip-link {
   position: absolute;
   top: -100px;
