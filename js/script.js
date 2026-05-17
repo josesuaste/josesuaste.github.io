@@ -58,6 +58,7 @@ if (aboutSection && navbar) {
 
 // ─────────────────────────────────────────────────────────────
 //  Deshabilitar transiciones CSS durante resize
+//  + Cerrar menú móvil al redimensionar a escritorio
 // ─────────────────────────────────────────────────────────────
 let resizeTimer;
 window.addEventListener('resize', () => {
@@ -66,6 +67,14 @@ window.addEventListener('resize', () => {
     resizeTimer = setTimeout(() => {
         document.body.classList.remove('no-transition');
     }, 200);
+
+    if (window.innerWidth > 768) {
+        navLinksContainer.classList.remove('is-active');
+        menuToggle.classList.remove('is-active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú');
+        document.body.style.overflow = '';
+    }
 });
 
 // ─────────────────────────────────────────────────────────────
@@ -91,16 +100,3 @@ const sectionObserver = new IntersectionObserver(
 );
 
 sections.forEach(section => sectionObserver.observe(section));
-
-// ─────────────────────────────────────────────────────────────
-//  Cerrar menú móvil al redimensionar a escritorio
-// ─────────────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        navLinksContainer.classList.remove('is-active');
-        menuToggle.classList.remove('is-active');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Abrir menú');
-        document.body.style.overflow = '';
-    }
-});
