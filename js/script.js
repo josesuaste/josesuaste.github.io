@@ -41,7 +41,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const target = document.querySelector(href);
         if (!target) return;
         window.scrollTo({
-            top: target.getBoundingClientRect().top + window.pageYOffset - 80,
+            top: target.getBoundingClientRect().top + window.scrollY - 80,
             behavior: 'smooth'
         });
     });
@@ -97,7 +97,7 @@ const sectionObserver = new IntersectionObserver(
             }
         });
     },
-    { threshold: 0.4 }
+    { threshold: 0.2 }
 );
 
 sections.forEach(section => sectionObserver.observe(section));

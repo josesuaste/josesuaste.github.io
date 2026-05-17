@@ -1,12 +1,10 @@
 :root {
-    --blue: #1a5ed4; 
-   --orange: #c94420;
+    --blue: #1a5ed4;
+    --orange: #c94420;
     --white: #ffffff;
     --bg-cream: #f4f1ea;
-
-    /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
     --text-primary: var(--blue);
-    --text-muted: #3b4e78;        /* color fijo, no opacity — mejor contraste WCAG */
+    --text-muted: #3b4e78;
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
 }
@@ -678,6 +676,56 @@ body {
 .video-card:hover { transform: translateY(-4px); }
 
 /* ... resto de tus estilos de video-info y botones ... */
+
+.video-link {
+    text-decoration: none;
+    color: var(--text-primary);
+}
+.video-info h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin: 12px 0 6px;
+}
+.video-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+.video-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(26, 94, 212, 0.08);
+}
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+.video-card:hover .video-thumbnail img {
+    transform: scale(1.04);
+}
+.play-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.video-card:hover .play-overlay {
+    opacity: 1;
+}
 
 /* Ajuste para móviles */
 @media (max-width: 768px) {
