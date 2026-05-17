@@ -906,8 +906,7 @@ body {
 /* ── Footer headings (Social, Contacto, GitHub) ── */
 .footer-heading {
     font-size: 0.8rem;
-    color: var(--white);           /* antes #dde4f7 */
-    /* opacity eliminada */
+    color: var(--bg-cream);      /* crema sólido */
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -917,36 +916,39 @@ body {
 /* ── Textos y enlaces del footer ── */
 .footer-col p,
 .footer-col a {
-    color: var(--white);           /* antes var(--bg-cream) */
+    color: var(--bg-cream);      /* crema sólido */
     text-decoration: none;
-    /* opacity eliminada */
 }
 
 .footer-col a:hover {
-    opacity: 0.8;                  /* efecto hover sutil */
+    opacity: 0.8;                /* solo para el hover, no afecta al contraste base */
     text-decoration: none;
 }
 
 /* ── Píldoras sociales (IG, YT) ── */
 .social-pills a {
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(244, 241, 234, 0.4);
     padding: 6px 14px;
     border-radius: 50px;
     margin-right: 5px;
     font-size: 0.8rem;
     display: inline-block;
     text-decoration: none;
-    color: var(--white);           /* antes var(--bg-cream) */
+    color: var(--bg-cream);      /* crema sólido */
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
 }
 
 .social-pills a:hover {
-    background: var(--white);
+    background: var(--bg-cream);
     color: var(--blue);
-    border-color: var(--white);
+    border-color: var(--bg-cream);
     transform: translateY(-2px);
 }
+
+
+
+
 
 @media (max-width: 768px) {
     .footer-bottom {
