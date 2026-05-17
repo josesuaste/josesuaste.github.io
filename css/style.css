@@ -40,7 +40,6 @@ body.no-transition * {
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
-    overflow-x: hidden;
     max-width: 100%;
 }
 
@@ -48,7 +47,6 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-cream);
     color: var(--text-primary); /* antes var(--blue) */
-    overflow-x: hidden;
     max-width: 100%;
     padding-top: 10px; 
 }
@@ -343,7 +341,6 @@ body {
 
 @media (max-width: 992px) {
     .hero {
-        height: 100svh;
         height: 100vh;
         height: 100svh;
         padding-bottom: 0;
@@ -490,6 +487,7 @@ body {
     line-height: 1;
     letter-spacing: -2px;
     display: block;
+    min-height: 1em;
     min-height: 1lh; /* reserva el espacio antes de que el contador arranque */
 }
 
@@ -755,8 +753,8 @@ body {
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-    color: var(--bg-cream);
-    opacity: 0.35;
+    color: #c7d2e6;
+    opacity: 1;
 }
 
 .form-field input:focus,
