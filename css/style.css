@@ -6,7 +6,7 @@
 
     /* FIX: tokens adicionales para reducir repetición y facilitar theming futuro */
     --text-primary: var(--blue);
-    --text-muted: #5a7ab8;        /* color fijo, no opacity — mejor contraste WCAG */
+    --text-muted: #3b4e78;        /* color fijo, no opacity — mejor contraste WCAG */
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
 }
@@ -41,6 +41,22 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     max-width: 100%;
+}
+:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: 2px;
+}
+
+/* ── Movimiento reducido (accesibilidad) ── */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 body {
@@ -378,8 +394,6 @@ body {
     }
 }
 
-
-
 /* ===========================
    CLASE COMPARTIDA (TODAS LAS SECCIONES)
    =========================== */
@@ -427,7 +441,7 @@ body {
     padding: 120px 40px;
     display: flex;
     justify-content: center;
-    color: var(--blue);
+    color: var(--text-primary);
 }
 
 .about-right {
