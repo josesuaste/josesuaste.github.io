@@ -892,13 +892,14 @@ body {
     gap: 40px;
 }
 
-.footer-col h4 {
+.footer-heading {
     font-size: 0.8rem;
     color: #dde4f7;
     opacity: 0.5;
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    font-weight: 700;
 }
 
 .footer-col p,
