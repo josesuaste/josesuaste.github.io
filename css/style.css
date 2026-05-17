@@ -789,10 +789,9 @@ body {
     gap: 25px;
 }
 
-/* Etiquetas del formulario en cream */
 .form-field label {
     color: var(--bg-cream);
-    opacity: 0.7;
+    /* opacity eliminada */
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -828,7 +827,6 @@ body {
 
 .form-field textarea { resize: vertical; min-height: 100px; }
 
-/* Título big-title en cream dentro del bloque azul */
 .contact-section-minimal .big-title {
     color: var(--bg-cream);
 }
@@ -881,12 +879,11 @@ body {
         padding: 80px 5%;
     }
 }
-
 /* ===========================
    FOOTER
    =========================== */
 .massive-footer {
-    background: var(--text-primary);  /* el mismo azul que los títulos grandes */
+    background: var(--text-primary);
     color: var(--bg-cream);
     padding: 60px 5%;
 }
@@ -902,25 +899,29 @@ body {
     gap: 40px;
 }
 
+/* ── Footer headings (Social, Contacto, GitHub) ── */
 .footer-heading {
     font-size: 0.8rem;
-    color: #dde4f7;
-    opacity: 0.5;
+    color: var(--bg-cream);      /* crema sólido */
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700;
 }
 
+/* ── Textos y enlaces del footer ── */
 .footer-col p,
 .footer-col a {
-    color: var(--bg-cream);
+    color: var(--bg-cream);      /* crema sólido */
     text-decoration: none;
-    opacity: 0.85;
 }
 
-.footer-col a:hover { opacity: 1; text-decoration: none; }
+.footer-col a:hover {
+    opacity: 0.8;                /* solo para el hover, no afecta al contraste base */
+    text-decoration: none;
+}
 
+/* ── Píldoras sociales (IG, YT) ── */
 .social-pills a {
     border: 1px solid rgba(244, 241, 234, 0.4);
     padding: 6px 14px;
@@ -929,7 +930,7 @@ body {
     font-size: 0.8rem;
     display: inline-block;
     text-decoration: none;
-    color: var(--bg-cream);
+    color: var(--bg-cream);      /* crema sólido */
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
 }
