@@ -220,27 +220,23 @@ body {
     
 
     .nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: auto;
-    transform: translateX(100%);
-    visibility: hidden;                    /* ← nuevo */
-    width: 100%;
-    height: 100vh;
-    background-color: var(--bg-cream);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
-    z-index: 150;
-}
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: auto;
+        transform: translateX(100%);
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 150;
+    }
 
-.nav-links.is-active {
-    transform: translateX(0);
-    visibility: visible;                   /* ← nuevo */
-}
+    .nav-links.is-active { transform: translateX(0); }
 
     .nav-links a {
         font-size: 2rem;

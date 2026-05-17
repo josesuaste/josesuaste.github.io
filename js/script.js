@@ -343,15 +343,3 @@ mm.add(
         ]);
     }
 );
-// ─────────────────────────────────────────────────────────────
-//  Cerrar menú móvil al redimensionar a escritorio
-// ─────────────────────────────────────────────────────────────
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768) {
-        navLinksContainer.classList.remove('is-active');
-        menuToggle.classList.remove('is-active');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Abrir menú');
-        document.body.style.overflow = '';
-    }
-});
