@@ -92,7 +92,7 @@ body {
     background-color: rgba(244, 241, 234, 0.75); /* tu --bg-cream semitransparente */
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    box-shadow: 0 2px 20px rgba(42, 120, 246, 0.08);
+    box-shadow: 0 2px 20px rgba(26, 94, 212, 0.08);
 
 }
 
@@ -126,7 +126,7 @@ body {
     white-space: nowrap;
 }
 
-.nav-links a:hover { background-color: rgba(42, 120, 246, 0.08); }
+.nav-links a:hover { background-color: rgba(26, 94, 212, 0.08); }
 
 .nav-links a.active {
     background-color: var(--blue);
@@ -307,7 +307,7 @@ body {
 
 .bottom-sub-btn:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(245, 141, 50, 0.4);
+    box-shadow: 0 10px 20px rgba(201, 68, 32, 0.4);
 }
 
 .hero-footer {
