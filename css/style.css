@@ -8,6 +8,9 @@
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
 }
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 
 @font-face {
     font-family: "Necto-Mono-Regular";
