@@ -1,3 +1,4 @@
+
 // ─────────────────────────────────────────────────────────────
 //  Menú móvil
 //  La transition se agrega/quita por JS para que el resize
