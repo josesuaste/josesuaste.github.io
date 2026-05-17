@@ -63,7 +63,6 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-cream);
     color: var(--text-primary); /* antes var(--blue) */
-    max-width: 100%;
     padding-top: 10px; 
 }
 
@@ -810,21 +809,6 @@ body {
 
 .minimal-submit span { transition: transform 0.3s ease; }
 .minimal-submit:hover span { transform: translateX(5px); }
-
-.contact-footer {
-    margin-top: 40px;
-    font-size: 0.9rem;
-    color: var(--bg-cream);
-}
-
-.contact-footer a {
-    color: var(--bg-cream);
-    text-decoration: none;
-    border-bottom: 1px solid var(--bg-cream);
-    transition: opacity 0.3s ease;
-}
-
-.contact-footer a:hover { opacity: 0.6; }
 
 @media (max-width: 1100px) {
     .contact-grid {
