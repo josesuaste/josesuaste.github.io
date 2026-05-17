@@ -17,7 +17,6 @@
     src: url("../fonts/NectoMono-Regular.woff2") format("woff2");
     font-weight: normal;
     font-style: normal;
-    /* FIX: sin font-display el texto era invisible mientras cargaba (FOIT) */
     font-display: swap;
 }
 @font-face {
@@ -63,7 +62,7 @@ html {
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--bg-cream);
-    color: var(--text-primary); /* antes var(--blue) */
+    color: var(--text-primary);
     padding-top: 10px; 
 }
 
@@ -72,8 +71,6 @@ body {
    =========================== */
 .hero {
     position: relative;
-    /* FIX: 100vh ignora la barra de URL dinámica en iOS Safari → 100svh es preciso */
-    /* Fallback para browsers sin soporte svh */
     height: 100vh;
     height: 100svh;
     display: flex;
@@ -81,7 +78,7 @@ body {
     align-items: center;
     text-align: center;
     overflow: visible;
-    padding-top: 64px; /* compensa el navbar fixed */
+    padding-top: 64px;
 }
 
 .navbar {
@@ -95,19 +92,16 @@ body {
     height: 64px;
     z-index: 100;
     font-weight: 900;
-
-    /* Fondo inicial transparente, se animará al hacer scroll */
     background-color: transparent;
     backdrop-filter: blur(0px);
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar--scrolled {
-    background-color: rgba(244, 241, 234, 0.75); /* tu --bg-cream semitransparente */
+    background-color: rgba(244, 241, 234, 0.75);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     box-shadow: 0 2px 20px rgba(26, 94, 212, 0.08);
-
 }
 
 .logo {
@@ -120,6 +114,7 @@ body {
 
 .logo:hover { opacity: 0.7; }
 
+/* ── Menú escritorio ── */
 .nav-links {
     position: absolute;
     left: 50%;
@@ -173,34 +168,104 @@ body {
     transform: translateY(-2px);
 }
 
+/* Ocultar menú hamburguesa en escritorio */
 .menu-toggle {
     display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 200;
-    padding: 0;
 }
 
-.menu-toggle .bar {
-    width: 100%;
-    height: 2px;
-    background-color: var(--blue);
-    border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    transform-origin: center;
-}
-/* Ocultar el enlace de PayPal en escritorio */
+/* Ocultar enlace de Media Kit en escritorio */
 .nav-mediakit-link {
     display: none;
 }
 
-/* Mostrarlo solo en móvil */
+/* ===========================
+   MENÚ MÓVIL (ÚNICO BLOQUE)
+   =========================== */
 @media (max-width: 768px) {
+    /* Ajustes de la barra de navegación en móvil */
+    .navbar {
+        padding: 0 20px;
+    }
+
+    /* Mostrar el botón de la hamburguesa */
+    .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 200;
+        padding: 0;
+    }
+
+    /* Barras del icono hamburguesa */
+    .menu-toggle .bar {
+        width: 24px;
+        height: 2px;
+        background-color: var(--blue);
+        border-radius: 2px;
+        transition: transform 0.3s ease;
+        pointer-events: none;
+    }
+
+    /* Transformación a X limpia y simétrica */
+    .menu-toggle.is-active .bar:nth-child(1) {
+        transform: translateY(4px) rotate(45deg);
+    }
+    .menu-toggle.is-active .bar:nth-child(2) {
+        transform: translateY(-4px) rotate(-45deg);
+    }
+
+    /* Ocultar el botón de Media Kit de escritorio en móvil */
+    .nav-mediakit-btn {
+        display: none;
+    }
+
+    /* Panel del menú desplegable */
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: auto;
+        transform: translateX(100%);
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        background-color: var(--bg-cream);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1);
+        z-index: 150;
+    }
+
+    /* Mostrar el panel */
+    .nav-links.is-active {
+        transform: translateX(0);
+    }
+
+    /* Enlaces del menú móvil */
+    .nav-links a {
+        font-size: 2rem;
+        font-weight: 900;
+        padding: 8px 20px;
+        border-radius: 0;
+        text-decoration: none;
+        color: var(--text-primary);
+    }
+
+    .nav-links a:hover {
+        background-color: transparent;
+        opacity: 0.6;
+    }
+
+    /* Enlace especial de Media Kit en el menú desplegable */
     .nav-mediakit-link {
         display: block;
         font-size: 2rem;
@@ -210,68 +275,16 @@ body {
         padding: 8px 20px;
         border-radius: 0;
     }
+
     .nav-mediakit-link:hover {
         background-color: transparent;
         opacity: 0.6;
     }
 }
-/* ── Menú móvil ─────────────────────────────────────────── */
-@media (max-width: 768px) {
-    .navbar { padding: 0 20px; }
-    .menu-toggle { display: flex; }
-    .nav-mediakit-btn { display: none; }
-    
 
-    .nav-links {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: auto;
-    transform: translateX(100%);
-    /* Las 3 líneas mágicas ↓ */
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    /* ----------------------------------- */
-    width: 100%;
-    height: 100vh;
-    background-color: var(--bg-cream);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    transition: transform 0.45s cubic-bezier(0.77, 0.2, 0.05, 1), visibility 0.45s;
-    z-index: 150;
-}
-
-.nav-links.is-active {
-    transform: translateX(0);
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-}
-
-    .nav-links a {
-        font-size: 2rem;
-        font-weight: 900;
-        padding: 8px 20px;
-        border-radius: 0;
-    }
-
-    .nav-links a:hover {
-        background-color: transparent;
-        opacity: 0.6;
-    }
-
-    .menu-toggle.is-active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    .menu-toggle.is-active .bar:nth-child(2) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-}
-
-/* HERO */
+/* ===========================
+   HERO
+   =========================== */
 .hero-content {
     z-index: 5;
     flex: 1;
@@ -298,8 +311,6 @@ body {
 .profile-img {
     width: 600px;
     max-width: 90vw;
-    /* FIX: height: auto evita que el atributo height="600" del HTML
-       distorsione la imagen en móvil — el CSS siempre gana al atributo */
     height: auto;
     filter: grayscale(100%);
     border-radius: 50%;
@@ -371,7 +382,6 @@ body {
         height: 100svh;
         padding-bottom: 0;
         overflow: visible;
-        /* Distribuir contenido verticalmente para aprovechar todo el espacio */
         justify-content: space-between;
     }
 
@@ -424,7 +434,6 @@ body {
     }
 }
 
-/* Ajuste opcional para contacto (formulario arriba) */
 .contact-grid {
     align-items: start;
 }
@@ -504,7 +513,7 @@ body {
 }
 
 .stat-number {
-    font-family: 'Inter', sans-serif; /* FIX: era 'serif' — typo que rompía el fallback */
+    font-family: 'Inter', sans-serif;
     font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 600;
     color: var(--text-primary);
@@ -512,14 +521,13 @@ body {
     letter-spacing: -2px;
     display: block;
     min-height: 1em;
-    min-height: 1lh; /* reserva el espacio antes de que el contador arranque */
+    min-height: 1lh;
 }
 
 .stat-label {
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    /* FIX: opacity en texto pequeño falla WCAG AA — color fijo con mejor contraste */
     color: var(--text-muted);
     font-weight: 700;
 }
@@ -621,9 +629,6 @@ body {
     .giant-title {
         font-size: clamp(2.8rem, 14vw, 6rem);
     }
-}
-
-@media (max-width: 480px) {
     .setup-section { padding: 80px 5%; }
     .setup-shape { flex: 0 0 calc(45% - 12px); }
     .setup-shape img {
@@ -640,27 +645,25 @@ body {
     padding: 120px 5%;
 }
 
-/* Forzamos el orden visual en escritorio */
 #videos .section-grid {
     display: grid;
-    grid-template-columns: 1.5fr 1fr; /* El contenido es más ancho que el título */
+    grid-template-columns: 1.5fr 1fr;
     align-items: center;
     gap: 40px;
 }
 
 #videos .about-left {
-    grid-column: 2; /* Manda el título a la derecha */
+    grid-column: 2;
     text-align: right;
     display: flex;
     justify-content: flex-end;
 }
 
 #videos .about-right {
-    grid-column: 1; /* Manda el contenido a la izquierda */
-    grid-row: 1;    /* Asegura que esté en la misma fila que el título */
+    grid-column: 1;
+    grid-row: 1;
 }
 
-/* Estilos de la grid de videos y cards (tus originales) */
 .videos-grid {
     display: flex;
     gap: 2rem;
@@ -687,8 +690,6 @@ body {
 }
 
 .video-card:hover { transform: translateY(-4px); }
-
-/* ... resto de tus estilos de video-info y botones ... */
 
 .video-link {
     text-decoration: none;
@@ -740,19 +741,18 @@ body {
     opacity: 1;
 }
 
-/* Ajuste para móviles */
 @media (max-width: 768px) {
     .videos-section {
         padding: 80px 5%;
     }
 
     #videos .section-grid {
-        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-columns: 1fr;
     }
 
     #videos .about-left {
-        grid-column: 1; /* Regresa a la izquierda */
-        grid-row: 1;    /* Título arriba */
+        grid-column: 1;
+        grid-row: 1;
         text-align: left;
         justify-content: flex-start;
         margin-bottom: 0px;
@@ -760,7 +760,7 @@ body {
 
     #videos .about-right {
         grid-column: 1;
-        grid-row: 2;    /* Contenido abajo */
+        grid-row: 2;
     }
 
     .videos-section .section-description {
@@ -792,10 +792,9 @@ body {
     gap: 25px;
 }
 
-/* Etiquetas del formulario en cream */
 .form-field label {
     color: var(--bg-cream);
-    opacity: 0.7;
+    /* opacity eliminada */
     font-size: 0.8rem;
     font-weight: 600;
     letter-spacing: 0.05em;
@@ -831,7 +830,6 @@ body {
 
 .form-field textarea { resize: vertical; min-height: 100px; }
 
-/* Título big-title en cream dentro del bloque azul */
 .contact-section-minimal .big-title {
     color: var(--bg-cream);
 }
@@ -889,7 +887,7 @@ body {
    FOOTER
    =========================== */
 .massive-footer {
-    background: var(--text-primary);  /* el mismo azul que los títulos grandes */
+    background: var(--text-primary);
     color: var(--bg-cream);
     padding: 60px 5%;
 }
@@ -905,42 +903,48 @@ body {
     gap: 40px;
 }
 
+/* ── Footer headings (Social, Contacto, GitHub) ── */
 .footer-heading {
     font-size: 0.8rem;
-    color: #dde4f7;
-    opacity: 0.5;
+    color: var(--white);           /* antes #dde4f7 */
+    /* opacity eliminada */
     margin-bottom: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 700;
 }
 
+/* ── Textos y enlaces del footer ── */
 .footer-col p,
 .footer-col a {
-    color: var(--bg-cream);
+    color: var(--white);           /* antes var(--bg-cream) */
     text-decoration: none;
-    opacity: 0.85;
+    /* opacity eliminada */
 }
 
-.footer-col a:hover { opacity: 1; text-decoration: none; }
+.footer-col a:hover {
+    opacity: 0.8;                  /* efecto hover sutil */
+    text-decoration: none;
+}
 
+/* ── Píldoras sociales (IG, YT) ── */
 .social-pills a {
-    border: 1px solid rgba(244, 241, 234, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     padding: 6px 14px;
     border-radius: 50px;
     margin-right: 5px;
     font-size: 0.8rem;
     display: inline-block;
     text-decoration: none;
-    color: var(--bg-cream);
+    color: var(--white);           /* antes var(--bg-cream) */
     transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base), border-color var(--transition-base);
     cursor: pointer;
 }
 
 .social-pills a:hover {
-    background: var(--bg-cream);
+    background: var(--white);
     color: var(--blue);
-    border-color: var(--bg-cream);
+    border-color: var(--white);
     transform: translateY(-2px);
 }
 
