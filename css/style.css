@@ -1,3 +1,6 @@
+* {
+    -webkit-tap-highlight-color: transparent;
+}
 :root {
     --blue: #1a5ed4;
     --orange: #c94420;
@@ -7,9 +10,6 @@
     --text-muted: #3b4e78;
     --transition-base: 0.3s ease;
     --radius-pill: 50px;
-}
-* {
-    -webkit-tap-highlight-color: transparent;
 }
 
 @font-face {
