@@ -48,6 +48,7 @@
 }
 
 html {
+    scroll-behavior: smooth;
     scroll-padding-top: 64px;
     overflow-x: hidden;
 }
@@ -61,7 +62,17 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── ACCESIBILIDAD ──────────────────────────────────────── */:focus-visible {
+/* ── ACCESIBILIDAD ──────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+:focus-visible {
     outline: 2px solid var(--orange);
     outline-offset: 3px;
     border-radius: 2px;
@@ -78,8 +89,11 @@ body {
     font-size: 0.85rem;
     font-weight: 700;
     z-index: 9999;
+    transition: top 0.2s;
 }
 .skip-link:focus { top: 8px; }
+
+body.no-transition * { transition: none !important; }
 
 /* ════════════════════════════════════════════════════════════
    NAVBAR
@@ -94,6 +108,7 @@ body {
     padding: 0 var(--pad-x);
     z-index: 500;
     background: transparent;
+    transition: background var(--t-mid), backdrop-filter var(--t-mid), box-shadow var(--t-mid);
 }
 
 .navbar--scrolled {
@@ -112,6 +127,7 @@ body {
     text-decoration: none;
     letter-spacing: -0.01em;
     flex-shrink: 0;
+    transition: opacity var(--t-fast);
     z-index: 600; /* siempre encima del overlay */
     position: relative;
 }
@@ -139,6 +155,7 @@ body {
     height: 2px;
     background: var(--blue);
     border-radius: 2px;
+    transition: transform 0.35s var(--ease-out), opacity 0.25s;
     transform-origin: center;
     display: block;
 }
@@ -171,6 +188,7 @@ body {
     padding: 6px 14px;
     border-radius: 50px;
     white-space: nowrap;
+    transition: background var(--t-fast), color var(--t-fast);
 }
 .nav-links a:hover  { background: rgba(26, 94, 212, 0.08); }
 .nav-links a.active { background: var(--blue); color: var(--cream); }
@@ -196,9 +214,10 @@ body {
     border-radius: 50px;
     text-decoration: none;
     letter-spacing: 0.02em;
+    transition: background var(--t-fast), transform var(--t-fast);
     white-space: nowrap;
 }
-.nav-mediakit-btn:hover { background: var(--orange); }
+.nav-mediakit-btn:hover { background: var(--orange); transform: translateY(-2px); }
 
 /* ════════════════════════════════════════════════════════════
    NAVBAR MÓVIL — overlay
@@ -231,6 +250,12 @@ body {
         background: var(--cream);
         z-index: 550; /* debajo del toggle (600) pero encima de todo lo demás */
 
+        /* Sin transition por defecto → JS la agrega solo al abrir/cerrar */
+    }
+
+    /* Transition solo cuando JS agrega esta clase */
+    .nav-links.is-animating {
+        transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
     }
 
     /* Abierto */
@@ -320,6 +345,8 @@ body {
     filter: grayscale(100%);
     border-radius: 50%;
     display: block;
+    transition: filter 0.5s ease;
+    will-change: filter;
 }
 .profile-img:hover { filter: grayscale(0%); }
 
@@ -349,8 +376,10 @@ body {
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .bottom-sub-btn:hover {
+    transform: translateY(-4px);
     box-shadow: 0 10px 24px rgba(201, 68, 32, 0.38);
 }
 
@@ -419,22 +448,91 @@ body {
     margin: 0;
 }
 
-/* ── Imágenes inline para texto editorial ───────────────── */
-.inline-media,
+/* ── Imágenes inline tipo sticker (sección Sobre mí) ────── */
+.inline-img {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    position: relative;
+    top: -0.08em;
+
+    width: 1.18em;
+    height: 1.18em;
+    margin: 0 0.14em;
+
+    overflow: visible;
+    line-height: 1;
+}
+
+.inline-img img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.14));
+}
+
+/* Tamaños opcionales para variar ritmo visual dentro del texto */
+.inline-img.sm {
+    width: 0.95em;
+    height: 0.95em;
+}
+
+.inline-img.lg {
+    width: 1.42em;
+    height: 1.42em;
+}
+
+.inline-img.xl {
+    width: 1.75em;
+    height: 1.75em;
+}
+
+/* Opción si quieres imagen circular dentro del párrafo */
+.inline-img.is-circle {
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.inline-img.is-circle img {
+    object-fit: cover;
+}
+
+/* Opción si quieres imagen con esquinas redondeadas */
+.inline-img.is-rounded {
+    overflow: hidden;
+    border-radius: 0.32em;
+}
+
+.inline-img.is-rounded img {
+    object-fit: cover;
+}
+
+/* ── Píldoras inline con imagen (sección Mi setup) ──────── */
 .inline-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     vertical-align: middle;
     position: relative;
-    top: -0.06em;
+    top: -0.08em;
+
+    width: 1.95em;
+    height: 0.92em;
+    margin: 0 0.14em;
+
+    background: rgba(0, 0, 0, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.82);
+    border-radius: 999px;
     overflow: hidden;
-    margin: 0 0.12em;
-    line-height: 1;
-    background: rgba(26, 94, 212, 0.08);
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 6px 16px rgba(0, 0, 0, 0.16);
 }
 
-.inline-media img,
 .inline-pill img {
     width: 100%;
     height: 100%;
@@ -442,46 +540,54 @@ body {
     object-fit: cover;
 }
 
-/* Sobre mí: usa PNG, JPG, WEBP o SVG dentro del texto */
-.inline-media {
-    width: 1.35em;
-    height: 0.9em;
-    border-radius: 999px;
-    border: 2px solid rgba(26, 94, 212, 0.16);
-    background: rgba(26, 94, 212, 0.1);
-}
-
-.inline-media--circle {
-    width: 0.95em;
-    height: 0.95em;
-    border-radius: 50%;
-}
-
-.inline-media--badge {
-    width: 1.55em;
-    height: 0.9em;
-}
-
-/* Mi setup: píldoras para fotos o íconos de tus dispositivos */
-.inline-pill {
-    height: 0.95em;
-    width: 2.05em;
-    background: rgba(0, 0, 0, 0.28);
-    border: 2.5px solid rgba(255, 255, 255, 0.85);
-    border-radius: 999px;
-}
-
-/* Usa contain si no quieres recortar logos/SVG. Cambia a cover para fotos. */
-.inline-pill img {
+/* Para SVG o PNG con transparencia que no deben recortarse */
+.inline-pill.contain img {
     object-fit: contain;
     padding: 0.08em;
 }
 
-/* Para fotos rectangulares dentro de píldoras, agrega class="is-photo" al img */
-.inline-pill img.is-photo,
-.inline-media img.is-photo {
-    object-fit: cover;
-    padding: 0;
+/* Píldora más larga, útil para imágenes horizontales */
+.inline-pill.wide {
+    width: 2.45em;
+}
+
+/* Píldora más alta, útil para objetos con más detalle */
+.inline-pill.tall {
+    height: 1.08em;
+}
+
+/* Píldora sin borde, más limpia */
+.inline-pill.clean {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Mantiene las clases antiguas por si todavía existen en el HTML */
+.inline-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    position: relative;
+    top: -0.08em;
+    margin: 0 0.14em;
+}
+
+.inline-shape.circle {
+    width: 0.75em;
+    height: 0.75em;
+    background: var(--blue);
+    border-radius: 50%;
+}
+
+.inline-shape.star {
+    color: var(--orange);
+    font-style: normal;
+    font-size: 0.85em;
+    line-height: 1;
+    width: auto;
+    height: auto;
 }
 
 /* ── CTA link ───────────────────────────────────────────── */
@@ -497,10 +603,11 @@ body {
     border-bottom: 1.5px solid currentColor;
     padding-bottom: 2px;
     align-self: flex-start;
+    transition: opacity var(--t-fast), gap var(--t-fast);
 }
-.cta-link:hover { opacity: 0.65; }
-.cta-link .arrow { display: inline-block; }
-
+.cta-link:hover { opacity: 0.65; gap: 10px; }
+.cta-link .arrow { display: inline-block; transition: transform var(--t-fast); }
+.cta-link:hover .arrow { transform: translate(2px, -2px); }
 
 /* ════════════════════════════════════════════════════════════
    STATS
@@ -536,8 +643,9 @@ body {
     padding: 24px 16px;
     border: 1px solid rgba(242, 237, 228, 0.12);
     border-radius: 10px;
+    transition: border-color var(--t-mid), transform var(--t-mid);
 }
-.stat-item:hover { border-color: rgba(242,237,228,0.35); }
+.stat-item:hover { border-color: rgba(242,237,228,0.35); transform: translateY(-3px); }
 
 .stat-number {
     font-size: clamp(2rem, 5vw, 4rem);
@@ -603,8 +711,9 @@ body {
 .video-thumbnail img {
     width: 100%; height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
-
+.video-card:hover .video-thumbnail img { transform: scale(1.04); }
 
 .video-info { padding: 12px 0 0; }
 .video-info h3 {
@@ -679,6 +788,7 @@ body {
     font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--cream);
+    transition: border-color var(--t-mid);
     -webkit-appearance: none;
 }
 .form-field input::placeholder,
@@ -700,14 +810,16 @@ body {
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
+    transition: background var(--t-fast), transform var(--t-fast);
 }
-.submit-btn:hover { background: var(--orange); color: #fff; }
+.submit-btn:hover { background: var(--orange); color: #fff; transform: translateY(-2px); }
 
 .btn-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--orange);
     flex-shrink: 0;
+    transition: background var(--t-fast);
 }
 .submit-btn:hover .btn-dot { background: #fff; }
 
@@ -781,10 +893,12 @@ body {
     border-radius: 50px;
     text-decoration: none;
     color: rgba(242,237,228,0.7);
+    transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
 }
 .social-pills a:hover {
     background: var(--cream);
     color: var(--blue);
+    transform: translateY(-2px);
 }
 
 .footer-bar {
