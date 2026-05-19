@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>José Suaste — ERROR404 | Creador de Contenido Tech</title>
-    <meta name="description" content="Tutoriales, reviews y tips sobre tecnología en español. Apps, hardware y flujo de trabajo desde México. Apple, Microsoft, Linux y más.">
-    <meta name="keywords" content="tutoriales Mac, apps productividad, tips Apple, tecnología en español, YouTube tech México, ERROR404, José Suaste, hardware, Linux, Microsoft">
+    <meta name="description" content="Tutoriales, reviews y tips sobre tecnología en español. Apps, hardware y flujo de trabajo desde México.">
     <meta name="author" content="José Suaste">
     <meta name="robots" content="index, follow, max-image-preview:large">
 
-    <!-- Umami Analytics -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="7d243bf9-5a94-4c25-9371-e60236ca9366"></script>
 
     <link rel="canonical" href="https://josesuaste.github.io/">
@@ -18,14 +16,13 @@
     <meta property="og:site_name" content="ERROR404">
     <meta property="og:url" content="https://josesuaste.github.io/">
     <meta property="og:title" content="José Suaste — ERROR404 | Creador de Contenido Tech">
-    <meta property="og:description" content="Tutoriales, tips y curiosidades sobre tecnología en español. Apple, Microsoft, Linux y más.">
+    <meta property="og:description" content="Tutoriales, tips y curiosidades sobre tecnología en español.">
     <meta property="og:image" content="https://josesuaste.github.io/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="José Suaste — ERROR404 | Creador de Contenido Tech">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="José Suaste — ERROR404 | Tech en español">
-    <meta name="twitter:description" content="Tutoriales y contenido sobre tecnología en español. Apple, Microsoft, Linux y más.">
+    <meta name="twitter:description" content="Tutoriales y contenido sobre tecnología en español.">
     <meta name="twitter:image" content="https://josesuaste.github.io/og-image.png">
 
     <link rel="icon" type="image/png" href="images/favicon/favicon-96x96.png" sizes="96x96">
@@ -35,7 +32,6 @@
     <meta name="apple-mobile-web-app-title" content="ERROR404">
     <link rel="manifest" href="site.webmanifest">
 
-    <!-- Fuentes locales -->
     <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -48,8 +44,6 @@
         "name": "José Suaste",
         "alternateName": "ERROR404",
         "url": "https://josesuaste.github.io/",
-        "image": "https://josesuaste.github.io/images/img/ejemplo.png",
-        "description": "Creador de contenido tech en español. Tutoriales, reviews y tips sobre tecnología, apps y hardware desde México.",
         "jobTitle": "Creador de Contenido",
         "nationality": "MX",
         "sameAs": [
@@ -62,71 +56,57 @@
 </head>
 <body>
 
-<!-- ─── CURSOR PERSONALIZADO ─────────────────────────────── -->
-<div class="cursor" id="cursor" aria-hidden="true"></div>
-<div class="cursor-trail" id="cursorTrail" aria-hidden="true"></div>
-
 <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
 <div id="app">
 
-<!-- ─── NAV ──────────────────────────────────────────────── -->
-<nav class="navbar" role="navigation" aria-label="Navegación principal">
-    <a href="#" class="logo" aria-label="ERROR404 inicio">
-        <span class="logo-e">E</span>R<span class="logo-glitch">R</span>OR<span class="logo-404">404</span>
-    </a>
+    <!-- ════════════════════════════════════════════════════
+         NAVBAR
+         ════════════════════════════════════════════════════ -->
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
 
-    <div class="nav-links" id="nav-links">
-        <a href="#about" data-label="Sobre mí">Sobre mí</a>
-        <a href="#setup" data-label="Setup">Setup</a>
-        <a href="#stats" data-label="Stats">Stats</a>
-        <a href="#videos" data-label="Contenido">Contenido</a>
-        <a href="#contact" data-label="Contacto">Contacto</a>
-        <!-- Solo móvil -->
-        <a href="#"
-           target="_blank" rel="noopener noreferrer"
-           class="nav-mediakit-link"
-           data-umami-event="Click-MediaKit-Nav-Movil">Media Kit</a>
-    </div>
+        <a href="/" class="logo" aria-label="ERROR404 — inicio">ERROR404</a>
 
-    <div class="nav-right">
-        <a href="#"
-           target="_blank" rel="noopener noreferrer"
-           class="nav-mediakit-btn"
-           data-umami-event="Click-MediaKit-Nav-Desktop">Media Kit</a>
-        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-    </div>
-</nav>
-
-<!-- ─── HERO ─────────────────────────────────────────────── -->
-<header class="hero" id="hero">
-
-    <!-- Ruido ambiental de fondo -->
-    <div class="hero-noise" aria-hidden="true"></div>
-
-    <!-- Círculo que "respira" -->
-    <div class="breath-ring" aria-hidden="true"></div>
-
-    <!-- Texto flotante decorativo -->
-    <span class="hero-deco-tag" aria-hidden="true">v.2025</span>
-    <span class="hero-deco-tag right" aria-hidden="true">MX ↗</span>
-
-    <div class="hero-inner">
-        <!-- Nombre — stack tipográfico editorial -->
-        <div class="hero-name-block">
-            <p class="hero-eyebrow">Creador de contenido tech</p>
-            <h1 class="giant-title">
-                <span class="gt-jose">José</span>
-                <span class="gt-suaste">Suaste</span>
-            </h1>
+        <!-- Links: centrados en desktop / overlay full-screen en móvil -->
+        <div class="nav-links" id="nav-links">
+            <a href="#about">Sobre mí</a>
+            <a href="#setup">Set up</a>
+            <a href="#stats">Stats</a>
+            <a href="#videos">Videos</a>
+            <a href="#contact">Contacto</a>
+            <!-- Visible solo en el overlay móvil -->
+            <a href="#"
+               target="_blank" rel="noopener noreferrer"
+               class="nav-mediakit-link"
+               data-umami-event="Click-MediaKit-Nav-Movil">Media Kit</a>
         </div>
 
-        <!-- Foto — recortada en forma editorial, fuera de la cuadrícula -->
-        <div class="profile-wrapper">
-            <div class="profile-frame">
+        <div class="nav-right">
+            <!-- Visible solo en desktop -->
+            <a href="#"
+               target="_blank" rel="noopener noreferrer"
+               class="nav-mediakit-btn"
+               data-umami-event="Click-MediaKit-Nav-Desktop">Media Kit</a>
+
+            <!-- Botón hamburguesa — solo en móvil -->
+            <button class="menu-toggle"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                    aria-controls="nav-links">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════
+         HERO
+         ════════════════════════════════════════════════════ -->
+    <header class="hero" id="hero">
+        <div class="hero-content">
+            <h1 class="giant-title">José Suaste</h1>
+            <div class="profile-wrapper">
                 <img src="images/img/ejemplo.png"
                      alt="Foto de José Suaste"
                      class="profile-img"
@@ -134,233 +114,132 @@
                      loading="eager"
                      fetchpriority="high"
                      decoding="async">
-                <div class="profile-overlay" aria-hidden="true"></div>
-            </div>
-            <!-- Badge giratoria -->
-            <div class="profile-badge" aria-hidden="true">
-                <svg viewBox="0 0 100 100" class="badge-svg">
-                    <path id="badgePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
-                    <text font-size="10.5" fill="currentColor" letter-spacing="2.5">
-                        <textPath href="#badgePath">ERROR404 · TECH EN ESPAÑOL · </textPath>
-                    </text>
-                </svg>
-                <span class="badge-icon">★</span>
             </div>
         </div>
-    </div>
 
-    <!-- Footer del hero — texto esquinas + CTA central -->
-    <div class="hero-footer" aria-label="Descripción del canal">
-        <div class="header-corner left">
-            <p>Un espacio dedicado al análisis de herramientas digitales desde la utilidad real, No reviso gadgets, evalúo su impacto en tu flujo de trabajo.</p>
-        </div>
-
-        <a href="https://www.youtube.com/@error404mx?sub_confirmation=1"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="bottom-sub-btn"
-           data-umami-event="Click-Suscripcion-Hero">
-            <span class="sub-text">SUSCRIBETE</span>
-            <span class="sub-arrow">↗</span>
-        </a>
-
-        <div class="header-corner right">
-            <p>La tecnología debe ser una extensión de tu capacidad, Transformar el consumo impulsivo en dominio tecnológico.</p>
-        </div>
-    </div>
-
-    <!-- Indicador de scroll -->
-    <div class="scroll-indicator" aria-hidden="true">
-        <span class="scroll-line"></span>
-        <span class="scroll-label">SCROLL</span>
-    </div>
-</header>
-
-<!-- ─── MAIN ──────────────────────────────────────────────── -->
-<main id="main-content">
-
-    <!-- ═══ ABOUT ═══════════════════════════════════════════ -->
-    <section class="about-section section" id="about">
-        <div class="about-grid">
-            <div class="about-heading-col">
-                <span class="section-index">01</span>
-                <h2 class="big-title">acerca<br>de mí.</h2>
-                <!-- Elemento decorativo que se sale del grid -->
-                <div class="about-deco-circle" aria-hidden="true"></div>
+        <div class="hero-footer">
+            <div class="header-corner left">
+                <p>Un espacio dedicado al análisis de herramientas digitales desde la utilidad real.</p>
             </div>
 
-            <div class="about-content-col">
-                <h3 class="sub-title">Encantado de conocerte</h3>
-                <p class="section-description">
-                    Hola, mi nombre es José Suaste. Me gusta la tecnología, el arte y aprender cosas nuevas. Tengo un canal de YouTube donde comparto todo lo que aprendo: apps, tips, trucos, tutoriales y curiosidades.
+            <a href="https://www.youtube.com/@error404mx?sub_confirmation=1"
+               target="_blank" rel="noopener noreferrer"
+               class="bottom-sub-btn"
+               data-umami-event="Click-Suscripcion-Hero">
+                SUSCRÍBETE
+            </a>
+
+            <div class="header-corner right">
+                <p>Transformar el consumo impulsivo en dominio tecnológico desde México.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════
+         MAIN
+         ════════════════════════════════════════════════════ -->
+    <main id="main-content">
+
+        <!-- ── ABOUT: texto editorial gigante ──────────────── -->
+        <section class="section-editorial cream" id="about">
+            <div class="editorial-inner">
+                <span class="section-label">01 — Sobre mí</span>
+                <p class="text-giant" id="text-about">
+                    Hola mi nombre es Jose Suaste, me gusta la tecnología
+                    <span class="inline-shape circle" aria-hidden="true"></span>
+                    el arte, y aprender cosas nuevas. Tengo un canal de YouTube donde comparto todo lo que aprendo: apps, tips, trucos, tutoriales y curiosidades.
+                    Creé este canal para compartir todo lo que descubro. Cuando no estoy frente a la pantalla estoy coleccionando figuras, jugando Nintendo
+                    <span class="inline-shape star" aria-hidden="true">★</span>
+                    o ilustrando. ¿Quieres ver en qué estoy trabajando? Pásate por mi canal.
                 </p>
-                <p class="section-description mt">
-                    Creé este canal para compartir todo lo que descubro. Cuando no estoy frente a la pantalla estoy coleccionando figuras, jugando Nintendo o ilustrando.
-                </p>
-
-                <!-- Tags de identidad -->
-                <div class="about-tags">
-                    <span class="tag">Mac Enthusiast</span>
-                    <span class="tag">Lic. Informática</span>
-                    <span class="tag">Diseño</span>
-                    <span class="tag">Open Source</span>
-                    <span class="tag">México ★</span>
-                </div>
-
                 <a href="https://www.youtube.com/@error404mx"
                    target="_blank" rel="noopener noreferrer"
-                   class="text-link"
+                   class="cta-link"
                    data-umami-event="Click-VerCanal-About">
-                    Ver mi canal →
+                    Ver canal <span class="arrow">↗</span>
                 </a>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ═══ ESTADÍSTICAS ══════════════════════════════════════ -->
-    <section class="stats-section section" id="stats">
-        <div class="stats-inner">
-            <div class="stats-heading-row">
-                <span class="section-index">02</span>
-                <h2 class="big-title">estadís-<br>ticas</h2>
-                <p class="stats-caption">Números reales,<br>crecimiento orgánico.</p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-item" data-val="150">
-                    <span class="stat-number">150</span>
-                    <span class="stat-label">Suscriptores</span>
-                    <div class="stat-bar"><div class="stat-bar-fill" style="--pct: 15%"></div></div>
-                </div>
-                <div class="stat-item" data-val="12">
-                    <span class="stat-number">12</span>
-                    <span class="stat-label">Videos</span>
-                    <div class="stat-bar"><div class="stat-bar-fill" style="--pct: 12%"></div></div>
-                </div>
-                <div class="stat-item" data-val="2500" data-comma="true">
-                    <span class="stat-number">2,500</span>
-                    <span class="stat-label">Reproducciones</span>
-                    <div class="stat-bar"><div class="stat-bar-fill" style="--pct: 25%"></div></div>
-                </div>
-                <div class="stat-item" data-val="8">
-                    <span class="stat-number">8</span>
-                    <span class="stat-label">Países</span>
-                    <div class="stat-bar"><div class="stat-bar-fill" style="--pct: 8%"></div></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══ SETUP ══════════════════════════════════════════════ -->
-    <section class="setup-section section" id="setup">
-        <div class="setup-header">
-            <span class="section-index">03</span>
-            <div class="setup-heading-col">
-                <h2 class="big-title">mi<br>setup</h2>
-            </div>
-            <div class="setup-desc-col">
-                <p class="section-description">
-                    He construido un setup donde la versatilidad es clave. El núcleo es una Mac Mini que ofrece la potencia necesaria para desarrollo y diseño en un formato compacto. El iPad Pro M2 es esencial para bocetar y como segunda pantalla.
+        <!-- ── SETUP: texto editorial gigante fondo azul ───── -->
+        <section class="section-editorial blue" id="setup">
+            <div class="editorial-inner">
+                <span class="section-label light">02 — Mi setup</span>
+                <p class="text-giant" id="text-setup">
+                    He construido un setup donde la versatilidad es clave. El núcleo es una
+                    <span class="inline-pill" aria-label="Mac mini M4">
+                        <img src="images/svg/flower.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>
+                    Mac Mini que ofrece la potencia necesaria en un formato compacto. Complemento con un
+                    <span class="inline-pill" aria-label="iPad Pro M2">
+                        <img src="images/svg/diamante.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>
+                    iPad Pro M2, esencial para bocetar. La ergonomía es prioritaria con el
+                    <span class="inline-pill" aria-label="MX Vertical">
+                        <img src="images/svg/pill.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>
+                    MX Vertical y el Logitech Pebble Keys. Finalmente la
+                    <span class="inline-pill" aria-label="Xiaomi Light Bar">
+                        <img src="images/svg/sun.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>
+                    Xiaomi Lightbar garantiza iluminación precisa.
                 </p>
             </div>
-        </div>
+        </section>
 
-        <!-- Marquee de elementos del setup -->
-        <div class="setup-marquee-wrap" aria-label="Equipamiento">
-            <div class="setup-marquee" aria-hidden="true">
-                <div class="setup-track">
-                    <div class="setup-shape">
-                        <img src="images/svg/flower.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Mac mini M4</span>
+        <!-- ── STATS ──────────────────────────────────────── -->
+        <section class="stats-section" id="stats">
+            <div class="stats-inner">
+                <span class="section-label">03 — Estadísticas</span>
+                <div class="stats-grid">
+                    <div class="stat-item" data-val="150">
+                        <span class="stat-number">150</span>
+                        <span class="stat-label">Suscriptores</span>
                     </div>
-                    <div class="setup-shape">
-                        <img src="images/svg/medio-asterisco.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Logitech K380s</span>
+                    <div class="stat-item" data-val="12">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">Videos</span>
                     </div>
-                    <div class="setup-shape">
-                        <img src="images/svg/diamante.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">iPad Pro M2</span>
+                    <div class="stat-item" data-val="2500" data-comma="true">
+                        <span class="stat-number">2,500</span>
+                        <span class="stat-label">Reproducciones</span>
                     </div>
-                    <div class="setup-shape">
-                        <img src="images/svg/pill.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">MX Vertical</span>
-                    </div>
-                    <div class="setup-shape">
-                        <img src="images/svg/arco.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">DJI Mic Mini</span>
-                    </div>
-                    <div class="setup-shape">
-                        <img src="images/svg/sun.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Xiaomi Light Bar</span>
-                    </div>
-                    <!-- Duplicado para loop infinito -->
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/flower.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Mac mini M4</span>
-                    </div>
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/medio-asterisco.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Logitech K380s</span>
-                    </div>
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/diamante.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">iPad Pro M2</span>
-                    </div>
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/pill.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">MX Vertical</span>
-                    </div>
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/arco.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">DJI Mic Mini</span>
-                    </div>
-                    <div class="setup-shape" aria-hidden="true">
-                        <img src="images/svg/sun.svg" alt="" draggable="false" loading="lazy" width="200" height="200">
-                        <span class="shape-label">Xiaomi Light Bar</span>
+                    <div class="stat-item" data-val="8">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">Países</span>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ═══ VIDEOS ══════════════════════════════════════════════ -->
-    <section class="videos-section section" id="videos">
-        <div class="videos-header">
-            <span class="section-index">04</span>
-            <h2 class="big-title">videos</h2>
-            <p class="section-description">Contenido reciente sobre tecnología. Tutoriales, reviews y tips para tu día a día.</p>
-        </div>
-
-        <div class="videos-grid">
-            <!-- YOUTUBE-VIDEOS-LIST -->
-            <!-- /YOUTUBE-VIDEOS-LIST -->
-        </div>
-
-        <div class="videos-cta-row">
-            <a href="https://www.youtube.com/@error404mx"
-               target="_blank" rel="noopener noreferrer"
-               class="outline-btn"
-               data-umami-event="Click-VerTodosVideos">
-                Ver todos los videos <span>↗</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- ═══ CONTACTO ══════════════════════════════════════════ -->
-    <section class="contact-section section" id="contact">
-        <div class="contact-inner">
-            <div class="contact-heading-col">
-                <span class="section-index light">05</span>
-                <h2 class="big-title light">colabora-<br>ciones.</h2>
-                <p class="contact-tagline">¿Tienes una propuesta?<br>Me encantaría escucharla.</p>
+        <!-- ── VIDEOS ─────────────────────────────────────── -->
+        <section class="videos-section" id="videos">
+            <div class="videos-inner">
+                <span class="section-label">04 — Contenido reciente</span>
+                <div class="videos-grid">
+                    <!-- YOUTUBE-VIDEOS-LIST -->
+                    <!-- /YOUTUBE-VIDEOS-LIST -->
+                </div>
+                <a href="https://www.youtube.com/@error404mx"
+                   target="_blank" rel="noopener noreferrer"
+                   class="cta-link"
+                   data-umami-event="Click-VerTodosVideos">
+                    Ver todos los videos <span class="arrow">↗</span>
+                </a>
             </div>
+        </section>
 
-            <div class="contact-form-col">
+        <!-- ── CONTACTO ───────────────────────────────────── -->
+        <section class="contact-section" id="contact">
+            <div class="contact-inner">
+                <div class="contact-heading">
+                    <span class="section-label light">05 — Colaboraciones</span>
+                    <h2 class="contact-title">¿Tienes una<br>propuesta?</h2>
+                </div>
                 <form class="minimal-form"
                       action="https://api.web3forms.com/submit"
                       method="POST"
                       data-umami-event="Envio-Formulario-Contacto">
-
                     <input type="hidden" name="access_key" value="6ef499ff-7bf4-41bb-a6ee-7768df52d6c3">
                     <input type="hidden" name="subject" value="Nueva colaboración — ERROR404">
                     <input type="hidden" name="from_name" value="ERROR404 — Web">
@@ -376,79 +255,69 @@
                             <input type="email" id="email" name="email" placeholder="hola@correo.com" required autocomplete="email">
                         </div>
                     </div>
-
                     <div class="form-field">
                         <label for="empresa">Empresa</label>
                         <input type="text" id="empresa" name="empresa" placeholder="Marca u organización" autocomplete="organization">
                     </div>
-
                     <div class="form-field">
-                        <label for="mensaje">Cuéntame sobre tu propuesta</label>
-                        <textarea id="mensaje" name="mensaje" rows="1" placeholder="Escribe aquí..." required></textarea>
+                        <label for="mensaje">Propuesta</label>
+                        <textarea id="mensaje" name="mensaje" rows="3" placeholder="Escribe aquí..." required></textarea>
                     </div>
-
                     <div class="form-actions">
-                        <button type="submit" class="minimal-submit">
+                        <button type="submit" class="submit-btn">
                             <span class="btn-dot"></span>
-                            <span>Enviar mensaje</span>
+                            Enviar mensaje
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
-    </section>
+        </section>
 
-</main>
+    </main>
 
-<!-- ─── FOOTER ────────────────────────────────────────────── -->
-<footer class="massive-footer" role="contentinfo">
-    <div class="footer-inner">
-        <div class="footer-brand">
-            <span class="footer-logo">ERROR404</span>
-            <p class="footer-tagline">Tech en español<br>desde México.</p>
-        </div>
-
-        <div class="footer-cols">
-            <div class="footer-col">
-                <p class="footer-heading">Social</p>
-                <div class="social-pills">
-                    <a href="https://www.instagram.com/josesuaste"
-                       target="_blank" rel="noopener noreferrer"
-                       aria-label="Instagram de José Suaste"
-                       data-umami-event="Click-Social-Instagram">IG</a>
-                    <a href="https://www.youtube.com/@error404mx"
-                       target="_blank" rel="noopener noreferrer"
-                       aria-label="YouTube de José Suaste"
-                       data-umami-event="Click-Social-YouTube">YT</a>
+    <!-- ════════════════════════════════════════════════════
+         FOOTER
+         ════════════════════════════════════════════════════ -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">ERROR404</span>
+                <p>Tech en español · México</p>
+            </div>
+            <div class="footer-cols">
+                <div class="footer-col">
+                    <p class="footer-heading">Social</p>
+                    <div class="social-pills">
+                        <a href="https://www.instagram.com/josesuaste" target="_blank" rel="noopener noreferrer"
+                           aria-label="Instagram de José Suaste"
+                           data-umami-event="Click-Social-Instagram">IG</a>
+                        <a href="https://www.youtube.com/@error404mx" target="_blank" rel="noopener noreferrer"
+                           aria-label="YouTube de José Suaste"
+                           data-umami-event="Click-Social-YouTube">YT</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <p class="footer-heading">Contacto</p>
+                    <a href="mailto:holaerror404mx@gmail.com">holaerror404mx@gmail.com</a>
+                </div>
+                <div class="footer-col">
+                    <p class="footer-heading">GitHub</p>
+                    <a href="https://github.com/josesuaste" target="_blank" rel="noopener noreferrer"
+                       data-umami-event="Click-Social-GitHub">@josesuaste</a>
                 </div>
             </div>
-
-            <div class="footer-col">
-                <p class="footer-heading">Contacto</p>
-                <p><a href="mailto:holaerror404mx@gmail.com">holaerror404mx@gmail.com</a></p>
-            </div>
-
-            <div class="footer-col">
-                <p class="footer-heading">GitHub</p>
-                <p><a href="https://github.com/josesuaste"
-                      target="_blank" rel="noopener noreferrer"
-                      data-umami-event="Click-Social-GitHub">@josesuaste</a></p>
-            </div>
         </div>
-    </div>
-
-    <div class="footer-bottom-bar">
-        <span>© 2025 José Suaste</span>
-        <span class="footer-made">Hecho en México ★</span>
-    </div>
-</footer>
+        <div class="footer-bar">
+            <span>© 2025 José Suaste</span>
+            <span>Hecho en México ★</span>
+        </div>
+    </footer>
 
 </div><!-- /#app -->
 
-<!-- ─── SCRIPTS ────────────────────────────────────────────── -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
 <script src="js/script.js" defer></script>
-
 </body>
 </html>
