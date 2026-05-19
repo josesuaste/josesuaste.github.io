@@ -48,7 +48,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     scroll-padding-top: 64px;
     overflow-x: hidden;
 }
@@ -89,11 +88,8 @@ body {
     font-size: 0.85rem;
     font-weight: 700;
     z-index: 9999;
-    transition: top 0.2s;
 }
 .skip-link:focus { top: 8px; }
-
-body.no-transition * { transition: none !important; }
 
 /* ════════════════════════════════════════════════════════════
    NAVBAR
@@ -108,7 +104,6 @@ body.no-transition * { transition: none !important; }
     padding: 0 var(--pad-x);
     z-index: 500;
     background: transparent;
-    transition: background var(--t-mid), backdrop-filter var(--t-mid), box-shadow var(--t-mid);
 }
 
 .navbar--scrolled {
@@ -127,7 +122,6 @@ body.no-transition * { transition: none !important; }
     text-decoration: none;
     letter-spacing: -0.01em;
     flex-shrink: 0;
-    transition: opacity var(--t-fast);
     z-index: 600; /* siempre encima del overlay */
     position: relative;
 }
@@ -155,7 +149,6 @@ body.no-transition * { transition: none !important; }
     height: 2px;
     background: var(--blue);
     border-radius: 2px;
-    transition: transform 0.35s var(--ease-out), opacity 0.25s;
     transform-origin: center;
     display: block;
 }
@@ -188,7 +181,6 @@ body.no-transition * { transition: none !important; }
     padding: 6px 14px;
     border-radius: 50px;
     white-space: nowrap;
-    transition: background var(--t-fast), color var(--t-fast);
 }
 .nav-links a:hover  { background: rgba(26, 94, 212, 0.08); }
 .nav-links a.active { background: var(--blue); color: var(--cream); }
@@ -214,10 +206,9 @@ body.no-transition * { transition: none !important; }
     border-radius: 50px;
     text-decoration: none;
     letter-spacing: 0.02em;
-    transition: background var(--t-fast), transform var(--t-fast);
     white-space: nowrap;
 }
-.nav-mediakit-btn:hover { background: var(--orange); transform: translateY(-2px); }
+.nav-mediakit-btn:hover { background: var(--orange); }
 
 /* ════════════════════════════════════════════════════════════
    NAVBAR MÓVIL — overlay
@@ -251,11 +242,6 @@ body.no-transition * { transition: none !important; }
         z-index: 550; /* debajo del toggle (600) pero encima de todo lo demás */
 
         /* Sin transition por defecto → JS la agrega solo al abrir/cerrar */
-    }
-
-    /* Transition solo cuando JS agrega esta clase */
-    .nav-links.is-animating {
-        transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
     }
 
     /* Abierto */
@@ -345,8 +331,6 @@ body.no-transition * { transition: none !important; }
     filter: grayscale(100%);
     border-radius: 50%;
     display: block;
-    transition: filter 0.5s ease;
-    will-change: filter;
 }
 .profile-img:hover { filter: grayscale(0%); }
 
@@ -376,10 +360,8 @@ body.no-transition * { transition: none !important; }
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .bottom-sub-btn:hover {
-    transform: translateY(-4px);
     box-shadow: 0 10px 24px rgba(201, 68, 32, 0.38);
 }
 
@@ -442,7 +424,7 @@ body.no-transition * { transition: none !important; }
 .text-giant {
     font-size: clamp(1.6rem, 3.5vw, 4.2rem);
     font-weight: 800;
-    line-height: 1.55;
+    line-height: 1.65;
     letter-spacing: -0.03em;
     text-align: center;
     margin: 0;
@@ -511,11 +493,10 @@ body.no-transition * { transition: none !important; }
     border-bottom: 1.5px solid currentColor;
     padding-bottom: 2px;
     align-self: flex-start;
-    transition: opacity var(--t-fast), gap var(--t-fast);
 }
-.cta-link:hover { opacity: 0.65; gap: 10px; }
+.cta-link:hover { opacity: 0.65; }
 .cta-link .arrow { display: inline-block; transition: transform var(--t-fast); }
-.cta-link:hover .arrow { transform: translate(2px, -2px); }
+
 
 /* ════════════════════════════════════════════════════════════
    STATS
@@ -551,9 +532,8 @@ body.no-transition * { transition: none !important; }
     padding: 24px 16px;
     border: 1px solid rgba(242, 237, 228, 0.12);
     border-radius: 10px;
-    transition: border-color var(--t-mid), transform var(--t-mid);
 }
-.stat-item:hover { border-color: rgba(242,237,228,0.35); transform: translateY(-3px); }
+.stat-item:hover { border-color: rgba(242,237,228,0.35); }
 
 .stat-number {
     font-size: clamp(2rem, 5vw, 4rem);
@@ -619,9 +599,8 @@ body.no-transition * { transition: none !important; }
 .video-thumbnail img {
     width: 100%; height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
 }
-.video-card:hover .video-thumbnail img { transform: scale(1.04); }
+
 
 .video-info { padding: 12px 0 0; }
 .video-info h3 {
@@ -696,7 +675,6 @@ body.no-transition * { transition: none !important; }
     font-family: var(--font-sans);
     font-size: 1rem;
     color: var(--cream);
-    transition: border-color var(--t-mid);
     -webkit-appearance: none;
 }
 .form-field input::placeholder,
@@ -718,16 +696,14 @@ body.no-transition * { transition: none !important; }
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
-    transition: background var(--t-fast), transform var(--t-fast);
 }
-.submit-btn:hover { background: var(--orange); color: #fff; transform: translateY(-2px); }
+.submit-btn:hover { background: var(--orange); color: #fff; }
 
 .btn-dot {
     width: 7px; height: 7px;
     border-radius: 50%;
     background: var(--orange);
     flex-shrink: 0;
-    transition: background var(--t-fast);
 }
 .submit-btn:hover .btn-dot { background: #fff; }
 
@@ -801,12 +777,10 @@ body.no-transition * { transition: none !important; }
     border-radius: 50px;
     text-decoration: none;
     color: rgba(242,237,228,0.7);
-    transition: background var(--t-fast), color var(--t-fast), transform var(--t-fast);
 }
 .social-pills a:hover {
     background: var(--cream);
     color: var(--blue);
-    transform: translateY(-2px);
 }
 
 .footer-bar {
