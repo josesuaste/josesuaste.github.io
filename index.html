@@ -36,6 +36,8 @@
     <link rel="preload" href="fonts/NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 
     <link rel="stylesheet" href="css/style.css">
+    
+    <script type="module" src="js/setup-3d.js"></script>
 
     <script type="application/ld+json">
     {
@@ -147,28 +149,29 @@
             <div class="editorial-inner">
                 <span class="section-label">01 — Sobre mí</span>
                 <p class="text-giant" id="text-about">
-                     Hola mi nombre es Jose Suaste, del estado de mexico, me gusta la tecnología
+                    Hola mi nombre es Jose Suaste, me gusta la 
                     <span class="inline-media inline-media--badge" aria-label="diskete">
                     <img src="images/about/diskete.png" alt="" aria-hidden="true" loading="lazy">
-                    </span>
-                    el arte, la masica y aprender cosas nuevas. Tengo un canal de YouTube
-                    <span class="inline-media inline-media--badge" aria-label="tigre">
+                    </span>tecnología el arte, la masica y aprender cosas nuevas 
+                    <span class="inline-media inline-media--badge" aria-label="svg geometrico">
+                    <img src="images/svg/u.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>Tengo un canal de YouTube
+                    <span class="inline-media inline-media--badge" aria-label="camara">
                     <img src="images/about/cam.png" alt="" aria-hidden="true" loading="lazy">
-                    </span> 
-                    donde comparto todo lo que aprendo: apps, tips, trucos
+                    </span>donde comparto todo lo que aprendo: apps, tips, trucos
                     <span class="inline-media inline-media--badge" aria-label="tigre">
                     <img src="images/about/tiger.png" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     tutoriales y curiosidades
-                    <span class="inline-media inline-media--badge" aria-label="diskete">
+                    <span class="inline-media inline-media--badge" aria-label="svg geometrico">
                     <img src="images/svg/flower.svg" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     Creé este canal para compartir 
-                    <span class="inline-media inline-media--badge" aria-label="diskete">
+                    <span class="inline-media inline-media--badge" aria-label="svg geometrico">
                     <img src="images/svg/arco.svg" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     todo lo que descubro
-                    <span class="inline-media inline-media--badge" aria-label="pistoladeagua">
+                    <span class="inline-media inline-media--badge" aria-label="svg geometrico">
                     <img src="images/svg/sun.svg" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     Cuando no estoy frente a la pantalla estoy coleccionando figuras,
@@ -180,12 +183,15 @@
                     <img src="images/about/gun.png" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     o ilustrando.
-                    <span class="inline-media inline-media--badge" aria-label="pistoladeagua">
+                    <span class="inline-media inline-media--badge" aria-label="lapiz amarillo">
                     <img src="images/about/lapiz.png" alt="" aria-hidden="true" loading="lazy">
                     </span>
                     ¿Quieres ver en qué estoy trabajando? Pásate por mi canal
-                    <span class="inline-media inline-media--badge" aria-label="pistoladeagua">
+                    <span class="inline-media inline-media--badge" aria-label="svg geometrico">
                     <img src="images/svg/linea-ondulada.svg" alt="" aria-hidden="true" loading="lazy">
+                    </span>
+                    <span class="inline-pill" aria-label="">
+                    <img src="" alt="" aria-hidden="true" loading="lazy">
                     </span>
                 </p>
                 <a href="https://www.youtube.com/@error404mx"
@@ -197,32 +203,44 @@
             </div>
         </section>
 
-        <!-- ── SETUP: texto editorial gigante fondo azul ───── -->
-        <section class="section-editorial blue" id="setup">
-            <div class="editorial-inner">
-                <span class="section-label light">02 — Mi setup</span>
-                <p class="text-giant" id="text-setup">
-                    He construido un setup donde la versatilidad es clave. El núcleo es una
-                    <span class="inline-pill" aria-label="Mac mini M4">
-                        <img src="images/img/setup-mac-mini.png" alt="" aria-hidden="true" loading="lazy">
-                    </span>
-                    Mac Mini que ofrece la potencia necesaria en un formato compacto. Complemento con un
-                    <span class="inline-pill" aria-label="iPad Pro M2">
-                        <img src="images/img/setup-ipad.png" alt="" aria-hidden="true" loading="lazy">
-                    </span>
-                    iPad Pro M2, esencial para bocetar. La ergonomía es prioritaria con el
-                    <span class="inline-pill" aria-label="MX Vertical">
-                        <img src="images/img/setup-mouse.png" alt="" aria-hidden="true" loading="lazy">
-                    </span>
-                    MX Vertical y el Logitech Pebble Keys. Finalmente la
-                    <span class="inline-pill" aria-label="Xiaomi Light Bar">
-                        <img src="images/img/setup-lightbar.png" alt="" aria-hidden="true" loading="lazy">
-                    </span>
-                    Xiaomi Lightbar garantiza iluminación precisa.
-                </p>
+         <!-- ── SETUP: experiencia cinematográfica con Mac Mini 3D ── -->
+        <div class="setup-3d-stage">
+        <section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
+            <div class="setup-sticky">
+                <div class="setup-bg" aria-hidden="true">
+                    <span class="setup-grid"></span>
+                    <span class="setup-glow setup-glow-a"></span>
+                    <span class="setup-glow setup-glow-b"></span>
+                </div>
+
+                <div class="setup-model-stage" aria-hidden="true">
+                    <canvas id="macmini-canvas" class="setup-canvas"></canvas>
+                    <div class="setup-loader" id="setup-loader">Cargando núcleo creativo</div>
+                </div>
+
+                <div class="setup-copy setup-copy-main">
+                    <span class="section-label light">02 — Mi setup</span>
+                    <h2 class="setup-title" id="setup-title">Todo mi flujo creativo vive aquí.</h2>
+                    <p class="setup-lead">Un Mac Mini como centro silencioso para editar, escribir, diseñar y convertir ideas en contenido.</p>
+                </div>
+
+                <div class="setup-story setup-story-left">
+                    <span class="setup-step">Blueprint mode</span>
+                    <p>Primero aparece la estructura: una máquina pensada para sostener el proceso, no para robar atención.</p>
+                </div>
+
+                <div class="setup-story setup-story-right">
+                    <span class="setup-step">Ecosistema textual</span>
+                    <p>iPad Pro M2 y Apple Pencil para bocetar. MX Vertical y Pebble Keys para sesiones largas. BenQ MOBIUZ EX240 para edición. Xiaomi Lightbar para una luz precisa.</p>
+                </div>
+
+                <div class="setup-final-note">
+                    <p>El setup no es una vitrina de gadgets. Es el espacio donde pruebo, documento y construyo.</p>
+                </div>
             </div>
         </section>
-
+        </div>
+            
         <!-- ── STATS ──────────────────────────────────────── -->
         <section class="stats-section" id="stats">
             <div class="stats-inner">
@@ -351,6 +369,10 @@
 
 </div><!-- /#app -->
 
+
 <script src="js/script.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+<script type="module" src="js/setup-3d.js"></script>
 </body>
 </html>
