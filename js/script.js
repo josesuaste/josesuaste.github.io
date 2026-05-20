@@ -14,8 +14,13 @@
 
     let isOpen = false;
 
+    function enableAnimation() {
+        overlay.classList.add('is-animating');
+    }
+
     function openMenu() {
         isOpen = true;
+        enableAnimation();
         overlay.classList.add('is-active');
         toggle.classList.add('is-active');
         toggle.setAttribute('aria-expanded', 'true');
@@ -25,6 +30,7 @@
 
     function closeMenu() {
         isOpen = false;
+        enableAnimation();
         overlay.classList.remove('is-active');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
@@ -40,6 +46,13 @@
         toggle.setAttribute('aria-label', 'Abrir menú');
         document.body.style.overflow = '';
     }
+
+    // Quita la clase de transición al terminar, para evitar animaciones raras al cambiar de viewport
+    overlay.addEventListener('transitionend', event => {
+        if (event.propertyName === 'transform') {
+            overlay.classList.remove('is-animating');
+        }
+    });
 
     // Click en el botón
     toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
@@ -108,3 +121,14 @@
         this.style.height = this.scrollHeight + 'px';
     });
 })();
+
+// ════════════════════════════════════════════════════════════
+//  AÑO AUTOMÁTICO EN FOOTER
+// ════════════════════════════════════════════════════════════
+(function initCurrentYear() {
+    const year = document.getElementById('current-year');
+    if (!year) return;
+
+    year.textContent = new Date().getFullYear();
+})();
+
