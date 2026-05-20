@@ -407,10 +407,6 @@ body.no-transition * { transition: none !important; }
     .header-corner.right { text-align: right; }
 }
 
-
-
-
-
 /* ════════════════════════════════════════════════════════════
    SECCIONES EDITORIALES (texto gigante)
    ════════════════════════════════════════════════════════════ */
@@ -707,6 +703,8 @@ body.no-transition * { transition: none !important; }
 .cta-link:hover { opacity: 0.65; gap: 10px; }
 .cta-link .arrow { display: inline-block; transition: transform var(--t-fast); }
 .cta-link:hover .arrow { transform: translate(2px, -2px); }
+
+
 
 /* ════════════════════════════════════════════════════════════
    SETUP CINEMATOGRÁFICO — Mac Mini 3D protagonista
@@ -1135,7 +1133,6 @@ body.no-transition * { transition: none !important; }
     font-size: 1rem;
     color: var(--cream);
     transition: border-color var(--t-mid);
-   
 }
 .form-field input::placeholder,
 .form-field textarea::placeholder { color: rgba(242,237,228,0.28); }
