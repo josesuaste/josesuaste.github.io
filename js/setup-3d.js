@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 
-const canvas = document.querySelector('#setup-canvas');
+const canvas = document.querySelector('#macmini-canvas');
 
 if (canvas) {
     const scene = new THREE.Scene();
@@ -37,6 +37,7 @@ if (canvas) {
     scene.add(fillLight);
 
     const loader = new GLTFLoader();
+    const setupLoader = document.querySelector('#setup-loader');
 
     let macMini = null;
 
@@ -51,10 +52,16 @@ if (canvas) {
             macMini.scale.set(1.8, 1.8, 1.8);
 
             scene.add(macMini);
+
+            if (setupLoader) {
+                setupLoader.classList.add('is-hidden');
+            }
         },
 
         function (xhr) {
-            console.log(`Mac Mini cargando: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
+            if (xhr.total) {
+                console.log(`Mac Mini cargando: ${(xhr.loaded / xhr.total * 100).toFixed(0)}%`);
+            }
         },
 
         function (error) {
@@ -65,6 +72,8 @@ if (canvas) {
     function resizeRenderer() {
         const width = canvas.clientWidth;
         const height = canvas.clientHeight;
+
+        if (!width || !height) return;
 
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
@@ -85,5 +94,6 @@ if (canvas) {
         renderer.render(scene, camera);
     }
 
+    resizeRenderer();
     animate();
 }

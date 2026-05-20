@@ -1,0 +1,11 @@
+/* ════════════════════════════════════════════════════════════
+   STATS
+   ════════════════════════════════════════════════════════════ */
+.stats-section { background: var(--blue); color: var(--cream); padding: var(--pad-section); }
+.stats-inner { max-width: 1300px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.stat-item { display: flex; flex-direction: column; gap: 6px; padding: 24px 16px; border: 1px solid rgba(242,237,228,0.12); border-radius: 10px; transition: border-color var(--t-mid), transform var(--t-mid); }
+.stat-item:hover { border-color: rgba(242,237,228,0.35); transform: translateY(-3px); }
+.stat-number { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; display: block; color: var(--cream); }
+.stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(242,237,228,0.5); display: block; }
+@media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
