@@ -41,7 +41,8 @@ if (canvas && setupSection) {
   scene.add(modelGroup);
 
   let macMini = null;
-  let introPlayed = false;
+  let introStarted = false;
+  let introComplete = false;
   let isDragging = false;
 
   let previousX = 0;
@@ -84,62 +85,55 @@ if (canvas && setupSection) {
     object.scale.setScalar(scale);
   }
 
-
-
-
   function playIntro() {
-  if (introStarted || !macMini) return;
-  introStarted = true;
+    if (introStarted || !macMini) return;
+    introStarted = true;
 
-  if (!window.gsap || prefersReducedMotion) {
-    modelGroup.position.y = 0.02;
-    introComplete = true;
-    return;
-  }
+    if (!window.gsap || prefersReducedMotion) {
+      modelGroup.position.y = 0.02;
+      introComplete = true;
+      return;
+    }
 
-  gsap.fromTo(
-    modelGroup.position,
-    { y: 3.2 },
-    {
-      y: 0.02,
-      duration: 1.25,
-      ease: 'power4.out',
-      onComplete: () => {
-        introComplete = true;
+    gsap.fromTo(
+      modelGroup.position,
+      { y: 3.2 },
+      {
+        y: 0.02,
+        duration: 1.25,
+        ease: 'power4.out',
+        onComplete: () => {
+          introComplete = true;
+        }
       }
-    }
-  );
+    );
 
-  gsap.fromTo(
-    '.orbit-item',
-    { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
-    {
-      autoAlpha: 1,
-      y: 0,
-      filter: 'blur(0px)',
-      duration: .7,
-      stagger: .07,
-      delay: .35,
-      ease: 'power3.out'
-    }
-  );
+    gsap.fromTo(
+      '.orbit-item',
+      { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
+      {
+        autoAlpha: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: .7,
+        stagger: .07,
+        delay: .35,
+        ease: 'power3.out'
+      }
+    );
 
-  gsap.fromTo(
-    '.setup-description',
-    { autoAlpha: 0, y: 18 },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: .8,
-      delay: .55,
-      ease: 'power3.out'
-    }
-  );
-}
-
-
-
-
+    gsap.fromTo(
+      '.setup-description',
+      { autoAlpha: 0, y: 18 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: .8,
+        delay: .55,
+        ease: 'power3.out'
+      }
+    );
+  }
 
   new GLTFLoader().load(
     './models/Macmini.glb',
@@ -175,7 +169,7 @@ if (canvas && setupSection) {
             observer.disconnect();
           }
         },
-        { threshold: 0.35 }
+        { threshold: 0.15 }
       );
 
       observer.observe(setupSection);
@@ -189,67 +183,60 @@ if (canvas && setupSection) {
     }
   );
 
-
-
-
-
   let dragMode = null;
 
-canvas.addEventListener('pointerdown', (event) => {
-  if (!macMini) return;
+  canvas.addEventListener('pointerdown', (event) => {
+    if (!macMini) return;
 
-  isDragging = true;
-  dragMode = null;
-  previousX = event.clientX;
-  previousY = event.clientY;
+    isDragging = true;
+    dragMode = null;
+    previousX = event.clientX;
+    previousY = event.clientY;
 
-  canvas.setPointerCapture(event.pointerId);
-});
+    canvas.setPointerCapture(event.pointerId);
+  });
 
-canvas.addEventListener('pointermove', (event) => {
-  if (!isDragging) return;
+  canvas.addEventListener('pointermove', (event) => {
+    if (!isDragging) return;
 
-  const deltaX = event.clientX - previousX;
-  const deltaY = event.clientY - previousY;
+    const deltaX = event.clientX - previousX;
+    const deltaY = event.clientY - previousY;
 
-  if (!dragMode && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
-    dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
-  }
+    if (!dragMode && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
+      dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
+    }
 
-  if (dragMode === 'scroll') {
+    if (dragMode === 'scroll') {
+      isDragging = false;
+      dragMode = null;
+      return;
+    }
+
+    if (dragMode !== 'rotate') return;
+
+    event.preventDefault();
+
+    previousX = event.clientX;
+    previousY = event.clientY;
+
+    targetRotationY += deltaX * 0.012;
+    targetRotationX += deltaY * 0.006;
+    targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
+  }, { passive: false });
+
+  canvas.addEventListener('pointerup', (event) => {
     isDragging = false;
     dragMode = null;
-    return;
-  }
 
-  if (dragMode !== 'rotate') return;
+    if (canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+  });
 
-  event.preventDefault();
-
-  previousX = event.clientX;
-  previousY = event.clientY;
-
-  targetRotationY += deltaX * 0.012;
-  targetRotationX += deltaY * 0.006;
-  targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
-}, { passive: false });
-
-canvas.addEventListener('pointerup', (event) => {
-  isDragging = false;
-  dragMode = null;
-
-  if (canvas.hasPointerCapture(event.pointerId)) {
-    canvas.releasePointerCapture(event.pointerId);
-  }
-});
-
-canvas.addEventListener('pointercancel', () => {
-  isDragging = false;
-  dragMode = null;
-});
-
-
-
+  canvas.addEventListener('pointercancel', () => {
+    isDragging = false;
+    dragMode = null;
+  });
 
   function animate() {
     requestAnimationFrame(animate);
@@ -265,7 +252,7 @@ canvas.addEventListener('pointercancel', () => {
       modelGroup.rotation.y = currentRotationY;
       modelGroup.rotation.x = currentRotationX;
 
-      if (introPlayed && !isDragging && !prefersReducedMotion) {
+      if (introComplete && !isDragging && !prefersReducedMotion) {
         modelGroup.position.y = 0.02 + Math.sin(Date.now() * 0.001) * 0.025;
       }
     }
