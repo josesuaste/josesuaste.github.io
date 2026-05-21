@@ -200,42 +200,47 @@
             </div>
         </section>
 
+
          <!-- ── SETUP: experiencia cinematográfica con Mac Mini 3D ── -->
        
-        <section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
-            <div class="setup-sticky">
-                <div class="setup-bg" aria-hidden="true">
-                    <span class="setup-grid"></span>
-                    <span class="setup-glow setup-glow-a"></span>
-                    <span class="setup-glow setup-glow-b"></span>
-                </div>
+    <section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
+  <div class="setup-sticky">
 
-                <div class="setup-model-stage" aria-hidden="true">
-                    <canvas id="macmini-canvas" class="setup-canvas"></canvas>
-                    <div class="setup-loader" id="setup-loader">Cargando núcleo creativo</div>
-                </div>
+    <div class="setup-bg" aria-hidden="true">
+      <span class="setup-grid"></span>
+      <span class="setup-glow setup-glow-a"></span>
+      <span class="setup-glow setup-glow-b"></span>
+    </div>
 
-                <div class="setup-copy setup-copy-main">
-                    <span class="section-label light">02 — Mi setup</span>
-                    <h2 class="setup-title" id="setup-title">Todo mi flujo creativo vive aquí.</h2>
-                    <p class="setup-lead">Un Mac Mini como centro silencioso para editar, escribir, diseñar y convertir ideas en contenido.</p>
-                </div>
+    <div class="setup-copy-main">
+      <span class="section-label light">02 — Mi setup</span>
+    </div>
 
-                <div class="setup-story setup-story-left">
-                    <span class="setup-step">Blueprint mode</span>
-                    <p>Primero aparece la estructura: una máquina pensada para sostener el proceso, no para robar atención.</p>
-                </div>
+    <div class="setup-model-stage" aria-hidden="true">
+      <canvas id="macmini-canvas" class="setup-canvas"></canvas>
+      <div class="setup-loader" id="setup-loader">Cargando núcleo creativo</div>
+    </div>
 
-                <div class="setup-story setup-story-right">
-                    <span class="setup-step">Ecosistema textual</span>
-                    <p>iPad Pro M2 y Apple Pencil para bocetar. MX Vertical y Pebble Keys para sesiones largas. BenQ MOBIUZ EX240 para edición. Xiaomi Lightbar para una luz precisa.</p>
-                </div>
+    <div class="setup-orbit" aria-label="Elementos de mi setup">
+      <p class="orbit-item orbit-ipad">iPad Pro M2<br><span>Bocetos + segunda pantalla</span></p>
+      <p class="orbit-item orbit-mx">MX Vertical<br><span>Ergonomía para trabajo arduo y sesiones largas</span></p>
+      <p class="orbit-item orbit-benq">BenQ MOBIUZ EX240<br><span>Monitor para edición</span></p>
+      <p class="orbit-item orbit-light">Xiaomi Lightbar<br><span>Luz precisa sin reflejos</span></p>
+      <p class="orbit-item orbit-keys">Pebble Keys<br><span>Perfil bajo y estética limpia</span></p>
+    </div>
 
-                <div class="setup-final-note">
-                    <p>El setup no es una vitrina de gadgets. Es el espacio donde pruebo, documento y construyo.</p>
-                </div>
-            </div>
-        </section>
+    <div class="setup-description">
+      <p>
+        He construido un setup donde la versatilidad es clave. 
+        El núcleo es una Mac Mini, que ofrece la potencia necesaria para desarrollo y diseño en un formato compacto que libera espacio en el escritorio. 
+        Complemento mi flujo creativo con un iPad Pro M2, esencial para bocetar y como segunda pantalla. La ergonomía es prioritaria: uso el MX Vertical para reducir la fatiga muscular 
+        y un Logitech Pebble Keys por su perfil bajo y estética limpia. Finalmente, la Xiaomi Lightbar garantiza una iluminación precisa sobre el área de trabajo, eliminando reflejos 
+        en pantalla y manteniendo el orden visual.
+      </p>
+    </div>
+
+  </div>
+</section>
       
             
         <!-- ── STATS ──────────────────────────────────────── -->
@@ -367,11 +372,10 @@
 </div><!-- /#app -->
 
 
-<!-- Al final de index.html, antes de </body> -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
 
-<script src="js/script.js" defer></script>
-<script type="module" src="js/setup-3d.js"></script>
+    <script src="js/script.js" defer></script>
+   <script type="module" src="js/setup-3d.js"></script>
   </body>
 </html>
