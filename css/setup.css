@@ -153,6 +153,7 @@
   pointer-events: none;
 }
 
+
 /* Tablet / móvil */
 @media (max-width: 900px) {
   .setup-copy-main {
@@ -216,11 +217,11 @@
   }
 
   .setup-model-stage {
-    inset: 12vh 0 26vh;
+    inset: 6vh 0 18vh;
   }
 
   .setup-description {
-    bottom: 5vh;
+    bottom: 3vh;
     text-align: left;
     width: calc(100% - 40px);
   }

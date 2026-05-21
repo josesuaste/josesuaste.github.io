@@ -119,7 +119,7 @@ if (canvas && setupSection) {
     object.position.sub(center);
 
     const maxAxis = Math.max(size.x, size.y, size.z);
-    const targetSize = window.innerWidth < 700 ? 1.45 : 1.75;
+    const targetSize = window.innerWidth < 700 ? 1.45 : 2.05;
     const scale = targetSize / maxAxis;
 
     object.scale.setScalar(scale);
