@@ -26,7 +26,7 @@
   height: 100%;
   display: block;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .setup-canvas:active {
