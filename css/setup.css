@@ -1,7 +1,7 @@
 .setup-cinematic {
   position: relative;
   min-height: 100vh;
-  background: #06152f;
+  background: #07111f;
   color: var(--cream);
   overflow: hidden;
 }
@@ -43,9 +43,7 @@
 
 .setup-bg {
   z-index: 0;
-  background:
-    radial-gradient(circle at 50% 46%, rgba(244,241,234,.15), transparent 31%),
-    linear-gradient(145deg, #06152f 0%, #0e1f3d 48%, #021027 100%);
+  background: #07111f;
 }
 
 .setup-grid {
