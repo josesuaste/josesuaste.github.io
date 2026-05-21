@@ -1,9 +1,24 @@
+/* ════════════════════════════════════════════════════════════
+   SETUP 3D — Mac Mini
+   Three.js + GLTFLoader + GSAP intro + drag horizontal
+   ════════════════════════════════════════════════════════════ */
+
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { GLTFLoader } from 'https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+
+
+/* ───────────────────────────────────────────────────────────
+   ELEMENTOS DEL DOM
+   ─────────────────────────────────────────────────────────── */
 
 const canvas = document.querySelector('#macmini-canvas');
 const setupSection = document.querySelector('#setup');
 const setupLoader = document.querySelector('#setup-loader');
+
+
+/* ───────────────────────────────────────────────────────────
+   INIT
+   ─────────────────────────────────────────────────────────── */
 
 if (canvas && setupSection) {
   const scene = new THREE.Scene();
@@ -23,6 +38,11 @@ if (canvas && setupSection) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
 
+
+  /* ─────────────────────────────────────────────────────────
+     LUCES
+     ───────────────────────────────────────────────────────── */
+
   scene.add(new THREE.AmbientLight(0xffffff, 1.35));
 
   const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
@@ -36,6 +56,11 @@ if (canvas && setupSection) {
   const rimLight = new THREE.DirectionalLight(0xffffff, 2.2);
   rimLight.position.set(0, 3, -5);
   scene.add(rimLight);
+
+
+  /* ─────────────────────────────────────────────────────────
+     GRUPO DEL MODELO
+     ───────────────────────────────────────────────────────── */
 
   const modelGroup = new THREE.Group();
   scene.add(modelGroup);
@@ -54,7 +79,14 @@ if (canvas && setupSection) {
   let targetRotationX = 0;
   let currentRotationX = 0;
 
+  let dragMode = null;
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+  /* ─────────────────────────────────────────────────────────
+     RESIZE DEL CANVAS
+     ───────────────────────────────────────────────────────── */
 
   function resizeRenderer() {
     const rect = canvas.getBoundingClientRect();
@@ -65,6 +97,14 @@ if (canvas && setupSection) {
     camera.updateProjectionMatrix();
     renderer.setSize(width, height, false);
   }
+
+
+  /* ─────────────────────────────────────────────────────────
+     CENTRAR Y ESCALAR MODELO
+     Cambia aquí el tamaño:
+     - 1.45 = móvil
+     - 1.75 = escritorio
+     ───────────────────────────────────────────────────────── */
 
   function centerAndScaleModel(object) {
     object.updateMatrixWorld(true);
@@ -79,14 +119,20 @@ if (canvas && setupSection) {
     object.position.sub(center);
 
     const maxAxis = Math.max(size.x, size.y, size.z);
-    const targetSize = window.innerWidth < 700 ? 1.25 : 1.55;
+    const targetSize = window.innerWidth < 700 ? 1.45 : 1.75;
     const scale = targetSize / maxAxis;
 
     object.scale.setScalar(scale);
   }
 
+
+  /* ─────────────────────────────────────────────────────────
+     ANIMACIÓN DE ENTRADA
+     ───────────────────────────────────────────────────────── */
+
   function playIntro() {
     if (introStarted || !macMini) return;
+
     introStarted = true;
 
     if (!window.gsap || prefersReducedMotion) {
@@ -110,30 +156,42 @@ if (canvas && setupSection) {
 
     gsap.fromTo(
       '.orbit-item',
-      { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
+      {
+        autoAlpha: 0,
+        y: 18,
+        filter: 'blur(8px)'
+      },
       {
         autoAlpha: 1,
         y: 0,
         filter: 'blur(0px)',
-        duration: .7,
-        stagger: .07,
-        delay: .35,
+        duration: 0.7,
+        stagger: 0.07,
+        delay: 0.35,
         ease: 'power3.out'
       }
     );
 
     gsap.fromTo(
       '.setup-description',
-      { autoAlpha: 0, y: 18 },
+      {
+        autoAlpha: 0,
+        y: 18
+      },
       {
         autoAlpha: 1,
         y: 0,
-        duration: .8,
-        delay: .55,
+        duration: 0.8,
+        delay: 0.55,
         ease: 'power3.out'
       }
     );
   }
+
+
+  /* ─────────────────────────────────────────────────────────
+     CARGA DEL MODELO GLB
+     ───────────────────────────────────────────────────────── */
 
   new GLTFLoader().load(
     './models/Macmini.glb',
@@ -150,8 +208,14 @@ if (canvas && setupSection) {
         if (!child.isMesh || !child.material) return;
 
         child.material.side = THREE.DoubleSide;
-        if ('metalness' in child.material) child.material.metalness = 0.42;
-        if ('roughness' in child.material) child.material.roughness = 0.46;
+
+        if ('metalness' in child.material) {
+          child.material.metalness = 0.42;
+        }
+
+        if ('roughness' in child.material) {
+          child.material.roughness = 0.46;
+        }
       });
 
       modelGroup.add(macMini);
@@ -160,7 +224,9 @@ if (canvas && setupSection) {
       modelGroup.scale.set(0.72, 0.72, 0.72);
       modelGroup.rotation.set(0, -0.55, 0);
 
-      if (setupLoader) setupLoader.classList.add('is-hidden');
+      if (setupLoader) {
+        setupLoader.classList.add('is-hidden');
+      }
 
       const observer = new IntersectionObserver(
         ([entry]) => {
@@ -179,17 +245,26 @@ if (canvas && setupSection) {
 
     (error) => {
       console.error('Error cargando Macmini.glb:', error);
-      if (setupLoader) setupLoader.textContent = 'No se pudo cargar el modelo 3D';
+
+      if (setupLoader) {
+        setupLoader.textContent = 'No se pudo cargar el modelo 3D';
+      }
     }
   );
 
-  let dragMode = null;
+
+  /* ─────────────────────────────────────────────────────────
+     INTERACCIÓN DRAG
+     - Arrastre horizontal = rota la Mac
+     - Arrastre vertical = permite scroll en móvil/tablet
+     ───────────────────────────────────────────────────────── */
 
   canvas.addEventListener('pointerdown', (event) => {
     if (!macMini) return;
 
     isDragging = true;
     dragMode = null;
+
     previousX = event.clientX;
     previousY = event.clientY;
 
@@ -238,6 +313,11 @@ if (canvas && setupSection) {
     dragMode = null;
   });
 
+
+  /* ─────────────────────────────────────────────────────────
+     LOOP DE ANIMACIÓN
+     ───────────────────────────────────────────────────────── */
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -259,6 +339,11 @@ if (canvas && setupSection) {
 
     renderer.render(scene, camera);
   }
+
+
+  /* ─────────────────────────────────────────────────────────
+     EVENTOS GLOBALES
+     ───────────────────────────────────────────────────────── */
 
   window.addEventListener('resize', () => {
     resizeRenderer();

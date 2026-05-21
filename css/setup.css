@@ -1,3 +1,7 @@
+/* ════════════════════════════════════════════════════════════
+   SETUP — Mac Mini 3D + labels editoriales
+   ════════════════════════════════════════════════════════════ */
+
 .setup-cinematic {
   position: relative;
   min-height: 100vh;
@@ -15,9 +19,19 @@
   isolation: isolate;
 }
 
-.setup-model-stage {
+/* Fondo plano */
+.setup-bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  background: #07111f;
+  pointer-events: none;
+}
+
+/* Canvas 3D */
+.setup-model-stage {
+  position: absolute;
+  inset: 0 0 10vh;
   z-index: 2;
 }
 
@@ -33,17 +47,7 @@
   cursor: grabbing;
 }
 
-.setup-bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.setup-bg {
-  z-index: 0;
-  background: #07111f;
-}
-
+/* Label superior */
 .setup-copy-main {
   position: absolute;
   z-index: 4;
@@ -52,23 +56,7 @@
   width: min(540px, 42vw);
 }
 
-.setup-title {
-  margin-top: 18px;
-  font-size: clamp(3rem, 7vw, 7.4rem);
-  font-weight: 900;
-  line-height: .86;
-  letter-spacing: -.07em;
-  color: var(--cream);
-}
-
-.setup-lead {
-  max-width: 460px;
-  margin-top: 24px;
-  font-size: clamp(1rem, 1.2vw, 1.15rem);
-  line-height: 1.55;
-  color: rgba(244,241,234,.72);
-}
-
+/* Labels laterales */
 .setup-orbit {
   position: absolute;
   inset: 0;
@@ -96,22 +84,43 @@
   color: rgba(244,241,234,.62);
 }
 
-.orbit-ipad { left: 9vw; top: 31vh; }
-.orbit-mx { right: 9vw; top: 28vh; }
-.orbit-benq { left: 17vw; bottom: 31vh; }
-.orbit-light { right: 14vw; bottom: 33vh; }
-.orbit-keys {
-  left: 50%;
-  top: 21vh;
-  transform: translateX(-50%);
-  text-align: center;
+/* Desktop: composición en escalera */
+.orbit-mac {
+  left: 7vw;
+  top: 24vh;
 }
 
+.orbit-benq {
+  left: 12vw;
+  top: 42vh;
+}
+
+.orbit-ipad {
+  left: 7vw;
+  top: 60vh;
+}
+
+.orbit-light {
+  right: 7vw;
+  top: 24vh;
+}
+
+.orbit-mx {
+  right: 12vw;
+  top: 42vh;
+}
+
+.orbit-keys {
+  right: 7vw;
+  top: 60vh;
+}
+
+/* Descripción inferior */
 .setup-description {
   position: absolute;
   z-index: 5;
   left: 50%;
-  bottom: 8vh;
+  bottom: 5vh;
   width: min(820px, calc(100% - 40px));
   transform: translateX(-50%);
   text-align: center;
@@ -125,6 +134,7 @@
   color: rgba(244,241,234,.72);
 }
 
+/* Loader */
 .setup-loader {
   position: absolute;
   left: 50%;
@@ -143,6 +153,7 @@
   pointer-events: none;
 }
 
+/* Tablet / móvil */
 @media (max-width: 900px) {
   .setup-copy-main {
     top: 84px;
@@ -155,11 +166,39 @@
     font-size: .76rem;
   }
 
-  .orbit-ipad { left: 20px; top: 43vh; }
-  .orbit-mx { right: 20px; top: 43vh; }
-  .orbit-benq { left: 20px; bottom: 25vh; }
-  .orbit-light { right: 20px; bottom: 25vh; }
-  .orbit-keys { top: 34vh; }
+  .orbit-ipad {
+    left: 20px;
+    top: 43vh;
+  }
+
+  .orbit-mx {
+    right: 20px;
+    top: 43vh;
+  }
+
+  .orbit-benq {
+    left: 20px;
+    bottom: 25vh;
+  }
+
+  .orbit-light {
+    right: 20px;
+    bottom: 25vh;
+  }
+
+  .orbit-keys {
+    left: 50%;
+    top: 34vh;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .orbit-mac {
+    left: 50%;
+    bottom: 32vh;
+    transform: translateX(-50%);
+    text-align: center;
+  }
 
   .setup-description {
     bottom: 5vh;
@@ -169,5 +208,25 @@
   .setup-description p {
     font-size: .72rem;
     line-height: 1.45;
+  }
+}
+@media (max-width: 700px) {
+  .setup-orbit {
+    display: none;
+  }
+
+  .setup-model-stage {
+    inset: 12vh 0 26vh;
+  }
+
+  .setup-description {
+    bottom: 5vh;
+    text-align: left;
+    width: calc(100% - 40px);
+  }
+
+  .setup-description p {
+    font-size: .74rem;
+    line-height: 1.5;
   }
 }
