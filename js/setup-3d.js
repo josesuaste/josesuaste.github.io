@@ -84,51 +84,62 @@ if (canvas && setupSection) {
     object.scale.setScalar(scale);
   }
 
+
+
+
   function playIntro() {
-    if (introPlayed || !macMini) return;
-    introPlayed = true;
+  if (introStarted || !macMini) return;
+  introStarted = true;
 
-    if (!window.gsap || prefersReducedMotion) {
-      modelGroup.position.y = 0.02;
-      return;
-    }
-
-    gsap.fromTo(
-      modelGroup.position,
-      { y: 3.2 },
-      {
-        y: 0.02,
-        duration: 1.25,
-        ease: 'bounce.out'
-      }
-    );
-
-    gsap.fromTo(
-      '.orbit-item',
-      { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
-      {
-        autoAlpha: 1,
-        y: 0,
-        filter: 'blur(0px)',
-        duration: .7,
-        stagger: .07,
-        delay: .35,
-        ease: 'power3.out'
-      }
-    );
-
-    gsap.fromTo(
-      '.setup-description',
-      { autoAlpha: 0, y: 18 },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: .8,
-        delay: .55,
-        ease: 'power3.out'
-      }
-    );
+  if (!window.gsap || prefersReducedMotion) {
+    modelGroup.position.y = 0.02;
+    introComplete = true;
+    return;
   }
+
+  gsap.fromTo(
+    modelGroup.position,
+    { y: 3.2 },
+    {
+      y: 0.02,
+      duration: 1.25,
+      ease: 'power4.out',
+      onComplete: () => {
+        introComplete = true;
+      }
+    }
+  );
+
+  gsap.fromTo(
+    '.orbit-item',
+    { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
+    {
+      autoAlpha: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      duration: .7,
+      stagger: .07,
+      delay: .35,
+      ease: 'power3.out'
+    }
+  );
+
+  gsap.fromTo(
+    '.setup-description',
+    { autoAlpha: 0, y: 18 },
+    {
+      autoAlpha: 1,
+      y: 0,
+      duration: .8,
+      delay: .55,
+      ease: 'power3.out'
+    }
+  );
+}
+
+
+
+
 
   new GLTFLoader().load(
     './models/Macmini.glb',
@@ -178,52 +189,67 @@ if (canvas && setupSection) {
     }
   );
 
+
+
+
+
   let dragMode = null;
 
-  canvas.addEventListener('pointerdown', (event) => {
-    if (!macMini) return;
+canvas.addEventListener('pointerdown', (event) => {
+  if (!macMini) return;
 
-    isDragging = true;
-    dragMode = null;
-    previousX = event.clientX;
-    previousY = event.clientY;
-  });
+  isDragging = true;
+  dragMode = null;
+  previousX = event.clientX;
+  previousY = event.clientY;
 
-  canvas.addEventListener('pointermove', (event) => {
-    if (!isDragging) return;
+  canvas.setPointerCapture(event.pointerId);
+});
 
-    const deltaX = event.clientX - previousX;
-    const deltaY = event.clientY - previousY;
+canvas.addEventListener('pointermove', (event) => {
+  if (!isDragging) return;
 
-    if (!dragMode) {
-      dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
-    }
+  const deltaX = event.clientX - previousX;
+  const deltaY = event.clientY - previousY;
 
-    if (dragMode === 'scroll') {
-      isDragging = false;
-      dragMode = null;
-      return;
-    }
+  if (!dragMode && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
+    dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
+  }
 
-    event.preventDefault();
-
-    previousX = event.clientX;
-    previousY = event.clientY;
-
-    targetRotationY += deltaX * 0.01;
-    targetRotationX += deltaY * 0.006;
-    targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
-  }, { passive: false });
-
-  canvas.addEventListener('pointerup', () => {
+  if (dragMode === 'scroll') {
     isDragging = false;
     dragMode = null;
-  });
+    return;
+  }
 
-  canvas.addEventListener('pointercancel', () => {
-    isDragging = false;
-    dragMode = null;
-  });
+  if (dragMode !== 'rotate') return;
+
+  event.preventDefault();
+
+  previousX = event.clientX;
+  previousY = event.clientY;
+
+  targetRotationY += deltaX * 0.012;
+  targetRotationX += deltaY * 0.006;
+  targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
+}, { passive: false });
+
+canvas.addEventListener('pointerup', (event) => {
+  isDragging = false;
+  dragMode = null;
+
+  if (canvas.hasPointerCapture(event.pointerId)) {
+    canvas.releasePointerCapture(event.pointerId);
+  }
+});
+
+canvas.addEventListener('pointercancel', () => {
+  isDragging = false;
+  dragMode = null;
+});
+
+
+
 
   function animate() {
     requestAnimationFrame(animate);
