@@ -178,13 +178,15 @@ if (canvas && setupSection) {
     }
   );
 
+  let dragMode = null;
+
   canvas.addEventListener('pointerdown', (event) => {
     if (!macMini) return;
 
     isDragging = true;
+    dragMode = null;
     previousX = event.clientX;
     previousY = event.clientY;
-    canvas.setPointerCapture(event.pointerId);
   });
 
   canvas.addEventListener('pointermove', (event) => {
@@ -193,23 +195,34 @@ if (canvas && setupSection) {
     const deltaX = event.clientX - previousX;
     const deltaY = event.clientY - previousY;
 
+    if (!dragMode) {
+      dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
+    }
+
+    if (dragMode === 'scroll') {
+      isDragging = false;
+      dragMode = null;
+      return;
+    }
+
+    event.preventDefault();
+
     previousX = event.clientX;
     previousY = event.clientY;
 
     targetRotationY += deltaX * 0.01;
     targetRotationX += deltaY * 0.006;
     targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
-  });
+  }, { passive: false });
 
-  canvas.addEventListener('pointerup', (event) => {
+  canvas.addEventListener('pointerup', () => {
     isDragging = false;
-    if (canvas.hasPointerCapture(event.pointerId)) {
-      canvas.releasePointerCapture(event.pointerId);
-    }
+    dragMode = null;
   });
 
   canvas.addEventListener('pointercancel', () => {
     isDragging = false;
+    dragMode = null;
   });
 
   function animate() {
