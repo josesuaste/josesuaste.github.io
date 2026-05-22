@@ -56,7 +56,7 @@
   width: min(540px, 42vw);
 }
 
-/* Labels laterales */
+/* Labels laterales desktop */
 .setup-orbit {
   position: absolute;
   inset: 0;
@@ -115,6 +115,11 @@
   top: 60vh;
 }
 
+/* Label móvil */
+.setup-mobile-label {
+  display: none;
+}
+
 /* Descripción inferior */
 .setup-description {
   position: absolute;
@@ -153,8 +158,10 @@
   pointer-events: none;
 }
 
+/* ════════════════════════════════════════════════════════════
+   Tablet
+   ════════════════════════════════════════════════════════════ */
 
-/* Tablet / móvil */
 @media (max-width: 900px) {
   .setup-copy-main {
     top: 84px;
@@ -204,38 +211,41 @@
     line-height: 1.45;
   }
 }
+
+/* ════════════════════════════════════════════════════════════
+   Móvil
+   - Oculta labels laterales
+   - Deja Mac Mini flotando
+   - Muestra label corto + párrafo abajo
+   ════════════════════════════════════════════════════════════ */
+
 @media (max-width: 700px) {
   .setup-orbit {
     display: none;
   }
 
   .setup-model-stage {
-    inset: 6vh 0 18vh;
+    inset: 6vh 0 20vh;
   }
 
   .setup-description {
     bottom: 3vh;
-    text-align: left;
     width: calc(100% - 40px);
+    text-align: left;
   }
 
   .setup-description p {
     font-size: .74rem;
     line-height: 1.5;
   }
-}
-.setup-mobile-label {
-  display: none;
-}
 
-@media (max-width: 700px) {
   .setup-mobile-label {
     display: block;
     position: absolute;
     z-index: 5;
     left: 20px;
     right: 20px;
-    bottom: 20vh;
+    bottom: 30vh;
     text-align: center;
     color: var(--cream);
   }
@@ -252,27 +262,14 @@
     color: rgba(244,241,234,.62);
   }
 }
-/* ════════════════════════════════════════════════════════════
-   iPad / ventanas intermedias
-   Evita que el label y el párrafo se encimen
-   ════════════════════════════════════════════════════════════ */
 
-@media (max-width: 900px) and (min-width: 701px) and (max-height: 900px) {
-  .setup-model-stage {
-    inset: 4vh 0 24vh;
+/* Móvil alto / iPad redimensionado en ancho pequeño */
+@media (max-width: 700px) and (min-height: 760px) {
+  .setup-mobile-label {
+    bottom: 34vh;
   }
 
   .setup-description {
-    bottom: 2vh;
-    width: calc(100% - 56px);
-  }
-
-  .setup-description p {
-    font-size: .78rem;
-    line-height: 1.45;
-  }
-
-  .orbit-mac {
-    bottom: 36vh;
+    bottom: 4vh;
   }
 }
