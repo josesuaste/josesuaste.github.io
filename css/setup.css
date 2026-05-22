@@ -194,13 +194,6 @@
     text-align: center;
   }
 
-  .orbit-mac {
-    left: 50%;
-    bottom: 32vh;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
   .setup-description {
     bottom: 5vh;
     text-align: left;
@@ -242,7 +235,7 @@
     z-index: 5;
     left: 20px;
     right: 20px;
-    bottom: 24vh;
+    bottom: 20vh;
     text-align: center;
     color: var(--cream);
   }
@@ -257,5 +250,29 @@
     margin-top: 4px;
     font-size: .76rem;
     color: rgba(244,241,234,.62);
+  }
+}
+/* ════════════════════════════════════════════════════════════
+   iPad / ventanas intermedias
+   Evita que el label y el párrafo se encimen
+   ════════════════════════════════════════════════════════════ */
+
+@media (max-width: 900px) and (min-width: 701px) and (max-height: 900px) {
+  .setup-model-stage {
+    inset: 4vh 0 24vh;
+  }
+
+  .setup-description {
+    bottom: 2vh;
+    width: calc(100% - 56px);
+  }
+
+  .setup-description p {
+    font-size: .78rem;
+    line-height: 1.45;
+  }
+
+  .orbit-mac {
+    bottom: 36vh;
   }
 }
