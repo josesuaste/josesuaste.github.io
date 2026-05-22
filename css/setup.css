@@ -231,3 +231,31 @@
     line-height: 1.5;
   }
 }
+.setup-mobile-label {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .setup-mobile-label {
+    display: block;
+    position: absolute;
+    z-index: 5;
+    left: 20px;
+    right: 20px;
+    bottom: 24vh;
+    text-align: center;
+    color: var(--cream);
+  }
+
+  .setup-mobile-label strong {
+    display: block;
+    font-size: .9rem;
+  }
+
+  .setup-mobile-label span {
+    display: block;
+    margin-top: 4px;
+    font-size: .76rem;
+    color: rgba(244,241,234,.62);
+  }
+}
