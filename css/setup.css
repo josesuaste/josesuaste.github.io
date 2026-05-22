@@ -1,25 +1,37 @@
 /* ════════════════════════════════════════════════════════════
    SETUP — Mac Mini 3D + labels editoriales
+   Mobile-first: flex column → absolutos solo en desktop ≥900px
    ════════════════════════════════════════════════════════════ */
 
+/* ── Sección contenedor ─────────────────────────────────── */
 .setup-cinematic {
   position: relative;
-  min-height: 100vh;
   background: #07111f;
   color: var(--cream);
   overflow: hidden;
 }
 
+/* ════════════════════════════════════════════════════════════
+   MÓVIL BASE (< 900px)
+   Layout: flex column, sin absolutos, sin vh
+   Orden visual:
+     [label 02]
+     [canvas]
+     [Mac Mini label]
+     [párrafo]
+   ════════════════════════════════════════════════════════════ */
 .setup-sticky {
   position: relative;
-  min-height: 100vh;
-  display: grid;
-  place-items: center;
-  padding: 92px var(--pad-x) 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px 20px 40px;
+  gap: 0;
   isolation: isolate;
+  /* sin min-height fija — crece con el contenido */
 }
 
-/* Fondo plano */
+/* Fondo */
 .setup-bg {
   position: absolute;
   inset: 0;
@@ -28,11 +40,23 @@
   pointer-events: none;
 }
 
-/* Canvas 3D */
+/* Label superior */
+.setup-copy-main {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  margin-bottom: 16px;
+  /* sin absolute, sin top/left */
+}
+
+/* Canvas — aspect-ratio fijo para que siempre tenga alto real */
 .setup-model-stage {
-  position: absolute;
-  inset: 0 0 10vh;
+  position: relative;   /* ← en el flujo normal */
   z-index: 2;
+  width: 100%;
+  /* cuadrado en móvil: el modelo es casi cuadrado */
+  aspect-ratio: 1 / 1;
+  max-width: 400px;     /* no más grande que la pantalla */
 }
 
 .setup-canvas {
@@ -42,234 +66,205 @@
   cursor: grab;
   touch-action: pan-y;
 }
-
-.setup-canvas:active {
-  cursor: grabbing;
-}
-
-/* Label superior */
-.setup-copy-main {
-  position: absolute;
-  z-index: 4;
-  top: 10vh;
-  left: max(var(--pad-x), 6vw);
-  width: min(540px, 42vw);
-}
-
-/* Labels laterales desktop */
-.setup-orbit {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.orbit-item {
-  position: absolute;
-  width: min(250px, 25vw);
-  margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid rgba(244,241,234,.28);
-  font-size: clamp(.86rem, 1vw, 1rem);
-  font-weight: 800;
-  line-height: 1.2;
-  color: rgba(244,241,234,.9);
-}
-
-.orbit-item span {
-  display: block;
-  margin-top: 6px;
-  font-weight: 500;
-  line-height: 1.45;
-  color: rgba(244,241,234,.62);
-}
-
-/* Desktop: composición en escalera */
-.orbit-mac {
-  left: 7vw;
-  top: 24vh;
-}
-
-.orbit-benq {
-  left: 12vw;
-  top: 42vh;
-}
-
-.orbit-ipad {
-  left: 7vw;
-  top: 60vh;
-}
-
-.orbit-light {
-  right: 7vw;
-  top: 24vh;
-}
-
-.orbit-mx {
-  right: 12vw;
-  top: 42vh;
-}
-
-.orbit-keys {
-  right: 7vw;
-  top: 60vh;
-}
-
-/* Label móvil */
-.setup-mobile-label {
-  display: none;
-}
-
-/* Descripción inferior */
-.setup-description {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  bottom: 5vh;
-  width: min(820px, calc(100% - 40px));
-  transform: translateX(-50%);
-  text-align: center;
-  pointer-events: none;
-}
-
-.setup-description p {
-  margin: 0;
-  font-size: clamp(.78rem, .95vw, .96rem);
-  line-height: 1.6;
-  color: rgba(244,241,234,.72);
-}
+.setup-canvas:active { cursor: grabbing; }
 
 /* Loader */
 .setup-loader {
   position: absolute;
   left: 50%;
-  bottom: 8vh;
+  bottom: 8px;
   transform: translateX(-50%);
   z-index: 6;
   font-family: var(--font-mono);
-  font-size: .62rem;
-  letter-spacing: .16em;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(244,241,234,.54);
+  color: rgba(244,241,234,0.5);
+  white-space: nowrap;
+  transition: opacity 0.4s;
+}
+.setup-loader.is-hidden { opacity: 0; pointer-events: none; }
+
+/* Labels orbit — OCULTOS en móvil */
+.setup-orbit { display: none; }
+
+/* Label "Mac Mini" móvil — visible solo en móvil */
+.setup-mobile-label {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  /* espacio compacto: pegado al canvas */
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(244,241,234,0.15);
 }
 
-.setup-loader.is-hidden {
-  opacity: 0;
-  pointer-events: none;
+.setup-mobile-label strong {
+  display: block;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 900;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+}
+
+.setup-mobile-label span {
+  display: block;
+  margin-top: 3px;
+  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+  color: rgba(244,241,234,0.52);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+/* Párrafo descriptivo */
+.setup-description {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 400px;
+  /* espacio fijo en px, no en vh → no se solapa */
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(244,241,234,0.08);
+  padding-bottom: 40px;
+}
+
+.setup-description p {
+  margin: 0;
+  font-size: clamp(0.78rem, 3vw, 0.92rem);
+  line-height: 1.65;
+  color: rgba(244,241,234,0.65);
+  text-align: left;
 }
 
 /* ════════════════════════════════════════════════════════════
-   Tablet
+   TABLET ANCHA / iPAD LANDSCAPE (600px – 899px)
+   Mismo flex column pero con canvas más grande
    ════════════════════════════════════════════════════════════ */
-
-@media (max-width: 900px) {
-  .setup-copy-main {
-    top: 84px;
-    left: var(--pad-x);
-    width: calc(100% - 40px);
-  }
-
-  .orbit-item {
-    width: 42vw;
-    font-size: .76rem;
-  }
-
-  .orbit-ipad {
-    left: 20px;
-    top: 43vh;
-  }
-
-  .orbit-mx {
-    right: 20px;
-    top: 43vh;
-  }
-
-  .orbit-benq {
-    left: 20px;
-    bottom: 25vh;
-  }
-
-  .orbit-light {
-    right: 20px;
-    bottom: 25vh;
-  }
-
-  .orbit-keys {
-    left: 50%;
-    top: 34vh;
-    transform: translateX(-50%);
-    text-align: center;
-  }
-
-  .setup-description {
-    bottom: 5vh;
-    text-align: left;
-  }
-
-  .setup-description p {
-    font-size: .72rem;
-    line-height: 1.45;
-  }
-}
-
-/* ════════════════════════════════════════════════════════════
-   Móvil
-   - Oculta labels laterales
-   - Deja Mac Mini flotando
-   - Muestra label corto + párrafo abajo
-   ════════════════════════════════════════════════════════════ */
-
-@media (max-width: 700px) {
-  .setup-orbit {
-    display: none;
+@media (min-width: 600px) and (max-width: 899px) {
+  .setup-sticky {
+    padding: 80px 32px 48px;
   }
 
   .setup-model-stage {
-    inset: 6vh 0 20vh;
+    max-width: 520px;
+    aspect-ratio: 4 / 3;   /* un poco más ancho que alto */
+  }
+
+  .setup-mobile-label {
+    max-width: 520px;
   }
 
   .setup-description {
-    bottom: 3vh;
-    width: calc(100% - 40px);
-    text-align: left;
+    max-width: 520px;
   }
 
   .setup-description p {
-    font-size: .74rem;
-    line-height: 1.5;
-  }
-
-  .setup-mobile-label {
-    display: block;
-    position: absolute;
-    z-index: 5;
-    left: 20px;
-    right: 20px;
-    bottom: 30vh;
-    text-align: center;
-    color: var(--cream);
-  }
-
-  .setup-mobile-label strong {
-    display: block;
-    font-size: .9rem;
-  }
-
-  .setup-mobile-label span {
-    display: block;
-    margin-top: 4px;
-    font-size: .76rem;
-    color: rgba(244,241,234,.62);
+    font-size: clamp(0.82rem, 1.6vw, 0.96rem);
   }
 }
 
-/* Móvil alto / iPad redimensionado en ancho pequeño */
-@media (max-width: 700px) and (min-height: 760px) {
-  .setup-mobile-label {
-    bottom: 34vh;
+/* ════════════════════════════════════════════════════════════
+   DESKTOP (≥ 900px)
+   Vuelve a position:absolute clásico con vh
+   Canvas ocupa todo el fondo, textos flotan alrededor
+   ════════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+
+  .setup-cinematic {
+    min-height: 100vh;
   }
 
+  /* Contenedor: vuelve a relative con altura fija */
+  .setup-sticky {
+    display: block;           /* anular flex móvil */
+    position: relative;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Canvas — fondo absoluto */
+  .setup-model-stage {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: unset;
+    max-width: unset;
+  }
+
+  /* Label — esquina superior izquierda */
+  .setup-copy-main {
+    position: absolute;
+    top: 10vh;
+    left: max(40px, 6vw);
+    width: min(540px, 42vw);
+    margin-bottom: 0;
+  }
+
+  /* Orbit — absolutos alrededor del modelo */
+  .setup-orbit {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  .orbit-item {
+    position: absolute;
+    width: min(250px, 22vw);
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px solid rgba(244,241,234,0.28);
+    font-size: clamp(0.86rem, 1vw, 1rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: rgba(244,241,234,0.9);
+  }
+
+  .orbit-item span {
+    display: block;
+    margin-top: 6px;
+    font-weight: 500;
+    line-height: 1.45;
+    color: rgba(244,241,234,0.62);
+  }
+
+  /* Posiciones en escalera */
+  .orbit-mac   { left: 7vw;  top: 24vh; }
+  .orbit-benq  { left: 12vw; top: 42vh; }
+  .orbit-ipad  { left: 7vw;  top: 60vh; }
+  .orbit-light { right: 7vw; top: 24vh; }
+  .orbit-mx    { right: 12vw;top: 42vh; }
+  .orbit-keys  { right: 7vw; top: 60vh; }
+
+  /* Label móvil Mac Mini — oculto en desktop */
+  .setup-mobile-label { display: none; }
+
+  /* Párrafo — centrado en la parte baja */
   .setup-description {
+    position: absolute;
+    left: 50%;
     bottom: 4vh;
+    transform: translateX(-50%);
+    max-width: min(820px, calc(100% - 80px));
+    margin: 0;
+    padding: 0;
+    border-top: none;
+  }
+
+  .setup-description p {
+    font-size: clamp(0.78rem, 0.9vw, 0.96rem);
+    line-height: 1.6;
+    color: rgba(244,241,234,0.68);
+    text-align: center;
+  }
+
+  /* Loader */
+  .setup-loader {
+    bottom: auto;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
