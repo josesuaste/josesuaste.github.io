@@ -156,11 +156,7 @@ if (canvas && setupSection) {
 
     gsap.fromTo(
       '.orbit-item',
-      {
-        autoAlpha: 0,
-        y: 18,
-        filter: 'blur(8px)'
-      },
+      { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
       {
         autoAlpha: 1,
         y: 0,
@@ -168,22 +164,21 @@ if (canvas && setupSection) {
         duration: 0.7,
         stagger: 0.07,
         delay: 0.35,
-        ease: 'power3.out'
+        ease: 'power3.out',
+        clearProps: 'transform,opacity,visibility,filter'
       }
     );
 
     gsap.fromTo(
       '.setup-description',
-      {
-        autoAlpha: 0,
-        y: 18
-      },
+      { autoAlpha: 0, y: 18 },
       {
         autoAlpha: 1,
         y: 0,
         duration: 0.8,
         delay: 0.55,
-        ease: 'power3.out'
+        ease: 'power3.out',
+        clearProps: 'transform,opacity,visibility'
       }
     );
   }
@@ -345,9 +340,16 @@ if (canvas && setupSection) {
      EVENTOS GLOBALES
      ───────────────────────────────────────────────────────── */
 
-  window.addEventListener('resize', () => {
+  /* ─────────────────────────────────────────────────────────
+     RESIZE — ResizeObserver sobre el contenedor del canvas
+     Solo redimensiona el renderer. La escala del modelo
+     se calcula una sola vez al cargar en centerAndScaleModel.
+     ───────────────────────────────────────────────────────── */
+  const ro = new ResizeObserver(() => {
     resizeRenderer();
   });
+
+  ro.observe(canvas.parentElement);
 
   resizeRenderer();
   animate();

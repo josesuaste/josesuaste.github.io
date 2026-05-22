@@ -120,11 +120,14 @@
 
 /* Párrafo descriptivo */
 .setup-description {
-  position: relative;
+  /* Valores base móvil — explícitos para que no hereden del desktop */
+  position: relative !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: none !important;
   z-index: 5;
   width: 100%;
   max-width: 400px;
-  /* espacio fijo en px, no en vh → no se solapa */
   margin-top: 20px;
   padding-top: 16px;
   border-top: 1px solid rgba(244,241,234,0.08);
@@ -244,14 +247,16 @@
 
   /* Párrafo — centrado en la parte baja */
   .setup-description {
-    position: absolute;
-    left: 50%;
-    bottom: 4vh;
-    transform: translateX(-50%);
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 4vh !important;
+    transform: translateX(-50%) !important;
     max-width: min(820px, calc(100% - 80px));
+    width: auto;
     margin: 0;
     padding: 0;
     border-top: none;
+    padding-bottom: 0;
   }
 
   .setup-description p {
