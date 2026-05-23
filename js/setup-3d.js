@@ -30,7 +30,8 @@ if (canvas && setupSection) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    alpha: true
+    alpha: true,
+    preserveDrawingBuffer: true   // evita que el canvas se limpie entre frames durante resize
   });
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -341,12 +342,19 @@ if (canvas && setupSection) {
      ───────────────────────────────────────────────────────── */
 
   /* ─────────────────────────────────────────────────────────
-     RESIZE — ResizeObserver sobre el contenedor del canvas
-     Solo redimensiona el renderer. La escala del modelo
-     se calcula una sola vez al cargar en centerAndScaleModel.
+     RESIZE — rAF debounce sobre ResizeObserver
+     El observer dispara ~60x/seg durante resize.
+     rAF agrupa todas las llamadas del mismo frame en una sola
+     ejecución de resizeRenderer(), eliminando el parpadeo
+     sin introducir delay perceptible.
      ───────────────────────────────────────────────────────── */
+  let rafResize = null;
+
   const ro = new ResizeObserver(() => {
-    resizeRenderer();
+    if (rafResize) cancelAnimationFrame(rafResize);
+    rafResize = requestAnimationFrame(() => {
+      resizeRenderer();
+    });
   });
 
   ro.observe(canvas.parentElement);
