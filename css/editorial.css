@@ -144,6 +144,7 @@
 
 .text-youtube {
     color: #c94420;
+    font-weight: 900;
 }
 
 .text-highlight {
@@ -151,6 +152,13 @@
     color: var(--cream);
     padding: 0 .12em;
     border-radius: .12em;
+    font-weight: 800;
+}
+
+.text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--blue);
+    font-weight: 900;
 }
 
 .text-strike {
@@ -166,11 +174,6 @@
     width: 108%;
     height: 0.08em;
     background: var(--orange);
-}
-
-.text-outline {
-    color: transparent;
-    -webkit-text-stroke: 1.5px var(--blue);
 }
 .mark-oval {
     position: relative;
