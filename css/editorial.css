@@ -28,11 +28,13 @@
 .section-label.light { opacity: 0.5; color: #fff; }
 .text-giant {
     font-size: clamp(1.6rem, 3.5vw, 4.2rem);
-    font-weight: 800;
+    font-weight: 500;
     line-height: 1.65;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
     text-align: center;
     margin: 0;
+    color: rgba(15, 15, 15, 0.78);
+
 }
 .inline-media {
     display: inline-flex;
@@ -249,4 +251,18 @@
 
 .mark-blue {
     color: var(--blue);
+}
+/* ═══════════════════════════════════════════════
+   PALABRAS ESPECIALES — más peso visual
+   ═══════════════════════════════════════════════ */
+
+.text-gradient,
+.text-underline,
+.text-youtube,
+.text-highlight,
+.text-strike,
+.text-outline,
+.mark {
+    font-weight: 800;
+    color: var(--ink);
 }
