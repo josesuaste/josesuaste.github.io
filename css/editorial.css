@@ -170,3 +170,28 @@
     color: transparent;
     -webkit-text-stroke: 1.5px var(--blue);
 }
+.mark-oval {
+    position: relative;
+    display: inline-block;
+    color: var(--orange);
+}
+
+.mark-oval-svg {
+    position: absolute;
+    left: -0.25em;
+    top: 50%;
+    width: calc(100% + 0.5em);
+    height: 1.25em;
+    transform: translateY(-50%) rotate(-3deg);
+    overflow: visible;
+    pointer-events: none;
+}
+
+.mark-oval-svg ellipse {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 650;
+    stroke-dashoffset: 650;
+}
