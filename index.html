@@ -34,6 +34,9 @@
 
     <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <script>
+    document.documentElement.classList.add("js");
+    </script>
 
     <link rel="stylesheet" href="css/main.css">
     <script type="application/ld+json">
@@ -52,9 +55,6 @@
         ]
     }
     </script>
-<script>
-  document.documentElement.classList.add("js");
-</script>
 </head>
 <body>
 
@@ -262,7 +262,7 @@
 
             ¿Quieres ver en qué estoy
 
-            <span class="mark mark-underline text-ink">trabajando</span>
+            <span class="mark mark-underline text-ink">trabajando?</span>
 
             Pásate por mi
 
@@ -275,10 +275,11 @@
 
         <!-- CTA -->
         <a href="https://www.youtube.com/@error404mx"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="cta-link">
-            Ver canal <span class="arrow">↗</span>
+         target="_blank"
+         rel="noopener noreferrer"
+         class="cta-link"
+         data-umami-event="Click-VerCanal-About">
+         Ver canal <span class="arrow">↗</span>
         </a>
 
     </div>
@@ -458,8 +459,8 @@
 
 </div><!-- /#app -->
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
 
 <script src="js/script.js" defer></script>
 <script src="js/about-animations.js" defer></script>
