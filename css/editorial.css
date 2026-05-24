@@ -193,6 +193,8 @@
     margin: 0 0.10em;
     line-height: 1;
     overflow: visible;
+    cursor: pointer;
+    will-change: transform;
 }
 
 .inline-media--badge {
@@ -208,6 +210,8 @@
     pointer-events: none;
     user-select: none;
     filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.10));
+    will-change: transform;
+    transform-origin: center center;
 }
 
 
@@ -284,7 +288,7 @@
 
 /* ── Estado inicial GSAP (se anima con JS) ───────────────── */
 
-.gsap-reveal {
+html.js .gsap-reveal {
     opacity: 0;
     visibility: hidden;
 }
@@ -315,5 +319,23 @@
     .inline-media--badge {
         width: 1.25em;
         height: 1.25em;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .gsap-reveal {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .inline-media,
+    .inline-media img,
+    .mark,
+    .text-highlight,
+    .text-highlight-orange,
+    .mark-highlight,
+    .text-outline {
+        animation: none !important;
+        transition: none !important;
+        transform: none;
     }
 }
