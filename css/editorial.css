@@ -53,7 +53,7 @@
 
 .text-light  { font-weight: 500; }
 .text-ink    { color: var(--ink); }
-.text-blue   { color: var(--ink); }    /* alias semántico — mismo valor que ink */
+.text-blue   { color: var(--ink); }
 .text-orange { color: var(--orange); }
 
 
@@ -64,7 +64,6 @@
     font-weight: 900;
 }
 
-/* Highlight azul (fondo sólido) */
 .text-highlight {
     background: var(--blue);
     color: var(--cream);
@@ -73,7 +72,6 @@
     font-weight: 800;
 }
 
-/* Highlight naranja (fondo sólido) */
 .text-highlight-orange {
     background: var(--orange);
     color: var(--cream);
@@ -82,7 +80,6 @@
     font-weight: 800;
 }
 
-/* Highlight naranja suave (fondo tintado) */
 .mark-highlight {
     background: rgba(201, 68, 32, 0.16);
     color: var(--ink);
@@ -91,7 +88,6 @@
     font-weight: 800;
 }
 
-/* Texto en outline (solo trazo, sin relleno) */
 .text-outline {
     color: transparent;
     -webkit-text-stroke: 1px var(--blue);
@@ -99,8 +95,7 @@
 }
 
 
-/* ── Marcas con pseudoelemento (subrayado / tachado) ─────── */
-/* Requieren position:relative + display:inline-block          */
+/* ── Marcas con pseudoelemento ───────────────────────────── */
 
 .text-underline,
 .text-strike,
@@ -112,7 +107,10 @@
     display: inline-block;
 }
 
-/* Subrayado recto — uso: palabras clave simples */
+.mark {
+    isolation: isolate;
+}
+
 .text-underline::after {
     content: "";
     position: absolute;
@@ -123,7 +121,6 @@
     background: var(--orange);
 }
 
-/* Subrayado editorial — línea ligeramente inclinada */
 .mark-underline::after {
     content: "";
     position: absolute;
@@ -136,7 +133,6 @@
     transform-origin: left center;
 }
 
-/* Tachado — mismas reglas para alias semántico y de marca */
 .text-strike::after,
 .mark-strike::after {
     content: "";
@@ -160,6 +156,8 @@
     width: calc(100% + 0.44em);
     height: 1.15em;
     transform: translateY(-50%) rotate(-3deg);
+    transform-box: fill-box;
+    transform-origin: center;
     overflow: visible;
     pointer-events: none;
 }
@@ -169,9 +167,9 @@
     stroke: currentColor;
     stroke-width: 5;
     stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
 }
 
-/* Variante wide: para palabras más largas */
 .mark-oval-wide .mark-oval-svg {
     left: -0.9em;
     width: calc(100% + 1.8em);
@@ -179,7 +177,7 @@
 }
 
 
-/* ── Stickers inline (imágenes decorativas en el flujo) ──── */
+/* ── Stickers inline ─────────────────────────────────────── */
 
 .inline-media {
     display: inline-flex;
@@ -193,7 +191,6 @@
     margin: 0 0.10em;
     line-height: 1;
     overflow: visible;
-    cursor: pointer;
     will-change: transform;
 }
 
@@ -215,8 +212,20 @@
 }
 
 
-/* ── Píldoras inline (para usar después) ────────────────── */
-/* Estas reglas están reservadas — no hay HTML todavía        */
+/* ── Hover SOLO para desktop / mouse real ────────────────── */
+
+@media (hover: hover) and (pointer: fine) {
+    .inline-media {
+        cursor: pointer;
+    }
+
+    .inline-media:hover img {
+        filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.16));
+    }
+}
+
+
+/* ── Píldoras inline ─────────────────────────────────────── */
 
 .inline-pill {
     display: inline-flex;
@@ -244,7 +253,6 @@
     object-fit: cover;
 }
 
-/* Variantes de píldora */
 .inline-pill.contain img { object-fit: contain; padding: 0.08em; }
 .inline-pill.wide        { width: 2.45em; }
 .inline-pill.tall        { height: 1.08em; }
@@ -267,13 +275,22 @@
     transition: opacity var(--t-fast), gap var(--t-fast);
 }
 
-.cta-link:hover         { opacity: 0.65; gap: 10px; }
-.cta-link .arrow        { display: inline-block; transition: transform var(--t-fast); }
-.cta-link:hover .arrow  { transform: translate(2px, -2px); }
+.cta-link:hover {
+    opacity: 0.65;
+    gap: 10px;
+}
+
+.cta-link .arrow {
+    display: inline-block;
+    transition: transform var(--t-fast);
+}
+
+.cta-link:hover .arrow {
+    transform: translate(2px, -2px);
+}
 
 
-/* ── Optimización de render ──────────────────────────────── */
-/* Fuerza compositing en GPU para elementos que se animan     */
+/* ── Optimización de render para GSAP ────────────────────── */
 
 .inline-media,
 .mark,
@@ -282,11 +299,11 @@
 .mark-highlight,
 .text-outline {
     backface-visibility: hidden;
-    transform: translateZ(0);
+    will-change: transform;
 }
 
 
-/* ── Estado inicial GSAP (se anima con JS) ───────────────── */
+/* ── Estado inicial GSAP ─────────────────────────────────── */
 
 html.js .gsap-reveal {
     opacity: 0;
@@ -321,6 +338,10 @@ html.js .gsap-reveal {
         height: 1.25em;
     }
 }
+
+
+/* ── Accesibilidad: reducir movimiento ───────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
     .gsap-reveal {
         opacity: 1 !important;
@@ -336,6 +357,6 @@ html.js .gsap-reveal {
     .text-outline {
         animation: none !important;
         transition: none !important;
-        transform: none;
+        transform: none !important;
     }
 }
