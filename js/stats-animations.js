@@ -2,7 +2,8 @@
 
 /* ════════════════════════════════════════════════════════════
    STATS ANIMATIONS — GSAP + ScrollTrigger
-   Cards stagger + contador numérico + hover desktop
+   150+, 12, 2.5K, 8+
+   Cards stagger + glow mouse desktop
    ════════════════════════════════════════════════════════════ */
 
 (function initStatsAnimations() {
@@ -30,23 +31,23 @@
 
         if (!items.length) return;
 
-        const formatNumber = (value, useComma) => {
-            const rounded = Math.round(value);
+        const formatCompact = (value) => {
+            if (value >= 1000) {
+                const compact = value / 1000;
+                return `${Number.isInteger(compact) ? compact : compact.toFixed(1)}K`;
+            }
 
-            return useComma
-                ? rounded.toLocaleString('en-US')
-                : String(rounded);
+            return String(Math.round(value));
+        };
+
+        const getFinalDisplay = (item) => {
+            return item.dataset.display || formatCompact(Number(item.dataset.val || 0));
         };
 
         if (reduceMotion) {
             items.forEach((item) => {
                 const number = item.querySelector('.stat-number');
-                const finalValue = Number(item.dataset.val || 0);
-                const useComma = item.dataset.comma === 'true';
-
-                if (number) {
-                    number.textContent = formatNumber(finalValue, useComma);
-                }
+                if (number) number.textContent = getFinalDisplay(item);
             });
 
             gsap.set([label, items], {
@@ -66,7 +67,7 @@
 
         gsap.set(items, {
             autoAlpha: 0,
-            y: 42,
+            y: 44,
             scale: 0.96,
             transformOrigin: '50% 50%'
         });
@@ -97,7 +98,7 @@
             autoAlpha: 1,
             y: 0,
             scale: 1,
-            duration: 0.75,
+            duration: 0.8,
             stagger: 0.09,
             ease: 'power3.out'
         }, label ? '-=0.25' : 0);
@@ -105,7 +106,7 @@
         items.forEach((item, index) => {
             const number = item.querySelector('.stat-number');
             const finalValue = Number(item.dataset.val || 0);
-            const useComma = item.dataset.comma === 'true';
+            const finalDisplay = getFinalDisplay(item);
 
             if (!number) return;
 
@@ -113,21 +114,32 @@
 
             tl.to(counter, {
                 value: finalValue,
-                duration: 1.35,
+                duration: 1.25,
                 ease: 'power2.out',
                 onUpdate: () => {
-                    number.textContent = formatNumber(counter.value, useComma);
+                    number.textContent = formatCompact(counter.value);
+                },
+                onComplete: () => {
+                    number.textContent = finalDisplay;
                 }
             }, 0.25 + index * 0.08);
         });
 
         if (canHover) {
             items.forEach((item) => {
+                item.addEventListener('mousemove', (event) => {
+                    const rect = item.getBoundingClientRect();
+                    const x = ((event.clientX - rect.left) / rect.width) * 100;
+                    const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+                    item.style.setProperty('--mx', `${x}%`);
+                    item.style.setProperty('--my', `${y}%`);
+                });
+
                 item.addEventListener('mouseenter', () => {
                     gsap.to(item, {
                         y: -6,
                         scale: 1.025,
-                        borderColor: 'rgba(242,237,228,0.35)',
                         duration: 0.28,
                         ease: 'power2.out'
                     });
@@ -137,10 +149,12 @@
                     gsap.to(item, {
                         y: 0,
                         scale: 1,
-                        borderColor: 'rgba(242,237,228,0.12)',
                         duration: 0.35,
                         ease: 'power2.out'
                     });
+
+                    item.style.setProperty('--mx', '50%');
+                    item.style.setProperty('--my', '50%');
                 });
             });
         }

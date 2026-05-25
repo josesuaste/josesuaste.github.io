@@ -1,11 +1,136 @@
 /* ════════════════════════════════════════════════════════════
    STATS
    ════════════════════════════════════════════════════════════ */
-.stats-section { background: #07111f; color: var(--cream); padding: var(--pad-section); }
-.stats-inner { max-width: 1300px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.stat-item { display: flex; flex-direction: column; gap: 6px; padding: 24px 16px; border: 1px solid rgba(242,237,228,0.12); border-radius: 10px; transition: border-color var(--t-mid), transform var(--t-mid); }
-.stat-item:hover { border-color: rgba(242,237,228,0.35); transform: translateY(-3px); }
-.stat-number { font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; display: block; color: var(--cream); }
-.stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(242,237,228,0.5); display: block; }
-@media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; } }
+
+.stats-section {
+    background: #07111f;
+    color: var(--cream);
+    padding: var(--pad-section);
+    overflow: hidden;
+}
+
+.stats-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.stat-item {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px 16px;
+    border: 1px solid rgba(242, 237, 228, 0.12);
+    border-radius: 10px;
+    background: rgba(242, 237, 228, 0.015);
+    transition: border-color var(--t-mid), background-color var(--t-mid);
+    will-change: transform, opacity;
+}
+
+.stat-item::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    background:
+        radial-gradient(
+            circle at var(--mx, 50%) var(--my, 50%),
+            rgba(242, 237, 228, 0.16),
+            rgba(242, 237, 228, 0.06) 22%,
+            transparent 48%
+        );
+    opacity: 0;
+    transition: opacity var(--t-mid);
+    pointer-events: none;
+}
+
+.stat-item::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: linear-gradient(
+        135deg,
+        rgba(242, 237, 228, 0.045),
+        transparent 55%
+    );
+    opacity: 0;
+    transition: opacity var(--t-mid);
+    pointer-events: none;
+}
+
+.stat-number {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    display: block;
+    color: var(--cream);
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+    position: relative;
+    z-index: 1;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(242, 237, 228, 0.5);
+    display: block;
+}
+
+/* Hover solo desktop / mouse real */
+@media (hover: hover) and (pointer: fine) {
+    .stat-item {
+        cursor: default;
+    }
+
+    .stat-item:hover {
+        border-color: rgba(242, 237, 228, 0.35);
+        background-color: rgba(242, 237, 228, 0.035);
+    }
+
+    .stat-item:hover::before {
+        opacity: 1;
+    }
+
+    .stat-item:hover::after {
+        opacity: 1;
+    }
+}
+
+@media (min-width: 640px) {
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stat-item,
+    .stat-number,
+    .stat-label {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+
+    .stat-item::before,
+    .stat-item::after {
+        transition: none !important;
+    }
+}
