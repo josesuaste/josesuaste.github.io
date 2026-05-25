@@ -33,6 +33,26 @@
     --pad-x: 20px;
     --pad-section: 80px 20px;
 }
+/* ── Global layout safety ───────────────────────────────── */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
 
 *, *::before, *::after {
     box-sizing: border-box;
