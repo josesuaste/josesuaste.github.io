@@ -1,19 +1,22 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   CONTACT ANIMATIONS — GSAP + ScrollTrigger
-   Entrada stagger + focus fields + hover desktop + submit feedback
+   CONTACT ANIMATIONS
+   GSAP + ScrollTrigger
+   Entrada stagger · focus fields · hover desktop · submit feedback
    ════════════════════════════════════════════════════════════ */
 
 (function initContactAnimations() {
+
     function start() {
+
         if (typeof gsap === 'undefined') {
-            console.warn('GSAP no está cargado.');
+            console.warn('[contact-animations] GSAP no está cargado.');
             return;
         }
 
         if (typeof ScrollTrigger === 'undefined') {
-            console.warn('ScrollTrigger no está cargado.');
+            console.warn('[contact-animations] ScrollTrigger no está cargado.');
             return;
         }
 
@@ -39,10 +42,10 @@
                 y: 0,
                 scale: 1
             });
-
             return;
         }
 
+        /* Estado inicial */
         gsap.set([label, title], {
             autoAlpha: 0,
             y: 34
@@ -59,6 +62,7 @@
             scale: 0.98
         });
 
+        /* Entrada de la sección */
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: contact,
@@ -97,15 +101,16 @@
             ease: 'back.out(1.6)'
         }, '-=0.18');
 
+        /* Focus en campos */
         inputs.forEach((input) => {
             const field = input.closest('.form-field');
-            const labelEl = field ? field.querySelector('label') : null;
+            const labelEl = field?.querySelector('label');
 
             input.addEventListener('focus', () => {
                 if (!field) return;
 
                 gsap.to(field, {
-                    y: -4,
+                    y: -3,
                     duration: 0.24,
                     ease: 'power2.out'
                 });
@@ -140,6 +145,7 @@
             });
         });
 
+        /* Hover botón solo desktop */
         if (canHover && button) {
             const dot = button.querySelector('.btn-dot');
 
@@ -178,19 +184,22 @@
             });
         }
 
+        /* Feedback visual al enviar */
         if (form && button) {
             form.addEventListener('submit', () => {
-                const originalHTML = button.innerHTML;
-
                 button.disabled = true;
                 button.setAttribute('aria-busy', 'true');
-                button.innerHTML = '<span class="btn-dot"></span> Enviando…';
+                button.innerHTML = '<span class="btn-dot" aria-hidden="true"></span> Enviando…';
 
+                /*
+                  Antes usábamos scale: 0.96.
+                  Ahora usamos y para evitar que el botón cambie de ancho visualmente en móvil.
+                */
                 gsap.fromTo(button,
-                    { scale: 1 },
+                    { y: 0 },
                     {
-                        scale: 0.96,
-                        duration: 0.12,
+                        y: 2,
+                        duration: 0.1,
                         yoyo: true,
                         repeat: 1,
                         ease: 'power2.inOut'
@@ -198,7 +207,7 @@
                 );
 
                 setTimeout(() => {
-                    button.innerHTML = originalHTML;
+                    button.innerHTML = '<span class="btn-dot" aria-hidden="true"></span> Enviar mensaje';
                     button.disabled = false;
                     button.removeAttribute('aria-busy');
                 }, 2500);
@@ -215,4 +224,5 @@
     } else {
         start();
     }
+
 })();

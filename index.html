@@ -465,16 +465,17 @@
             <span>Hecho en México ★</span>
         </div>
     </footer>
-
 </div><!-- /#app -->
 
+<!-- 1. GSAP primero -->
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
-
+<!-- 2. Scripts propios después -->
 <script src="js/script.js" defer></script>
 <script src="js/about-animations.js" defer></script>
 <script src="js/stats-animations.js" defer></script>
 <script src="js/contact-animations.js" defer></script>
+<!-- 3. ES module separado (no puede llevar defer) -->
 <script type="module" src="js/setup-3d.js"></script>
   </body>
 </html>

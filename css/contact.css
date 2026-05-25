@@ -2,6 +2,9 @@
    CONTACTO
    ════════════════════════════════════════════════════════════ */
 
+
+/* ── Sección ─────────────────────────────────────────────── */
+
 .contact-section {
     background: #07111f;
     color: var(--cream);
@@ -10,19 +13,17 @@
 }
 
 .contact-inner {
+    width: 100%;
     max-width: 1300px;
+    min-width: 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
 
-.contact-heading,
-.minimal-form,
-.form-field,
-.submit-btn {
-    will-change: transform, opacity;
-}
+
+/* ── Título ──────────────────────────────────────────────── */
 
 .contact-title {
     font-size: clamp(2.5rem, 6vw, 5rem);
@@ -33,16 +34,29 @@
     color: var(--cream);
 }
 
+
+/* ── Formulario ──────────────────────────────────────────── */
+
 .minimal-form {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .form-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* minmax(0,1fr) evita que el contenido desborde el grid */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 20px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.form-field {
+    min-width: 0;
+    max-width: 100%;
 }
 
 .form-field label {
@@ -53,12 +67,14 @@
     text-transform: uppercase;
     color: rgba(242, 237, 228, 0.45);
     margin-bottom: 8px;
-    will-change: transform, opacity;
+    /* Sin will-change aquí: GSAP lo activa solo durante la animación */
 }
 
 .form-field input,
 .form-field textarea {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     padding: 10px 0;
     background: transparent;
     border: none;
@@ -68,8 +84,8 @@
     color: var(--cream);
     transition:
         border-color var(--t-mid),
-        box-shadow var(--t-mid),
-        color var(--t-mid);
+        box-shadow var(--t-mid);
+    /* Nota: 'color' no se anima visualmente aquí, se eliminó de la transition */
 }
 
 .form-field input::placeholder,
@@ -89,10 +105,23 @@
     min-height: 80px;
 }
 
+.form-actions {
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+    padding-top: 6px;
+
+}
+
+
+/* ── Botón ───────────────────────────────────────────────── */
+
 .submit-btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
+    max-width: 100%;
     padding: 14px 36px;
     background: var(--cream);
     color: var(--ink);
@@ -102,10 +131,11 @@
     font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
+    white-space: nowrap;
+    transform-origin: center;
     transition:
         background var(--t-fast),
         color var(--t-fast);
-    transform-origin: center;
 }
 
 .btn-dot {
@@ -114,12 +144,12 @@
     border-radius: 50%;
     background: var(--orange);
     flex-shrink: 0;
-    transition: background var(--t-fast);
-    will-change: transform;
     transform-origin: center;
+    transition: background var(--t-fast);
+    /* Sin will-change global: GSAP lo activa solo en hover/animación */
 }
 
-/* Hover solo desktop / mouse real */
+/* Hover solo en dispositivos con cursor real (no touch) */
 @media (hover: hover) and (pointer: fine) {
     .submit-btn:hover {
         background: var(--orange);
@@ -130,6 +160,9 @@
         background: #fff;
     }
 }
+
+
+/* ── Responsive ──────────────────────────────────────────── */
 
 @media (min-width: 900px) {
     .contact-inner {
@@ -151,15 +184,15 @@
     .form-row {
         grid-template-columns: 1fr;
     }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    .contact-section *,
-    .minimal-form *,
-    .submit-btn,
-    .btn-dot {
-        animation: none !important;
-        transition: none !important;
-        transform: none !important;
+    .submit-btn {
+        width: 100%;
+        justify-content: center;
     }
 }
+
+/*
+    Nota: prefers-reduced-motion se maneja exclusivamente en
+    contact-animations.js con la variable reduceMotion.
+    No se duplica aquí para evitar conflictos con clearProps de GSAP.
+*/
