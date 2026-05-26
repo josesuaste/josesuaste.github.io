@@ -3,6 +3,8 @@
    ════════════════════════════════════════════════════════════ */
 
 .hero {
+    perspective: 1200px;
+    transform-style: preserve-3d;
     position: relative;
     z-index: 1;
     height: 100svh;
@@ -16,7 +18,18 @@
     background: var(--hero-bg);
 }
 
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 31, 61, 0.16);
+    opacity: var(--hero-dim, 0);
+    pointer-events: none;
+    z-index: 8;
+}
+
 .hero-content {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -55,6 +68,7 @@
 }
 
 .hero-footer {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -70,7 +84,7 @@
 
 .bottom-sub-btn {
     display: inline-block;
-    background: var(--orange);
+    background: var(--ink);
     color: #fff;
     padding: 12px 34px;
     border-radius: 50px;
@@ -79,12 +93,26 @@
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.3s ease;
 }
 
 .bottom-sub-btn:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 24px rgba(201, 68, 32, 0.38);
+    box-shadow: 0 10px 24px rgba(14, 31, 61, 0.28);
+}
+
+/* Elementos que participan en la profundidad del Hero */
+.hero-content,
+.giant-title,
+.profile-wrapper,
+.hero-footer,
+.header-corner,
+.bottom-sub-btn {
+    transform-style: preserve-3d;
+    will-change: transform, opacity, filter;
 }
 
 @media (min-width: 768px) {
@@ -106,7 +134,7 @@
         font-weight: 800;
         line-height: 1.5;
         text-transform: uppercase;
-        color: var(--muted);
+        color: rgba(14, 31, 61, 0.72);
     }
 
     .header-corner.right {

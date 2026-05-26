@@ -1,8 +1,8 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   ABOUT ANIMATIONS — Curtain reveal
-   El About sube como cortina y tapa el Hero
+   ABOUT ANIMATIONS — Curtain reveal + Hero depth limpio
+   Profundidad sin lavar colores
    ════════════════════════════════════════════════════════════ */
 
 (function initAboutAnimations() {
@@ -26,38 +26,68 @@
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        const heroTitle = hero.querySelector('.giant-title');
+        const heroImage = hero.querySelector('.profile-img');
+        const heroCorners = hero.querySelectorAll('.header-corner');
+
         const label = about.querySelector('.section-label');
         const paragraphs = about.querySelectorAll('.text-giant');
         const cta = about.querySelector('.cta-link');
+        const aboutLinks = document.querySelectorAll('a[href="#about"]');
 
         if (reduceMotion) {
-            gsap.set([hero, about, label, paragraphs, cta], {
+            gsap.set([
+                hero,
+                about,
+                heroTitle,
+                heroImage,
+                heroCorners,
+                label,
+                paragraphs,
+                cta
+            ], {
                 clearProps: 'all',
                 autoAlpha: 1,
                 y: 0,
-                yPercent: 0
+                yPercent: 0,
+                scale: 1,
+                rotationX: 0,
+                z: 0,
+                filter: 'none'
+            });
+
+            gsap.set(hero, {
+                '--hero-dim': 0
             });
 
             return;
         }
 
-        /*
-          El About ya está encima del Hero gracias a margin-top: -100vh,
-          pero visualmente arranca abajo del viewport.
-        */
         gsap.set(about, {
             yPercent: 100
         });
 
         gsap.set([label, paragraphs, cta], {
-            autoAlpha: 0,
-            y: 32
+            autoAlpha: 1,
+            y: 0
         });
 
-        /*
-          Cortina principal:
-          pinea el Hero y sube el About encima de él.
-        */
+        gsap.set([heroTitle, heroCorners], {
+            autoAlpha: 1,
+            filter: 'none',
+            transformOrigin: '50% 50%',
+            transformPerspective: 1200
+        });
+
+        if (heroImage) {
+            gsap.set(heroImage, {
+                autoAlpha: 1,
+                filter: 'grayscale(100%)',
+                transformOrigin: '50% 50%',
+                transformPerspective: 1200
+            });
+        }
+
         const curtainTl = gsap.timeline({
             scrollTrigger: {
                 trigger: hero,
@@ -74,34 +104,59 @@
         curtainTl.to(about, {
             yPercent: 0,
             ease: 'none'
-        });
+        }, 0);
 
-        /*
-          Entrada del contenido interno cuando la cortina ya está llegando.
-        */
-        curtainTl.to(label, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.25,
+        curtainTl.to(hero, {
+            '--hero-dim': 1,
             ease: 'none'
-        }, 0.58);
+        }, 0);
 
-        curtainTl.to(paragraphs, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.35,
-            stagger: 0.08,
-            ease: 'none'
-        }, 0.65);
-
-        if (cta) {
-            curtainTl.to(cta, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.25,
+        if (heroTitle) {
+            curtainTl.to(heroTitle, {
+                scale: 0.94,
+                y: -14,
+                z: -140,
+                rotationX: 5,
+                autoAlpha: 0.88,
                 ease: 'none'
-            }, 0.82);
+            }, 0);
         }
+
+        if (heroImage) {
+            curtainTl.to(heroImage, {
+                scale: 0.96,
+                z: -110,
+                autoAlpha: 0.9,
+                filter: 'grayscale(100%)',
+                ease: 'none'
+            }, 0);
+        }
+
+        if (heroCorners.length) {
+            curtainTl.to(heroCorners, {
+                y: 10,
+                z: -80,
+                scale: 0.98,
+                autoAlpha: 0.78,
+                ease: 'none'
+            }, 0);
+        }
+
+        aboutLinks.forEach((link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const st = curtainTl.scrollTrigger;
+                if (!st) return;
+
+                window.scrollTo({
+                    top: st.end - 2,
+                    behavior: 'smooth'
+                });
+
+                history.replaceState(null, '', '#about');
+            });
+        });
 
         window.addEventListener('load', () => {
             ScrollTrigger.refresh();
