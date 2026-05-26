@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   EDITORIAL — About, texto gigante, stickers y marcas
+   EDITORIAL — About limpio + efecto cortina full width
    ════════════════════════════════════════════════════════════ */
 
 
@@ -12,6 +12,17 @@
     justify-content: center;
     padding: 100px var(--pad-x);
     background: #fdfaf3;
+    overflow: hidden;
+
+    position: relative;
+    z-index: 3;
+
+    margin: 0;
+    margin-top: -100vh;
+
+    border-radius: 32px 32px 0 0;
+
+    will-change: transform;
 }
 
 .editorial-inner {
@@ -20,6 +31,9 @@
     flex-direction: column;
     gap: 42px;
 }
+
+
+/* ── Label ───────────────────────────────────────────────── */
 
 .section-label {
     font-family: var(--font-mono);
@@ -41,222 +55,8 @@
     text-align: center;
     margin: 0;
     color: rgba(20, 20, 20, 0.78);
+    will-change: transform, opacity;
 }
-
-
-/* ── Variantes de peso y color ───────────────────────────── */
-
-.text-bold,
-.mark {
-    font-weight: 800;
-}
-
-.text-light  { font-weight: 500; }
-.text-ink    { color: var(--ink); }
-.text-blue   { color: var(--ink); }
-.text-orange { color: var(--orange); }
-
-
-/* ── Efectos de texto ────────────────────────────────────── */
-
-.text-youtube {
-    color: var(--ink);
-    font-weight: 900;
-}
-
-.text-highlight {
-    background: var(--blue);
-    color: var(--cream);
-    padding: 0 0.12em;
-    border-radius: 0.12em;
-    font-weight: 800;
-}
-
-.text-highlight-orange {
-    background: var(--orange);
-    color: var(--cream);
-    padding: 0 0.12em;
-    border-radius: 0.12em;
-    font-weight: 800;
-}
-
-.mark-highlight {
-    background: rgba(201, 68, 32, 0.16);
-    color: var(--ink);
-    padding: 0 0.12em;
-    border-radius: 0.12em;
-    font-weight: 800;
-}
-
-.text-outline {
-    color: transparent;
-    -webkit-text-stroke: 1px var(--blue);
-    font-weight: 900;
-}
-
-
-/* ── Marcas con pseudoelemento ───────────────────────────── */
-
-.text-underline,
-.text-strike,
-.mark,
-.mark-underline,
-.mark-strike,
-.mark-oval {
-    position: relative;
-    display: inline-block;
-}
-
-.mark {
-    isolation: isolate;
-}
-
-.text-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0.12em;
-    width: 100%;
-    height: 0.055em;
-    background: var(--orange);
-}
-
-.mark-underline::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.04em;
-    width: 100%;
-    height: 0.06em;
-    background: var(--orange);
-    transform: rotate(-1deg);
-    transform-origin: left center;
-}
-
-.text-strike::after,
-.mark-strike::after {
-    content: "";
-    position: absolute;
-    left: -0.04em;
-    top: 54%;
-    width: 108%;
-    height: 0.08em;
-    background: var(--orange);
-    transform: rotate(-2deg);
-    transform-origin: left center;
-}
-
-
-/* ── Óvalos SVG ──────────────────────────────────────────── */
-
-.mark-oval-svg {
-    position: absolute;
-    left: -0.22em;
-    top: 50%;
-    width: calc(100% + 0.44em);
-    height: 1.15em;
-    transform: translateY(-50%) rotate(-3deg);
-    transform-box: fill-box;
-    transform-origin: center;
-    overflow: visible;
-    pointer-events: none;
-}
-
-.mark-oval-svg ellipse {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 5;
-    stroke-linecap: round;
-    vector-effect: non-scaling-stroke;
-}
-
-.mark-oval-wide .mark-oval-svg {
-    left: -0.38em;
-    width: calc(100% + 0.76em);
-    height: 1.25em;
-}
-
-
-/* ── Stickers inline ─────────────────────────────────────── */
-
-.inline-media {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    position: relative;
-    top: -0.06em;
-    width: 1.22em;
-    height: 1.22em;
-    margin: 0 0.10em;
-    line-height: 1;
-    overflow: visible;
-    will-change: transform;
-}
-
-.inline-media--badge {
-    width: 1.4em;
-    height: 1.4em;
-}
-
-.inline-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    pointer-events: none;
-    user-select: none;
-    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.10));
-    will-change: transform;
-    transform-origin: center center;
-}
-
-
-/* ── Hover SOLO para desktop / mouse real ────────────────── */
-
-@media (hover: hover) and (pointer: fine) {
-    .inline-media {
-        cursor: pointer;
-    }
-
-    .inline-media:hover img {
-        filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.16));
-    }
-}
-
-
-/* ── Píldoras inline ─────────────────────────────────────── */
-
-.inline-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    vertical-align: middle;
-    position: relative;
-    top: -0.08em;
-    width: 1.95em;
-    height: 0.92em;
-    margin: 0 0.14em;
-    background: rgba(0, 0, 0, 0.18);
-    border: 2px solid rgba(255, 255, 255, 0.82);
-    border-radius: 999px;
-    overflow: hidden;
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
-        0 6px 16px rgba(0, 0, 0, 0.16);
-}
-
-.inline-pill img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-}
-
-.inline-pill.contain img { object-fit: contain; padding: 0.08em; }
-.inline-pill.wide        { width: 2.45em; }
-.inline-pill.tall        { height: 1.08em; }
-.inline-pill.clean       { border: 0; background: transparent; box-shadow: none; }
 
 
 /* ── CTA link ────────────────────────────────────────────── */
@@ -272,12 +72,9 @@
     border-bottom: 1.5px solid currentColor;
     padding-bottom: 2px;
     align-self: flex-start;
-    transition: opacity var(--t-fast), gap var(--t-fast);
-}
-
-.cta-link:hover {
-    opacity: 0.65;
-    gap: 10px;
+    transition:
+        opacity var(--t-fast),
+        gap var(--t-fast);
 }
 
 .cta-link .arrow {
@@ -285,35 +82,29 @@
     transition: transform var(--t-fast);
 }
 
-.cta-link:hover .arrow {
-    transform: translate(2px, -2px);
-}
+@media (hover: hover) and (pointer: fine) {
+    .cta-link:hover {
+        opacity: 0.65;
+        gap: 10px;
+    }
 
-
-/* ── Optimización de render para GSAP ────────────────────── */
-
-.inline-media,
-.mark,
-.text-highlight,
-.text-highlight-orange,
-.mark-highlight,
-.text-outline {
-    backface-visibility: hidden;
-    will-change: transform;
-}
-
-
-/* ── Estado inicial GSAP ─────────────────────────────────── */
-
-html.js .gsap-reveal {
-    opacity: 0;
-    visibility: hidden;
+    .cta-link:hover .arrow {
+        transform: translate(2px, -2px);
+    }
 }
 
 
 /* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 768px) {
+    .section-editorial {
+        min-height: 100vh;
+        margin: 0;
+        margin-top: -100vh;
+        border-radius: 24px 24px 0 0;
+        padding: 96px var(--pad-x);
+    }
+
     .editorial-inner {
         width: calc(100% - 40px);
     }
@@ -322,39 +113,26 @@ html.js .gsap-reveal {
         line-height: 1.45;
         letter-spacing: -0.035em;
     }
-
-    .inline-media {
-        margin-inline: 0.06em;
-    }
 }
 
 @media (max-width: 520px) {
-    .text-giant {
-        font-size: clamp(1.55rem, 9vw, 3rem);
+    .section-editorial {
+        padding-block: 90px;
     }
 
-    .inline-media--badge {
-        width: 1.25em;
-        height: 1.25em;
+    .text-giant {
+        font-size: clamp(1.55rem, 9vw, 3rem);
     }
 }
 
 
-/* ── Accesibilidad: reducir movimiento ───────────────────── */
+/* ── Accesibilidad ───────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-    .gsap-reveal {
-        opacity: 1 !important;
-        visibility: visible !important;
-    }
-
-    .inline-media,
-    .inline-media img,
-    .mark,
-    .text-highlight,
-    .text-highlight-orange,
-    .mark-highlight,
-    .text-outline {
+    .section-editorial,
+    .text-giant,
+    .section-label,
+    .cta-link {
         animation: none !important;
         transition: none !important;
         transform: none !important;
