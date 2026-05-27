@@ -6,7 +6,7 @@
 /* ── Sección contenedor ─────────────────────────────────── */
 .setup-cinematic {
   position: relative;
-  background: #07111f;
+  background: #080808;
   color: var(--cream);
   overflow: hidden;
 }

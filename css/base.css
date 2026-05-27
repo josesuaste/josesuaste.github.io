@@ -71,7 +71,6 @@
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-display: 'Mattone', var(--font-sans);
     --font-mono: 'NectoMono', 'Courier New', monospace;
-    --font-mono: var(--font-sans);
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --t-fast: 0.2s;

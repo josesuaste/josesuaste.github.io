@@ -13,29 +13,43 @@
     padding: 0 var(--pad-x);
     z-index: 500;
     background: transparent;
-    transition: background var(--t-mid), backdrop-filter var(--t-mid), box-shadow var(--t-mid);
+    transition:
+        background var(--t-mid),
+        backdrop-filter var(--t-mid),
+        box-shadow var(--t-mid);
 }
 
 .navbar--scrolled {
-    background: rgba(244, 241, 234, 0.82);
+    background: rgba(244, 241, 234, 0.86);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 rgba(26, 94, 212, 0.1);
+    box-shadow: 0 1px 0 rgba(17, 17, 17, 0.08);
 }
+
+
+/* ── Logo ───────────────────────────────────────────────── */
 
 .logo {
     font-family: var(--font-mono);
     font-size: 1.1rem;
     font-weight: 900;
-    color: var(--blue);
+    color: var(--dark);
     text-decoration: none;
     letter-spacing: -0.01em;
     flex-shrink: 0;
-    transition: opacity var(--t-fast);
+    transition:
+        opacity var(--t-fast),
+        color var(--t-fast);
     z-index: 600;
     position: relative;
 }
-.logo:hover { opacity: 0.6; }
+
+.logo:hover {
+    opacity: 0.65;
+}
+
+
+/* ── Toggle móvil ───────────────────────────────────────── */
 
 .menu-toggle {
     display: none;
@@ -54,14 +68,25 @@
 .menu-toggle .bar {
     width: 100%;
     height: 2px;
-    background: var(--blue);
+    background: var(--dark);
     border-radius: 2px;
-    transition: transform 0.35s var(--ease-out), opacity 0.25s;
+    transition:
+        transform 0.35s var(--ease-out),
+        opacity 0.25s;
     transform-origin: center;
     display: block;
 }
-.menu-toggle.is-active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.menu-toggle.is-active .bar:nth-child(2) { transform: translateY(-8px) rotate(-45deg); }
+
+.menu-toggle.is-active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.is-active .bar:nth-child(2) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+
+/* ── Links desktop ───────────────────────────────────────── */
 
 .nav-links {
     position: absolute;
@@ -69,22 +94,38 @@
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 10px;
 }
 
 .nav-links a {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--blue);
+    font-weight: 650;
+    color: var(--dark);
     text-decoration: none;
-    padding: 6px 14px;
+    padding: 6px 10px;
     border-radius: 50px;
     white-space: nowrap;
-    transition: background var(--t-fast), color var(--t-fast);
+    transition:
+        background var(--t-fast),
+        color var(--t-fast),
+        opacity var(--t-fast);
 }
-.nav-links a:hover { background: rgba(26, 94, 212, 0.08); }
-.nav-links a.active { background: var(--blue); color: var(--cream); }
-.nav-mediakit-link { display: none; }
+
+.nav-links a:hover {
+    background: rgba(255, 112, 93, 0.14);
+}
+
+.nav-links a.active {
+    background: var(--coral);
+    color: var(--white);
+}
+
+.nav-mediakit-link {
+    display: none;
+}
+
+
+/* ── Right / Media Kit como texto ───────────────────────── */
 
 .nav-right {
     margin-left: auto;
@@ -95,22 +136,41 @@
 }
 
 .nav-mediakit-btn {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--cream);
-    background: var(--blue);
-    padding: 8px 20px;
-    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 650;
+    color: var(--dark);
+    background: transparent;
+    padding: 6px 0;
+    border-radius: 0;
     text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: background var(--t-fast), transform var(--t-fast);
+    letter-spacing: -0.01em;
+    transition:
+        color var(--t-fast),
+        opacity var(--t-fast),
+        transform var(--t-fast);
     white-space: nowrap;
 }
-.nav-mediakit-btn:hover { background: var(--orange); transform: translateY(-2px); }
+
+.nav-mediakit-btn:hover {
+    color: var(--coral);
+    opacity: 1;
+    transform: translateY(-1px);
+    box-shadow: none;
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   MOBILE
+   ════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-    .menu-toggle { display: flex; }
-    .nav-mediakit-btn { display: none; }
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-mediakit-btn {
+        display: none;
+    }
 
     .nav-links {
         position: fixed;
@@ -128,8 +188,13 @@
         z-index: 550;
     }
 
-    .nav-links.is-animating { transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1); }
-    .nav-links.is-active { transform: translateX(0); }
+    .nav-links.is-animating {
+        transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+
+    .nav-links.is-active {
+        transform: translateX(0);
+    }
 
     .nav-links a {
         font-size: clamp(1.8rem, 7vw, 2.4rem);
@@ -139,31 +204,44 @@
         width: 100%;
         text-align: center;
         border-radius: 0;
-        color: var(--blue);
-        border-bottom: 1px solid rgba(26, 94, 212, 0.08);
+        color: var(--dark);
+        border-bottom: 1px solid rgba(17, 17, 17, 0.08);
     }
-    .nav-links a:last-child { border-bottom: none; }
-    .nav-links a:hover { background: transparent; opacity: 0.45; }
-    .nav-links a.active { background: transparent; color: var(--orange); }
+
+    .nav-links a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a:hover {
+        background: transparent;
+        color: var(--coral);
+        opacity: 1;
+    }
+
+    .nav-links a.active {
+        background: transparent;
+        color: var(--coral);
+    }
 
     .nav-mediakit-link {
         display: block;
         font-size: 0.85rem !important;
-        font-weight: 700;
+        font-weight: 750;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: var(--muted) !important;
+        color: var(--coral) !important;
         margin-top: 20px;
         padding: 11px 28px !important;
-        border: 1.5px solid rgba(26, 94, 212, 0.2) !important;
+        border: 1.5px solid rgba(255, 112, 93, 0.42) !important;
         border-radius: 50px !important;
         width: auto !important;
         border-bottom: none !important;
     }
+
     .nav-mediakit-link:hover {
-        background: var(--blue) !important;
-        color: var(--cream) !important;
-        border-color: var(--blue) !important;
+        background: var(--coral) !important;
+        color: var(--white) !important;
+        border-color: var(--coral) !important;
         opacity: 1 !important;
     }
 }
