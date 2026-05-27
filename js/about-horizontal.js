@@ -3,6 +3,8 @@
 /* ════════════════════════════════════════════════════════════
    ABOUT HORIZONTAL
    Primer párrafo: escena pinned horizontal + palabras + SVGs
+   Versión: solo primeras 13 palabras tienen animación de entrada.
+   El resto del texto aparece ya visible.
    ════════════════════════════════════════════════════════════ */
 
 (function initAboutHorizontal() {
@@ -50,7 +52,6 @@
                 clearProps: 'all',
                 autoAlpha: 1
             });
-
             return;
         }
 
@@ -99,10 +100,10 @@
                     duration: 1
                 }, 0);
 
-                gsap.from('.about-animate-intro .section-label, .about-animate-small', {
+                // Texto pequeño de introducción (se mantiene)
+                gsap.from('.about-animate-small', {
                     y: 36,
                     autoAlpha: 0,
-                    stagger: 0.08,
                     duration: 0.9,
                     ease: 'power3.out',
                     scrollTrigger: {
@@ -112,7 +113,14 @@
                     }
                 });
 
-                words.forEach((word, index) => {
+                // --- NUEVO: Dividir palabras (las primeras 13 tienen animación de entrada) ---
+                const allWords = gsap.utils.toArray('.about-word');
+                const countToAnimate = 13; // palabras desde "soy" hasta "música"
+                const wordsToAnimate = allWords.slice(0, countToAnimate);
+                const wordsStatic = allWords.slice(countToAnimate);
+
+                // Animación de entrada solo para las primeras palabras
+                wordsToAnimate.forEach((word) => {
                     gsap.from(word, {
                         x: () => gsap.utils.random(-80, 80),
                         y: () => gsap.utils.random(-90, 90),
@@ -129,7 +137,20 @@
                             scrub: 1
                         }
                     });
+                });
 
+                // El resto de palabras ya visibles desde el inicio
+                gsap.set(wordsStatic, {
+                    autoAlpha: 1,
+                    filter: 'blur(0px)',
+                    scale: 1,
+                    x: 0,
+                    y: 0,
+                    rotate: 0
+                });
+
+                // Movimiento flotante para TODAS las palabras (como en GSAP)
+                allWords.forEach((word, index) => {
                     gsap.to(word, {
                         yPercent: index % 2 === 0 ? -8 : 8,
                         rotate: index % 2 === 0 ? '-=2' : '+=2',
@@ -144,6 +165,7 @@
                     });
                 });
 
+                // --- SVGs inline (animaciones originales) ---
                 inlineSvgs.forEach((svg, index) => {
                     gsap.from(svg, {
                         x: () => gsap.utils.random(-60, 60),
@@ -176,6 +198,7 @@
                     });
                 });
 
+                // --- SVG flotante grande (intro) ---
                 if (introSvg) {
                     gsap.fromTo(introSvg,
                         {
@@ -228,10 +251,9 @@
                     clearProps: 'transform'
                 });
 
-                gsap.from('.about-animate-intro .section-label, .about-animate-small', {
+                gsap.from('.about-animate-small', {
                     y: 36,
                     autoAlpha: 0,
-                    stagger: 0.08,
                     duration: 0.8,
                     ease: 'power3.out',
                     scrollTrigger: {
@@ -241,7 +263,12 @@
                     }
                 });
 
-                gsap.from(words, {
+                // En móvil también aplicamos la misma lógica: primeras 13 palabras animadas, resto estáticas
+                const allWordsMobile = gsap.utils.toArray('.about-word');
+                const wordsToAnimateMobile = allWordsMobile.slice(0, 13);
+                const wordsStaticMobile = allWordsMobile.slice(13);
+
+                gsap.from(wordsToAnimateMobile, {
                     y: 48,
                     rotate: () => gsap.utils.random(-8, 8),
                     autoAlpha: 0,
@@ -254,6 +281,13 @@
                         end: 'center center',
                         scrub: 1
                     }
+                });
+
+                gsap.set(wordsStaticMobile, {
+                    autoAlpha: 1,
+                    filter: 'blur(0px)',
+                    y: 0,
+                    rotate: 0
                 });
 
                 gsap.from(inlineSvgs, {
