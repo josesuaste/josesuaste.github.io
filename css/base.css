@@ -3,29 +3,12 @@
    ════════════════════════════════════════════════════════════ */
 
 @font-face {
-    font-family: 'Mattone';
-    src: url('../fonts/Mattone-Regular.woff2') format('woff2');
-    font-weight: 400;
+    font-family: 'NectoMono';
+    src: url('../fonts/NectoMono-Regular.woff2') format('woff2');
+    font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
-
-@font-face {
-    font-family: 'Mattone';
-    src: url('../fonts/Mattone-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Mattone';
-    src: url('../fonts/Mattone-Black.woff2') format('woff2');
-    font-weight: 900;
-    font-style: normal;
-    font-display: swap;
-}
-
 
 @font-face {
     font-family: 'Inter';
@@ -42,17 +25,11 @@
     --cream: #f4f1ea;
     --ink: #0e1f3d;
     --muted: #3b4e78;
-
-    --hero-bg: #f0f2cd;   
-
     --font-sans: 'Inter', system-ui, sans-serif;
-    --font-display: 'Mattone', var(--font-sans);
-    --font-mono: var(--font-sans);
-
+    --font-mono: 'NectoMono', 'Courier New', monospace;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --t-fast: 0.2s;
     --t-mid: 0.4s;
-
     --pad-x: 20px;
     --pad-section: 80px 20px;
 }
@@ -88,20 +65,15 @@ html {
     scroll-behavior: smooth;
     scroll-padding-top: 64px;
     overflow-x: hidden;
-    background-color: var(--hero-bg);
 }
 
 body {
     font-family: var(--font-sans);
-    background-color: var(--hero-bg);
-    color: var(--ink);
+    background-color: var(--cream);
+    color: var(--blue);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-}
-
-#app {
-    background-color: var(--hero-bg);
 }
 
 @media (prefers-reduced-motion: reduce) {

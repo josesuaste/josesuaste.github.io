@@ -55,6 +55,7 @@
     text-align: center;
     margin: 0;
     color: rgba(20, 20, 20, 0.78);
+    will-change: transform, opacity;
 }
 
 
@@ -80,9 +81,6 @@
     display: inline-block;
     transition: transform var(--t-fast);
 }
-
-
-/* Hover solo desktop */
 
 @media (hover: hover) and (pointer: fine) {
     .cta-link:hover {
@@ -132,8 +130,9 @@
 
 @media (prefers-reduced-motion: reduce) {
     .section-editorial,
-    .cta-link,
-    .cta-link .arrow {
+    .text-giant,
+    .section-label,
+    .cta-link {
         animation: none !important;
         transition: none !important;
         transform: none !important;
