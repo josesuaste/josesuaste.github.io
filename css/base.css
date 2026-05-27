@@ -2,37 +2,86 @@
    BASE — fonts, tokens, reset y accesibilidad
    ════════════════════════════════════════════════════════════ */
 
+/* ── Fonts ───────────────────────────────────────────────── */
+
 @font-face {
-    font-family: 'NectoMono';
-    src: url('../fonts/NectoMono-Regular.woff2') format('woff2');
-    font-weight: normal;
+    font-family: 'Mattone';
+    src: url('../fonts/Mattone-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mattone';
+    src: url('../fonts/Mattone-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mattone';
+    src: url('../fonts/Mattone-Black.woff2') format('woff2');
+    font-weight: 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
     font-family: 'Inter';
-    src: url('../fonts/InterVariable.woff2') format('woff2-variations'),
-         url('../fonts/InterVariable.woff2') format('woff2');
+    src:
+        url('../fonts/InterVariable.woff2') format('woff2-variations'),
+        url('../fonts/InterVariable.woff2') format('woff2');
     font-weight: 100 900;
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'NectoMono';
+    src: url('../fonts/NectoMono-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+/* ── Tokens ──────────────────────────────────────────────── */
 
 :root {
-    --blue: #1a5ed4;
-    --orange: #c94420;
+    --green: #8ED462;
+    --coral: #FF705D;
+    --sky: #2BA0FF;
+    --yellow: #F5E211;
+
     --cream: #f4f1ea;
+    --paper: #fdfaf3;
+    --white: #ffffff;
+
+    --dark: #111111;
     --ink: #0e1f3d;
-    --muted: #3b4e78;
+    --muted: #5f6258;
+
+    /* Alias para no romper secciones que todavía usan blue/orange */
+    --blue: var(--sky);
+    --orange: var(--coral);
+
+    --hero-bg: var(--cream);
+
     --font-sans: 'Inter', system-ui, sans-serif;
+    --font-display: 'Mattone', var(--font-sans);
     --font-mono: 'NectoMono', 'Courier New', monospace;
+    --font-mono: var(--font-sans);
+
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --t-fast: 0.2s;
     --t-mid: 0.4s;
+
     --pad-x: 20px;
     --pad-section: 80px 20px;
 }
+
+
 /* ── Global layout safety ───────────────────────────────── */
 
 *,
@@ -54,8 +103,9 @@ body {
     overflow-x: hidden;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     -webkit-tap-highlight-color: transparent;
@@ -70,14 +120,19 @@ html {
 body {
     font-family: var(--font-sans);
     background-color: var(--cream);
-    color: var(--blue);
+    color: var(--dark);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
+
+/* ── Accesibilidad ───────────────────────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -86,7 +141,7 @@ body {
 }
 
 :focus-visible {
-    outline: 2px solid var(--orange);
+    outline: 2px solid var(--coral);
     outline-offset: 3px;
     border-radius: 2px;
 }
@@ -95,8 +150,8 @@ body {
     position: absolute;
     top: -100px;
     left: 16px;
-    background: var(--blue);
-    color: #fff;
+    background: var(--coral);
+    color: var(--white);
     padding: 8px 18px;
     border-radius: 4px;
     font-size: 0.85rem;
@@ -105,5 +160,10 @@ body {
     transition: top 0.2s;
 }
 
-.skip-link:focus { top: 8px; }
-body.no-transition * { transition: none !important; }
+.skip-link:focus {
+    top: 8px;
+}
+
+body.no-transition * {
+    transition: none !important;
+}

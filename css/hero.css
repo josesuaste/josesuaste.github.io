@@ -2,19 +2,55 @@
    HERO
    ════════════════════════════════════════════════════════════ */
 
+
+/* ── Contenedor ──────────────────────────────────────────── */
+
 .hero {
     position: relative;
     z-index: 1;
     height: 100svh;
-    height: 100vh;
+    height: 100vh;           /* fallback para browsers sin svh */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     overflow: visible;
     padding-top: 64px;
+    background: var(--hero-bg);
+
+    /*
+        FIX 1 — perspective y transform-style eliminados del hero.
+        perspective: 1200px + transform-style: preserve-3d en el
+        contenedor padre crean un contexto 3D que hace que
+        position: fixed de la navbar deje de funcionar
+        correctamente en Safari/iOS (known bug).
+        El efecto 3D se aplica solo en los hijos que lo necesitan,
+        no en el contenedor.
+    */
 }
+
+/* Overlay de dim — controlado por JS con --hero-dim */
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(14, 31, 61, 0.16);
+    opacity: var(--hero-dim, 0);
+    pointer-events: none;
+    z-index: 8;
+    /*
+        FIX 2 — Sin transform-style: preserve-3d aquí.
+        Un ::after con preserve-3d puede crear un stacking
+        context inesperado que hace que el overlay tape elementos
+        de z-index mayor aunque no debería.
+    */
+}
+
+
+/* ── Contenido central ───────────────────────────────────── */
+
 .hero-content {
+    position: relative;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -22,14 +58,22 @@
     justify-content: center;
     z-index: 5;
 }
+
 .giant-title {
-    font-size: clamp(3.5rem, 14vw, 11rem);
+    font-family: var(--font-display, var(--font-sans));
+    font-size: clamp(3.5rem, 13vw, 10rem);
     font-weight: 900;
     line-height: 0.82;
     letter-spacing: -0.04em;
-    color: var(--blue);
+    color: var(--dark, #111111);
 }
-.profile-wrapper { position: relative; z-index: 6; margin-top: -30px; }
+
+.profile-wrapper {
+    position: relative;
+    z-index: 6;
+    margin-top: -30px;
+}
+
 .profile-img {
     width: clamp(200px, 72vw, 560px);
     height: auto;
@@ -37,10 +81,38 @@
     border-radius: 50%;
     display: block;
     transition: filter 0.5s ease;
+    /*
+        FIX 3 — will-change: filter en lugar de
+        will-change: transform, opacity, filter.
+        Declarar transform y opacity en will-change
+        sin animarlos activa capas de compositing GPU
+        innecesarias para todos los elementos del hero
+        desde el primer frame. Solo filter se anima
+        aquí (hover grayscale), así que solo filter
+        va en will-change.
+    */
     will-change: filter;
 }
-.profile-img:hover { filter: grayscale(0%); }
+
+.profile-img:hover {
+    filter: grayscale(0%);
+}
+
+
+/* ── Footer del hero ─────────────────────────────────────── */
+
 .hero-footer {
+    /*
+        FIX 4 — position: relative (no absolute) en móvil.
+        En el layout flex column del hero, .hero-footer es el
+        último hijo. Con position: relative participa en el
+        flujo y empuja el contenido hacia arriba si la pantalla
+        es pequeña. Con position: absolute (como estaba antes)
+        se superpone encima de .hero-content en pantallas
+        muy pequeñas (iPhone SE, etc.).
+        El absolute se aplica solo en desktop via media query.
+    */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,11 +121,15 @@
     width: 100%;
     z-index: 10;
 }
-.header-corner { display: none; }
+
+.header-corner {
+    display: none;
+}
+
 .bottom-sub-btn {
     display: inline-block;
-    background: var(--orange);
-    color: #fff;
+    background: var(--coral, #FF705D);
+    color: var(--white, #ffffff);
     padding: 12px 34px;
     border-radius: 50px;
     text-decoration: none;
@@ -61,11 +137,47 @@
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+    /*
+        FIX 5 — opacity eliminada de transition.
+        opacity: 0.3s en un enlace provoca que cuando
+        el browser aplica :visited o cualquier estado
+        del sistema, el fade se dispare inesperadamente.
+        El hover aquí solo necesita transform + box-shadow.
+    */
 }
-.bottom-sub-btn:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(201, 68, 32, 0.38); }
+
+.bottom-sub-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(255, 112, 93, 0.36);
+}
+
+
+/*
+    FIX 3 (continuación) — El bloque will-change global
+    que aplicaba transform, opacity y filter a todos los
+    elementos del hero se elimina.
+    Cada elemento declara solo lo que realmente anima.
+
+    ELIMINADO:
+    .hero-content,
+    .giant-title,
+    .profile-wrapper,
+    .hero-footer,
+    .header-corner,
+    .bottom-sub-btn {
+        transform-style: preserve-3d;
+        will-change: transform, opacity, filter;
+    }
+*/
+
+
+/* ── Desktop ─────────────────────────────────────────────── */
 
 @media (min-width: 768px) {
+
     .hero-footer {
         position: absolute;
         bottom: 40px;
@@ -76,14 +188,25 @@
         padding: 0 50px;
         gap: 20px;
     }
+
     .header-corner {
-        display: block;
-        max-width: 240px;
-        font-size: 0.68rem;
-        font-weight: 800;
-        line-height: 1.5;
-        text-transform: uppercase;
-        color: var(--muted);
-    }
-    .header-corner.right { text-align: right; }
+    display: block;
+    max-width: 280px;
+    font-family: var(--font-mono);
+    font-size: clamp(0.72rem, 0.72vw, 0.84rem);
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    text-transform: none;
+    color: rgba(14, 31, 61, 0.76);
+}
+
+.header-corner.left {
+    text-align: left;
+}
+
+.header-corner.right {
+    text-align: right;
+}
+
 }
