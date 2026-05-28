@@ -36,7 +36,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: #07111f;
+  background: transparent;
   pointer-events: none;
 }
 
@@ -141,7 +141,6 @@
   color: rgba(244,241,234,0.65);
   text-align: left;
 }
-
 /* ════════════════════════════════════════════════════════════
    TABLET ANCHA / iPAD LANDSCAPE (600px – 899px)
    Mismo flex column pero con canvas más grande

@@ -1,11 +1,9 @@
 /* ════════════════════════════════════════════════════════════
    ABOUT — escena horizontal pinned + ScrambleText
-   Mobile-first
+   Mobile-first (≤768px layout vertical)
    ════════════════════════════════════════════════════════════ */
 
-
 /* ── Sección contenedor ──────────────────────────────────── */
-
 .section-editorial.about-motion {
     position: relative;
     z-index: 3;
@@ -17,12 +15,8 @@
     color: #f4f1ea;
 }
 
-
 /* ── Label fijo ──────────────────────────────────────────── */
-
 .section-label.light {
-    position: relative;
-    z-index: 4;
     display: block;
     margin-bottom: clamp(32px, 5vw, 72px);
     font-family: var(--font-mono);
@@ -45,12 +39,9 @@
     margin-bottom: 0;
 }
 
-
 /* ════════════════════════════════════════════════════════════
    MÓVIL BASE (< 769px)
-   Layout vertical, sin horizontal scroll, sin pin
    ════════════════════════════════════════════════════════════ */
-
 .about-animate-scene {
     position: relative;
     background: #080808;
@@ -93,19 +84,12 @@
     color: #f4f1ea;
 }
 
-
 /* SVG decorativo intro */
-
-.about-float-svg,
-.about-svg {
+.about-float-svg--intro {
     position: absolute;
     z-index: 1;
     pointer-events: none;
     user-select: none;
-    opacity: 0.86;
-}
-
-.about-float-svg--intro {
     right: -6vw;
     bottom: 14vh;
     width: clamp(130px, 42vw, 240px);
@@ -113,9 +97,7 @@
     transform: none;
 }
 
-
-/* Track: columna en móvil */
-
+/* Track vertical en móvil */
 .about-animate-scroll {
     width: 100%;
     height: auto;
@@ -131,9 +113,7 @@
     width: 100%;
 }
 
-
-/* Grupos de palabras — móvil */
-
+/* Grupos de palabras */
 .about-word-group {
     position: relative;
     display: flex;
@@ -150,16 +130,7 @@
     white-space: normal;
 }
 
-.about-word-group--one,
-.about-word-group--two,
-.about-word-group--three,
-.about-word-group--four {
-    margin: 0;
-}
-
-
 /* Palabras */
-
 .about-word {
     position: relative;
     display: inline-flex;
@@ -170,33 +141,18 @@
     color: #f4f1ea;
 }
 
-.about-word > span {
-    background: transparent !important;
-    padding: 0 !important;
-    border-radius: 0;
-    box-shadow: none !important;
-    color: inherit;
-}
+/* Eliminada la regla .about-word > span (no existe) */
 
 .about-word::before {
     display: none !important;
     content: none;
 }
 
-.about-word--cream > span,
-.about-word--outline > span {
-    background: transparent !important;
-    color: #f4f1ea;
-    box-shadow: none;
-}
-
 .about-word--large {
     font-size: 1.22em;
 }
 
-
-/* Palabras destacadas */
-
+/* Palabras destacadas (ahora sin transition, para no interferir con GSAP) */
 .about-word--highlight {
     position: relative;
     background: #0ae448 !important;
@@ -204,7 +160,7 @@
     padding: 0.08em 0.2em !important;
     border-radius: 0.2em;
     font-weight: 600;
-    transition: all 0.2s ease;
+    /* transition eliminada para evitar conflictos con GSAP */
 }
 
 .about-word--highlight::before {
@@ -220,15 +176,13 @@
     pointer-events: none;
 }
 
+/* Colores alternos para highlights */
 .about-word-group .about-word--highlight:nth-of-type(1) { background: #0ae448 !important; }
 .about-word-group .about-word--highlight:nth-of-type(2) { background: #fec5fb !important; }
 .about-word-group .about-word--highlight:nth-of-type(3) { background: #ff8709 !important; }
-.about-word-group .about-word--highlight:nth-of-type(4) { background: #9d95ff !important; }
-.about-word-group .about-word--highlight:nth-of-type(5) { background: #abff84 !important; }
-
+/* Eliminados 4º y 5º (no existen) */
 
 /* SVGs inline */
-
 .about-inline-svg {
     position: relative;
     display: inline-flex;
@@ -249,38 +203,9 @@
 .about-inline-svg--one { margin-inline: 0.1em; }
 .about-inline-svg--two { margin-left: 0.12em; }
 
-
-/* ── Flecha curva hacia segundo párrafo ─────────────────── */
-
-.about-transition-arrow {
-    position: absolute;
-    right: 20px;
-    bottom: -70px;
-    z-index: 10;
-
-    width: 78vw;
-    height: auto;
-
-    pointer-events: none;
-    overflow: visible;
-}
-
-.about-arrow-path,
-.about-arrow-head {
-    opacity: 0.9;
-}
-
-.about-arrow-path,
-.about-arrow-head {
-    stroke-width: 4;
-}
-
-
 /* ════════════════════════════════════════════════════════════
    DESKTOP (≥ 769px)
-   Activa el scroll horizontal, el pin y los will-change
    ════════════════════════════════════════════════════════════ */
-
 @media (min-width: 769px) {
     .about-animate-scene {
         height: 100vh;
@@ -314,7 +239,7 @@
         width: clamp(150px, 16vw, 280px);
         opacity: 0.86;
         transform: translateX(18%);
-        will-change: transform, opacity, filter;
+        /* will-change se deja solo si realmente se anima; GSAP lo gestionará */
     }
 
     .about-animate-scroll {
@@ -332,7 +257,7 @@
         align-items: center;
         gap: clamp(64px, 9vw, 160px);
         width: fit-content;
-        will-change: transform;
+        /* will-change eliminado */
     }
 
     .about-word-group {
@@ -345,57 +270,27 @@
         white-space: nowrap;
     }
 
-    .about-word-group--one {
-        margin-left: 4vw;
-    }
+    .about-word-group--one { margin-left: 4vw; }
+    .about-word-group--two { margin-top: -12vh; }
+    .about-word-group--three { margin-top: 14vh; }
+    .about-word-group--four { margin-top: -4vh; }
 
-    .about-word-group--two {
-        margin-top: -12vh;
-    }
-
-    .about-word-group--three {
-        margin-top: 14vh;
-    }
-
-    .about-word-group--four {
-        margin-top: -4vh;
-    }
-
-    .about-word {
-        will-change: transform, opacity, filter;
-    }
+    /* will-change eliminado también de .about-word y .about-inline-svg */
 
     .about-inline-svg {
         width: clamp(72px, 8vw, 136px);
         height: clamp(72px, 8vw, 136px);
-        will-change: transform, opacity, filter;
     }
 
-    .about-inline-svg--one {
-        transform: rotate(-8deg);
-    }
+    .about-inline-svg--one { transform: rotate(-8deg); }
+    .about-inline-svg--two { transform: rotate(8deg); }
 
-    .about-inline-svg--two {
-        transform: rotate(8deg);
-    }
-
-    .about-transition-arrow {
-        right: clamp(32px, 7vw, 110px);
-        bottom: -120px;
-        width: min(680px, 58vw);
-    }
-
-    .about-arrow-path,
-    .about-arrow-head {
-        stroke-width: 5;
-    }
+    /* Reglas de la flecha eliminadas por no existir en HTML */
 }
 
-/* Texto accesible oculto visualmente */
-
+/* Texto accesible oculto */
 .visually-hidden {
     clip: rect(0 0 0 0);
-    -webkit-clip-path: inset(50%);
     clip-path: inset(50%);
     height: 1px;
     width: 1px;

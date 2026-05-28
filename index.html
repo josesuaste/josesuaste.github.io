@@ -246,27 +246,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Flecha curva hacia el siguiente párrafo -->
-    <svg class="about-transition-arrow"
-         viewBox="0 0 900 420"
-         fill="none"
-         aria-hidden="true">
-        <path class="about-arrow-path"
-              d="M 90 70 C 300 260, 620 20, 780 270"
-              stroke="#f4f1ea"
-              stroke-width="5"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-
-        <path class="about-arrow-head"
-              d="M 748 260 L 786 278 L 764 315"
-              stroke="#f4f1ea"
-              stroke-width="5"
-              stroke-linecap="round"
-              stroke-linejoin="round" />
-    </svg>
-
 </section>
 
 
@@ -370,33 +349,67 @@
         </section>
 
         <!-- ── STATS ──────────────────────────────────────── -->
-        <section class="stats-section" id="stats">
-            <div class="stats-inner">
-                <span class="section-label light">03 — Estadísticas</span>
+<section class="stats-section" id="stats">
+    <div class="stats-inner">
+        <span class="section-label light">03 — Estadísticas</span>
 
-                <div class="stats-grid">
-                    <div class="stat-item" data-val="150" data-display="150+">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Suscriptores</span>
-                    </div>
+        <div class="stats-stack">
 
-                    <div class="stat-item" data-val="12" data-display="12">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Videos</span>
-                    </div>
+            <article class="stat-card" data-val="150" data-display="150+">
+                <span class="stat-index">01</span>
 
-                    <div class="stat-item" data-val="2500" data-display="2.5K">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Reproducciones</span>
-                    </div>
-
-                    <div class="stat-item" data-val="8" data-display="8+">
-                        <span class="stat-number">0</span>
-                        <span class="stat-label">Países</span>
-                    </div>
+                <div class="stat-main">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Suscriptores</span>
                 </div>
-            </div>
-        </section>
+
+                <p class="stat-copy">
+                    Una comunidad inicial creciendo alrededor de tecnología útil, apps y contenido real.
+                </p>
+            </article>
+
+            <article class="stat-card" data-val="12" data-display="12">
+                <span class="stat-index">02</span>
+
+                <div class="stat-main">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Videos</span>
+                </div>
+
+                <p class="stat-copy">
+                    Tutoriales, tips, trucos y piezas pensadas para mejorar el flujo digital.
+                </p>
+            </article>
+
+            <article class="stat-card" data-val="2500" data-display="2.5K">
+                <span class="stat-index">03</span>
+
+                <div class="stat-main">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Reproducciones</span>
+                </div>
+
+                <p class="stat-copy">
+                    Alcance orgánico para una audiencia que busca contenido tech claro y práctico.
+                </p>
+            </article>
+
+            <article class="stat-card" data-val="8" data-display="8+">
+                <span class="stat-index">04</span>
+
+                <div class="stat-main">
+                    <span class="stat-number">0</span>
+                    <span class="stat-label">Países</span>
+                </div>
+
+                <p class="stat-copy">
+                    Personas de distintos lugares conectando con herramientas, ideas y curiosidad.
+                </p>
+            </article>
+
+        </div>
+    </div>
+</section>
 
         <!-- ── VIDEOS ─────────────────────────────────────── -->
         <section class="videos-section" id="videos">
@@ -555,12 +568,11 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
 
 <!-- 2. Scripts propios después -->
 <script src="js/script.js" defer></script>
 <script src="js/about-horizontal.js" defer></script>
-<script src="js/about-scramble.js" defer></script>
+<script src="js/paragraph.js" defer></script>
 <script src="js/stats-animations.js" defer></script>
 <script src="js/contact-animations.js" defer></script>
 

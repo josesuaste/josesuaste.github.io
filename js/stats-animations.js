@@ -1,163 +1,198 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   STATS ANIMATIONS — GSAP + ScrollTrigger
-   150+, 12, 2.5K, 8+
-   Cards stagger + glow mouse desktop
+   STATS ANIMATIONS
+   Sticky stack cards + hover premium + number count
    ════════════════════════════════════════════════════════════ */
 
 (function initStatsAnimations() {
     function start() {
         if (typeof gsap === 'undefined') {
-            console.warn('GSAP no está cargado.');
+            console.warn('[stats-animations] GSAP no está cargado.');
             return;
         }
 
         if (typeof ScrollTrigger === 'undefined') {
-            console.warn('ScrollTrigger no está cargado.');
+            console.warn('[stats-animations] ScrollTrigger no está cargado.');
             return;
         }
 
         gsap.registerPlugin(ScrollTrigger);
 
-        const statsSection = document.querySelector('#stats');
-        if (!statsSection) return;
+        const section = document.querySelector('.stats-section');
+        const cards = gsap.utils.toArray('.stat-card');
+
+        if (!section || !cards.length) return;
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-        const label = statsSection.querySelector('.section-label');
-        const items = statsSection.querySelectorAll('.stat-item');
-
-        if (!items.length) return;
-
-        const formatCompact = (value) => {
-            if (value >= 1000) {
-                const compact = value / 1000;
-                return `${Number.isInteger(compact) ? compact : compact.toFixed(1)}K`;
-            }
-
-            return String(Math.round(value));
-        };
-
-        const getFinalDisplay = (item) => {
-            return item.dataset.display || formatCompact(Number(item.dataset.val || 0));
-        };
 
         if (reduceMotion) {
-            items.forEach((item) => {
-                const number = item.querySelector('.stat-number');
-                if (number) number.textContent = getFinalDisplay(item);
-            });
+            cards.forEach((card) => {
+                const number = card.querySelector('.stat-number');
+                const display = card.dataset.display;
 
-            gsap.set([label, items], {
-                clearProps: 'all',
-                autoAlpha: 1,
-                y: 0,
-                scale: 1
+                if (number && display) {
+                    number.textContent = display;
+                }
             });
 
             return;
         }
 
-        gsap.set(label, {
-            autoAlpha: 0,
-            y: 24
-        });
+        cards.forEach((card, index) => {
+            const number = card.querySelector('.stat-number');
+            const label = card.querySelector('.stat-label');
+            const copy = card.querySelector('.stat-copy');
+            const display = card.dataset.display;
+            const value = Number(card.dataset.val || 0);
 
-        gsap.set(items, {
-            autoAlpha: 0,
-            y: 44,
-            scale: 0.96,
-            transformOrigin: '50% 50%'
-        });
-
-        items.forEach((item) => {
-            const number = item.querySelector('.stat-number');
-            if (number) number.textContent = '0';
-        });
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: statsSection,
-                start: 'top 72%',
-                once: true
-            }
-        });
-
-        if (label) {
-            tl.to(label, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.6,
-                ease: 'power3.out'
-            });
-        }
-
-        tl.to(items, {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.8,
-            stagger: 0.09,
-            ease: 'power3.out'
-        }, label ? '-=0.25' : 0);
-
-        items.forEach((item, index) => {
-            const number = item.querySelector('.stat-number');
-            const finalValue = Number(item.dataset.val || 0);
-            const finalDisplay = getFinalDisplay(item);
-
-            if (!number) return;
-
-            const counter = { value: 0 };
-
-            tl.to(counter, {
-                value: finalValue,
-                duration: 1.25,
-                ease: 'power2.out',
-                onUpdate: () => {
-                    number.textContent = formatCompact(counter.value);
-                },
-                onComplete: () => {
-                    number.textContent = finalDisplay;
+            /*
+              Entrada de cada card.
+            */
+            gsap.from(card, {
+                y: 80,
+                autoAlpha: 0,
+                filter: 'blur(14px)',
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 82%',
+                    once: true
                 }
-            }, 0.25 + index * 0.08);
-        });
+            });
 
-        if (canHover) {
-            items.forEach((item) => {
-                item.addEventListener('mousemove', (event) => {
-                    const rect = item.getBoundingClientRect();
+            /*
+              Efecto stack: cada card se comprime sutilmente al quedar pegada.
+            */
+            gsap.to(card, {
+                scale: 1 - index * 0.025,
+                transformOrigin: 'center top',
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 110px',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            /*
+              Conteo numérico.
+            */
+            if (number && display) {
+                const counter = { value: 0 };
+
+                ScrollTrigger.create({
+                    trigger: card,
+                    start: 'top 75%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to(counter, {
+                            value,
+                            duration: 1.4,
+                            ease: 'power2.out',
+                            onUpdate: () => {
+                                if (display.includes('K')) {
+                                    number.textContent = display;
+                                    return;
+                                }
+
+                                number.textContent = Math.round(counter.value).toLocaleString('es-MX');
+
+                                if (display.includes('+')) {
+                                    number.textContent += '+';
+                                }
+                            },
+                            onComplete: () => {
+                                number.textContent = display;
+                            }
+                        });
+                    }
+                });
+            }
+
+            /*
+              Hover premium solo desktop.
+            */
+            const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+            if (canHover) {
+                card.addEventListener('pointermove', (event) => {
+                    const rect = card.getBoundingClientRect();
                     const x = ((event.clientX - rect.left) / rect.width) * 100;
                     const y = ((event.clientY - rect.top) / rect.height) * 100;
 
-                    item.style.setProperty('--mx', `${x}%`);
-                    item.style.setProperty('--my', `${y}%`);
+                    card.style.setProperty('--mx', `${x}%`);
+                    card.style.setProperty('--my', `${y}%`);
                 });
 
-                item.addEventListener('mouseenter', () => {
-                    gsap.to(item, {
-                        y: -6,
-                        scale: 1.025,
-                        duration: 0.28,
-                        ease: 'power2.out'
-                    });
-                });
-
-                item.addEventListener('mouseleave', () => {
-                    gsap.to(item, {
-                        y: 0,
-                        scale: 1,
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        y: -10,
                         duration: 0.35,
-                        ease: 'power2.out'
+                        ease: 'power3.out'
                     });
 
-                    item.style.setProperty('--mx', '50%');
-                    item.style.setProperty('--my', '50%');
+                    if (number) {
+                        gsap.to(number, {
+                            scale: 1.045,
+                            transformOrigin: 'left center',
+                            duration: 0.35,
+                            ease: 'power3.out'
+                        });
+                    }
+
+                    if (label) {
+                        gsap.to(label, {
+                            autoAlpha: 0.92,
+                            duration: 0.25,
+                            ease: 'power2.out'
+                        });
+                    }
+
+                    if (copy) {
+                        gsap.to(copy, {
+                            autoAlpha: 0.78,
+                            duration: 0.25,
+                            ease: 'power2.out'
+                        });
+                    }
                 });
-            });
-        }
+
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        y: 0,
+                        duration: 0.35,
+                        ease: 'power3.out'
+                    });
+
+                    if (number) {
+                        gsap.to(number, {
+                            scale: 1,
+                            duration: 0.35,
+                            ease: 'power3.out'
+                        });
+                    }
+
+                    if (label) {
+                        gsap.to(label, {
+                            autoAlpha: 1,
+                            duration: 0.25,
+                            ease: 'power2.out'
+                        });
+                    }
+
+                    if (copy) {
+                        gsap.to(copy, {
+                            autoAlpha: 1,
+                            duration: 0.25,
+                            ease: 'power2.out'
+                        });
+                    }
+                });
+            }
+        });
 
         window.addEventListener('load', () => {
             ScrollTrigger.refresh();
