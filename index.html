@@ -159,6 +159,7 @@
     <main id="main-content">
 
         <!-- ── ABOUT: PRIMER PÁRRAFO / HORIZONTAL PINNED ───────────── -->
+<!-- ── ABOUT: PRIMER PÁRRAFO / HORIZONTAL PINNED ───────────── -->
 <section class="section-editorial about-motion" id="about">
 
     <span class="section-label light about-fixed-label">01 — Sobre mí</span>
@@ -171,49 +172,53 @@
     <div class="about-animate-scene">
         <div class="about-animate-intro">
             <p class="about-animate-small">
-                Hola mi nombre es Jose Suaste
+                Hola mi nombre es
+                <span class="about-name">José Suaste</span>
             </p>
 
-            <img src="images/svg/flower.svg" alt=""
-                 class="about-float-svg about-float-svg--intro"
-                 aria-hidden="true">
+            <img
+                src="images/svg/eyes.svg"
+                alt=""
+                class="about-float-svg about-float-svg--intro"
+                aria-hidden="true"
+            >
         </div>
 
         <div class="about-animate-scroll">
             <div class="about-animate-track">
 
-                <!-- Grupo 1 -->
                 <p class="about-word-group about-word-group--one">
                     <span class="about-word">soy</span>
                     <span class="about-word">del</span>
                     <span class="about-word about-word--large">estado</span>
                 </p>
 
-                <!-- Grupo 2 -->
                 <p class="about-word-group about-word-group--two">
                     <span class="about-word">de</span>
                     <span class="about-word about-word--highlight">México</span>
                     <span class="about-word">me</span>
+
                     <span class="about-inline-svg about-inline-svg--one" aria-hidden="true">
-                        <img src="images/svg/about-shape-2.svg" alt="">
+                        <img src="images/svg/hola.svg" alt="">
                     </span>
+
                     <span class="about-word">gusta</span>
                     <span class="about-word">la</span>
                 </p>
 
-                <!-- Grupo 3 -->
                 <p class="about-word-group about-word-group--three">
                     <span class="about-word about-word--highlight about-word--large">tecnología</span>
                     <span class="about-word">el</span>
                     <span class="about-word">arte</span>
+
                     <span class="about-inline-svg about-inline-svg--two" aria-hidden="true">
-                        <img src="images/svg/about-shape-3.svg" alt="">
+                        <img src="images/webp/tiger.webp" alt="">
                     </span>
+
                     <span class="about-word">la</span>
                     <span class="about-word">música</span>
                 </p>
 
-                <!-- Grupo 4 -->
                 <p class="about-word-group about-word-group--four">
                     <span class="about-word">y</span>
                     <span class="about-word about-word--highlight">aprender</span>
@@ -241,6 +246,26 @@
             </div>
         </div>
     </div>
+
+    <!-- Flecha curva hacia el siguiente párrafo -->
+    <svg class="about-transition-arrow"
+         viewBox="0 0 900 420"
+         fill="none"
+         aria-hidden="true">
+        <path class="about-arrow-path"
+              d="M 90 70 C 300 260, 620 20, 780 270"
+              stroke="#f4f1ea"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+
+        <path class="about-arrow-head"
+              d="M 748 260 L 786 278 L 764 315"
+              stroke="#f4f1ea"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round" />
+    </svg>
 
 </section>
 
@@ -530,6 +555,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js" defer></script>
 
 <!-- 2. Scripts propios después -->
 <script src="js/script.js" defer></script>

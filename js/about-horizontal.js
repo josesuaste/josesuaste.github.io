@@ -2,13 +2,14 @@
 
 /* ════════════════════════════════════════════════════════════
    ABOUT HORIZONTAL
-   Primer párrafo: escena pinned horizontal + palabras + SVGs
-   Versión: solo primeras 13 palabras tienen animación de entrada.
-   El resto del texto aparece ya visible.
+   Desktop: escena pinned + scroll horizontal
+   Mobile: animaciones verticales con ScrollTrigger
    ════════════════════════════════════════════════════════════ */
 
 (function initAboutHorizontal() {
+
     function start() {
+
         if (typeof gsap === 'undefined') {
             console.warn('[about-horizontal] GSAP no está cargado.');
             return;
@@ -21,39 +22,42 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
-        const about = document.querySelector('#about');
-        const scene = document.querySelector('.about-animate-scene');
-        const intro = document.querySelector('.about-animate-intro');
-        const scrollWrap = document.querySelector('.about-animate-scroll');
-        const track = document.querySelector('.about-animate-track');
+        /* ── Elementos ───────────────────────────────────── */
 
-        const words = gsap.utils.toArray('.about-word');
+        const about     = document.querySelector('#about');
+        const scene     = document.querySelector('.about-animate-scene');
+        const intro     = document.querySelector('.about-animate-intro');
+        const scrollWrap = document.querySelector('.about-animate-scroll');
+        const track     = document.querySelector('.about-animate-track');
+        const introSvg  = document.querySelector('.about-float-svg--intro');
+
+        const words     = gsap.utils.toArray('.about-word');
         const inlineSvgs = gsap.utils.toArray('.about-inline-svg');
-        const introSvg = document.querySelector('.about-float-svg--intro');
 
         if (!about || !scene || !intro || !scrollWrap || !track) {
-            console.warn('[about-horizontal] Faltan elementos.');
+            console.warn('[about-horizontal] Faltan elementos del DOM.');
             return;
         }
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        /* ── Sin animación (prefers-reduced-motion) ──────── */
+
         if (reduceMotion) {
-            gsap.set([
-                about,
-                scene,
-                intro,
-                scrollWrap,
-                track,
-                words,
-                inlineSvgs,
-                introSvg
-            ], {
+            gsap.set([about, scene, intro, scrollWrap, track, words, inlineSvgs, introSvg], {
                 clearProps: 'all',
                 autoAlpha: 1
             });
             return;
         }
+
+
+        /* ── Guardar estilos antes de matchMedia ─────────── */
+        /* FIX 5: ScrollTrigger.saveStyles garantiza que al
+           cambiar breakpoint (resize) los estilos del DOM
+           se restauran antes de recalcular, evitando que
+           la escena quede con width: fit-content en móvil
+           o display: block en desktop. */
 
         ScrollTrigger.saveStyles([
             '.about-animate-scene',
@@ -65,22 +69,26 @@
             '.about-float-svg'
         ].join(','));
 
+
+        /* ════════════════════════════════════════════════════
+           DESKTOP ≥ 769px
+           ════════════════════════════════════════════════════ */
+
         ScrollTrigger.matchMedia({
+
             '(min-width: 769px)': function () {
-                gsap.set(scene, {
-                    display: 'flex',
-                    width: 'fit-content'
-                });
 
-                gsap.set(scrollWrap, {
-                    display: 'flex'
-                });
+                gsap.set(scene,      { display: 'flex', width: 'fit-content' });
+                gsap.set(scrollWrap, { display: 'flex' });
 
+                /* Distancia total a desplazar */
                 const getDistance = () => {
                     const sceneWidth = scene.scrollWidth;
-                    const viewportWidth = window.innerWidth;
-                    return Math.max(sceneWidth - viewportWidth, viewportWidth);
+                    const vw = window.innerWidth;
+                    return Math.max(sceneWidth - vw, vw);
                 };
+
+                /* ── Timeline horizontal pinned ────────────── */
 
                 const horizontalTl = gsap.timeline({
                     scrollTrigger: {
@@ -100,7 +108,8 @@
                     duration: 1
                 }, 0);
 
-                // Texto pequeño de introducción (se mantiene)
+                /* ── Intro: texto pequeño ──────────────────── */
+
                 gsap.from('.about-animate-small', {
                     y: 36,
                     autoAlpha: 0,
@@ -113,13 +122,12 @@
                     }
                 });
 
-                // --- NUEVO: Dividir palabras (las primeras 13 tienen animación de entrada) ---
-                const allWords = gsap.utils.toArray('.about-word');
-                const countToAnimate = 13; // palabras desde "soy" hasta "música"
-                const wordsToAnimate = allWords.slice(0, countToAnimate);
-                const wordsStatic = allWords.slice(countToAnimate);
+                /* ── Palabras: primeras 13 animadas, resto visibles ── */
 
-                // Animación de entrada solo para las primeras palabras
+                const countToAnimate = 13;
+                const wordsToAnimate = words.slice(0, countToAnimate);
+                const wordsStatic    = words.slice(countToAnimate);
+
                 wordsToAnimate.forEach((word) => {
                     gsap.from(word, {
                         x: () => gsap.utils.random(-80, 80),
@@ -139,7 +147,6 @@
                     });
                 });
 
-                // El resto de palabras ya visibles desde el inicio
                 gsap.set(wordsStatic, {
                     autoAlpha: 1,
                     filter: 'blur(0px)',
@@ -149,11 +156,12 @@
                     rotate: 0
                 });
 
-                // Movimiento flotante para TODAS las palabras (como en GSAP)
-                allWords.forEach((word, index) => {
+                /* ── Movimiento flotante en todas las palabras ─ */
+
+                words.forEach((word, i) => {
                     gsap.to(word, {
-                        yPercent: index % 2 === 0 ? -8 : 8,
-                        rotate: index % 2 === 0 ? '-=2' : '+=2',
+                        yPercent: i % 2 === 0 ? -8 : 8,
+                        rotate: i % 2 === 0 ? '-=2' : '+=2',
                         ease: 'none',
                         scrollTrigger: {
                             trigger: word,
@@ -165,12 +173,13 @@
                     });
                 });
 
-                // --- SVGs inline (animaciones originales) ---
-                inlineSvgs.forEach((svg, index) => {
+                /* ── SVGs inline ─────────────────────────────── */
+
+                inlineSvgs.forEach((svg, i) => {
                     gsap.from(svg, {
                         x: () => gsap.utils.random(-60, 60),
                         y: () => gsap.utils.random(-70, 70),
-                        rotate: index % 2 === 0 ? -28 : 28,
+                        rotate: i % 2 === 0 ? -28 : 28,
                         scale: 0.45,
                         autoAlpha: 0,
                         filter: 'blur(12px)',
@@ -185,8 +194,8 @@
                     });
 
                     gsap.to(svg, {
-                        rotate: index % 2 === 0 ? '+=22' : '-=22',
-                        yPercent: index % 2 === 0 ? -12 : 12,
+                        rotate: i % 2 === 0 ? '+=22' : '-=22',
+                        yPercent: i % 2 === 0 ? -12 : 12,
                         ease: 'none',
                         scrollTrigger: {
                             trigger: svg,
@@ -198,31 +207,16 @@
                     });
                 });
 
-                // --- SVG flotante grande (intro) ---
+                /* ── SVG flotante grande (intro) ─────────────── */
+
                 if (introSvg) {
                     gsap.fromTo(introSvg,
+                        { x: 140, y: 80, rotate: -26, scale: 0.6, autoAlpha: 0, filter: 'blur(14px)' },
                         {
-                            x: 140,
-                            y: 80,
-                            rotate: -26,
-                            scale: 0.6,
-                            autoAlpha: 0,
-                            filter: 'blur(14px)'
-                        },
-                        {
-                            x: 0,
-                            y: 0,
-                            rotate: 0,
-                            scale: 1,
-                            autoAlpha: 1,
-                            filter: 'blur(0px)',
+                            x: 0, y: 0, rotate: 0, scale: 1, autoAlpha: 1, filter: 'blur(0px)',
                             duration: 1,
                             ease: 'power3.out',
-                            scrollTrigger: {
-                                trigger: scene,
-                                start: 'top 70%',
-                                once: true
-                            }
+                            scrollTrigger: { trigger: scene, start: 'top 70%', once: true }
                         }
                     );
 
@@ -239,47 +233,49 @@
                         }
                     });
                 }
+
             },
 
+
+            /* ══════════════════════════════════════════════════
+               MÓVIL ≤ 768px
+               ══════════════════════════════════════════════════ */
+
             '(max-width: 768px)': function () {
-                gsap.set(scene, {
-                    display: 'block',
-                    width: '100%'
-                });
 
-                gsap.set(track, {
-                    clearProps: 'transform'
-                });
+                gsap.set(scene, { display: 'block', width: '100%' });
+                gsap.set(track, { clearProps: 'transform' });
 
+                /* Intro */
                 gsap.from('.about-animate-small', {
                     y: 36,
                     autoAlpha: 0,
                     duration: 0.8,
                     ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: intro,
-                        start: 'top 75%',
-                        once: true
-                    }
+                    scrollTrigger: { trigger: intro, start: 'top 75%', once: true }
                 });
 
-                // En móvil también aplicamos la misma lógica: primeras 13 palabras animadas, resto estáticas
-                const allWordsMobile = gsap.utils.toArray('.about-word');
-                const wordsToAnimateMobile = allWordsMobile.slice(0, 13);
-                const wordsStaticMobile = allWordsMobile.slice(13);
+                /* Palabras */
+                const countToAnimate = 13;
+                const wordsToAnimateMobile = words.slice(0, countToAnimate);
+                const wordsStaticMobile    = words.slice(countToAnimate);
 
+                /* FIX 6: En móvil el trigger debe ser el track completo,
+                   no palabra por palabra. Las palabras son pequeñas y
+                   su threshold puede no activarse si están fuera del
+                   viewport antes de que el usuario llegue. */
                 gsap.from(wordsToAnimateMobile, {
                     y: 48,
                     rotate: () => gsap.utils.random(-8, 8),
                     autoAlpha: 0,
                     filter: 'blur(8px)',
-                    stagger: 0.08,
+                    stagger: 0.06,
                     ease: 'power3.out',
                     scrollTrigger: {
                         trigger: track,
-                        start: 'top 75%',
+                        start: 'top 80%',
                         end: 'center center',
-                        scrub: 1
+                        scrub: 0.8
                     }
                 });
 
@@ -290,31 +286,40 @@
                     rotate: 0
                 });
 
+                /* SVGs inline */
                 gsap.from(inlineSvgs, {
                     scale: 0.55,
                     rotate: () => gsap.utils.random(-18, 18),
                     autoAlpha: 0,
                     filter: 'blur(10px)',
-                    stagger: 0.12,
+                    stagger: 0.1,
                     ease: 'power3.out',
                     scrollTrigger: {
                         trigger: track,
-                        start: 'top 75%',
+                        start: 'top 80%',
                         end: 'center center',
-                        scrub: 1
+                        scrub: 0.8
                     }
                 });
+
             }
+
         });
 
-        window.addEventListener('load', () => {
-            ScrollTrigger.refresh();
-        });
+
+        /* ── Refresh al cargar todos los assets ──────────── */
+
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+
     }
+
+
+    /* ── Punto de entrada ────────────────────────────────── */
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', start);
     } else {
         start();
     }
+
 })();
