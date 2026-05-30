@@ -34,6 +34,7 @@
 
     <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/Mattone-Regular.woff2.woff2" as="font" type="font/woff2" crossorigin>
 
     <script>
         document.documentElement.classList.add("js");
@@ -79,9 +80,7 @@
             <a href="#videos">Videos</a>
             <a href="#contact">Contacto</a>
 
-            <a href="#"
-               target="_blank"
-               rel="noopener noreferrer"
+            <a href="mailto:holaerror404mx@gmail.com?subject=Media%20Kit%20ERROR404"
                class="nav-mediakit-link"
                data-umami-event="Click-MediaKit-Nav-Movil">
                 Media Kit
@@ -89,9 +88,7 @@
         </div>
 
         <div class="nav-right">
-            <a href="#"
-               target="_blank"
-               rel="noopener noreferrer"
+            <a href="mailto:holaerror404mx@gmail.com?subject=Media%20Kit%20ERROR404"
                class="nav-mediakit-btn"
                data-umami-event="Click-MediaKit-Nav-Desktop">
                 Media Kit
@@ -153,132 +150,61 @@
         </div>
     </header>
 
-    <!-- ════════════════════════════════════════════════════
-         MAIN
-         ════════════════════════════════════════════════════ -->
-    <main id="main-content">
+   <!-- ════════════════════════════════════════════════════════════
+     ABOUT — Segundo bloque (dos párrafos en una sola section)
 
-<!-- ── ABOUT: PRIMER PÁRRAFO / HORIZONTAL PINNED ───────────── -->
-<section class="section-editorial about-motion" id="about">
+     FIXES respecto al original:
+     1. Una sola <section> con id único — no dos con el mismo id
+     2. IDs únicos para cada párrafo
+     3. </section> de cierre añadido
+     4. CTA envuelto en .cta-pill (píldora rosa)
+     5. .about-svg-two movida dentro del bloque que la necesita
+     ════════════════════════════════════════════════════════════ -->
 
-    <span class="section-label light about-fixed-label">01 — Sobre mí</span>
-
-    <!-- === TEXTO OCULTO ACCESIBLE === -->
-    <p class="visually-hidden">
-        Hola, soy del estado de México. Me gusta la tecnología, el arte, la música y aprender cosas nuevas. Tengo un canal de YouTube donde comparto todo lo que aprendo: apps, tips, trucos, tutoriales y curiosidades.
-    </p>
-
-    <div class="about-animate-scene">
-        <div class="about-animate-intro">
-            <p class="about-animate-small">
-                Hola mi nombre es
-                <span class="about-name">José Suaste</span>
-            </p>
-
-            <img
-                src="images/svg/eyes.svg"
-                alt=""
-                class="about-float-svg about-float-svg--intro"
-                aria-hidden="true"
-            >
-        </div>
-
-        <div class="about-animate-scroll">
-            <div class="about-animate-track">
-
-                <p class="about-word-group about-word-group--one">
-                    <span class="about-word">soy</span>
-                    <span class="about-word">del</span>
-                    <span class="about-word about-word--large">estado</span>
-                </p>
-
-                <p class="about-word-group about-word-group--two">
-                    <span class="about-word">de</span>
-                    <span class="about-word about-word--highlight">México</span>
-                    <span class="about-word">me</span>
-
-                    <span class="about-inline-svg about-inline-svg--one" aria-hidden="true">
-                        <img src="images/svg/hola.svg" alt="">
-                    </span>
-
-                    <span class="about-word">gusta</span>
-                    <span class="about-word">la</span>
-                </p>
-
-                <p class="about-word-group about-word-group--three">
-                    <span class="about-word about-word--highlight about-word--large">tecnología</span>
-                    <span class="about-word">el</span>
-                    <span class="about-word">arte</span>
-
-                    <span class="about-inline-svg about-inline-svg--two" aria-hidden="true">
-                        <img src="images/webp/tiger.webp" alt="">
-                    </span>
-
-                    <span class="about-word">la</span>
-                    <span class="about-word">música</span>
-                </p>
-
-                <p class="about-word-group about-word-group--four">
-                    <span class="about-word">y</span>
-                    <span class="about-word about-word--highlight">aprender</span>
-                    <span class="about-word">cosas</span>
-                    <span class="about-word">nuevas.</span>
-                    <span class="about-word about-word--large">tengo</span>
-                    <span class="about-word">un</span>
-                    <span class="about-word">canal</span>
-                    <span class="about-word">de</span>
-                    <span class="about-word about-word--highlight">YouTube</span>
-                    <span class="about-word">donde</span>
-                    <span class="about-word about-word--highlight">comparto</span>
-                    <span class="about-word">todo</span>
-                    <span class="about-word">lo</span>
-                    <span class="about-word">que</span>
-                    <span class="about-word">aprendo</span>
-                    <span class="about-word">apps,</span>
-                    <span class="about-word">tips,</span>
-                    <span class="about-word">trucos,</span>
-                    <span class="about-word">tutoriales,</span>
-                    <span class="about-word">y</span>
-                    <span class="about-word">curiosidades.</span>
-                </p>
-
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- ── ABOUT: SEGUNDO PÁRRAFO / SCRAMBLETEXT ─────────────── -->
 <section class="about-scramble-section" id="about-more">
 
+    <!-- ── Bloque 1: presentación ────────────────────────── -->
     <div class="about-scramble-block">
-        <span class="section-label light">Más personal</span>
 
-        <p class="text-giant scramble-about" id="text-about-2">
-            Creé este canal para compartir todo lo que descubro. Cuando no estoy frente a la pantalla estoy coleccionando figuras, jugando videojuegos o ilustrando.
+        <p class="text-giant scramble-about" id="text-about-p1">
+            Encantado de conocerte. Me gusta la tecnología, el arte
+            y aprender cosas nuevas, En este canal comparto apps,
+            tips, trucos, tutoriales y curiosidades que voy descubriendo.
+        </p>
+    </div>
+
+    <!-- ── Bloque 2: vida fuera de pantalla + CTA ─────────── -->
+    <div class="about-scramble-block">
+
+        <p class="text-giant scramble-about" id="text-about-p2">
+            Creé este canal para compartir todo lo que descubro.
+            Cuando no estoy frente a la pantalla estoy coleccionando
+            figuras, jugando videojuegos o ilustrando.
         </p>
 
-        <img
-            src="images/svg/about-shape-4.svg"
-            alt=""
-            class="about-svg about-svg-two"
-            aria-hidden="true"
-        >
+        <!-- SVG decorativo: entre el párrafo y el botón
+             Cambia --svg-size para ajustar el tamaño sin tocar el CSS -->
+        <img src="images/svg/eyes.svg"
+             alt=""
+             class="about-svg about-svg-two"
+             style="--svg-size: 180px"
+             aria-hidden="true"
+             loading="lazy">
 
+        <!-- CTA en píldora rosa -->
         <a href="https://www.youtube.com/@error404mx"
            target="_blank"
            rel="noopener noreferrer"
-           class="cta-link about-cta"
+           class="cta-pill"
            data-umami-event="Click-VerCanal-About">
-            Ver canal <span class="arrow">↗</span>
+            Ver canal <span class="cta-pill__arrow" aria-hidden="true">↗</span>
         </a>
+
     </div>
 
-</section>
-
-
         <!-- ── SETUP: experiencia cinematográfica con Mac Mini 3D ── -->
-        <section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
+
+<section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
             <div class="setup-sticky">
 
                 <div class="setup-bg" aria-hidden="true">
@@ -288,11 +214,12 @@
                 </div>
 
                 <div class="setup-copy-main">
-                    <span class="section-label light">02 — Mi setup</span>
+                    <span class="section-label light" aria-hidden="true">02 — Mi setup</span>
+                    <h2 class="visually-hidden" id="setup-title">Mi setup</h2>
                 </div>
 
-                <div class="setup-model-stage" aria-hidden="true">
-                    <canvas id="macmini-canvas" class="setup-canvas"></canvas>
+                <div class="setup-model-stage">
+                    <canvas id="macmini-canvas" class="setup-canvas" aria-hidden="true" tabindex="-1"></canvas>
                     <div class="setup-loader" id="setup-loader">Cargando núcleo creativo</div>
                 </div>
 
@@ -348,9 +275,10 @@
         </section>
 
         <!-- ── STATS ──────────────────────────────────────── -->
-<section class="stats-section" id="stats">
+<section class="stats-section" id="stats" aria-labelledby="stats-title">
     <div class="stats-inner">
-        <span class="section-label light">03 — Estadísticas</span>
+        <span class="section-label light" aria-hidden="true">03 — Estadísticas</span>
+        <h2 class="visually-hidden" id="stats-title">Estadísticas</h2>
 
         <div class="stats-stack">
 
@@ -411,9 +339,10 @@
 </section>
 
         <!-- ── VIDEOS ─────────────────────────────────────── -->
-        <section class="videos-section" id="videos">
+        <section class="videos-section" id="videos" aria-labelledby="videos-title">
             <div class="videos-inner">
-                <span class="section-label">04 — Contenido reciente</span>
+                <span class="section-label" aria-hidden="true">04 — Contenido reciente</span>
+                <h2 class="visually-hidden" id="videos-title">Contenido reciente</h2>
 
                 <div class="videos-grid">
                     <!-- YOUTUBE-VIDEOS-LIST -->
@@ -431,12 +360,12 @@
         </section>
 
         <!-- ── CONTACTO ───────────────────────────────────── -->
-        <section class="contact-section" id="contact">
+        <section class="contact-section" id="contact" aria-labelledby="contact-title">
             <div class="contact-inner">
 
                 <div class="contact-heading">
                     <span class="section-label light">05 — Colaboraciones</span>
-                    <h2 class="contact-title">¿Tienes una<br>propuesta?</h2>
+                    <h2 class="contact-title" id="contact-title">¿Tienes una<br>propuesta?</h2>
                 </div>
 
                 <form class="minimal-form"
@@ -484,8 +413,9 @@
                         <label for="mensaje">Propuesta</label>
                         <textarea id="mensaje"
                                   name="mensaje"
-                                  rows="3"
+                                  rows="4"
                                   placeholder="Escribe aquí..."
+                                  autocomplete="off"
                                   required></textarea>
                     </div>
 
@@ -566,12 +496,11 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrambleTextPlugin.min.js" defer></script>
+
 
 <!-- 2. Scripts propios después -->
 <script src="js/script.js" defer></script>
-<script src="js/about-horizontal.js" defer></script>
-<script src="js/paragraph.js" defer></script>
+<script src="js/about.js" defer></script>
 <script src="js/stats-animations.js" defer></script>
 <script src="js/contact-animations.js" defer></script>
 

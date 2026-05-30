@@ -31,7 +31,7 @@ if (canvas && setupSection) {
     canvas,
     antialias: true,
     alpha: true,
-    preserveDrawingBuffer: true   // evita que el canvas se limpie entre frames durante resize
+    powerPreference: 'high-performance'
   });
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -120,7 +120,7 @@ if (canvas && setupSection) {
     object.position.sub(center);
 
     const maxAxis = Math.max(size.x, size.y, size.z);
-    const targetSize = window.innerWidth < 700 ? 2.05 : 2.05;
+    const targetSize = window.innerWidth < 700 ? 1.65 : 2.05;
     const scale = targetSize / maxAxis;
 
     object.scale.setScalar(scale);
@@ -309,6 +309,11 @@ if (canvas && setupSection) {
     dragMode = null;
   });
 
+  canvas.addEventListener('lostpointercapture', () => {
+    isDragging = false;
+    dragMode = null;
+  });
+
 
   /* ─────────────────────────────────────────────────────────
      LOOP DE ANIMACIÓN
@@ -350,14 +355,20 @@ if (canvas && setupSection) {
      ───────────────────────────────────────────────────────── */
   let rafResize = null;
 
-  const ro = new ResizeObserver(() => {
-    if (rafResize) cancelAnimationFrame(rafResize);
-    rafResize = requestAnimationFrame(() => {
-      resizeRenderer();
-    });
-  });
+  const ro = typeof ResizeObserver !== 'undefined'
+    ? new ResizeObserver(() => {
+        if (rafResize) cancelAnimationFrame(rafResize);
+        rafResize = requestAnimationFrame(() => {
+          resizeRenderer();
+        });
+      })
+    : null;
 
-  ro.observe(canvas.parentElement);
+  if (ro && canvas.parentElement) {
+    ro.observe(canvas.parentElement);
+  } else {
+    window.addEventListener('resize', resizeRenderer, { passive: true });
+  }
 
   resizeRenderer();
   animate();

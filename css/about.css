@@ -1,300 +1,168 @@
 /* ════════════════════════════════════════════════════════════
-   ABOUT — escena horizontal pinned + ScrambleText
-   Mobile-first (≤768px layout vertical)
+   ABOUT — Segundo bloque: ScrambleText + CTA
    ════════════════════════════════════════════════════════════ */
 
+
 /* ── Sección contenedor ──────────────────────────────────── */
-.section-editorial.about-motion {
+
+.about-scramble-section {
     position: relative;
-    z-index: 3;
-    min-height: auto;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
+    min-height: 100vh;
+    overflow: hidden;
     background: #080808;
     color: #f4f1ea;
 }
 
-/* ── Label fijo ──────────────────────────────────────────── */
-.section-label.light {
-    display: block;
-    margin-bottom: clamp(32px, 5vw, 72px);
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(244, 241, 234, 0.52);
+
+/* ── Bloque interno ──────────────────────────────────────── */
+
+.about-scramble-block {
+    position: relative;          /* contexto para .about-svg-two */
+    min-height: 100vh;
+    padding: clamp(96px, 7vw, 110px) clamp(24px, 7vw, 110px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(28px, 4vw, 56px);
+    overflow: hidden;
+    background: #080808;
+    color: #f4f1ea;
 }
 
-.about-fixed-label {
-    position: absolute;
-    top: clamp(32px, 7vw, 110px);
-    left: clamp(32px, 7vw, 110px);
-    z-index: 20;
-    margin: 0;
-    pointer-events: none;
-}
-
-.about-fixed-label.section-label.light {
+.about-scramble-block .section-label.light {
+    text-align: center;
     margin-bottom: 0;
 }
 
-/* ════════════════════════════════════════════════════════════
-   MÓVIL BASE (< 769px)
-   ════════════════════════════════════════════════════════════ */
-.about-animate-scene {
-    position: relative;
-    background: #080808;
-    color: #f4f1ea;
-    height: auto;
-    min-height: 100vh;
-    overflow: hidden;
-}
 
-.about-animate-intro {
-    position: relative;
-    height: auto;
-    min-height: 100vh;
-    padding: 96px 24px 48px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-}
+/* ── Texto gigante ───────────────────────────────────────── */
 
-.about-animate-small {
+.text-giant.scramble-about {
     position: relative;
     z-index: 3;
-    max-width: 100%;
-    margin: 0;
+    max-width: 920px;
+    margin: 0 auto;
     font-family: var(--font-sans);
-    font-size: clamp(42px, 14vw, 82px);
+    font-size: clamp(30px, 5vw, 72px);
     font-weight: 600;
-    line-height: 0.9;
-    letter-spacing: -0.065em;
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+    text-align: center;
     color: #f4f1ea;
+    /* will-change eliminado del estado base —
+       GSAP lo activa solo durante la animación */
 }
 
-.about-name {
-    display: block;
-    font-size: clamp(64px, 20vw, 108px);
-    font-weight: 750;
-    line-height: 0.82;
-    letter-spacing: -0.085em;
-    color: #f4f1ea;
-}
 
-/* SVG decorativo intro */
-.about-float-svg--intro {
-    position: absolute;
-    z-index: 1;
+/* ── SVG decorativo ──────────────────────────────────────── */
+/*
+    Ahora está en el flujo normal del flex column,
+    entre el párrafo y el CTA.
+    --svg-size controla el tamaño — cámbialo en el HTML:
+        style="--svg-size: 200px"   ← más grande
+        style="--svg-size: 120px"   ← más pequeño
+*/
+.about-svg-two {
+    position: relative;   /* en flujo, no absolute */
+    width: var(--svg-size, 160px);
+    height: var(--svg-size, 160px);
+    object-fit: contain;
+    opacity: 0.9;
     pointer-events: none;
     user-select: none;
-    right: -6vw;
-    bottom: 14vh;
-    width: clamp(130px, 42vw, 240px);
-    opacity: 0.38;
-    transform: none;
+    flex-shrink: 0;
 }
 
-/* Track vertical en móvil */
-.about-animate-scroll {
-    width: 100%;
-    height: auto;
-    padding: 0 24px 96px;
-    display: block;
-}
 
-.about-animate-track {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 34px;
-    width: 100%;
-}
+/* ── CTA — píldora rosa ──────────────────────────────────── */
 
-/* Grupos de palabras */
-.about-word-group {
-    position: relative;
-    display: flex;
+.cta-pill {
+    display: inline-flex;
     align-items: center;
-    gap: clamp(10px, 3vw, 20px);
-    flex: 0 0 auto;
-    margin: 0;
+    gap: 8px;
+
+    /* Color: pink del sistema de colores del about */
+    background: #fec5fb;
+    color: #0e100f;
+
+    padding: 14px 28px;
+    border-radius: 999px;
+
     font-family: var(--font-sans);
-    font-size: clamp(44px, 14vw, 78px);
-    font-weight: 650;
-    line-height: 0.95;
-    letter-spacing: -0.065em;
-    flex-wrap: wrap;
-    white-space: normal;
-}
-
-/* Palabras */
-.about-word {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    background: transparent !important;
-    padding: 0 !important;
-    margin: 0;
-    color: #f4f1ea;
-}
-
-/* Eliminada la regla .about-word > span (no existe) */
-
-.about-word::before {
-    display: none !important;
-    content: none;
-}
-
-.about-word--large {
-    font-size: 1.22em;
-}
-
-/* Palabras destacadas (ahora sin transition, para no interferir con GSAP) */
-.about-word--highlight {
-    position: relative;
-    background: #0ae448 !important;
-    color: #0e100f !important;
-    padding: 0.08em 0.2em !important;
-    border-radius: 0.2em;
-    font-weight: 600;
-    /* transition eliminada para evitar conflictos con GSAP */
-}
-
-.about-word--highlight::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    display: block !important;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 0.2em;
-    transform: translate(0.08em, 0.08em);
-    z-index: -1;
-    opacity: 0.4;
-    pointer-events: none;
-}
-
-/* Colores alternos para highlights */
-.about-word-group .about-word--highlight:nth-of-type(1) { background: #0ae448 !important; }
-.about-word-group .about-word--highlight:nth-of-type(2) { background: #fec5fb !important; }
-.about-word-group .about-word--highlight:nth-of-type(3) { background: #ff8709 !important; }
-/* Eliminados 4º y 5º (no existen) */
-
-/* SVGs inline */
-.about-inline-svg {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    width: clamp(64px, 20vw, 108px);
-    height: clamp(64px, 20vw, 108px);
-}
-
-.about-inline-svg img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.about-inline-svg--one { margin-inline: 0.1em; }
-.about-inline-svg--two { margin-left: 0.12em; }
-
-/* ════════════════════════════════════════════════════════════
-   DESKTOP (≥ 769px)
-   ════════════════════════════════════════════════════════════ */
-@media (min-width: 769px) {
-    .about-animate-scene {
-        height: 100vh;
-        overflow: hidden;
-        display: flex;
-        width: fit-content;
-    }
-
-    .about-animate-intro {
-        flex: 0 0 100vw;
-        width: 100vw;
-        height: 100vh;
-        padding: clamp(96px, 12vw, 160px) clamp(32px, 7vw, 110px) clamp(32px, 7vw, 110px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .about-animate-small {
-        max-width: 860px;
-        font-size: clamp(42px, 5.4vw, 88px);
-    }
-
-    .about-name {
-        font-size: clamp(72px, 9.8vw, 168px);
-    }
-
-    .about-float-svg--intro {
-        right: clamp(220px, 24vw, 420px);
-        bottom: 25vh;
-        width: clamp(150px, 16vw, 280px);
-        opacity: 0.86;
-        transform: translateX(18%);
-        /* will-change se deja solo si realmente se anima; GSAP lo gestionará */
-    }
-
-    .about-animate-scroll {
-        height: 100vh;
-        width: fit-content;
-        display: flex;
-        align-items: center;
-        padding-right: 24vw;
-        padding-bottom: 0;
-    }
-
-    .about-animate-track {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: clamp(64px, 9vw, 160px);
-        width: fit-content;
-        /* will-change eliminado */
-    }
-
-    .about-word-group {
-        font-size: clamp(58px, 8vw, 128px);
-        font-weight: 650;
-        line-height: 0.92;
-        letter-spacing: -0.075em;
-        gap: clamp(14px, 2vw, 32px);
-        flex-wrap: nowrap;
-        white-space: nowrap;
-    }
-
-    .about-word-group--one { margin-left: 4vw; }
-    .about-word-group--two { margin-top: -12vh; }
-    .about-word-group--three { margin-top: 14vh; }
-    .about-word-group--four { margin-top: -4vh; }
-
-    /* will-change eliminado también de .about-word y .about-inline-svg */
-
-    .about-inline-svg {
-        width: clamp(72px, 8vw, 136px);
-        height: clamp(72px, 8vw, 136px);
-    }
-
-    .about-inline-svg--one { transform: rotate(-8deg); }
-    .about-inline-svg--two { transform: rotate(8deg); }
-
-    /* Reglas de la flecha eliminadas por no existir en HTML */
-}
-
-/* Texto accesible oculto */
-.visually-hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    position: absolute;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-decoration: none;
     white-space: nowrap;
+
+    position: relative;
+    z-index: 4;
+
+    /* Sombra desplazada — coherente con las pills del about */
+    box-shadow:
+        0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25);
+
+    transition:
+        transform 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+        box-shadow 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
+
+/* Hover — solo dispositivos con cursor real */
+@media (hover: hover) and (pointer: fine) {
+    .cta-pill:hover {
+        transform: translate(-2px, -2px);
+        box-shadow:
+            0.6rem 0.6rem 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .cta-pill:hover .cta-pill__arrow {
+        transform: translate(2px, -2px);
+    }
+}
+
+.cta-pill__arrow {
+    display: inline-block;
+    transition: transform 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+    .text-giant.scramble-about {
+        max-width: 100%;
+        font-size: clamp(30px, 10vw, 54px);
+        line-height: 1.04;
+        letter-spacing: -0.055em;
+        text-align: center;
+    }
+
+    .about-scramble-block {
+        padding: 96px 24px;
+    }
+
+    /* En móvil el SVG se reduce un poco si --svg-size no está seteado */
+    .about-svg-two {
+        width: var(--svg-size, 120px);
+        height: var(--svg-size, 120px);
+    }
+
+    .cta-pill {
+        font-size: 1rem;
+        padding: 13px 26px;
+    }
+
+}
+
+
+/* ── Accesibilidad ───────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    .cta-pill,
+    .cta-pill__arrow {
+        transition: none !important;
+    }
+}
+

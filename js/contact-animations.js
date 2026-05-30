@@ -216,7 +216,7 @@
 
         window.addEventListener('load', () => {
             ScrollTrigger.refresh();
-        });
+        }, { once: true });
     }
 
     if (document.readyState === 'loading') {

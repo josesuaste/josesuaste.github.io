@@ -24,7 +24,7 @@
         toggle.classList.add('is-active');
         toggle.setAttribute('aria-expanded', 'true');
         toggle.setAttribute('aria-label', 'Cerrar menú');
-        document.body.style.overflow = 'hidden';
+        document.body.classList.add('nav-open');
     }
 
     function closeMenu() {
@@ -34,7 +34,7 @@
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Abrir menú');
-        document.body.style.overflow = '';
+        document.body.classList.remove('nav-open');
     }
 
     function closeInstant() {
@@ -43,7 +43,7 @@
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Abrir menú');
-        document.body.style.overflow = '';
+        document.body.classList.remove('nav-open');
     }
 
     // Quita la clase de transición al terminar, para evitar animaciones raras al cambiar de viewport
@@ -90,22 +90,45 @@
 //  NAV LINK ACTIVO (IntersectionObserver)
 // ════════════════════════════════════════════════════════════
 (function initActiveLinks() {
-    const sections = document.querySelectorAll('section[id], header[id]');
-    const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-    if (!sections.length || !navLinks.length) return;
-
-    sections.forEach(section => {
-        new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                navLinks.forEach(link => {
-                    link.classList.toggle(
-                        'active',
-                        link.getAttribute('href') === `#${entry.target.id}`
-                    );
-                });
-            }
-        }, { threshold: 0.25 }).observe(section);
+    const sections = Array.from(document.querySelectorAll('section[id], header[id]'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]')).filter((link) => {
+        const href = link.getAttribute('href');
+        return href && href.length > 1;
     });
+
+    if (!sections.length || !navLinks.length || !('IntersectionObserver' in window)) return;
+
+    const linkById = new Map(
+        navLinks.map((link) => [link.getAttribute('href').slice(1), link])
+    );
+
+    function setActive(id) {
+        navLinks.forEach((link) => {
+            const isActive = link.getAttribute('href') === `#${id}`;
+            link.classList.toggle('active', isActive);
+
+            if (isActive) {
+                link.setAttribute('aria-current', 'page');
+            } else {
+                link.removeAttribute('aria-current');
+            }
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (visible && linkById.has(visible.target.id)) {
+            setActive(visible.target.id);
+        }
+    }, {
+        rootMargin: '-28% 0px -55% 0px',
+        threshold: [0.15, 0.35, 0.6]
+    });
+
+    sections.forEach((section) => observer.observe(section));
 })();
 
 // ════════════════════════════════════════════════════════════

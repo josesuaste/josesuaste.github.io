@@ -245,3 +245,17 @@
         opacity: 1 !important;
     }
 }
+body.nav-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .navbar,
+    .nav-links,
+    .nav-links a,
+    .menu-toggle .bar,
+    .nav-mediakit-btn {
+        transition: none !important;
+    }
+}

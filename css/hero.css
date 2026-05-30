@@ -8,13 +8,13 @@
 .hero {
     position: relative;
     z-index: 1;
-    height: 100vh; /* fallback para browsers sin svh */
-    height: 100svh;
+    min-height: 100vh; /* fallback para browsers sin svh */
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    overflow: visible;
+    overflow: clip;
     padding-top: 64px;
     background: var(--hero-bg);
 
@@ -209,4 +209,15 @@
     text-align: right;
 }
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-img,
+    .bottom-sub-btn {
+        transition: none;
+    }
+
+    .bottom-sub-btn:hover {
+        transform: none;
+    }
 }

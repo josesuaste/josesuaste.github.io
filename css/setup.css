@@ -1,274 +1,226 @@
 /* ════════════════════════════════════════════════════════════
-   SETUP — Mac Mini 3D + labels editoriales
-   Mobile-first: flex column → absolutos solo en desktop ≥900px
+   SETUP — modelo 3D sobre fondo negro, sin espacio extra
    ════════════════════════════════════════════════════════════ */
 
-/* ── Sección contenedor ─────────────────────────────────── */
 .setup-cinematic {
-  position: relative;
-  background: #080808;
-  color: var(--cream);
-  overflow: hidden;
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    background: #080808;
+    color: var(--cream);
+    overflow: hidden;
 }
 
-/* ════════════════════════════════════════════════════════════
-   MÓVIL BASE (< 900px)
-   Layout: flex column, sin absolutos, sin vh
-   Orden visual:
-     [label 02]
-     [canvas]
-     [Mac Mini label]
-     [párrafo]
-   ════════════════════════════════════════════════════════════ */
 .setup-sticky {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 72px 20px 40px;
-  gap: 0;
-  isolation: isolate;
-  /* sin min-height fija — crece con el contenido */
+    position: relative;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 92px var(--pad-x) 56px;
+    isolation: isolate;
+    background: #080808;
 }
 
-/* Fondo */
+.setup-bg,
+.setup-grid,
+.setup-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
 .setup-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: transparent;
-  pointer-events: none;
+    z-index: -4;
+    background:
+        radial-gradient(circle at 50% 46%, rgba(244, 241, 234, 0.08), transparent 32%),
+        #080808;
 }
 
-/* Label superior */
+.setup-grid {
+    opacity: 0.1;
+    background-image:
+        linear-gradient(rgba(244, 241, 234, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 241, 234, 0.055) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+}
+
+.setup-glow {
+    border-radius: 999px;
+    filter: blur(84px);
+    opacity: 0.46;
+}
+
+.setup-glow-a {
+    width: 42vw;
+    height: 42vw;
+    left: 5vw;
+    top: 20vh;
+    background: rgba(244, 241, 234, 0.08);
+}
+
+.setup-glow-b {
+    width: 34vw;
+    height: 34vw;
+    right: 8vw;
+    bottom: 8vh;
+    background: rgba(255, 112, 93, 0.12);
+}
+
 .setup-copy-main {
-  position: relative;
-  z-index: 4;
-  width: 100%;
-  margin-bottom: 16px;
-  /* sin absolute, sin top/left */
+    position: absolute;
+    top: clamp(88px, 12vh, 140px);
+    left: var(--pad-x);
+    z-index: 3;
 }
 
-/* Canvas — aspect-ratio fijo para que siempre tenga alto real */
 .setup-model-stage {
-  position: relative;   /* ← en el flujo normal */
-  z-index: 2;
-  width: 100%;
-  /* cuadrado en móvil: el modelo es casi cuadrado */
-  aspect-ratio: 1 / 1;
-  max-width: 400px;     /* no más grande que la pantalla */
+    position: absolute;
+    inset: 0;
+    z-index: -1;
 }
 
 .setup-canvas {
-  width: 100%;
-  height: 100%;
-  display: block;
-  cursor: grab;
-  touch-action: pan-y;
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: pan-y;
 }
-.setup-canvas:active { cursor: grabbing; }
 
-/* Loader */
 .setup-loader {
-  position: absolute;
-  left: 50%;
-  bottom: 8px;
-  transform: translateX(-50%);
-  z-index: 6;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(244,241,234,0.5);
-  white-space: nowrap;
-  transition: opacity 0.4s;
+    position: absolute;
+    left: 50%;
+    bottom: 8vh;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(244, 241, 234, 0.54);
+    transition: opacity var(--t-mid), visibility var(--t-mid);
 }
-.setup-loader.is-hidden { opacity: 0; pointer-events: none; }
 
-/* Labels orbit — OCULTOS en móvil */
-.setup-orbit { display: none; }
+.setup-loader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-/* Label "Mac Mini" móvil — visible solo en móvil */
+.setup-orbit {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.orbit-item {
+    position: absolute;
+    max-width: 230px;
+    margin: 0;
+    padding-top: 14px;
+    border-top: 1px solid rgba(244, 241, 234, 0.28);
+    font-family: var(--font-mono);
+    font-size: clamp(0.72rem, 0.9vw, 0.9rem);
+    line-height: 1.35;
+    color: rgba(244, 241, 234, 0.88);
+}
+
+.orbit-item span {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: rgba(244, 241, 234, 0.52);
+}
+
+.orbit-ipad { left: 8vw; top: 28vh; }
+.orbit-mx { right: 8vw; top: 25vh; }
+.orbit-benq { left: 7vw; bottom: 24vh; }
+.orbit-light { right: 9vw; bottom: 27vh; }
+.orbit-keys { left: 18vw; bottom: 24vh; }
+.orbit-mac { right: 18vw; bottom: 24vh; }
+
 .setup-mobile-label {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-  /* espacio compacto: pegado al canvas */
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px solid rgba(244,241,234,0.15);
+    display: none;
 }
 
-.setup-mobile-label strong {
-  display: block;
-  font-size: clamp(0.95rem, 3vw, 1.1rem);
-  font-weight: 900;
-  color: var(--cream);
-  letter-spacing: -0.01em;
-}
-
-.setup-mobile-label span {
-  display: block;
-  margin-top: 3px;
-  font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-  color: rgba(244,241,234,0.52);
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
-}
-
-/* Párrafo descriptivo */
 .setup-description {
-  /* Valores base móvil — explícitos para que no hereden del desktop */
-  position: relative !important;
-  left: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  z-index: 5;
-  width: 100%;
-  max-width: 400px;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(244,241,234,0.08);
-  padding-bottom: 40px;
+    position: absolute;
+    left: 50%;
+    right: auto;
+    bottom: clamp(28px, 5vh, 56px);
+    z-index: 4;
+    width: min(780px, calc(100% - (var(--pad-x) * 2)));
+    padding-top: 18px;
+    border-top: 1px solid rgba(244, 241, 234, 0.24);
+    transform: translateX(-50%);
+    text-align: center;
 }
 
 .setup-description p {
-  margin: 0;
-  font-size: clamp(0.78rem, 3vw, 0.92rem);
-  line-height: 1.65;
-  color: rgba(244,241,234,0.65);
-  text-align: left;
-}
-/* ════════════════════════════════════════════════════════════
-   TABLET ANCHA / iPAD LANDSCAPE (600px – 899px)
-   Mismo flex column pero con canvas más grande
-   ════════════════════════════════════════════════════════════ */
-@media (min-width: 600px) and (max-width: 899px) {
-  .setup-sticky {
-    padding: 80px 32px 48px;
-  }
-
-  .setup-model-stage {
-    max-width: 520px;
-    aspect-ratio: 4 / 3;   /* un poco más ancho que alto */
-  }
-
-  .setup-mobile-label {
-    max-width: 520px;
-  }
-
-  .setup-description {
-    max-width: 520px;
-  }
-
-  .setup-description p {
-    font-size: clamp(0.82rem, 1.6vw, 0.96rem);
-  }
+    margin: 0;
+    font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+    line-height: 1.55;
+    color: rgba(244, 241, 234, 0.74);
 }
 
-/* ════════════════════════════════════════════════════════════
-   DESKTOP (≥ 900px)
-   Vuelve a position:absolute clásico con vh
-   Canvas ocupa todo el fondo, textos flotan alrededor
-   ════════════════════════════════════════════════════════════ */
-@media (min-width: 900px) {
+@media (max-width: 900px) {
+    .setup-cinematic {
+        min-height: 100vh;
+        min-height: 100svh;
+        overflow: hidden;
+    }
 
-  .setup-cinematic {
-    min-height: 100vh;
-  }
+    .setup-sticky {
+        min-height: 100vh;
+        min-height: 100svh;
+        padding: 88px var(--pad-x) 56px;
+    }
 
-  /* Contenedor: vuelve a relative con altura fija */
-  .setup-sticky {
-    display: block;           /* anular flex móvil */
-    position: relative;
-    min-height: 100vh;
-    padding: 0;
-  }
+    .setup-model-stage {
+        inset: 0;
+    }
 
-  /* Canvas — fondo absoluto */
-  .setup-model-stage {
-    position: absolute;
-    inset: 0;
-    aspect-ratio: unset;
-    max-width: unset;
-  }
+    .setup-orbit,
+    .setup-description {
+        display: none;
+    }
 
-  /* Label — esquina superior izquierda */
-  .setup-copy-main {
-    position: absolute;
-    top: 10vh;
-    left: max(40px, 6vw);
-    width: min(540px, 42vw);
-    margin-bottom: 0;
-  }
+    .setup-mobile-label {
+        position: absolute;
+        left: var(--pad-x);
+        right: var(--pad-x);
+        bottom: 48px;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(244, 241, 234, 0.24);
+        color: var(--cream);
+    }
 
-  /* Orbit — absolutos alrededor del modelo */
-  .setup-orbit {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
-  }
+    .setup-mobile-label strong {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
 
-  .orbit-item {
-    position: absolute;
-    width: min(250px, 22vw);
-    margin: 0;
-    padding-top: 14px;
-    border-top: 1px solid rgba(244,241,234,0.28);
-    font-size: clamp(0.86rem, 1vw, 1rem);
-    font-weight: 800;
-    line-height: 1.2;
-    color: rgba(244,241,234,0.9);
-  }
+    .setup-mobile-label span {
+        font-size: 0.95rem;
+        color: rgba(244, 241, 234, 0.62);
+    }
+}
 
-  .orbit-item span {
-    display: block;
-    margin-top: 6px;
-    font-weight: 500;
-    line-height: 1.45;
-    color: rgba(244,241,234,0.62);
-  }
-
-  /* Posiciones en escalera */
-  .orbit-mac   { left: 7vw;  top: 24vh; }
-  .orbit-benq  { left: 12vw; top: 42vh; }
-  .orbit-ipad  { left: 7vw;  top: 60vh; }
-  .orbit-light { right: 7vw; top: 24vh; }
-  .orbit-mx    { right: 12vw;top: 42vh; }
-  .orbit-keys  { right: 7vw; top: 60vh; }
-
-  /* Label móvil Mac Mini — oculto en desktop */
-  .setup-mobile-label { display: none; }
-
-  /* Párrafo — centrado en la parte baja */
-  .setup-description {
-    position: absolute !important;
-    left: 50% !important;
-    bottom: 4vh !important;
-    transform: translateX(-50%) !important;
-    max-width: min(820px, calc(100% - 80px));
-    width: auto;
-    margin: 0;
-    padding: 0;
-    border-top: none;
-    padding-bottom: 0;
-  }
-
-  .setup-description p {
-    font-size: clamp(0.78rem, 0.9vw, 0.96rem);
-    line-height: 1.6;
-    color: rgba(244,241,234,0.68);
-    text-align: center;
-  }
-
-  /* Loader */
-  .setup-loader {
-    bottom: auto;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
+@media (prefers-reduced-motion: reduce) {
+    .setup-loader,
+    .orbit-item,
+    .setup-description {
+        transition: none !important;
+        animation: none !important;
+    }
 }
