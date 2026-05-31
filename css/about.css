@@ -24,7 +24,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: clamp(4px, 0.8vw, 10px);
+    gap: clamp(24px, 3vw, 48px);
     overflow: hidden;
     background: #080808;
     color: #f4f1ea;
@@ -48,31 +48,7 @@
 }
 
 
-/* ── Tipografía — frase hero (NyghtSerif Light Italic) ───── */
-
-.about-text--hero {
-    font-family: 'NyghtSerif-LightItalic', Georgia, serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(54px, 10vw, 140px);
-    line-height: 1.0;
-    letter-spacing: -0.03em;
-}
-
-
-/* ── Tipografía — cuerpo bloque 1 (Inter 800) ────────────── */
-
-.about-text--body {
-    font-family: var(--font-sans);
-    font-weight: 800;
-    font-size: clamp(30px, 5vw, 72px);
-    line-height: 1.25;
-    letter-spacing: -0.025em;
-    color: rgba(244, 241, 234, 0.7);
-}
-
-
-/* ── Tipografía — bloque 2 (Inter Light 300) ─────────────── */
+/* ── Tipografía — Inter Light 300 (ambos bloques) ────────── */
 
 .about-text--light {
     font-family: var(--font-sans);
@@ -81,6 +57,11 @@
     line-height: 1.15;
     letter-spacing: -0.025em;
     color: #f4f1ea;
+}
+
+/* Modificador — segundo párrafo del bloque 1 levemente apagado */
+.about-text--dim {
+    color: rgba(244, 241, 234, 0.6);
 }
 
 
@@ -162,14 +143,6 @@
 /* ── Responsive ──────────────────────────────────────────── */
 
 @media (max-width: 768px) {
-
-    .about-text--hero {
-        font-size: clamp(32px, 10vw, 56px);
-    }
-
-    .about-text--body {
-        font-size: clamp(16px, 5.5vw, 28px);
-    }
 
     .about-text--light {
         font-size: clamp(22px, 7vw, 42px);
