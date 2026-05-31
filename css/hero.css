@@ -8,7 +8,7 @@
 .hero {
     position: relative;
     z-index: 1;
-    min-height: 100vh; /* fallback para browsers sin svh */
+    min-height: 100vh;
     min-height: 100svh;
     display: flex;
     flex-direction: column;
@@ -17,16 +17,6 @@
     overflow: clip;
     padding-top: 64px;
     background: var(--hero-bg);
-
-    /*
-        FIX 1 — perspective y transform-style eliminados del hero.
-        perspective: 1200px + transform-style: preserve-3d en el
-        contenedor padre crean un contexto 3D que hace que
-        position: fixed de la navbar deje de funcionar
-        correctamente en Safari/iOS (known bug).
-        El efecto 3D se aplica solo en los hijos que lo necesitan,
-        no en el contenedor.
-    */
 }
 
 /* Overlay de dim — controlado por JS con --hero-dim */
@@ -38,12 +28,6 @@
     opacity: var(--hero-dim, 0);
     pointer-events: none;
     z-index: 8;
-    /*
-        FIX 2 — Sin transform-style: preserve-3d aquí.
-        Un ::after con preserve-3d puede crear un stacking
-        context inesperado que hace que el overlay tape elementos
-        de z-index mayor aunque no debería.
-    */
 }
 
 
@@ -59,14 +43,36 @@
     z-index: 5;
 }
 
+
+/* ── Título mixto ────────────────────────────────────────── */
+
 .giant-title {
-    font-family: var(--font-display, var(--font-sans));
     font-size: clamp(3.5rem, 13vw, 10rem);
-    font-weight: 900;
     line-height: 0.82;
     letter-spacing: -0.04em;
     color: var(--dark, #111111);
+
+    /* flex para alinear los dos spans en línea */
+    display: flex;
+    align-items: baseline;
+    gap: 0.18em;
 }
+
+/* "José" — NyghtSerif Light Italic */
+.giant-title__serif {
+    font-family: 'NyghtSerif-LightItalic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* "Suaste" — Inter */
+.giant-title__sans {
+    font-family: var(--font-sans);
+    font-weight: 900;
+}
+
+
+/* ── Foto ────────────────────────────────────────────────── */
 
 .profile-wrapper {
     position: relative;
@@ -81,16 +87,6 @@
     border-radius: 50%;
     display: block;
     transition: filter 0.5s ease;
-    /*
-        FIX 3 — will-change: filter en lugar de
-        will-change: transform, opacity, filter.
-        Declarar transform y opacity en will-change
-        sin animarlos activa capas de compositing GPU
-        innecesarias para todos los elementos del hero
-        desde el primer frame. Solo filter se anima
-        aquí (hover grayscale), así que solo filter
-        va en will-change.
-    */
     will-change: filter;
 }
 
@@ -102,16 +98,6 @@
 /* ── Footer del hero ─────────────────────────────────────── */
 
 .hero-footer {
-    /*
-        FIX 4 — position: relative (no absolute) en móvil.
-        En el layout flex column del hero, .hero-footer es el
-        último hijo. Con position: relative participa en el
-        flujo y empuja el contenido hacia arriba si la pantalla
-        es pequeña. Con position: absolute (como estaba antes)
-        se superpone encima de .hero-content en pantallas
-        muy pequeñas (iPhone SE, etc.).
-        El absolute se aplica solo en desktop via media query.
-    */
     position: relative;
     display: flex;
     flex-direction: column;
@@ -122,9 +108,7 @@
     z-index: 10;
 }
 
-.header-corner {
-    display: none;
-}
+/* .header-corner eliminado — ya no se usa */
 
 .bottom-sub-btn {
     display: inline-block;
@@ -140,38 +124,12 @@
     transition:
         transform 0.3s ease,
         box-shadow 0.3s ease;
-    /*
-        FIX 5 — opacity eliminada de transition.
-        opacity: 0.3s en un enlace provoca que cuando
-        el browser aplica :visited o cualquier estado
-        del sistema, el fade se dispare inesperadamente.
-        El hover aquí solo necesita transform + box-shadow.
-    */
 }
 
 .bottom-sub-btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 10px 24px rgba(255, 112, 93, 0.36);
 }
-
-
-/*
-    FIX 3 (continuación) — El bloque will-change global
-    que aplicaba transform, opacity y filter a todos los
-    elementos del hero se elimina.
-    Cada elemento declara solo lo que realmente anima.
-
-    ELIMINADO:
-    .hero-content,
-    .giant-title,
-    .profile-wrapper,
-    .hero-footer,
-    .header-corner,
-    .bottom-sub-btn {
-        transform-style: preserve-3d;
-        will-change: transform, opacity, filter;
-    }
-*/
 
 
 /* ── Desktop ─────────────────────────────────────────────── */
@@ -183,33 +141,16 @@
         bottom: 40px;
         left: 0;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: flex-end;
         padding: 0 50px;
         gap: 20px;
     }
 
-    .header-corner {
-    display: block;
-    max-width: 280px;
-    font-family: var(--font-mono);
-    font-size: clamp(0.72rem, 0.72vw, 0.84rem);
-    font-weight: 400;
-    line-height: 1.45;
-    text-transform: none;
-    color: rgba(14, 31, 61, 0.76);
-    letter-spacing: 0.01em;
 }
 
-.header-corner.left {
-    text-align: left;
-}
 
-.header-corner.right {
-    text-align: right;
-}
-
-}
+/* ── Accesibilidad ───────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
     .profile-img,

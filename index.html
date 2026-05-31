@@ -109,87 +109,70 @@
          HERO
          ════════════════════════════════════════════════════ -->
     <header class="hero" id="hero">
-        <div class="hero-content">
-            <h1 class="giant-title">José Suaste</h1>
-
-            <div class="profile-wrapper">
-                <img src="images/img/ejemplo.png"
-                     alt="Foto de José Suaste"
-                     class="profile-img"
-                     width="600"
-                     height="600"
-                     loading="eager"
-                     fetchpriority="high"
-                     decoding="async">
-            </div>
+    <div class="hero-content">
+        <h1 class="giant-title">
+            <span class="giant-title__serif">José</span>
+            <span class="giant-title__sans">Suaste</span>
+        </h1>
+        <div class="profile-wrapper">
+            <img src="images/img/ejemplo.png"
+                 alt="Foto de José Suaste"
+                 class="profile-img"
+                 width="600"
+                 height="600"
+                 loading="eager"
+                 fetchpriority="high"
+                 decoding="async">
         </div>
+    </div>
+    <div class="hero-footer">
+        <a href="https://www.youtube.com/@error404mx?sub_confirmation=1"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="bottom-sub-btn"
+           data-umami-event="Click-Suscripcion-Hero">
+            SUSCRÍBETE
+        </a>
+    </div>
+</header>
 
-        <div class="hero-footer">
-            <div class="header-corner left">
-                <p>
-                    Un espacio dedicado al análisis de herramientas digitales desde la utilidad real,
-                    No reviso gadgets, evalúo su impacto en tu flujo de trabajo.
-                </p>
-            </div>
 
-            <a href="https://www.youtube.com/@error404mx?sub_confirmation=1"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="bottom-sub-btn"
-               data-umami-event="Click-Suscripcion-Hero">
-                SUSCRÍBETE
-            </a>
 
-            <div class="header-corner right">
-                <p>
-                    La tecnología debe ser una extensión de tu capacidad,
-                    Transformar el consumo impulsivo en dominio tecnológico,
-                    Una curaduría de apps, hardware y minimalismo digital.
-                </p>
-            </div>
-        </div>
-    </header>
 
-   <!-- ════════════════════════════════════════════════════════════
-     ABOUT — Segundo bloque (dos párrafos en una sola section)
 
-     FIXES respecto al original:
-     1. Una sola <section> con id único — no dos con el mismo id
-     2. IDs únicos para cada párrafo
-     3. </section> de cierre añadido
-     4. CTA envuelto en .cta-pill (píldora rosa)
-     5. .about-svg-two movida dentro del bloque que la necesita
-     ════════════════════════════════════════════════════════════ -->
 
-<section class="about-scramble-section" id="about-more">
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="about-section" id="about-more">
 
     <!-- ── Bloque 1: presentación ────────────────────────── -->
-    <div class="about-scramble-block">
-
-        <p class="text-giant scramble-about" id="text-about-p1">
-            Encantado de conocerte, En este canal comparto apps,
-            tips, trucos, tutoriales y curiosidades que voy descubriendo.
+    <div class="about-block">
+        <p class="text-giant about-text about-text--hero" id="text-about-p1a">
+            apps, tips, trucos, tutoriales
+        </p>
+        <p class="text-giant about-text about-text--body" id="text-about-p1b">
+            y curiosidades que voy descubriendo.
         </p>
     </div>
 
-    <!-- ── Bloque 2: vida fuera de pantalla + CTA ─────────── -->
-    <div class="about-scramble-block">
-
-        <p class="text-giant scramble-about" id="text-about-p2">
-            Cuando no estoy frente a la pantalla estoy coleccionando
-            figuras, jugando videojuegos o ilustrando.
-        </p>
-
-        <!-- SVG decorativo: entre el párrafo y el botón
-             Cambia --svg-size para ajustar el tamaño sin tocar el CSS -->
+    <!-- ── Divisor: SVG + CTA ─────────────────────────────── -->
+    <div class="about-block__footer">
         <img src="images/svg/eyes.svg"
              alt=""
              class="about-svg about-svg-two"
              style="--svg-size: 180px"
              aria-hidden="true"
              loading="lazy">
-
-        <!-- CTA en píldora rosa -->
         <a href="https://www.youtube.com/@error404mx"
            target="_blank"
            rel="noopener noreferrer"
@@ -197,8 +180,46 @@
            data-umami-event="Click-VerCanal-About">
             Ver canal <span class="cta-pill__arrow" aria-hidden="true">↗</span>
         </a>
-
     </div>
+
+    <!-- ── Bloque 2: vida fuera de pantalla ───────────────── -->
+    <div class="about-block">
+        <p class="text-giant about-text about-text--light" id="text-about-p2">
+            Cuando no estoy frente a la pantalla estoy coleccionando
+            figuras, jugando videojuegos o ilustrando.
+        </p>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- ── SETUP: experiencia cinematográfica con Mac Mini 3D ── -->
 

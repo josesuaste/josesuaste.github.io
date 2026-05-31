@@ -1,11 +1,11 @@
 /* ════════════════════════════════════════════════════════════
-   ABOUT — Segundo bloque: ScrambleText + CTA
+   ABOUT + CTA
    ════════════════════════════════════════════════════════════ */
 
 
 /* ── Sección contenedor ──────────────────────────────────── */
 
-.about-scramble-section {
+.about-section {
     position: relative;
     min-height: 100vh;
     overflow: hidden;
@@ -16,55 +16,78 @@
 
 /* ── Bloque interno ──────────────────────────────────────── */
 
-.about-scramble-block {
-    position: relative;          /* contexto para .about-svg-two */
+.about-block {
+    position: relative;
     min-height: 100vh;
     padding: clamp(96px, 7vw, 110px) clamp(24px, 7vw, 110px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: clamp(28px, 4vw, 56px);
+    gap: clamp(4px, 0.8vw, 10px);
     overflow: hidden;
     background: #080808;
     color: #f4f1ea;
 }
 
-.about-scramble-block .section-label.light {
+.about-block .section-label.light {
     text-align: center;
     margin-bottom: 0;
 }
 
 
-/* ── Texto gigante ───────────────────────────────────────── */
+/* ── Texto gigante — base ────────────────────────────────── */
 
-.text-giant.scramble-about {
+.text-giant.about-text {
     position: relative;
     z-index: 3;
     max-width: 920px;
     margin: 0 auto;
-    font-family: var(--font-sans);
-    font-size: clamp(30px, 5vw, 72px);
-    font-weight: 600;
-    line-height: 1.05;
-    letter-spacing: -0.055em;
     text-align: center;
     color: #f4f1ea;
-    /* will-change eliminado del estado base —
-       GSAP lo activa solo durante la animación */
+}
+
+
+/* ── Tipografía — frase hero (NyghtSerif Light Italic) ───── */
+
+.about-text--hero {
+    font-family: 'NyghtSerif-LightItalic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(54px, 10vw, 140px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+}
+
+
+/* ── Tipografía — cuerpo bloque 1 (Inter 800) ────────────── */
+
+.about-text--body {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(30px, 5vw, 72px);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    color: rgba(244, 241, 234, 0.7);
+}
+
+
+/* ── Tipografía — bloque 2 (Inter Light 300) ─────────────── */
+
+.about-text--light {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(30px, 5vw, 72px);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    color: #f4f1ea;
 }
 
 
 /* ── SVG decorativo ──────────────────────────────────────── */
-/*
-    Ahora está en el flujo normal del flex column,
-    entre el párrafo y el CTA.
-    --svg-size controla el tamaño — cámbialo en el HTML:
-        style="--svg-size: 200px"   ← más grande
-        style="--svg-size: 120px"   ← más pequeño
-*/
+
 .about-svg-two {
-    position: relative;   /* en flujo, no absolute */
+    position: relative;
     width: var(--svg-size, 160px);
     height: var(--svg-size, 160px);
     object-fit: contain;
@@ -75,6 +98,20 @@
 }
 
 
+/* ── Divisor: SVG + CTA ──────────────────────────────────── */
+
+.about-block__footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 4vw, 48px) clamp(24px, 7vw, 110px) clamp(64px, 10vw, 120px);
+    gap: clamp(32px, 5vw, 56px);
+    width: 100%;
+    background: #080808;
+}
+
+
 /* ── CTA — píldora rosa ──────────────────────────────────── */
 
 .cta-pill {
@@ -82,7 +119,6 @@
     align-items: center;
     gap: 8px;
 
-    /* Color: pink del sistema de colores del about */
     background: #fec5fb;
     color: #0e100f;
 
@@ -99,21 +135,17 @@
     position: relative;
     z-index: 4;
 
-    /* Sombra desplazada — coherente con las pills del about */
-    box-shadow:
-        0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25);
+    box-shadow: 0.4rem 0.4rem 0 rgba(0, 0, 0, 0.25);
 
     transition:
         transform 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
         box-shadow 0.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-/* Hover — solo dispositivos con cursor real */
 @media (hover: hover) and (pointer: fine) {
     .cta-pill:hover {
         transform: translate(-2px, -2px);
-        box-shadow:
-            0.6rem 0.6rem 0 rgba(0, 0, 0, 0.25);
+        box-shadow: 0.6rem 0.6rem 0 rgba(0, 0, 0, 0.25);
     }
 
     .cta-pill:hover .cta-pill__arrow {
@@ -131,22 +163,30 @@
 
 @media (max-width: 768px) {
 
-    .text-giant.scramble-about {
-        max-width: 100%;
-        font-size: clamp(30px, 10vw, 54px);
-        line-height: 1.04;
-        letter-spacing: -0.055em;
-        text-align: center;
+    .about-text--hero {
+        font-size: clamp(32px, 10vw, 56px);
     }
 
-    .about-scramble-block {
+    .about-text--body {
+        font-size: clamp(16px, 5.5vw, 28px);
+    }
+
+    .about-text--light {
+        font-size: clamp(22px, 7vw, 42px);
+    }
+
+    .about-block {
         padding: 96px 24px;
     }
 
-    /* En móvil el SVG se reduce un poco si --svg-size no está seteado */
     .about-svg-two {
         width: var(--svg-size, 120px);
         height: var(--svg-size, 120px);
+    }
+
+    .about-block__footer {
+        padding: 24px 24px 72px;
+        gap: clamp(24px, 6vw, 40px);
     }
 
     .cta-pill {
@@ -165,4 +205,3 @@
         transition: none !important;
     }
 }
-
