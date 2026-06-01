@@ -26,6 +26,10 @@
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        function isNavOpen() {
+            return document.body.classList.contains('nav-open');
+        }
+
         if (reduceMotion) {
             cards.forEach((card) => {
                 const number = card.querySelector('.stat-number');
@@ -55,6 +59,7 @@
                 filter: 'blur(14px)',
                 duration: 0.9,
                 ease: 'power3.out',
+                overwrite: 'auto',
                 scrollTrigger: {
                     trigger: card,
                     start: 'top 82%',
@@ -69,6 +74,7 @@
                 scale: 1 - index * 0.025,
                 transformOrigin: 'center top',
                 ease: 'none',
+                overwrite: 'auto',
                 scrollTrigger: {
                     trigger: card,
                     start: 'top 110px',
@@ -92,6 +98,7 @@
                             value,
                             duration: 1.4,
                             ease: 'power2.out',
+                            overwrite: 'auto',
                             onUpdate: () => {
                                 if (display.includes('K')) {
                                     number.textContent = display;
@@ -114,11 +121,15 @@
 
             /*
               Hover premium solo desktop.
+              Se desactiva mientras el menú está abierto para evitar
+              conflictos de pointer/mouse con el overlay del navbar.
             */
             const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
             if (canHover) {
                 card.addEventListener('pointermove', (event) => {
+                    if (isNavOpen()) return;
+
                     const rect = card.getBoundingClientRect();
                     const x = ((event.clientX - rect.left) / rect.width) * 100;
                     const y = ((event.clientY - rect.top) / rect.height) * 100;
@@ -128,10 +139,13 @@
                 });
 
                 card.addEventListener('mouseenter', () => {
+                    if (isNavOpen()) return;
+
                     gsap.to(card, {
                         y: -10,
                         duration: 0.35,
-                        ease: 'power3.out'
+                        ease: 'power3.out',
+                        overwrite: 'auto'
                     });
 
                     if (number) {
@@ -139,7 +153,8 @@
                             scale: 1.045,
                             transformOrigin: 'left center',
                             duration: 0.35,
-                            ease: 'power3.out'
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     }
 
@@ -147,7 +162,8 @@
                         gsap.to(label, {
                             autoAlpha: 0.92,
                             duration: 0.25,
-                            ease: 'power2.out'
+                            ease: 'power2.out',
+                            overwrite: 'auto'
                         });
                     }
 
@@ -155,23 +171,28 @@
                         gsap.to(copy, {
                             autoAlpha: 0.78,
                             duration: 0.25,
-                            ease: 'power2.out'
+                            ease: 'power2.out',
+                            overwrite: 'auto'
                         });
                     }
                 });
 
                 card.addEventListener('mouseleave', () => {
+                    if (isNavOpen()) return;
+
                     gsap.to(card, {
                         y: 0,
                         duration: 0.35,
-                        ease: 'power3.out'
+                        ease: 'power3.out',
+                        overwrite: 'auto'
                     });
 
                     if (number) {
                         gsap.to(number, {
                             scale: 1,
                             duration: 0.35,
-                            ease: 'power3.out'
+                            ease: 'power3.out',
+                            overwrite: 'auto'
                         });
                     }
 
@@ -179,7 +200,8 @@
                         gsap.to(label, {
                             autoAlpha: 1,
                             duration: 0.25,
-                            ease: 'power2.out'
+                            ease: 'power2.out',
+                            overwrite: 'auto'
                         });
                     }
 
@@ -187,7 +209,8 @@
                         gsap.to(copy, {
                             autoAlpha: 1,
                             duration: 0.25,
-                            ease: 'power2.out'
+                            ease: 'power2.out',
+                            overwrite: 'auto'
                         });
                     }
                 });

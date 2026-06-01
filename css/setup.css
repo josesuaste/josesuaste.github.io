@@ -86,6 +86,13 @@
     height: 100%;
     display: block;
     touch-action: pan-y;
+    user-select: none;
+}
+
+/* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
+body.nav-open .setup-canvas,
+body.nav-open .setup-model-stage {
+    pointer-events: none;
 }
 
 .setup-loader {
@@ -100,6 +107,7 @@
     text-transform: uppercase;
     color: rgba(244, 241, 234, 0.54);
     transition: opacity var(--t-mid), visibility var(--t-mid);
+    pointer-events: none;
 }
 
 .setup-loader.is-hidden {
@@ -136,12 +144,35 @@
     color: rgba(244, 241, 234, 0.52);
 }
 
-.orbit-ipad { left: 8vw; top: 28vh; }
-.orbit-mx { right: 8vw; top: 25vh; }
-.orbit-benq { left: 7vw; bottom: 24vh; }
-.orbit-light { right: 9vw; bottom: 27vh; }
-.orbit-keys { left: 18vw; bottom: 24vh; }
-.orbit-mac { right: 18vw; bottom: 24vh; }
+.orbit-ipad {
+    left: 8vw;
+    top: 28vh;
+}
+
+.orbit-mx {
+    right: 8vw;
+    top: 25vh;
+}
+
+.orbit-benq {
+    left: 7vw;
+    bottom: 24vh;
+}
+
+.orbit-light {
+    right: 9vw;
+    bottom: 27vh;
+}
+
+.orbit-keys {
+    left: 18vw;
+    bottom: 24vh;
+}
+
+.orbit-mac {
+    right: 18vw;
+    bottom: 24vh;
+}
 
 .setup-mobile-label {
     display: none;
@@ -158,6 +189,7 @@
     border-top: 1px solid rgba(244, 241, 234, 0.24);
     transform: translateX(-50%);
     text-align: center;
+    pointer-events: none;
 }
 
 .setup-description p {
@@ -201,6 +233,7 @@
         padding-top: 16px;
         border-top: 1px solid rgba(244, 241, 234, 0.24);
         color: var(--cream);
+        pointer-events: none;
     }
 
     .setup-mobile-label strong {
