@@ -74,7 +74,7 @@
 html {
     width: 100%;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 72px;
 }
@@ -83,8 +83,8 @@ body {
     width: 100%;
     max-width: 100%;
     margin: 0;
-    padding:0;
-    overflow-x: hidden;
+    padding: 0;
+    overflow-x: clip;
     font-family: var(--font-sans);
     background-color: var(--cream);
     color: var(--dark);

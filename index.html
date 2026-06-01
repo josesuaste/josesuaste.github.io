@@ -70,91 +70,179 @@
          NAVBAR
          ════════════════════════════════════════════════════ -->
 
+    <nav class="navbar" aria-label="Navegación principal">
+        <a class="navbar-logo" href="#hero" aria-label="Ir al inicio">
+            ERROR404
+        </a>
 
+        <button
+            class="menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="navOverlay"
+            aria-label="Abrir menú"
+        >
+            <svg class="menu-icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+                <line class="bar bar-top" x1="6" y1="10" x2="22" y2="10" />
+                <line class="bar bar-bot" x1="6" y1="18" x2="22" y2="18" />
+            </svg>
+        </button>
+    </nav>
 
-    <!-- ════════════════════════════════════════════════════
-         HERO
-         ════════════════════════════════════════════════════ -->
-    <header class="hero" id="hero">
-    <div class="hero-content">
-        <h1 class="giant-title">
-            <span class="giant-title__serif">José</span>
-            <span class="giant-title__sans">Suaste</span>
-        </h1>
-        <div class="profile-wrapper">
-            <img src="images/img/ejemplo.png"
-                 alt="Foto de José Suaste"
-                 class="profile-img"
-                 width="600"
-                 height="600"
-                 loading="eager"
-                 fetchpriority="high"
-                 decoding="async">
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
+        <div class="nav-overlay-bg"></div>
+
+        <div class="nav-panel nav-panel-main">
+            <div class="nav-panel-header">
+                <span>Navegación</span>
+                <span>ERROR404</span>
+            </div>
+
+            <ul class="nav-overlay-links">
+                <li><a href="#about">Sobre mí</a></li>
+                <li><a href="#setup">Set up</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+
+        <div class="nav-panel nav-panel-social">
+            <p class="nav-social-label">Redes</p>
+
+            <ul class="nav-socials">
+                <li>
+                    <a
+                        href="https://github.com/josesuaste"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-umami-event="Click-Nav-GitHub"
+                    >
+                        GitHub
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="https://www.instagram.com/josesuaste"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-umami-event="Click-Nav-Instagram"
+                    >
+                        Instagram
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="https://www.youtube.com/@error404mx"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-umami-event="Click-Nav-YouTube"
+                    >
+                        YouTube
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
-    <div class="hero-footer">
-        <a href="https://www.youtube.com/@error404mx?sub_confirmation=1"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="bottom-sub-btn"
-           data-umami-event="Click-Suscripcion-Hero">
-            SUSCRÍBETE
-        </a>
-    </div>
-</header>
 
+    <main id="main-content">
 
-<section class="about-me" aria-labelledby="about-title">
-  <div class="about-me__inner">
-    
-    <div class="about-me__animated" aria-hidden="true">
-      <p class="about-me__paragraph">
-        Comparto apps, tips, trucos, tutoriales y curiosidades que voy descubriendo. Me gusta la tecnología, el arte, la música y aprender cosas nuevas.
-      </p>
+        <!-- ════════════════════════════════════════════════════
+             HERO
+             ════════════════════════════════════════════════════ -->
 
-      <div class="about-last">
-        <p class="about-me__paragraph">
-          Cuando no estoy frente a la pantalla, probablemente estoy coleccionando figuras, jugando videojuegos, ilustrando algo nuevo o explorando nuevas ideas para todos ustedes.
-        </p>
+        <header class="hero" id="hero">
+            <div class="hero-content">
+                <h1 class="giant-title">
+                    <span class="giant-title__serif">José</span>
+                    <span class="giant-title__sans">Suaste</span>
+                </h1>
 
-        <svg
-          class="about-scribble"
-          viewBox="0 0 900 120"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          focusable="false"
-        >
-          <path
-            class="about-scribble__path"
-            d="M20 65 C200 35, 360 45, 330 62 C300 85, 620 38, 880 58"
-            fill="none"
-            stroke="#fec5fb"
-            stroke-width="7"
-            stroke-linecap="round"
-          />
-        </svg>
-      </div>
-    </div>
+                <div class="profile-wrapper">
+                    <img
+                        src="images/img/ejemplo.png"
+                        alt="Foto de José Suaste"
+                        class="profile-img"
+                        width="600"
+                        height="600"
+                        loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
+                    >
+                </div>
+            </div>
 
-    <div class="visually-hidden">
-      <h2 id="about-title">Sobre mí</h2>
+            <div class="hero-footer">
+                <a
+                    href="https://www.youtube.com/@error404mx?sub_confirmation=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bottom-sub-btn"
+                    data-umami-event="Click-Suscripcion-Hero"
+                >
+                    SUSCRÍBETE
+                </a>
+            </div>
+        </header>
 
-      <p>
-        Encantado de conocerte. Me gusta la tecnología, el arte, la música y aprender cosas nuevas.
-      </p>
+        <!-- ════════════════════════════════════════════════════
+             ABOUT
+             ════════════════════════════════════════════════════ -->
 
-      <p>
-        En este canal comparto apps, tips, trucos, tutoriales y curiosidades que voy descubriendo. Cuando no estoy frente a la pantalla, probablemente estoy coleccionando figuras, jugando videojuegos, ilustrando algo nuevo o explorando nuevas ideas para todos ustedes.
-      </p>
-    </div>
+        <section class="about-me" id="about" aria-labelledby="about-title">
+            <div class="about-me__inner">
 
-  </div>
-</section>
+                <div class="about-me__animated" aria-hidden="true">
+                    <p class="about-me__paragraph">
+                        Comparto apps, tips, trucos, tutoriales y curiosidades que voy descubriendo. Me gusta la tecnología, el arte, la música y aprender cosas nuevas.
+                    </p>
 
+                    <div class="about-last">
+                        <p class="about-me__paragraph">
+                            Cuando no estoy frente a la pantalla, probablemente estoy coleccionando figuras, jugando videojuegos, ilustrando algo nuevo o explorando nuevas ideas para todos ustedes.
+                        </p>
 
-        <!-- ── SETUP: experiencia cinematográfica con Mac Mini 3D ── -->
+                        <svg
+                            class="about-scribble"
+                            viewBox="0 0 900 120"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <path
+                                class="about-scribble__path"
+                                d="M20 65 C200 35, 360 45, 330 62 C300 85, 620 38, 880 58"
+                                fill="none"
+                                stroke="#fec5fb"
+                                stroke-width="7"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+                </div>
 
-<section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
+                <div class="visually-hidden">
+                    <h2 id="about-title">Sobre mí</h2>
+
+                    <p>
+                        Encantado de conocerte. Me gusta la tecnología, el arte, la música y aprender cosas nuevas.
+                    </p>
+
+                    <p>
+                        En este canal comparto apps, tips, trucos, tutoriales y curiosidades que voy descubriendo. Cuando no estoy frente a la pantalla, probablemente estoy coleccionando figuras, jugando videojuegos, ilustrando algo nuevo o explorando nuevas ideas para todos ustedes.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ════════════════════════════════════════════════════
+             SETUP
+             ════════════════════════════════════════════════════ -->
+
+        <section class="setup-cinematic" id="setup" aria-labelledby="setup-title">
             <div class="setup-sticky">
 
                 <div class="setup-bg" aria-hidden="true">
@@ -212,8 +300,7 @@
 
                 <div class="setup-description">
                     <p>
-                        El núcleo es una Mac Mini,
-                        que ofrece la potencia necesaria en un formato compacto.
+                        El núcleo es una Mac Mini, que ofrece la potencia necesaria en un formato compacto.
                         Complemento mi flujo creativo con un iPad Pro M2 como segunda pantalla y la ergonomía
                         del MX Vertical para reducir la fatiga muscular y un Logitech Pebble Keys por su perfil bajo
                         y estética limpia. Finalmente, la Xiaomi Lightbar garantiza una iluminación precisa sobre el área
@@ -224,71 +311,77 @@
             </div>
         </section>
 
-        <!-- ── STATS ──────────────────────────────────────── -->
-<section class="stats-section" id="stats" aria-labelledby="stats-title">
-    <div class="stats-inner">
-        <span class="section-label light" aria-hidden="true">03 — Estadísticas</span>
-        <h2 class="visually-hidden" id="stats-title">Estadísticas</h2>
+        <!-- ════════════════════════════════════════════════════
+             STATS
+             ════════════════════════════════════════════════════ -->
 
-        <div class="stats-stack">
+        <section class="stats-section" id="stats" aria-labelledby="stats-title">
+            <div class="stats-inner">
+                <span class="section-label light" aria-hidden="true">03 — Estadísticas</span>
+                <h2 class="visually-hidden" id="stats-title">Estadísticas</h2>
 
-            <article class="stat-card" data-val="150" data-display="150+">
-                <span class="stat-index">01</span>
+                <div class="stats-stack">
 
-                <div class="stat-main">
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Suscriptores</span>
+                    <article class="stat-card" data-val="150" data-display="150+">
+                        <span class="stat-index">01</span>
+
+                        <div class="stat-main">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Suscriptores</span>
+                        </div>
+
+                        <p class="stat-copy">
+                            Una comunidad inicial creciendo alrededor de tecnología útil, apps y contenido real.
+                        </p>
+                    </article>
+
+                    <article class="stat-card" data-val="12" data-display="12">
+                        <span class="stat-index">02</span>
+
+                        <div class="stat-main">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Videos</span>
+                        </div>
+
+                        <p class="stat-copy">
+                            Tutoriales, tips, trucos y piezas pensadas para mejorar el flujo digital.
+                        </p>
+                    </article>
+
+                    <article class="stat-card" data-val="2500" data-display="2.5K">
+                        <span class="stat-index">03</span>
+
+                        <div class="stat-main">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Reproducciones</span>
+                        </div>
+
+                        <p class="stat-copy">
+                            Alcance orgánico para una audiencia que busca contenido tech claro y práctico.
+                        </p>
+                    </article>
+
+                    <article class="stat-card" data-val="8" data-display="8+">
+                        <span class="stat-index">04</span>
+
+                        <div class="stat-main">
+                            <span class="stat-number">0</span>
+                            <span class="stat-label">Países</span>
+                        </div>
+
+                        <p class="stat-copy">
+                            Personas de distintos lugares conectando con herramientas, ideas y curiosidad.
+                        </p>
+                    </article>
+
                 </div>
+            </div>
+        </section>
 
-                <p class="stat-copy">
-                    Una comunidad inicial creciendo alrededor de tecnología útil, apps y contenido real.
-                </p>
-            </article>
+        <!-- ════════════════════════════════════════════════════
+             VIDEOS
+             ════════════════════════════════════════════════════ -->
 
-            <article class="stat-card" data-val="12" data-display="12">
-                <span class="stat-index">02</span>
-
-                <div class="stat-main">
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Videos</span>
-                </div>
-
-                <p class="stat-copy">
-                    Tutoriales, tips, trucos y piezas pensadas para mejorar el flujo digital.
-                </p>
-            </article>
-
-            <article class="stat-card" data-val="2500" data-display="2.5K">
-                <span class="stat-index">03</span>
-
-                <div class="stat-main">
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Reproducciones</span>
-                </div>
-
-                <p class="stat-copy">
-                    Alcance orgánico para una audiencia que busca contenido tech claro y práctico.
-                </p>
-            </article>
-
-            <article class="stat-card" data-val="8" data-display="8+">
-                <span class="stat-index">04</span>
-
-                <div class="stat-main">
-                    <span class="stat-number">0</span>
-                    <span class="stat-label">Países</span>
-                </div>
-
-                <p class="stat-copy">
-                    Personas de distintos lugares conectando con herramientas, ideas y curiosidad.
-                </p>
-            </article>
-
-        </div>
-    </div>
-</section>
-
-        <!-- ── VIDEOS ─────────────────────────────────────── -->
         <section class="videos-section" id="videos" aria-labelledby="videos-title">
             <div class="videos-inner">
                 <span class="section-label" aria-hidden="true">04 — Contenido reciente</span>
@@ -299,17 +392,22 @@
                     <!-- /YOUTUBE-VIDEOS-LIST -->
                 </div>
 
-                <a href="https://www.youtube.com/@error404mx"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="cta-link"
-                   data-umami-event="Click-VerTodosVideos">
+                <a
+                    href="https://www.youtube.com/@error404mx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-link"
+                    data-umami-event="Click-VerTodosVideos"
+                >
                     Ver todos los videos <span class="arrow">↗</span>
                 </a>
             </div>
         </section>
 
-        <!-- ── CONTACTO ───────────────────────────────────── -->
+        <!-- ════════════════════════════════════════════════════
+             CONTACTO
+             ════════════════════════════════════════════════════ -->
+
         <section class="contact-section" id="contact" aria-labelledby="contact-title">
             <div class="contact-inner">
 
@@ -318,10 +416,12 @@
                     <h2 class="contact-title" id="contact-title">¿Tienes una<br>propuesta?</h2>
                 </div>
 
-                <form class="minimal-form"
-                      action="https://api.web3forms.com/submit"
-                      method="POST"
-                      data-umami-event="Envio-Formulario-Contacto">
+                <form
+                    class="minimal-form"
+                    action="https://api.web3forms.com/submit"
+                    method="POST"
+                    data-umami-event="Envio-Formulario-Contacto"
+                >
 
                     <input type="hidden" name="access_key" value="6ef499ff-7bf4-41bb-a6ee-7768df52d6c3">
                     <input type="hidden" name="subject" value="Nueva colaboración — ERROR404">
@@ -331,42 +431,50 @@
                     <div class="form-row">
                         <div class="form-field">
                             <label for="nombre">Nombre</label>
-                            <input type="text"
-                                   id="nombre"
-                                   name="nombre"
-                                   placeholder="Tu nombre"
-                                   required
-                                   autocomplete="name">
+                            <input
+                                type="text"
+                                id="nombre"
+                                name="nombre"
+                                placeholder="Tu nombre"
+                                required
+                                autocomplete="name"
+                            >
                         </div>
 
                         <div class="form-field">
                             <label for="email">Email</label>
-                            <input type="email"
-                                   id="email"
-                                   name="email"
-                                   placeholder="hola@correo.com"
-                                   required
-                                   autocomplete="email">
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="hola@correo.com"
+                                required
+                                autocomplete="email"
+                            >
                         </div>
                     </div>
 
                     <div class="form-field">
                         <label for="empresa">Empresa</label>
-                        <input type="text"
-                               id="empresa"
-                               name="empresa"
-                               placeholder="Marca u organización"
-                               autocomplete="organization">
+                        <input
+                            type="text"
+                            id="empresa"
+                            name="empresa"
+                            placeholder="Marca u organización"
+                            autocomplete="organization"
+                        >
                     </div>
 
                     <div class="form-field">
                         <label for="mensaje">Propuesta</label>
-                        <textarea id="mensaje"
-                                  name="mensaje"
-                                  rows="4"
-                                  placeholder="Escribe aquí..."
-                                  autocomplete="off"
-                                  required></textarea>
+                        <textarea
+                            id="mensaje"
+                            name="mensaje"
+                            rows="4"
+                            placeholder="Escribe aquí..."
+                            autocomplete="off"
+                            required
+                        ></textarea>
                     </div>
 
                     <div class="form-actions">
@@ -385,6 +493,7 @@
     <!-- ════════════════════════════════════════════════════
          FOOTER
          ════════════════════════════════════════════════════ -->
+
     <footer class="site-footer" role="contentinfo">
         <div class="footer-inner">
 
@@ -398,19 +507,23 @@
                     <p class="footer-heading">Social</p>
 
                     <div class="social-pills">
-                        <a href="https://www.instagram.com/josesuaste"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="Instagram de José Suaste"
-                           data-umami-event="Click-Social-Instagram">
+                        <a
+                            href="https://www.instagram.com/josesuaste"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Instagram de José Suaste"
+                            data-umami-event="Click-Social-Instagram"
+                        >
                             IG
                         </a>
 
-                        <a href="https://www.youtube.com/@error404mx"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="YouTube de José Suaste"
-                           data-umami-event="Click-Social-YouTube">
+                        <a
+                            href="https://www.youtube.com/@error404mx"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="YouTube de José Suaste"
+                            data-umami-event="Click-Social-YouTube"
+                        >
                             YT
                         </a>
                     </div>
@@ -423,10 +536,12 @@
 
                 <div class="footer-col">
                     <p class="footer-heading">GitHub</p>
-                    <a href="https://github.com/josesuaste"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       data-umami-event="Click-Social-GitHub">
+                    <a
+                        href="https://github.com/josesuaste"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-umami-event="Click-Social-GitHub"
+                    >
                         @josesuaste
                     </a>
                 </div>
@@ -447,12 +562,12 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js" defer></script>
 
-
 <!-- 2. Scripts propios después -->
-<script src="js/script.js" defer></script>
+<script src="js/navbar.js" defer></script>
 <script src="js/about.js" defer></script>
 <script src="js/stats-animations.js" defer></script>
-<script src="js/contact-animations.js" defer></script>
+<script src="js/form.js" defer></script>
+<script src="js/footer.js" defer></script>
 
 <!-- 3. ES module separado -->
 <script type="module" src="js/setup-3d.js"></script>

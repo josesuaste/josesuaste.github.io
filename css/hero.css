@@ -24,10 +24,10 @@
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
     background: rgba(14, 31, 61, 0.16);
     opacity: var(--hero-dim, 0);
     pointer-events: none;
-    z-index: 8;
 }
 
 
@@ -35,12 +35,12 @@
 
 .hero-content {
     position: relative;
+    z-index: 2;
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 5;
 }
 
 
@@ -51,8 +51,6 @@
     line-height: 0.82;
     letter-spacing: -0.04em;
     color: var(--dark, #111111);
-
-    /* flex para alinear los dos spans en línea */
     display: flex;
     align-items: baseline;
     gap: 0.18em;
@@ -76,7 +74,7 @@
 
 .profile-wrapper {
     position: relative;
-    z-index: 6;
+    z-index: 3;
     margin-top: -30px;
 }
 
@@ -99,16 +97,14 @@
 
 .hero-footer {
     position: relative;
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
     padding: 0 var(--pad-x) 36px;
     width: 100%;
-    z-index: 10;
 }
-
-/* .header-corner eliminado — ya no se usa */
 
 .bottom-sub-btn {
     display: inline-block;
@@ -135,7 +131,6 @@
 /* ── Desktop ─────────────────────────────────────────────── */
 
 @media (min-width: 768px) {
-
     .hero-footer {
         position: absolute;
         bottom: 40px;
@@ -146,7 +141,6 @@
         padding: 0 50px;
         gap: 20px;
     }
-
 }
 
 
