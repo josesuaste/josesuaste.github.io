@@ -7,9 +7,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 64px;
+    height: 60px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 var(--pad-x);
     z-index: 500;
     background: transparent;
@@ -20,10 +21,10 @@
 }
 
 .navbar--scrolled {
-    background: rgba(244, 241, 234, 0.86);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 rgba(17, 17, 17, 0.08);
+    background: rgba(244, 241, 234, 0.90);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 1px 0 rgba(17, 17, 17, 0.07);
 }
 
 
@@ -31,229 +32,251 @@
 
 .logo {
     font-family: var(--font-mono);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     font-weight: 900;
     color: var(--dark);
     text-decoration: none;
     letter-spacing: -0.01em;
     flex-shrink: 0;
-    transition:
-        opacity var(--t-fast),
-        color var(--t-fast);
     z-index: 600;
     position: relative;
+    transition: opacity var(--t-fast);
 }
 
 .logo:hover {
-    opacity: 0.65;
+    opacity: 0.5;
 }
 
 
-/* ── Toggle móvil ───────────────────────────────────────── */
-
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 28px;
-    height: 18px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    position: relative;
-    z-index: 600;
-}
-
-.menu-toggle .bar {
-    width: 100%;
-    height: 2px;
-    background: var(--dark);
-    border-radius: 2px;
-    transition:
-        transform 0.35s var(--ease-out),
-        opacity 0.25s;
-    transform-origin: center;
-    display: block;
-}
-
-.menu-toggle.is-active .bar:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-}
-
-.menu-toggle.is-active .bar:nth-child(2) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
-
-/* ── Links desktop ───────────────────────────────────────── */
-
-.nav-links {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.nav-links a {
-    font-size: 0.9rem;
-    font-weight: 650;
-    color: var(--dark);
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: 50px;
-    white-space: nowrap;
-    transition:
-        background var(--t-fast),
-        color var(--t-fast),
-        opacity var(--t-fast);
-}
-
-.nav-links a:hover {
-    background: rgba(255, 112, 93, 0.14);
-}
-
-.nav-links a.active {
-    background: var(--coral);
-    color: var(--white);
-}
-
-.nav-mediakit-link {
-    display: none;
-}
-
-
-/* ── Right / Media Kit como texto ───────────────────────── */
+/* ── Nav right ───────────────────────────────────────────── */
 
 .nav-right {
-    margin-left: auto;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     flex-shrink: 0;
+    z-index: 600;
+    position: relative;
 }
 
+
+/* ── Media Kit — solo desktop ───────────────────────────── */
+
 .nav-mediakit-btn {
-    font-size: 0.9rem;
-    font-weight: 650;
+    font-size: 0.82rem;
+    font-weight: 600;
     color: var(--dark);
-    background: transparent;
-    padding: 6px 0;
-    border-radius: 0;
     text-decoration: none;
     letter-spacing: -0.01em;
-    transition:
-        color var(--t-fast),
-        opacity var(--t-fast),
-        transform var(--t-fast);
     white-space: nowrap;
+    display: none;
+    transition: color var(--t-fast);
 }
 
 .nav-mediakit-btn:hover {
     color: var(--coral);
-    opacity: 1;
-    transform: translateY(-1px);
-    box-shadow: none;
+}
+
+
+/* ── Toggle (hambúrger / ×) ──────────────────────────────── */
+
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 600;
+    position: relative;
+}
+
+.menu-toggle .bar {
+    width: 20px;
+    height: 1.5px;
+    background: var(--dark);
+    border-radius: 2px;
+    display: block;
+    transition:
+        transform 0.32s cubic-bezier(0.77, 0.2, 0.05, 1),
+        opacity 0.22s;
+    transform-origin: center;
+}
+
+.menu-toggle.is-active .bar:nth-child(1) {
+    transform: translateY(6.5px) rotate(45deg);
+}
+
+.menu-toggle.is-active .bar:nth-child(2) {
+    transform: translateY(-6.5px) rotate(-45deg);
 }
 
 
 /* ════════════════════════════════════════════════════════════
-   MOBILE
+   OVERLAY MÓVIL
    ════════════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: flex;
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    background: var(--cream);
+    z-index: 550;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 80px var(--pad-x) 44px;
+    transform: translateX(100%);
+    transition: transform 0.38s cubic-bezier(0.77, 0.2, 0.05, 1);
+    overflow: hidden;
+}
+
+.nav-overlay.is-active {
+    transform: translateX(0);
+}
+
+
+/* ── Botón cerrar (tache) dentro del overlay ─────────────── */
+
+.nav-overlay-close {
+    position: absolute;
+    top: 16px;
+    right: var(--pad-x);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity var(--t-fast);
+}
+
+.nav-overlay-close:hover {
+    opacity: 0.45;
+}
+
+.nav-overlay-close svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* ── Label de sección ────────────────────────────────────── */
+
+.nav-section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+    display: block;
+}
+
+
+/* ── Links del overlay ───────────────────────────────────── */
+
+.nav-overlay-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.nav-overlay-links a {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: var(--dark);
+    text-decoration: none;
+    line-height: 1;
+    padding: 10px 0;
+    display: block;
+    text-align: left;
+    transition: color var(--t-fast);
+}
+
+.nav-overlay-links a:hover {
+    color: var(--coral);
+}
+
+
+/* ── Footer del overlay ──────────────────────────────────── */
+
+.nav-overlay-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: left;
+}
+
+.nav-footer-label {
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+    display: block;
+}
+
+.nav-footer-value {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--dark);
+    text-decoration: none;
+}
+
+.nav-footer-value:hover {
+    color: var(--coral);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   DESKTOP
+   ════════════════════════════════════════════════════════════ */
+
+@media (min-width: 769px) {
+    .navbar {
+        height: 64px;
     }
 
-    .nav-mediakit-btn {
+    .menu-toggle {
         display: none;
     }
 
-    .nav-links {
-        position: fixed;
-        left: 0;
-        top: 0;
-        transform: translateX(100%);
-        width: 100%;
-        height: 100dvh;
-        height: 100vh;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        background: var(--cream);
-        z-index: 550;
-    }
-
-    .nav-links.is-animating {
-        transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1);
-    }
-
-    .nav-links.is-active {
-        transform: translateX(0);
-    }
-
-    .nav-links a {
-        font-size: clamp(1.8rem, 7vw, 2.4rem);
-        font-weight: 900;
-        letter-spacing: -0.03em;
-        padding: 12px 0;
-        width: 100%;
-        text-align: center;
-        border-radius: 0;
-        color: var(--dark);
-        border-bottom: 1px solid rgba(17, 17, 17, 0.08);
-    }
-
-    .nav-links a:last-child {
-        border-bottom: none;
-    }
-
-    .nav-links a:hover {
-        background: transparent;
-        color: var(--coral);
-        opacity: 1;
-    }
-
-    .nav-links a.active {
-        background: transparent;
-        color: var(--coral);
-    }
-
-    .nav-mediakit-link {
+    .nav-mediakit-btn {
         display: block;
-        font-size: 0.85rem !important;
-        font-weight: 750;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--coral) !important;
-        margin-top: 20px;
-        padding: 11px 28px !important;
-        border: 1.5px solid rgba(255, 112, 93, 0.42) !important;
-        border-radius: 50px !important;
-        width: auto !important;
-        border-bottom: none !important;
     }
 
-    .nav-mediakit-link:hover {
-        background: var(--coral) !important;
-        color: var(--white) !important;
-        border-color: var(--coral) !important;
-        opacity: 1 !important;
+    .nav-overlay {
+        display: none;
     }
 }
+
+
+/* ── body bloqueado al abrir menú ────────────────────────── */
+
 body.nav-open {
     overflow: hidden;
     touch-action: none;
 }
 
+
+/* ── Reduced motion ──────────────────────────────────────── */
+
 @media (prefers-reduced-motion: reduce) {
     .navbar,
-    .nav-links,
-    .nav-links a,
+    .nav-overlay,
     .menu-toggle .bar,
     .nav-mediakit-btn {
         transition: none !important;

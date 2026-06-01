@@ -1,25 +1,23 @@
 'use strict';
 // ════════════════════════════════════════════════════════════
 //  MENÚ HAMBURGUESA
-//  Regla de oro: el overlay (.nav-links) va a z-index 550
-//  El toggle (.menu-toggle) va a z-index 600 → siempre encima
-//  La X la forman las dos .bar → sin ningún ::before ni elemento extra
+//  overlay → .nav-overlay  |  z-index 550
+//  toggle  → .menu-toggle  |  z-index 600 → siempre encima
+//  close   → .nav-overlay-close (#navClose) — tache dedicado
+//  La X del toggle la forman las dos .bar → sin elemento extra
 // ════════════════════════════════════════════════════════════
 (function initMenu() {
-    const toggle    = document.querySelector('.menu-toggle');
-    const overlay   = document.querySelector('.nav-links');
-    const allLinks  = document.querySelectorAll('.nav-links a');
+    const toggle   = document.querySelector('.menu-toggle');
+    const overlay  = document.querySelector('.nav-overlay');
+    const closeBtn = document.getElementById('navClose');
+    const allLinks = document.querySelectorAll('.nav-overlay a');
+
     if (!toggle || !overlay) return;
 
     let isOpen = false;
 
-    function enableAnimation() {
-        overlay.classList.add('is-animating');
-    }
-
     function openMenu() {
         isOpen = true;
-        enableAnimation();
         overlay.classList.add('is-active');
         toggle.classList.add('is-active');
         toggle.setAttribute('aria-expanded', 'true');
@@ -29,7 +27,6 @@
 
     function closeMenu() {
         isOpen = false;
-        enableAnimation();
         overlay.classList.remove('is-active');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
@@ -39,22 +36,18 @@
 
     function closeInstant() {
         isOpen = false;
-        overlay.classList.remove('is-animating', 'is-active');
+        overlay.classList.remove('is-active');
         toggle.classList.remove('is-active');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'Abrir menú');
         document.body.classList.remove('nav-open');
     }
 
-    // Quita la clase de transición al terminar, para evitar animaciones raras al cambiar de viewport
-    overlay.addEventListener('transitionend', event => {
-        if (event.propertyName === 'transform') {
-            overlay.classList.remove('is-animating');
-        }
-    });
-
-    // Click en el botón
+    // Hambúrger
     toggle.addEventListener('click', () => isOpen ? closeMenu() : openMenu());
+
+    // Tache dedicado dentro del overlay
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
 
     // Click en cualquier link del overlay → cerrar
     allLinks.forEach(link => link.addEventListener('click', closeMenu));
@@ -91,7 +84,7 @@
 // ════════════════════════════════════════════════════════════
 (function initActiveLinks() {
     const sections = Array.from(document.querySelectorAll('section[id], header[id]'));
-    const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]')).filter((link) => {
+    const navLinks = Array.from(document.querySelectorAll('.nav-overlay-links a[href^="#"]')).filter(link => {
         const href = link.getAttribute('href');
         return href && href.length > 1;
     });
@@ -99,14 +92,13 @@
     if (!sections.length || !navLinks.length || !('IntersectionObserver' in window)) return;
 
     const linkById = new Map(
-        navLinks.map((link) => [link.getAttribute('href').slice(1), link])
+        navLinks.map(link => [link.getAttribute('href').slice(1), link])
     );
 
     function setActive(id) {
-        navLinks.forEach((link) => {
+        navLinks.forEach(link => {
             const isActive = link.getAttribute('href') === `#${id}`;
             link.classList.toggle('active', isActive);
-
             if (isActive) {
                 link.setAttribute('aria-current', 'page');
             } else {
@@ -115,10 +107,10 @@
         });
     }
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
         const visible = entries
-            .filter((entry) => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
         if (visible && linkById.has(visible.target.id)) {
             setActive(visible.target.id);
@@ -128,8 +120,9 @@
         threshold: [0.15, 0.35, 0.6]
     });
 
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach(section => observer.observe(section));
 })();
+
 
 // ════════════════════════════════════════════════════════════
 //  AUTO-RESIZE TEXTAREA
@@ -143,6 +136,7 @@
         this.style.height = this.scrollHeight + 'px';
     });
 })();
+
 
 // ════════════════════════════════════════════════════════════
 //  AÑO AUTOMÁTICO EN FOOTER

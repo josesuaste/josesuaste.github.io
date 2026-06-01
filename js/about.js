@@ -1,70 +1,96 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const aboutSection = document.querySelector(".about-me");
+  const aboutInner = document.querySelector(".about-me__inner");
+  const paragraphs = document.querySelectorAll(".about-me__paragraph");
+  const scribblePath = document.querySelector(".about-scribble__path");
+
+  if (!aboutSection || !aboutInner || !paragraphs.length) return;
+
+  if (typeof gsap === "undefined") {
+    console.warn("GSAP no está cargado.");
+    aboutInner.style.opacity = "1";
+    return;
+  }
+
+  if (typeof ScrollTrigger !== "undefined") {
     gsap.registerPlugin(ScrollTrigger);
+  }
 
-    /* ─────────────────────────────────────────────
-       STICKER POP
-       Cada párrafo dispara su propio sticker
-    ───────────────────────────────────────────── */
+  /*
+    Divide cada párrafo en palabras.
+    Esto permite animar palabra por palabra sin cambiar tu HTML manualmente.
+  */
+  paragraphs.forEach((paragraph) => {
+    const text = paragraph.textContent.trim();
 
-    const aboutParagraphs = document.querySelectorAll(".about-paragraph");
+    paragraph.innerHTML = text
+      .split(/\s+/)
+      .map((word) => `<span class="word">${word}</span>`)
+      .join(" ");
+  });
 
-    aboutParagraphs.forEach((paragraph) => {
-        const sticker = paragraph.querySelector(".sticker-pop");
+  const words = aboutSection.querySelectorAll(".word");
 
-        if (!sticker) return;
+  /*
+    Estado inicial
+  */
+  gsap.set(aboutInner, {
+    opacity: 1
+  });
 
-        const initialRotate = gsap.utils.random(-18, 18);
+  gsap.set(words, {
+    opacity: 0,
+    y: 18
+  });
 
-        gsap.fromTo(
-            sticker,
-            {
-                scale: 0,
-                opacity: 0,
-                rotate: initialRotate,
-                y: 24
-            },
-            {
-                scale: 1,
-                opacity: 1,
-                rotate: 0,
-                y: 0,
-                duration: 0.7,
-                ease: "back.out(2)",
-                scrollTrigger: {
-                    trigger: paragraph,
-                    start: "top 72%",
-                    toggleActions: "play none none reverse"
-                }
-            }
-        );
+  /*
+    Línea rosa: se prepara para que aparezca dibujándose.
+  */
+  if (scribblePath) {
+    const scribbleLength = scribblePath.getTotalLength();
+
+    gsap.set(scribblePath, {
+      strokeDasharray: scribbleLength,
+      strokeDashoffset: scribbleLength
     });
+  }
 
+  /*
+    Animación principal del texto
+  */
+  const aboutTimeline = gsap.timeline({
+    scrollTrigger: typeof ScrollTrigger !== "undefined"
+      ? {
+          trigger: aboutSection,
+          start: "top 70%",
+          once: true
+        }
+      : undefined
+  });
 
-    /* ─────────────────────────────────────────────
-       LÍNEA ANIMADA DEL ÚLTIMO PÁRRAFO
-    ───────────────────────────────────────────── */
+  aboutTimeline.to(words, {
+    opacity: 1,
+    y: 0,
+    duration: 0.65,
+    stagger: 0.035,
+    ease: "power3.out"
+  });
 
-    const aboutPath = document.querySelector(".about-scribble__path");
-    const lastParagraph = document.querySelector(".about-last");
-
-    if (aboutPath && lastParagraph) {
-        const pathLength = aboutPath.getTotalLength();
-
-        gsap.set(aboutPath, {
-            strokeDasharray: pathLength,
-            strokeDashoffset: pathLength
-        });
-
-        gsap.to(aboutPath, {
-            strokeDashoffset: 0,
-            duration: 1.4,
-            ease: "power2.inOut",
-            scrollTrigger: {
-                trigger: lastParagraph,
-                start: "top 70%",
-                toggleActions: "play none none reverse"
-            }
-        });
-    }
+  /*
+    Animación de la línea debajo del segundo párrafo
+  */
+  if (scribblePath) {
+    aboutTimeline.to(
+      scribblePath,
+      {
+        strokeDashoffset: 0,
+        duration: 1.15,
+        ease: "power3.out"
+      },
+      "-=0.15"
+    );
+  }
 });
+
+
     
