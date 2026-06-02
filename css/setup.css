@@ -3,12 +3,15 @@
    ════════════════════════════════════════════════════════════ */
 
 .setup-cinematic {
+    --setup-radius: clamp(34px, 5vw, 72px);
+
     position: relative;
     min-height: 100vh;
     min-height: 100svh;
     background: #080808;
-    color: var(--cream);
+    color: var(--white);
     overflow: hidden;
+    border-radius: var(--setup-radius);
 }
 
 .setup-sticky {
@@ -20,6 +23,7 @@
     padding: 92px var(--pad-x) 56px;
     isolation: isolate;
     background: #080808;
+    color: var(--white);
 }
 
 .setup-bg,
@@ -70,7 +74,7 @@
 
 .setup-copy-main {
     position: absolute;
-    top: clamp(92px, 11vh, 132px);
+    top: clamp(76px, 9vh, 110px);
     left: 50%;
     z-index: 5;
     width: min(100%, 760px);
@@ -206,10 +210,13 @@ body.nav-open .setup-model-stage {
 
 @media (max-width: 900px) {
     .setup-cinematic {
+        --setup-radius: 30px;
+
         min-height: 100vh;
         min-height: 100svh;
         overflow: hidden;
     }
+
     .setup-copy-main {
         top: 88px;
         width: 100%;
