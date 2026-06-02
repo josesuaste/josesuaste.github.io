@@ -1,20 +1,19 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   ABOUT — editorial note + section label + SVG line animation
+   ABOUT — editorial text animation
    ════════════════════════════════════════════════════════════ */
 
 (function initAboutSection() {
     function start() {
         const about = document.querySelector('.about-me');
-        const note = document.querySelector('.about-note');
+        const copy = document.querySelector('.about-copy');
 
-        if (!about || !note) return;
+        if (!about || !copy) return;
 
         const sectionLabel = about.querySelector('.section-label');
-        const lines = about.querySelectorAll('.about-me__line');
-        const textBlocks = note.querySelectorAll('.about-note__text');
-        const drawLines = about.querySelectorAll('.about-draw-line');
+        const lead = copy.querySelector('.about-copy__lead');
+        const body = copy.querySelector('.about-copy__body');
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -24,13 +23,8 @@
                 sectionLabel.style.transform = 'none';
             }
 
-            note.style.opacity = '1';
-            note.style.transform = 'none';
-
-            lines.forEach((line) => {
-                line.style.opacity = '1';
-            });
-
+            copy.style.opacity = '1';
+            copy.style.transform = 'none';
             return;
         }
 
@@ -38,66 +32,26 @@
             gsap.registerPlugin(ScrollTrigger);
         }
 
-        /*
-          Prepara líneas tipo stroke para animación de dibujo.
-          Solo funciona en SVGs con <path class="about-draw-line" ...>.
-        */
-        drawLines.forEach((line) => {
-            if (typeof line.getTotalLength !== 'function') return;
-
-            const length = line.getTotalLength();
-
-            gsap.set(line, {
-                strokeDasharray: length,
-                strokeDashoffset: length
-            });
-        });
-
         if (reduceMotion) {
-            gsap.set([sectionLabel, note, lines, textBlocks].filter(Boolean), {
+            gsap.set([sectionLabel, copy, lead, body].filter(Boolean), {
                 clearProps: 'all',
                 autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                rotate: 0
-            });
-
-            gsap.set(drawLines, {
-                strokeDashoffset: 0
+                y: 0
             });
 
             return;
         }
 
-        /*
-          Estado inicial
-        */
-        if (sectionLabel) {
-            gsap.set(sectionLabel, {
-                autoAlpha: 0,
-                y: 14
-            });
-        }
-
-        gsap.set(note, {
+        gsap.set([sectionLabel, lead, body].filter(Boolean), {
             autoAlpha: 0,
-            y: 26,
-            scale: 0.992
+            y: 20
         });
 
-        gsap.set(textBlocks, {
-            autoAlpha: 0,
-            y: 16
+        gsap.set(copy, {
+            autoAlpha: 1,
+            y: 0
         });
 
-        gsap.set(lines, {
-            autoAlpha: 0,
-            scale: 0.98
-        });
-
-        /*
-          Entrada principal
-        */
         const tl = gsap.timeline({
             scrollTrigger: typeof ScrollTrigger !== 'undefined'
                 ? {
@@ -108,90 +62,31 @@
                 : undefined
         });
 
-        tl.to(lines, {
-            autoAlpha: 1,
-            scale: 1,
-            duration: 0.95,
-            stagger: 0.12,
-            ease: 'power3.out'
-        }, 0);
-
-        if (drawLines.length) {
-            tl.to(drawLines, {
-                strokeDashoffset: 0,
-                duration: 1.35,
-                stagger: 0.12,
-                ease: 'power3.out'
-            }, 0.05);
-        }
-
         if (sectionLabel) {
             tl.to(sectionLabel, {
                 autoAlpha: 1,
                 y: 0,
                 duration: 0.42,
                 ease: 'power3.out'
+            }, 0);
+        }
+
+        if (lead) {
+            tl.to(lead, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.78,
+                ease: 'power3.out'
             }, 0.16);
         }
 
-        tl.to(note, {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.82,
-            ease: 'power3.out'
-        }, 0.24);
-
-        tl.to(textBlocks, {
-            autoAlpha: 1,
-            y: 0,
-            duration: 0.58,
-            stagger: 0.12,
-            ease: 'power3.out'
-        }, 0.48);
-
-        /*
-          Parallax sutil solo en desktop.
-          No se aplica en touch para mantenerlo ligero.
-        */
-        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-        if (canHover && typeof ScrollTrigger !== 'undefined' && lines.length) {
-            gsap.to('.about-me__line--one', {
-                y: -38,
-                rotate: -10,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: about,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                }
-            });
-
-            gsap.to('.about-me__line--two', {
-                y: 46,
-                rotate: 132,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: about,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                }
-            });
-
-            gsap.to('.about-me__line--three', {
-                y: -24,
-                rotate: 28,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: about,
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true
-                }
-            });
+        if (body) {
+            tl.to(body, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.62,
+                ease: 'power3.out'
+            }, 0.42);
         }
 
         window.addEventListener('load', () => {
