@@ -1,30 +1,40 @@
 /* ════════════════════════════════════════════════════════════
-   SETUP — modelo 3D sobre fondo negro, sin espacio extra
+   SETUP — card 3D + texto editorial
    ════════════════════════════════════════════════════════════ */
 
 .setup-cinematic {
-    --setup-radius: clamp(34px, 5vw, 72px);
-
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    background: #080808;
-    color: var(--white);
+    background: var(--cream);
+    color: var(--dark);
+    padding: clamp(72px, 8vw, 120px) var(--pad-x);
     overflow: hidden;
-    border-radius: var(--setup-radius);
 }
 
-.setup-sticky {
+.setup-shell {
+    width: min(100%, 1320px);
+    margin: 0 auto;
+}
+
+/* Card visual del modelo */
+
+.setup-card {
     position: relative;
     min-height: 100vh;
     min-height: 100svh;
     display: grid;
     place-items: center;
-    padding: 92px var(--pad-x) 56px;
     isolation: isolate;
+    overflow: hidden;
+
     background: #080808;
     color: var(--white);
+    border-radius: clamp(34px, 5vw, 72px);
+    box-shadow:
+        0 34px 120px rgba(17, 17, 17, 0.22),
+        0 1px 0 rgba(244, 241, 234, 0.06) inset;
 }
+
+/* Fondo interno */
 
 .setup-bg,
 .setup-grid,
@@ -72,6 +82,8 @@
     background: rgba(255, 112, 93, 0.12);
 }
 
+/* Label */
+
 .setup-copy-main {
     position: absolute;
     top: clamp(76px, 9vh, 110px);
@@ -83,6 +95,8 @@
     transform: translateX(-50%);
     text-align: center;
 }
+
+/* Modelo */
 
 .setup-model-stage {
     position: absolute;
@@ -98,11 +112,12 @@
     user-select: none;
 }
 
-/* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
 body.nav-open .setup-canvas,
 body.nav-open .setup-model-stage {
     pointer-events: none;
 }
+
+/* Loader */
 
 .setup-loader {
     position: absolute;
@@ -110,8 +125,9 @@ body.nav-open .setup-model-stage {
     bottom: 8vh;
     transform: translateX(-50%);
     z-index: 2;
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.62rem;
+    font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: rgba(244, 241, 234, 0.54);
@@ -124,6 +140,8 @@ body.nav-open .setup-model-stage {
     visibility: hidden;
     pointer-events: none;
 }
+
+/* Orbit items */
 
 .setup-orbit {
     position: absolute;
@@ -138,8 +156,9 @@ body.nav-open .setup-model-stage {
     margin: 0;
     padding-top: 14px;
     border-top: 1px solid rgba(244, 241, 234, 0.28);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: clamp(0.72rem, 0.9vw, 0.9rem);
+    font-weight: 700;
     line-height: 1.35;
     color: rgba(244, 241, 234, 0.88);
 }
@@ -149,6 +168,7 @@ body.nav-open .setup-model-stage {
     margin-top: 6px;
     font-family: var(--font-sans);
     font-size: 0.78rem;
+    font-weight: 300;
     line-height: 1.45;
     color: rgba(244, 241, 234, 0.52);
 }
@@ -187,85 +207,113 @@ body.nav-open .setup-model-stage {
     display: none;
 }
 
+/* Texto editorial debajo */
+
 .setup-description {
-    position: absolute;
-    left: 50%;
-    right: auto;
-    bottom: clamp(28px, 5vh, 56px);
-    z-index: 4;
-    width: min(780px, calc(100% - (var(--pad-x) * 2)));
-    padding-top: 18px;
-    border-top: 1px solid rgba(244, 241, 234, 0.24);
-    transform: translateX(-50%);
+    width: min(100%, 860px);
+    margin: clamp(32px, 5vw, 56px) auto 0;
     text-align: center;
-    pointer-events: none;
 }
 
 .setup-description p {
     margin: 0;
-    font-size: clamp(0.95rem, 1.15vw, 1.08rem);
-    line-height: 1.55;
-    color: rgba(244, 241, 234, 0.74);
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.35vw, 1.16rem);
+    font-weight: 300;
+    line-height: 1.62;
+    letter-spacing: -0.025em;
+    color: rgba(17, 17, 17, 0.68);
 }
+
+/* Mobile */
 
 @media (max-width: 900px) {
     .setup-cinematic {
-        min-height: 100vh;
-        min-height: 100svh;
-        overflow: hidden;
+        padding: 72px 14px 88px;
+    }
 
-        /* Móvil sin redondeo inferior y radio más discreto */
-        border-radius: 22px 22px 0 0;
+    .setup-shell {
+        width: 100%;
+    }
+
+    .setup-card {
+        min-height: 78svh;
+        border-radius: 26px;
     }
 
     .setup-copy-main {
-        top: 88px;
+        top: 82px;
         width: 100%;
-    }
-}
-
-    .setup-sticky {
-        min-height: 100vh;
-        min-height: 100svh;
-        padding: 88px var(--pad-x) 56px;
+        padding-inline: 20px;
     }
 
     .setup-model-stage {
         inset: 0;
     }
 
-    .setup-orbit,
-    .setup-description {
+    .setup-orbit {
         display: none;
     }
 
     .setup-mobile-label {
         position: absolute;
-        left: var(--pad-x);
-        right: var(--pad-x);
-        bottom: 48px;
+        left: 20px;
+        right: 20px;
+        bottom: 32px;
         z-index: 3;
         display: flex;
         flex-direction: column;
         gap: 6px;
         padding-top: 16px;
         border-top: 1px solid rgba(244, 241, 234, 0.24);
-        color: var(--cream);
+        color: var(--white);
         pointer-events: none;
     }
 
     .setup-mobile-label strong {
-        font-family: var(--font-mono);
-        font-size: 0.82rem;
-        letter-spacing: 0.08em;
+        font-family: var(--font-sans);
+        font-size: 0.8rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
     }
 
     .setup-mobile-label span {
         font-size: 0.95rem;
+        font-weight: 300;
         color: rgba(244, 241, 234, 0.62);
     }
+
+    .setup-description {
+        width: min(100%, 560px);
+        margin-top: 30px;
+        padding-inline: 8px;
+        text-align: center;
+    }
+
+    .setup-description p {
+        font-size: 0.98rem;
+        line-height: 1.58;
+        color: rgba(17, 17, 17, 0.68);
+    }
 }
+
+@media (max-width: 520px) {
+    .setup-card {
+        min-height: 74svh;
+        border-radius: 24px;
+    }
+
+    .setup-copy-main {
+        top: 72px;
+    }
+
+    .setup-description {
+        margin-top: 26px;
+    }
+}
+
+/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
     .setup-loader,
