@@ -1,97 +1,207 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const aboutSection = document.querySelector(".about-me");
-  const aboutInner = document.querySelector(".about-me__inner");
-  const paragraphs = document.querySelectorAll(".about-me__paragraph");
-  const scribblePath = document.querySelector(".about-scribble__path");
+'use strict';
 
-  if (!aboutSection || !aboutInner || !paragraphs.length) return;
+/* ════════════════════════════════════════════════════════════
+   ABOUT — editorial note + SVG line animation
+   ════════════════════════════════════════════════════════════ */
 
-  if (typeof gsap === "undefined") {
-    console.warn("GSAP no está cargado.");
-    aboutInner.style.opacity = "1";
-    return;
-  }
+(function initAboutSection() {
+    function start() {
+        const about = document.querySelector('.about-me');
+        const note = document.querySelector('.about-note');
 
-  if (typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
-  }
+        if (!about || !note) return;
 
-  /*
-    Divide cada párrafo en palabras.
-    Esto permite animar palabra por palabra sin cambiar tu HTML manualmente.
-  */
-  paragraphs.forEach((paragraph) => {
-    const text = paragraph.textContent.trim();
+        const lines = about.querySelectorAll('.about-me__line');
+        const textBlocks = note.querySelectorAll('.about-note__text');
+        const button = note.querySelector('.about-note__btn');
+        const drawLines = about.querySelectorAll('.about-draw-line');
 
-    paragraph.innerHTML = text
-      .split(/\s+/)
-      .map((word) => `<span class="word">${word}</span>`)
-      .join(" ");
-  });
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const words = aboutSection.querySelectorAll(".word");
+        if (typeof gsap === 'undefined') {
+            note.style.opacity = '1';
+            note.style.transform = 'none';
 
-  /*
-    Estado inicial
-  */
-  gsap.set(aboutInner, {
-    opacity: 1
-  });
+            lines.forEach((line) => {
+                line.style.opacity = '1';
+            });
 
-  gsap.set(words, {
-    opacity: 0,
-    y: 18
-  });
-
-  /*
-    Línea rosa: se prepara para que aparezca dibujándose.
-  */
-  if (scribblePath) {
-    const scribbleLength = scribblePath.getTotalLength();
-
-    gsap.set(scribblePath, {
-      strokeDasharray: scribbleLength,
-      strokeDashoffset: scribbleLength
-    });
-  }
-
-  /*
-    Animación principal del texto
-  */
-  const aboutTimeline = gsap.timeline({
-    scrollTrigger: typeof ScrollTrigger !== "undefined"
-      ? {
-          trigger: aboutSection,
-          start: "top 70%",
-          once: true
+            return;
         }
-      : undefined
-  });
 
-  aboutTimeline.to(words, {
-    opacity: 1,
-    y: 0,
-    duration: 0.65,
-    stagger: 0.035,
-    ease: "power3.out"
-  });
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
 
-  /*
-    Animación de la línea debajo del segundo párrafo
-  */
-  if (scribblePath) {
-    aboutTimeline.to(
-      scribblePath,
-      {
-        strokeDashoffset: 0,
-        duration: 1.15,
-        ease: "power3.out"
-      },
-      "-=0.15"
-    );
-  }
-});
+        /*
+          Prepara líneas tipo stroke para animación de dibujo.
+          Solo funciona en SVGs con <path class="about-draw-line" ...>.
+        */
+        drawLines.forEach((line) => {
+            if (typeof line.getTotalLength !== 'function') return;
 
+            const length = line.getTotalLength();
+
+            gsap.set(line, {
+                strokeDasharray: length,
+                strokeDashoffset: length
+            });
+        });
+
+        if (reduceMotion) {
+            gsap.set([note, lines, textBlocks, button].filter(Boolean), {
+                clearProps: 'all',
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                rotate: 0
+            });
+
+            gsap.set(drawLines, {
+                strokeDashoffset: 0
+            });
+
+            return;
+        }
+
+        /*
+          Estado inicial
+        */
+        gsap.set(note, {
+            autoAlpha: 0,
+            y: 26,
+            scale: 0.992
+        });
+
+        gsap.set(textBlocks, {
+            autoAlpha: 0,
+            y: 16
+        });
+
+        if (button) {
+            gsap.set(button, {
+                autoAlpha: 0,
+                y: 12
+            });
+        }
+
+        gsap.set(lines, {
+            autoAlpha: 0,
+            scale: 0.98
+        });
+
+        /*
+          Entrada principal
+        */
+        const tl = gsap.timeline({
+            scrollTrigger: typeof ScrollTrigger !== 'undefined'
+                ? {
+                    trigger: about,
+                    start: 'top 68%',
+                    once: true
+                }
+                : undefined
+        });
+
+        tl.to(lines, {
+            autoAlpha: 1,
+            scale: 1,
+            duration: 0.95,
+            stagger: 0.12,
+            ease: 'power3.out'
+        }, 0);
+
+        if (drawLines.length) {
+            tl.to(drawLines, {
+                strokeDashoffset: 0,
+                duration: 1.35,
+                stagger: 0.12,
+                ease: 'power3.out'
+            }, 0.05);
+        }
+
+        tl.to(note, {
+            autoAlpha: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.82,
+            ease: 'power3.out'
+        }, 0.18);
+
+        tl.to(textBlocks, {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.58,
+            stagger: 0.12,
+            ease: 'power3.out'
+        }, 0.42);
+
+        if (button) {
+            tl.to(button, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.42,
+                ease: 'power3.out'
+            }, 0.74);
+        }
+
+        /*
+          Parallax sutil solo en desktop.
+          No se aplica en touch para mantenerlo ligero.
+        */
+        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+        if (canHover && typeof ScrollTrigger !== 'undefined' && lines.length) {
+            gsap.to('.about-me__line--one', {
+                y: -38,
+                rotate: -10,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: about,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            gsap.to('.about-me__line--two', {
+                y: 46,
+                rotate: 132,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: about,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+
+            gsap.to('.about-me__line--three', {
+                y: -24,
+                rotate: 28,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: about,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+        }
+
+        window.addEventListener('load', () => {
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }, { once: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();
 
     
 
