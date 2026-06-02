@@ -59,10 +59,7 @@
     overflow: visible;
 }
 
-/*
-    Para SVGs con stroke:
-    <path class="about-draw-line about-draw-line--cream" ...>
-*/
+/* SVG stroke */
 
 .about-draw-line {
     fill: none;
@@ -82,10 +79,7 @@
     stroke: var(--about-pink);
 }
 
-/*
-    Para SVGs que vienen como forma con fill:
-    <path class="about-fill-shape about-fill-shape--coral" ...>
-*/
+/* SVG fill */
 
 .about-fill-shape--cream {
     fill: var(--cream);
@@ -99,7 +93,7 @@
     fill: var(--about-pink);
 }
 
-/* Posiciones de las líneas */
+/* Posiciones de líneas */
 
 .about-me__line--one {
     top: -14%;
@@ -127,7 +121,12 @@
     width: min(100%, 980px);
     margin: 0 auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-me .section-kicker {
+    width: min(100%, 760px);
 }
 
 /* Caja editorial */
@@ -179,15 +178,6 @@
     letter-spacing: -0.035em;
 }
 
-@media (hover: hover) and (pointer: fine) {
-    .about-note__btn:hover {
-        background: var(--about-text);
-        color: var(--about-panel);
-        border-color: var(--about-text);
-        transform: translateY(-2px);
-    }
-}
-
 /* Desktop */
 
 @media (min-width: 900px) {
@@ -212,6 +202,11 @@
         width: 100%;
     }
 
+    .about-me .section-kicker {
+        width: min(100%, 560px);
+        margin-bottom: 24px;
+    }
+
     .about-note {
         width: min(100%, 560px);
         padding: 32px 24px;
@@ -226,12 +221,6 @@
     .about-note__text--body {
         font-size: 0.98rem;
         line-height: 1.55;
-    }
-
-    .about-note__btn {
-        width: auto;
-        min-height: 42px;
-        padding-inline: 22px;
     }
 
     .about-me__line {
@@ -259,7 +248,7 @@
     .about-note,
     .about-me__line,
     .about-note__text,
-    .about-note__btn {
+    .section-label {
         opacity: 1 !important;
         transform: none !important;
         transition: none !important;

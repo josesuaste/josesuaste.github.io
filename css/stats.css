@@ -15,12 +15,15 @@
     margin: 0 auto;
 }
 
+.stats-inner .section-kicker {
+    max-width: 1180px;
+}
+
 .stats-stack {
     position: relative;
     display: flex;
     flex-direction: column;
     gap: 28px;
-    padding-top: clamp(48px, 7vw, 96px);
 }
 
 .stat-card {
@@ -73,9 +76,11 @@
     position: relative;
     z-index: 2;
 
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     font-size: 0.72rem;
-    letter-spacing: 0.18em;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: rgba(244, 241, 234, 0.42);
 }
 
@@ -143,9 +148,12 @@
         padding: 96px 20px;
     }
 
+    .stats-inner .section-kicker {
+        margin-bottom: 40px;
+    }
+
     .stats-stack {
         gap: 22px;
-        padding-top: 48px;
     }
 
     .stat-card,

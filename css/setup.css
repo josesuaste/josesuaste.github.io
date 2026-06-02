@@ -73,6 +73,8 @@
     top: clamp(88px, 12vh, 140px);
     left: var(--pad-x);
     z-index: 3;
+    width: auto;
+    margin: 0;
 }
 
 .setup-model-stage {

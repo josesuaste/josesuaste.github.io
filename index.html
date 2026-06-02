@@ -204,28 +204,14 @@
 <section class="about-me" id="about" aria-labelledby="about-title">
     <div class="about-me__bg" aria-hidden="true">
 
-        <!-- 
-            SVG decorativo 01
-            Aquí puedes pegar tu SVG inline.
-            Recomendado: línea grande entrando desde arriba/izquierda.
-        -->
         <div class="about-me__line about-me__line--one">
             <!-- Pega aquí tu SVG 01 -->
         </div>
 
-        <!-- 
-            SVG decorativo 02
-            Aquí puedes pegar otro SVG inline o duplicar el mismo.
-            Recomendado: línea saliendo desde abajo/derecha.
-        -->
         <div class="about-me__line about-me__line--two">
             <!-- Pega aquí tu SVG 02 -->
         </div>
 
-        <!-- 
-            SVG decorativo 03 opcional.
-            Úsalo solo en desktop si quieres más profundidad visual.
-        -->
         <div class="about-me__line about-me__line--three">
             <!-- Pega aquí tu SVG 03 opcional -->
         </div>
@@ -233,8 +219,12 @@
     </div>
 
     <div class="about-me__inner">
+        <div class="section-kicker section-kicker--center">
+            <span class="section-label section-label--light">Acerca de mí</span>
+        </div>
+
         <article class="about-note">
-            <h2 class="visually-hidden" id="about-title">Sobre mí</h2>
+            <h2 class="visually-hidden" id="about-title">Acerca de mí</h2>
 
             <p class="about-note__text about-note__text--lead">
                 La <span class="about-note__serif">tecnología</span> me interesa cuando se mezcla con la <span class="about-note__serif">creatividad</span>.
@@ -261,9 +251,9 @@
                 </div>
 
                 <div class="setup-copy-main">
-                    <span class="section-label light" aria-hidden="true">02 — Mi setup</span>
-                    <h2 class="visually-hidden" id="setup-title">Mi setup</h2>
-                </div>
+    <span class="section-label light" aria-hidden="true">Mi setup</span>
+    <h2 class="visually-hidden" id="setup-title">Mi setup</h2>
+</div>
 
                 <div class="setup-model-stage">
                     <canvas id="macmini-canvas" class="setup-canvas" aria-hidden="true" tabindex="-1"></canvas>
@@ -326,8 +316,10 @@
 
         <section class="stats-section" id="stats" aria-labelledby="stats-title">
             <div class="stats-inner">
-                <span class="section-label light" aria-hidden="true">03 — Estadísticas</span>
-                <h2 class="visually-hidden" id="stats-title">Estadísticas</h2>
+                <div class="section-kicker">
+    <span class="section-label section-label--light">Estadísticas</span>
+    <h2 class="visually-hidden" id="stats-title">Estadísticas</h2>
+</div>
 
                 <div class="stats-stack">
 
@@ -393,9 +385,10 @@
 
         <section class="videos-section" id="videos" aria-labelledby="videos-title">
             <div class="videos-inner">
-                <span class="section-label" aria-hidden="true">04 — Contenido reciente</span>
-                <h2 class="visually-hidden" id="videos-title">Contenido reciente</h2>
-
+                <div class="section-kicker">
+    <span class="section-label section-label--dark">04 — Contenido reciente</span>
+    <h2 class="visually-hidden" id="videos-title">Contenido reciente</h2>
+</div>
                 <div class="videos-grid">
                      YOUTUBE-VIDEOS-LIST 
                     /YOUTUBE-VIDEOS-LIST
@@ -422,9 +415,12 @@
             <div class="contact-inner">
 
                 <div class="contact-heading">
-                    <span class="section-label light">05 — Colaboraciones</span>
-                    <h2 class="contact-title" id="contact-title">¿Tienes una<br>propuesta?</h2>
-                </div>
+    <div class="section-kicker section-kicker--tight">
+        <span class="section-label section-label--light">Colaboraciones</span>
+    </div>
+
+    <h2 class="contact-title" id="contact-title">¿Tienes una<br>propuesta?</h2>
+</div>
 
                 <form
                     class="minimal-form"

@@ -1,7 +1,7 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   ABOUT — editorial note + SVG line animation
+   ABOUT — editorial note + section label + SVG line animation
    ════════════════════════════════════════════════════════════ */
 
 (function initAboutSection() {
@@ -11,14 +11,19 @@
 
         if (!about || !note) return;
 
+        const sectionLabel = about.querySelector('.section-label');
         const lines = about.querySelectorAll('.about-me__line');
         const textBlocks = note.querySelectorAll('.about-note__text');
-        const button = note.querySelector('.about-note__btn');
         const drawLines = about.querySelectorAll('.about-draw-line');
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
         if (typeof gsap === 'undefined') {
+            if (sectionLabel) {
+                sectionLabel.style.opacity = '1';
+                sectionLabel.style.transform = 'none';
+            }
+
             note.style.opacity = '1';
             note.style.transform = 'none';
 
@@ -49,7 +54,7 @@
         });
 
         if (reduceMotion) {
-            gsap.set([note, lines, textBlocks, button].filter(Boolean), {
+            gsap.set([sectionLabel, note, lines, textBlocks].filter(Boolean), {
                 clearProps: 'all',
                 autoAlpha: 1,
                 y: 0,
@@ -67,6 +72,13 @@
         /*
           Estado inicial
         */
+        if (sectionLabel) {
+            gsap.set(sectionLabel, {
+                autoAlpha: 0,
+                y: 14
+            });
+        }
+
         gsap.set(note, {
             autoAlpha: 0,
             y: 26,
@@ -77,13 +89,6 @@
             autoAlpha: 0,
             y: 16
         });
-
-        if (button) {
-            gsap.set(button, {
-                autoAlpha: 0,
-                y: 12
-            });
-        }
 
         gsap.set(lines, {
             autoAlpha: 0,
@@ -120,13 +125,22 @@
             }, 0.05);
         }
 
+        if (sectionLabel) {
+            tl.to(sectionLabel, {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.42,
+                ease: 'power3.out'
+            }, 0.16);
+        }
+
         tl.to(note, {
             autoAlpha: 1,
             y: 0,
             scale: 1,
             duration: 0.82,
             ease: 'power3.out'
-        }, 0.18);
+        }, 0.24);
 
         tl.to(textBlocks, {
             autoAlpha: 1,
@@ -134,16 +148,7 @@
             duration: 0.58,
             stagger: 0.12,
             ease: 'power3.out'
-        }, 0.42);
-
-        if (button) {
-            tl.to(button, {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.42,
-                ease: 'power3.out'
-            }, 0.74);
-        }
+        }, 0.48);
 
         /*
           Parallax sutil solo en desktop.
@@ -202,8 +207,3 @@
         start();
     }
 })();
-
-    
-
-
-    

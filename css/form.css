@@ -30,8 +30,14 @@
     font-weight: 900;
     line-height: 0.9;
     letter-spacing: -0.04em;
-    margin-top: 14px;
+    margin-top: 0;
     color: var(--cream);
+}
+
+.contact-heading .section-kicker {
+    width: auto;
+    margin-left: 0;
+    margin-right: 0;
 }
 
 
