@@ -210,20 +210,19 @@ body.nav-open .setup-model-stage {
 
 @media (max-width: 900px) {
     .setup-cinematic {
-        --setup-radius: 28px;
-
         min-height: 100vh;
         min-height: 100svh;
         overflow: hidden;
 
-        /* En móvil solo redondeamos arriba */
-        border-radius: var(--setup-radius) var(--setup-radius) 0 0;
+        /* Móvil sin redondeo inferior y radio más discreto */
+        border-radius: 22px 22px 0 0;
     }
 
     .setup-copy-main {
         top: 88px;
         width: 100%;
     }
+}
 
     .setup-sticky {
         min-height: 100vh;
