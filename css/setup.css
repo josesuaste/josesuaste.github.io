@@ -13,7 +13,8 @@
 }
 
 .setup-shell {
-    width: min(100%, 1320px);
+    width: 100%;
+    max-width: none;
     margin: 0 auto;
 }
 
@@ -23,14 +24,17 @@
     position: relative;
     min-height: 100vh;
     min-height: 100svh;
+
     display: grid;
     place-items: center;
+
     isolation: isolate;
     overflow: hidden;
 
     background: #080808;
     color: var(--white);
     border-radius: clamp(34px, 5vw, 72px);
+
     box-shadow:
         0 34px 120px rgba(17, 17, 17, 0.22),
         0 1px 0 rgba(244, 241, 234, 0.06) inset;
@@ -84,16 +88,18 @@
     background: rgba(255, 112, 93, 0.12);
 }
 
-/* Label */
+/* Label principal */
 
 .setup-copy-main {
     position: absolute;
-    top: clamp(76px, 9vh, 110px);
+    top: clamp(54px, 7vh, 86px);
     left: 50%;
     z-index: 5;
+
     width: min(100%, 760px);
     margin: 0;
     padding-inline: var(--pad-x);
+
     transform: translateX(-50%);
     text-align: center;
 }
@@ -114,6 +120,8 @@
     user-select: none;
 }
 
+/* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
+
 body.nav-open .setup-canvas,
 body.nav-open .setup-model-stage {
     pointer-events: none;
@@ -125,15 +133,21 @@ body.nav-open .setup-model-stage {
     position: absolute;
     left: 50%;
     bottom: 8vh;
-    transform: translateX(-50%);
     z-index: 2;
+
+    transform: translateX(-50%);
+
     font-family: var(--font-sans);
     font-size: 0.62rem;
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+
     color: rgba(244, 241, 234, 0.54);
-    transition: opacity var(--t-mid), visibility var(--t-mid);
+    transition:
+        opacity var(--t-mid),
+        visibility var(--t-mid);
+
     pointer-events: none;
 }
 
@@ -157,57 +171,175 @@ body.nav-open .setup-model-stage {
     max-width: 230px;
     margin: 0;
     padding-top: 14px;
-    border-top: 1px solid rgba(244, 241, 234, 0.28);
+
+    border-top: 1px solid rgba(244, 241, 234, 0.26);
+
     font-family: var(--font-sans);
-    font-size: clamp(0.72rem, 0.9vw, 0.9rem);
-    font-weight: 700;
-    line-height: 1.35;
-    color: rgba(244, 241, 234, 0.88);
+    font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+
+    color: rgba(244, 241, 234, 0.9);
 }
 
 .orbit-item span {
     display: block;
     margin-top: 6px;
+
     font-family: var(--font-sans);
-    font-size: 0.78rem;
+    font-size: clamp(0.68rem, 0.75vw, 0.78rem);
     font-weight: 300;
-    line-height: 1.45;
-    color: rgba(244, 241, 234, 0.52);
+    line-height: 1.42;
+    letter-spacing: -0.015em;
+
+    color: rgba(244, 241, 234, 0.54);
 }
+
+/* Lado izquierdo — 3 labels */
 
 .orbit-ipad {
-    left: 8vw;
-    top: 28vh;
-}
-
-.orbit-mx {
-    right: 8vw;
-    top: 25vh;
+    left: clamp(34px, 7vw, 120px);
+    top: 25%;
 }
 
 .orbit-benq {
-    left: 7vw;
-    bottom: 24vh;
-}
-
-.orbit-light {
-    right: 9vw;
-    bottom: 27vh;
+    left: clamp(34px, 7vw, 120px);
+    top: 48%;
 }
 
 .orbit-keys {
-    left: 18vw;
-    bottom: 24vh;
+    left: clamp(34px, 7vw, 120px);
+    bottom: 18%;
 }
 
-.orbit-mac {
-    right: 18vw;
-    bottom: 24vh;
+/* Lado derecho — 3 labels */
+
+.orbit-mx {
+    right: clamp(34px, 7vw, 120px);
+    top: 25%;
+    text-align: right;
 }
 
-.setup-mobile-label {
-    display: none;
+.orbit-light {
+    right: clamp(34px, 7vw, 120px);
+    top: 48%;
+    text-align: right;
 }
+
+.orbit-dji {
+    right: clamp(34px, 7vw, 120px);
+    bottom: 18%;
+    text-align: right;
+}
+
+/* Texto editorial debajo */
+
+.setup-description {
+    width: min(100%, 860px);
+    margin: clamp(32px, 5vw, 56px) auto 0;
+    text-align: center;
+}
+
+.setup-description p {
+    margin: 0;
+
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.35vw, 1.16rem);
+    font-weight: 300;
+    line-height: 1.62;
+    letter-spacing: -0.025em;
+
+    color: rgba(17, 17, 17, 0.68);
+}
+
+/* Mobile */
+
+@media (max-width: 900px) {
+    .setup-cinematic {
+        --setup-side-gap: 10px;
+
+        padding-top: 72px;
+        padding-right: var(--setup-side-gap);
+        padding-bottom: 88px;
+        padding-left: var(--setup-side-gap);
+    }
+
+    .setup-shell {
+        width: 100%;
+    }
+
+    .setup-card {
+        min-height: 74svh;
+        border-radius: 24px;
+    }
+
+    .setup-copy-main {
+        top: 64px;
+        width: 100%;
+        padding-inline: 20px;
+    }
+
+    .setup-model-stage {
+        inset: 0;
+    }
+
+    .setup-orbit {
+        display: none;
+    }
+
+    .setup-mobile-label {
+        display: none !important;
+    }
+
+    .setup-description {
+        width: min(100%, 560px);
+        margin-top: 30px;
+        padding-inline: 8px;
+        text-align: center;
+    }
+
+    .setup-description p {
+        font-size: 0.98rem;
+        line-height: 1.58;
+        color: rgba(17, 17, 17, 0.68);
+    }
+}
+
+@media (max-width: 520px) {
+    .setup-card {
+        min-height: 72svh;
+        border-radius: 22px;
+    }
+
+    .setup-copy-main {
+        top: 56px;
+    }
+
+    .setup-description {
+        margin-top: 26px;
+    }
+}
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    .setup-loader,
+    .orbit-item,
+    .setup-description {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+
+
+
+
+
+
+
+
 
 /* Texto editorial debajo */
 
