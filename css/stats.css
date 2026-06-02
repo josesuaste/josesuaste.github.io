@@ -1,11 +1,11 @@
 /* ════════════════════════════════════════════════════════════
-   STATS — sticky stack cards + hover premium
+   STATS — cream section + dark accent cards
    ════════════════════════════════════════════════════════════ */
 
 .stats-section {
     position: relative;
-    background: #080808;
-    color: var(--cream);
+    background: var(--cream);
+    color: var(--dark);
     padding: clamp(96px, 10vw, 160px) clamp(20px, 6vw, 96px);
     overflow: visible;
 }
@@ -19,6 +19,8 @@
     max-width: 1180px;
 }
 
+/* Stack */
+
 .stats-stack {
     position: relative;
     display: flex;
@@ -26,7 +28,11 @@
     gap: 28px;
 }
 
+/* Card base */
+
 .stat-card {
+    --stat-accent: var(--green);
+
     position: sticky;
     top: 92px;
 
@@ -37,28 +43,55 @@
     flex-direction: column;
     justify-content: space-between;
 
-    border: 1px solid rgba(244, 241, 234, 0.14);
+    border: 1px solid color-mix(in srgb, var(--stat-accent) 42%, transparent);
     border-radius: 28px;
 
     background:
         radial-gradient(
             circle at var(--mx, 80%) var(--my, 20%),
-            rgba(244, 241, 234, 0.075),
+            color-mix(in srgb, var(--stat-accent) 18%, transparent),
             transparent 34%
+        ),
+        radial-gradient(
+            circle at 12% 12%,
+            color-mix(in srgb, var(--stat-accent) 10%, transparent),
+            transparent 28%
         ),
         linear-gradient(
             135deg,
-            rgba(244, 241, 234, 0.045),
-            transparent 55%
+            rgba(244, 241, 234, 0.055),
+            transparent 56%
         ),
         #080808;
 
-    box-shadow: 0 40px 120px rgba(0, 0, 0, 0.36);
+    box-shadow:
+        0 34px 90px rgba(17, 17, 17, 0.18),
+        0 0 0 1px rgba(244, 241, 234, 0.04) inset;
 
     overflow: hidden;
     isolation: isolate;
     will-change: transform, opacity, filter;
 }
+
+/* Accent map */
+
+.stat-card:nth-child(1) {
+    --stat-accent: var(--green);
+}
+
+.stat-card:nth-child(2) {
+    --stat-accent: var(--yellow);
+}
+
+.stat-card:nth-child(3) {
+    --stat-accent: var(--coral);
+}
+
+.stat-card:nth-child(4) {
+    --stat-accent: var(--sky);
+}
+
+/* Sticky offsets */
 
 .stat-card:nth-child(2) {
     top: 112px;
@@ -72,16 +105,21 @@
     top: 152px;
 }
 
+/* Content */
+
 .stat-index {
     position: relative;
     z-index: 2;
 
     font-family: var(--font-sans);
     font-size: 0.72rem;
-    font-weight: 800;
+    font-weight: 850;
+    line-height: 1;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(244, 241, 234, 0.42);
+
+    color: color-mix(in srgb, var(--stat-accent) 86%, var(--cream));
+    text-shadow: 0 0 24px color-mix(in srgb, var(--stat-accent) 34%, transparent);
 }
 
 .stat-main {
@@ -97,8 +135,11 @@
     line-height: 0.78;
     letter-spacing: -0.09em;
 
-    color: var(--cream);
+    color: var(--stat-accent);
     font-variant-numeric: tabular-nums;
+    text-shadow:
+        0 0 28px color-mix(in srgb, var(--stat-accent) 20%, transparent),
+        0 0 72px color-mix(in srgb, var(--stat-accent) 10%, transparent);
 }
 
 .stat-label {
@@ -111,7 +152,7 @@
     letter-spacing: -0.04em;
     text-transform: none;
 
-    color: rgba(244, 241, 234, 0.72);
+    color: rgba(244, 241, 234, 0.78);
 }
 
 .stat-copy {
@@ -125,8 +166,10 @@
     line-height: 1.35;
     letter-spacing: -0.03em;
 
-    color: rgba(244, 241, 234, 0.56);
+    color: rgba(244, 241, 234, 0.58);
 }
+
+/* Hover premium */
 
 @media (hover: hover) and (pointer: fine) {
     .stat-card {
@@ -138,10 +181,21 @@
     }
 
     .stat-card:hover {
-        border-color: rgba(244, 241, 234, 0.34);
-        box-shadow: 0 52px 140px rgba(0, 0, 0, 0.48);
+        border-color: color-mix(in srgb, var(--stat-accent) 68%, transparent);
+        box-shadow:
+            0 44px 120px rgba(17, 17, 17, 0.24),
+            0 0 46px color-mix(in srgb, var(--stat-accent) 18%, transparent),
+            0 0 0 1px rgba(244, 241, 234, 0.05) inset;
+    }
+
+    .stat-card:hover .stat-number {
+        text-shadow:
+            0 0 34px color-mix(in srgb, var(--stat-accent) 28%, transparent),
+            0 0 90px color-mix(in srgb, var(--stat-accent) 16%, transparent);
     }
 }
+
+/* Responsive */
 
 @media (max-width: 768px) {
     .stats-section {
@@ -182,6 +236,43 @@
         font-size: 16px;
     }
 }
+
+/* Fallback si color-mix no está soportado */
+
+@supports not (color: color-mix(in srgb, red 50%, transparent)) {
+    .stat-card {
+        border-color: rgba(17, 17, 17, 0.12);
+        background:
+            radial-gradient(
+                circle at var(--mx, 80%) var(--my, 20%),
+                rgba(244, 241, 234, 0.075),
+                transparent 34%
+            ),
+            linear-gradient(
+                135deg,
+                rgba(244, 241, 234, 0.045),
+                transparent 55%
+            ),
+            #080808;
+    }
+
+    .stat-index {
+        color: rgba(244, 241, 234, 0.62);
+        text-shadow: none;
+    }
+
+    .stat-number {
+        color: var(--cream);
+        text-shadow: none;
+    }
+
+    .stat-card:hover {
+        border-color: rgba(244, 241, 234, 0.34);
+        box-shadow: 0 44px 120px rgba(17, 17, 17, 0.24);
+    }
+}
+
+/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
     .stat-card,
