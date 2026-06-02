@@ -3,10 +3,12 @@
    ════════════════════════════════════════════════════════════ */
 
 .setup-cinematic {
+    --setup-side-gap: clamp(10px, 1.6vw, 22px);
+
     position: relative;
     background: var(--cream);
     color: var(--dark);
-    padding: clamp(72px, 8vw, 120px) var(--pad-x);
+    padding: clamp(72px, 8vw, 120px) var(--setup-side-gap);
     overflow: hidden;
 }
 
@@ -229,8 +231,14 @@ body.nav-open .setup-model-stage {
 
 @media (max-width: 900px) {
     .setup-cinematic {
-        padding: 72px 14px 88px;
+        --setup-side-gap: 10px;
+
+        padding-top: 72px;
+        padding-right: var(--setup-side-gap);
+        padding-bottom: 88px;
+        padding-left: var(--setup-side-gap);
     }
+
 
     .setup-shell {
         width: 100%;
