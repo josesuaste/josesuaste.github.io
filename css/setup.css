@@ -70,11 +70,14 @@
 
 .setup-copy-main {
     position: absolute;
-    top: clamp(88px, 12vh, 140px);
-    left: var(--pad-x);
-    z-index: 3;
-    width: auto;
+    top: clamp(92px, 11vh, 132px);
+    left: 50%;
+    z-index: 5;
+    width: min(100%, 760px);
     margin: 0;
+    padding-inline: var(--pad-x);
+    transform: translateX(-50%);
+    text-align: center;
 }
 
 .setup-model-stage {
@@ -206,6 +209,10 @@ body.nav-open .setup-model-stage {
         min-height: 100vh;
         min-height: 100svh;
         overflow: hidden;
+    }
+    .setup-copy-main {
+        top: 88px;
+        width: 100%;
     }
 
     .setup-sticky {
