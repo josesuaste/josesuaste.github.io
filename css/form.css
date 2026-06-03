@@ -1,27 +1,28 @@
 /* ════════════════════════════════════════════════════════════
-   CONTACTO — inbox curado + form centrado
+   CONTACTO — pieza gráfica editorial + form centrado
    ════════════════════════════════════════════════════════════ */
 
 .contact-section {
-    --contact-bg: #07111f;
-    --contact-field-bg: rgba(244, 241, 234, 0.94);
-    --contact-field-border: rgba(244, 241, 234, 0.18);
-    --contact-field-text: #07111f;
-    --contact-muted: rgba(244, 241, 234, 0.68);
-    --contact-soft: rgba(244, 241, 234, 0.08);
+    --contact-bg: var(--green);
+    --contact-text: var(--ink);
+    --contact-muted: rgba(7, 17, 31, 0.68);
+    --contact-field-bg: var(--cream);
+    --contact-field-text: var(--ink);
+    --contact-field-border: rgba(7, 17, 31, 0.12);
+    --contact-accent: var(--coral);
+    --contact-pink: #fec5fb;
 
     position: relative;
-    background:
-        radial-gradient(circle at 18% 18%, rgba(43, 160, 255, 0.22), transparent 34%),
-        radial-gradient(circle at 88% 76%, rgba(255, 112, 93, 0.18), transparent 30%),
-        var(--contact-bg);
-    color: var(--cream);
+    background: var(--contact-bg);
+    color: var(--contact-text);
     padding: clamp(96px, 10vw, 160px) clamp(20px, 6vw, 96px);
     overflow: hidden;
     isolation: isolate;
 }
 
-/* SVG decorativos */
+/* ════════════════════════════════════════════════════════════
+   Líneas SVG decorativas
+   ════════════════════════════════════════════════════════════ */
 
 .contact-bg {
     position: absolute;
@@ -34,7 +35,7 @@
 .contact-line {
     position: absolute;
     display: block;
-    width: clamp(280px, 42vw, 720px);
+    width: clamp(260px, 40vw, 680px);
     opacity: 0;
     transform-origin: center;
     will-change: transform, opacity;
@@ -48,58 +49,75 @@
 }
 
 .contact-line--one {
-    top: 6%;
-    left: -12%;
+    top: 4%;
+    left: -10%;
     transform: rotate(-12deg);
 }
 
 .contact-line--two {
-    right: -14%;
+    right: -12%;
     bottom: 8%;
-    width: clamp(320px, 48vw, 820px);
+    width: clamp(300px, 46vw, 760px);
     transform: rotate(14deg);
 }
 
 .contact-line--three {
     left: 8%;
     bottom: -10%;
-    width: clamp(180px, 24vw, 380px);
+    width: clamp(180px, 24vw, 360px);
     transform: rotate(24deg);
 }
 
-/* Para SVGs con fill */
-.contact-fill-shape--cream {
-    fill: rgba(244, 241, 234, 0.58);
+/* SVGs con fill */
+
+.contact-fill-shape {
+    fill: currentColor;
 }
 
 .contact-fill-shape--coral {
-    fill: rgba(255, 112, 93, 0.72);
+    color: var(--coral);
 }
 
 .contact-fill-shape--sky {
-    fill: rgba(43, 160, 255, 0.62);
+    color: var(--sky);
 }
 
-/* Para SVGs con stroke */
+.contact-fill-shape--yellow {
+    color: var(--yellow);
+}
+
+.contact-fill-shape--cream {
+    color: var(--cream);
+}
+
+/* SVGs con stroke */
+
 .contact-draw-line {
     fill: none;
+    stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
 }
 
-.contact-draw-line--cream {
-    stroke: rgba(244, 241, 234, 0.58);
-}
-
 .contact-draw-line--coral {
-    stroke: rgba(255, 112, 93, 0.72);
+    color: var(--coral);
 }
 
 .contact-draw-line--sky {
-    stroke: rgba(43, 160, 255, 0.62);
+    color: var(--sky);
 }
 
-/* Layout */
+.contact-draw-line--yellow {
+    color: var(--yellow);
+}
+
+.contact-draw-line--cream {
+    color: var(--cream);
+}
+
+/* ════════════════════════════════════════════════════════════
+   Layout
+   ════════════════════════════════════════════════════════════ */
 
 .contact-inner {
     width: min(100%, 860px);
@@ -129,7 +147,7 @@
     line-height: 0.78;
     letter-spacing: -0.085em;
     text-transform: uppercase;
-    color: var(--cream);
+    color: var(--contact-text);
 }
 
 .contact-subtitle {
@@ -138,9 +156,9 @@
     font-family: var(--font-sans);
     font-size: clamp(1.3rem, 2.7vw, 2.3rem);
     font-weight: 650;
-    line-height: 1.05;
+    line-height: 1.08;
     letter-spacing: -0.055em;
-    color: var(--cream);
+    color: var(--contact-text);
 }
 
 .contact-copy {
@@ -154,7 +172,9 @@
     color: var(--contact-muted);
 }
 
-/* Formulario */
+/* ════════════════════════════════════════════════════════════
+   Formulario
+   ════════════════════════════════════════════════════════════ */
 
 .minimal-form {
     width: min(100%, 760px);
@@ -185,16 +205,15 @@
     padding-left: 4px;
     font-family: var(--font-sans);
     font-size: 0.66rem;
-    font-weight: 800;
+    font-weight: 850;
     line-height: 1;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(244, 241, 234, 0.62);
+    color: rgba(7, 17, 31, 0.66);
 }
 
 .form-field input,
-.form-field textarea,
-.form-field select {
+.form-field textarea {
     width: 100%;
     max-width: 100%;
     min-height: 60px;
@@ -210,29 +229,13 @@
     line-height: 1.2;
     outline: none;
     box-shadow:
-        0 12px 34px rgba(0, 0, 0, 0.08),
+        0 12px 30px rgba(7, 17, 31, 0.08),
         0 1px 0 rgba(255, 255, 255, 0.42) inset;
     transition:
         border-color var(--t-fast) var(--ease-out),
-        background var(--t-fast) var(--ease-out),
         box-shadow var(--t-fast) var(--ease-out),
-        transform var(--t-fast) var(--ease-out);
-}
-
-.form-field select {
-    cursor: pointer;
-    appearance: none;
-    background-image:
-        linear-gradient(45deg, transparent 50%, rgba(7, 17, 31, 0.72) 50%),
-        linear-gradient(135deg, rgba(7, 17, 31, 0.72) 50%, transparent 50%);
-    background-position:
-        calc(100% - 22px) 50%,
-        calc(100% - 16px) 50%;
-    background-size:
-        6px 6px,
-        6px 6px;
-    background-repeat: no-repeat;
-    padding-right: 48px;
+        transform var(--t-fast) var(--ease-out),
+        background var(--t-fast) var(--ease-out);
 }
 
 .form-field input::placeholder,
@@ -241,13 +244,12 @@
 }
 
 .form-field input:focus,
-.form-field textarea:focus,
-.form-field select:focus {
-    border-color: rgba(255, 112, 93, 0.84);
+.form-field textarea:focus {
+    border-color: var(--contact-accent);
     background: var(--cream);
     box-shadow:
-        0 16px 44px rgba(0, 0, 0, 0.14),
-        0 0 0 4px rgba(255, 112, 93, 0.14);
+        0 16px 38px rgba(7, 17, 31, 0.12),
+        0 0 0 4px rgba(255, 112, 93, 0.16);
 }
 
 .form-field textarea {
@@ -265,7 +267,9 @@
     padding-top: 10px;
 }
 
-/* Botón */
+/* ════════════════════════════════════════════════════════════
+   Botón
+   ════════════════════════════════════════════════════════════ */
 
 .submit-btn {
     position: relative;
@@ -277,10 +281,9 @@
     min-height: 54px;
     max-width: 100%;
     padding: 15px 34px;
-    border: 0;
+    border: 1px solid rgba(7, 17, 31, 0.12);
     border-radius: 999px;
-    background:
-        radial-gradient(130% 120% at 100% 80%, rgba(255, 112, 93, 0.96), rgba(244, 241, 234, 1) 72%);
+    background: var(--cream);
     color: var(--ink);
     font-family: var(--font-sans);
     font-size: 0.78rem;
@@ -293,17 +296,19 @@
     white-space: nowrap;
     transform-origin: center;
     box-shadow:
-        0 18px 48px rgba(0, 0, 0, 0.24),
+        0 16px 34px rgba(7, 17, 31, 0.12),
         0 1px 0 rgba(255, 255, 255, 0.52) inset;
     transition:
         transform var(--t-fast) var(--ease-out),
-        box-shadow var(--t-fast) var(--ease-out),
-        filter var(--t-fast) var(--ease-out);
+        background var(--t-fast) var(--ease-out),
+        border-color var(--t-fast) var(--ease-out),
+        color var(--t-fast) var(--ease-out),
+        box-shadow var(--t-fast) var(--ease-out);
 }
 
 .submit-btn:disabled {
     cursor: progress;
-    opacity: 0.88;
+    opacity: 0.9;
 }
 
 .submit-btn__text {
@@ -322,11 +327,13 @@
 
 @media (hover: hover) and (pointer: fine) {
     .submit-btn:hover {
+        background: var(--contact-pink);
+        color: var(--ink);
+        border-color: var(--contact-pink);
         transform: translateY(-3px);
-        filter: saturate(1.08);
         box-shadow:
-            0 24px 64px rgba(0, 0, 0, 0.3),
-            0 0 34px rgba(255, 112, 93, 0.18);
+            0 20px 44px rgba(7, 17, 31, 0.16),
+            0 1px 0 rgba(255, 255, 255, 0.5) inset;
     }
 
     .submit-btn:hover .btn-dot {
@@ -334,7 +341,9 @@
     }
 }
 
-/* Responsive */
+/* ════════════════════════════════════════════════════════════
+   Responsive
+   ════════════════════════════════════════════════════════════ */
 
 @media (max-width: 760px) {
     .contact-section {
@@ -349,6 +358,10 @@
         font-size: clamp(1.25rem, 7vw, 2rem);
     }
 
+    .contact-copy {
+        max-width: 480px;
+    }
+
     .form-row {
         grid-template-columns: 1fr;
     }
@@ -358,8 +371,7 @@
     }
 
     .form-field input,
-    .form-field textarea,
-    .form-field select {
+    .form-field textarea {
         min-height: 58px;
         border-radius: 18px;
     }
@@ -370,7 +382,7 @@
     }
 
     .contact-line {
-        opacity: 0.34;
+        opacity: 0.38;
     }
 
     .contact-line--three {

@@ -400,25 +400,41 @@
      CONTACTO
      ════════════════════════════════════════════════════ -->
 
+<!-- ════════════════════════════════════════════════════
+     CONTACTO
+     ════════════════════════════════════════════════════ -->
+
 <section class="contact-section" id="contact" aria-labelledby="contact-title">
     <div class="contact-bg" aria-hidden="true">
         <div class="contact-line contact-line--one">
-            <!-- Pega aquí tu SVG decorativo 01 -->
+            <!-- 
+                Pega aquí tu SVG decorativo 01.
+                Para SVG con fill, usa clase:
+                contact-fill-shape contact-fill-shape--coral
+            -->
         </div>
 
         <div class="contact-line contact-line--two">
-            <!-- Pega aquí tu SVG decorativo 02 -->
+            <!-- 
+                Pega aquí tu SVG decorativo 02.
+                Para SVG con fill, usa clase:
+                contact-fill-shape contact-fill-shape--sky
+            -->
         </div>
 
         <div class="contact-line contact-line--three">
-            <!-- Pega aquí tu SVG decorativo 03 opcional -->
+            <!-- 
+                SVG opcional.
+                Para SVG con fill, usa clase:
+                contact-fill-shape contact-fill-shape--yellow
+            -->
         </div>
     </div>
 
     <div class="contact-inner">
         <div class="contact-heading">
             <div class="section-kicker section-kicker--center">
-                <span class="section-label section-label--light">Colaboraciones</span>
+                <span class="section-label section-label--dark">Colaboraciones</span>
             </div>
 
             <h2 class="contact-title" id="contact-title">Contacto</h2>
@@ -443,18 +459,6 @@
             <input type="hidden" name="subject" value="Nueva propuesta — ERROR404">
             <input type="hidden" name="from_name" value="ERROR404 — Web">
             <input type="hidden" name="redirect" value="https://josesuaste.github.io/gracias.html">
-
-            <div class="form-field">
-                <label for="tipo">Tipo de propuesta</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="" selected disabled>Selecciona una opción</option>
-                    <option value="Colaboración">Colaboración</option>
-                    <option value="App o herramienta para probar">App o herramienta para probar</option>
-                    <option value="Gadget o producto">Gadget o producto</option>
-                    <option value="Idea para video">Idea para video</option>
-                    <option value="Contacto general">Contacto general</option>
-                </select>
-            </div>
 
             <div class="form-row">
                 <div class="form-field">
@@ -494,7 +498,7 @@
             </div>
 
             <div class="form-field">
-                <label for="mensaje">Brief</label>
+                <label for="mensaje">Propuesta</label>
                 <textarea
                     id="mensaje"
                     name="mensaje"
