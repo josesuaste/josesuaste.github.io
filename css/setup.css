@@ -198,7 +198,7 @@ body.nav-open .setup-model-stage {
 }
 
 .orbit-ipad {
-    left: clamp(92px, 11vw, 190px);
+    left: clamp(72px, 9vw, 150px);
     top: 46%;
 }
 
@@ -216,7 +216,7 @@ body.nav-open .setup-model-stage {
 }
 
 .orbit-mx {
-    right: clamp(92px, 11vw, 190px);
+    right: clamp(72px, 9vw, 150px);
     top: 46%;
     text-align: right;
 }
