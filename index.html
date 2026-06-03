@@ -144,15 +144,15 @@
                     </a>
                 </li>
                 <li>
-    <a
-        href="docs/media-kit.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-umami-event="Click-Nav-MediaKit"
-    >
-        Media Kit
-    </a>
-</li>
+                    <a
+                        href="docs/media-kit.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-umami-event="Click-Nav-MediaKit"
+                    >
+                        Media Kit
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -291,11 +291,9 @@
 
         <div class="setup-description">
     <p>
-        El núcleo es una Mac Mini, que ofrece la potencia necesaria en un formato compacto.
-        Complemento mi flujo creativo con un iPad Pro M2 como segunda pantalla, un BenQ MOBIUZ EX240
-        para edición y revisión visual, la ergonomía del MX Vertical para sesiones largas, un Logitech
-        Pebble Keys por su perfil bajo, una Xiaomi Lightbar para mantener una iluminación limpia y un
-        DJI Mic Mini para capturar audio claro al grabar contenido.
+        El corazón del setup es una Mac Mini. La uso junto a un iPad Pro M2 como segunda pantalla y un BenQ MOBIUZ EX240 para tener un buen monitor donde revisar el trabajo visual. 
+        Para las sesiones largas, el MX Vertical hace una diferencia real en la muñeca, y el Pebble Keys encaja perfecto por su perfil bajo y lo poco que ocupa en el escritorio. 
+        La Xiaomi Lightbar mantiene la iluminación pareja sin estorbar, y el DJI Mic Mini se encarga de que el audio al grabar suene limpio.
     </p>
 </div>
 
@@ -382,8 +380,7 @@
     <h2 class="visually-hidden" id="videos-title">Contenido reciente</h2>
 </div>
                 <div class="videos-grid">
-                     YOUTUBE-VIDEOS-LIST 
-                    /YOUTUBE-VIDEOS-LIST
+                     videos van aquí
                 </div>
 
                 <a
@@ -548,7 +545,7 @@
         </div>
 
         <div class="footer-bar">
-            <span>© <span id="current-year">2025</span> José Suaste</span>
+            <span>© <span id="current-year"></span> José Suaste</span>
             <span>Hecho en México ★</span>
         </div>
     </footer>
@@ -556,15 +553,16 @@
 </div><!-- /#app -->
 
 <!-- 1. GSAP primero -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 
 <!-- 2. Scripts propios después -->
-<script src="js/navbar.js" defer></script>
-<script src="js/about.js" defer></script>
-<script src="js/stats.js" defer></script>
-<script src="js/form.js" defer></script>
-<script src="js/footer.js" defer></script>
+<script src="js/navbar.js"></script>
+<script src="js/about.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/form.js"></script>
+<script src="js/footer.js"></script>
 
 <!-- 3. ES module separado -->
 <script type="module" src="js/setup-3d.js"></script>
