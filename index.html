@@ -397,94 +397,123 @@
      -->
 
         <!-- ════════════════════════════════════════════════════
-             CONTACTO
-             ════════════════════════════════════════════════════ -->
+     CONTACTO
+     ════════════════════════════════════════════════════ -->
 
-        <section class="contact-section" id="contact" aria-labelledby="contact-title">
-            <div class="contact-inner">
+<section class="contact-section" id="contact" aria-labelledby="contact-title">
+    <div class="contact-bg" aria-hidden="true">
+        <div class="contact-line contact-line--one">
+            <!-- Pega aquí tu SVG decorativo 01 -->
+        </div>
 
-                <div class="contact-heading">
-    <div class="section-kicker section-kicker--tight">
-        <span class="section-label section-label--light">Colaboraciones</span>
+        <div class="contact-line contact-line--two">
+            <!-- Pega aquí tu SVG decorativo 02 -->
+        </div>
+
+        <div class="contact-line contact-line--three">
+            <!-- Pega aquí tu SVG decorativo 03 opcional -->
+        </div>
     </div>
 
-    <h2 class="contact-title" id="contact-title">¿Tienes una<br>propuesta?</h2>
-</div>
-
-                <form
-                    class="minimal-form"
-                    action="https://api.web3forms.com/submit"
-                    method="POST"
-                    data-umami-event="Envio-Formulario-Contacto"
-                >
-
-                    <input type="hidden" name="access_key" value="6ef499ff-7bf4-41bb-a6ee-7768df52d6c3">
-                    <input type="hidden" name="subject" value="Nueva colaboración — ERROR404">
-                    <input type="hidden" name="from_name" value="ERROR404 — Web">
-                    <input type="hidden" name="redirect" value="https://josesuaste.github.io/gracias.html">
-
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="nombre">Nombre</label>
-                            <input
-                                type="text"
-                                id="nombre"
-                                name="nombre"
-                                placeholder="Tu nombre"
-                                required
-                                autocomplete="name"
-                            >
-                        </div>
-
-                        <div class="form-field">
-                            <label for="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder="hola@correo.com"
-                                required
-                                autocomplete="email"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="form-field">
-                        <label for="empresa">Empresa</label>
-                        <input
-                            type="text"
-                            id="empresa"
-                            name="empresa"
-                            placeholder="Marca u organización"
-                            autocomplete="organization"
-                        >
-                    </div>
-
-                    <div class="form-field">
-                        <label for="mensaje">Propuesta</label>
-                        <textarea
-                            id="mensaje"
-                            name="mensaje"
-                            rows="4"
-                            placeholder="Escribe aquí..."
-                            autocomplete="off"
-                            required
-                        ></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="submit-btn">
-                            <span class="btn-dot"></span>
-                            Enviar mensaje
-                        </button>
-                    </div>
-
-                </form>
+    <div class="contact-inner">
+        <div class="contact-heading">
+            <div class="section-kicker section-kicker--center">
+                <span class="section-label section-label--light">Colaboraciones</span>
             </div>
-        </section>
 
-    </main>
+            <h2 class="contact-title" id="contact-title">Contacto</h2>
 
+            <p class="contact-subtitle">
+                ¿Tienes algo que debería probar?
+            </p>
+
+            <p class="contact-copy">
+                Mándame una app, gadget, herramienta o idea rara. Si encaja con ERROR404,
+                puede terminar en un video, una recomendación o una colaboración.
+            </p>
+        </div>
+
+        <form
+            class="minimal-form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            data-umami-event="Envio-Formulario-Contacto"
+        >
+            <input type="hidden" name="access_key" value="6ef499ff-7bf4-41bb-a6ee-7768df52d6c3">
+            <input type="hidden" name="subject" value="Nueva propuesta — ERROR404">
+            <input type="hidden" name="from_name" value="ERROR404 — Web">
+            <input type="hidden" name="redirect" value="https://josesuaste.github.io/gracias.html">
+
+            <div class="form-field">
+                <label for="tipo">Tipo de propuesta</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="" selected disabled>Selecciona una opción</option>
+                    <option value="Colaboración">Colaboración</option>
+                    <option value="App o herramienta para probar">App o herramienta para probar</option>
+                    <option value="Gadget o producto">Gadget o producto</option>
+                    <option value="Idea para video">Idea para video</option>
+                    <option value="Contacto general">Contacto general</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="form-field">
+                    <label for="nombre">Nombre</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        placeholder="Tu nombre"
+                        required
+                        autocomplete="name"
+                    >
+                </div>
+
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="hola@correo.com"
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="empresa">Marca / Proyecto</label>
+                <input
+                    type="text"
+                    id="empresa"
+                    name="empresa"
+                    placeholder="Nombre de la marca, app o proyecto"
+                    autocomplete="organization"
+                >
+            </div>
+
+            <div class="form-field">
+                <label for="mensaje">Brief</label>
+                <textarea
+                    id="mensaje"
+                    name="mensaje"
+                    rows="5"
+                    placeholder="Cuéntame qué debería probar y por qué podría encajar con ERROR404..."
+                    autocomplete="off"
+                    required
+                ></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">
+                    <span class="btn-dot" aria-hidden="true"></span>
+                    <span class="submit-btn__text">Enviar propuesta</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
     <!-- ════════════════════════════════════════════════════
          FOOTER
          ════════════════════════════════════════════════════ -->

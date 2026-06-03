@@ -1,61 +1,175 @@
 /* ════════════════════════════════════════════════════════════
-   CONTACTO
+   CONTACTO — inbox curado + form centrado
    ════════════════════════════════════════════════════════════ */
 
-
-/* ── Sección ─────────────────────────────────────────────── */
-
 .contact-section {
-    background: #07111f;
+    --contact-bg: #07111f;
+    --contact-field-bg: rgba(244, 241, 234, 0.94);
+    --contact-field-border: rgba(244, 241, 234, 0.18);
+    --contact-field-text: #07111f;
+    --contact-muted: rgba(244, 241, 234, 0.68);
+    --contact-soft: rgba(244, 241, 234, 0.08);
+
+    position: relative;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(43, 160, 255, 0.22), transparent 34%),
+        radial-gradient(circle at 88% 76%, rgba(255, 112, 93, 0.18), transparent 30%),
+        var(--contact-bg);
     color: var(--cream);
-    padding: var(--pad-section);
+    padding: clamp(96px, 10vw, 160px) clamp(20px, 6vw, 96px);
     overflow: hidden;
+    isolation: isolate;
 }
 
-.contact-inner {
+/* SVG decorativos */
+
+.contact-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.contact-line {
+    position: absolute;
+    display: block;
+    width: clamp(280px, 42vw, 720px);
+    opacity: 0;
+    transform-origin: center;
+    will-change: transform, opacity;
+}
+
+.contact-line svg {
+    display: block;
     width: 100%;
-    max-width: 1300px;
+    height: auto;
+    overflow: visible;
+}
+
+.contact-line--one {
+    top: 6%;
+    left: -12%;
+    transform: rotate(-12deg);
+}
+
+.contact-line--two {
+    right: -14%;
+    bottom: 8%;
+    width: clamp(320px, 48vw, 820px);
+    transform: rotate(14deg);
+}
+
+.contact-line--three {
+    left: 8%;
+    bottom: -10%;
+    width: clamp(180px, 24vw, 380px);
+    transform: rotate(24deg);
+}
+
+/* Para SVGs con fill */
+.contact-fill-shape--cream {
+    fill: rgba(244, 241, 234, 0.58);
+}
+
+.contact-fill-shape--coral {
+    fill: rgba(255, 112, 93, 0.72);
+}
+
+.contact-fill-shape--sky {
+    fill: rgba(43, 160, 255, 0.62);
+}
+
+/* Para SVGs con stroke */
+.contact-draw-line {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.contact-draw-line--cream {
+    stroke: rgba(244, 241, 234, 0.58);
+}
+
+.contact-draw-line--coral {
+    stroke: rgba(255, 112, 93, 0.72);
+}
+
+.contact-draw-line--sky {
+    stroke: rgba(43, 160, 255, 0.62);
+}
+
+/* Layout */
+
+.contact-inner {
+    width: min(100%, 860px);
     min-width: 0;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    align-items: center;
 }
 
-
-/* ── Título ──────────────────────────────────────────────── */
-
-.contact-title {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -0.04em;
-    margin-top: 0;
-    color: var(--cream);
+.contact-heading {
+    width: min(100%, 780px);
+    margin: 0 auto clamp(34px, 5vw, 56px);
+    text-align: center;
 }
 
 .contact-heading .section-kicker {
-    width: auto;
-    margin-left: 0;
-    margin-right: 0;
+    width: 100%;
+    margin-bottom: clamp(18px, 2.4vw, 28px);
 }
 
+.contact-title {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: clamp(3.4rem, 11vw, 9rem);
+    font-weight: 900;
+    line-height: 0.78;
+    letter-spacing: -0.085em;
+    text-transform: uppercase;
+    color: var(--cream);
+}
 
-/* ── Formulario ──────────────────────────────────────────── */
+.contact-subtitle {
+    max-width: 680px;
+    margin: clamp(26px, 4vw, 42px) auto 0;
+    font-family: var(--font-sans);
+    font-size: clamp(1.3rem, 2.7vw, 2.3rem);
+    font-weight: 650;
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+    color: var(--cream);
+}
+
+.contact-copy {
+    max-width: 620px;
+    margin: clamp(14px, 2vw, 20px) auto 0;
+    font-family: var(--font-sans);
+    font-size: clamp(0.98rem, 1.25vw, 1.12rem);
+    font-weight: 300;
+    line-height: 1.58;
+    letter-spacing: -0.025em;
+    color: var(--contact-muted);
+}
+
+/* Formulario */
 
 .minimal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    width: min(100%, 760px);
     min-width: 0;
     max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
 }
 
 .form-row {
     display: grid;
-    /* minmax(0,1fr) evita que el contenido desborde el grid */
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 20px;
+    gap: 18px;
     min-width: 0;
     max-width: 100%;
 }
@@ -67,138 +181,212 @@
 
 .form-field label {
     display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(242, 237, 228, 0.45);
     margin-bottom: 8px;
-    /* Sin will-change aquí: GSAP lo activa solo durante la animación */
+    padding-left: 4px;
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(244, 241, 234, 0.62);
 }
 
 .form-field input,
-.form-field textarea {
+.form-field textarea,
+.form-field select {
     width: 100%;
     max-width: 100%;
+    min-height: 60px;
     box-sizing: border-box;
-    padding: 10px 0;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(242, 237, 228, 0.2);
+    padding: 16px 18px;
+    border: 1px solid var(--contact-field-border);
+    border-radius: 20px;
+    background: var(--contact-field-bg);
+    color: var(--contact-field-text);
     font-family: var(--font-sans);
     font-size: 1rem;
-    color: var(--cream);
+    font-weight: 400;
+    line-height: 1.2;
+    outline: none;
+    box-shadow:
+        0 12px 34px rgba(0, 0, 0, 0.08),
+        0 1px 0 rgba(255, 255, 255, 0.42) inset;
     transition:
-        border-color var(--t-mid),
-        box-shadow var(--t-mid);
-    /* Nota: 'color' no se anima visualmente aquí, se eliminó de la transition */
+        border-color var(--t-fast) var(--ease-out),
+        background var(--t-fast) var(--ease-out),
+        box-shadow var(--t-fast) var(--ease-out),
+        transform var(--t-fast) var(--ease-out);
+}
+
+.form-field select {
+    cursor: pointer;
+    appearance: none;
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(7, 17, 31, 0.72) 50%),
+        linear-gradient(135deg, rgba(7, 17, 31, 0.72) 50%, transparent 50%);
+    background-position:
+        calc(100% - 22px) 50%,
+        calc(100% - 16px) 50%;
+    background-size:
+        6px 6px,
+        6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 48px;
 }
 
 .form-field input::placeholder,
 .form-field textarea::placeholder {
-    color: rgba(242, 237, 228, 0.28);
+    color: rgba(7, 17, 31, 0.42);
 }
 
 .form-field input:focus,
-.form-field textarea:focus {
-    outline: none;
-    border-bottom-color: var(--cream);
-    box-shadow: 0 8px 18px -18px rgba(242, 237, 228, 0.6);
+.form-field textarea:focus,
+.form-field select:focus {
+    border-color: rgba(255, 112, 93, 0.84);
+    background: var(--cream);
+    box-shadow:
+        0 16px 44px rgba(0, 0, 0, 0.14),
+        0 0 0 4px rgba(255, 112, 93, 0.14);
 }
 
 .form-field textarea {
+    min-height: 150px;
     resize: vertical;
-    min-height: 80px;
+    line-height: 1.45;
 }
 
 .form-actions {
+    display: flex;
+    justify-content: center;
     min-width: 0;
     max-width: 100%;
     overflow: visible;
-    padding-top: 6px;
-
+    padding-top: 10px;
 }
 
-
-/* ── Botón ───────────────────────────────────────────────── */
+/* Botón */
 
 .submit-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
+    min-width: 220px;
+    min-height: 54px;
     max-width: 100%;
-    padding: 14px 36px;
-    background: var(--cream);
+    padding: 15px 34px;
+    border: 0;
+    border-radius: 999px;
+    background:
+        radial-gradient(130% 120% at 100% 80%, rgba(255, 112, 93, 0.96), rgba(244, 241, 234, 1) 72%);
     color: var(--ink);
-    border: none;
     font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 700;
-    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 850;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
     cursor: pointer;
     white-space: nowrap;
     transform-origin: center;
+    box-shadow:
+        0 18px 48px rgba(0, 0, 0, 0.24),
+        0 1px 0 rgba(255, 255, 255, 0.52) inset;
     transition:
-        background var(--t-fast),
-        color var(--t-fast);
+        transform var(--t-fast) var(--ease-out),
+        box-shadow var(--t-fast) var(--ease-out),
+        filter var(--t-fast) var(--ease-out);
+}
+
+.submit-btn:disabled {
+    cursor: progress;
+    opacity: 0.88;
+}
+
+.submit-btn__text {
+    display: inline-block;
 }
 
 .btn-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--orange);
+    background: var(--coral);
     flex-shrink: 0;
     transform-origin: center;
-    transition: background var(--t-fast);
-    /* Sin will-change global: GSAP lo activa solo en hover/animación */
+    transition: background var(--t-fast) var(--ease-out);
 }
 
-/* Hover solo en dispositivos con cursor real (no touch) */
 @media (hover: hover) and (pointer: fine) {
     .submit-btn:hover {
-        background: var(--orange);
-        color: #fff;
+        transform: translateY(-3px);
+        filter: saturate(1.08);
+        box-shadow:
+            0 24px 64px rgba(0, 0, 0, 0.3),
+            0 0 34px rgba(255, 112, 93, 0.18);
     }
 
     .submit-btn:hover .btn-dot {
-        background: #fff;
+        background: var(--ink);
     }
 }
 
+/* Responsive */
 
-/* ── Responsive ──────────────────────────────────────────── */
-
-@media (min-width: 900px) {
-    .contact-inner {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 80px;
+@media (max-width: 760px) {
+    .contact-section {
+        padding: 96px 20px;
     }
 
-    .contact-heading {
-        flex: 0 0 320px;
+    .contact-title {
+        font-size: clamp(3.2rem, 17vw, 6.5rem);
     }
 
-    .minimal-form {
-        flex: 1;
+    .contact-subtitle {
+        font-size: clamp(1.25rem, 7vw, 2rem);
     }
-}
 
-@media (max-width: 520px) {
     .form-row {
         grid-template-columns: 1fr;
     }
 
+    .minimal-form {
+        gap: 16px;
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+        min-height: 58px;
+        border-radius: 18px;
+    }
+
     .submit-btn {
         width: 100%;
-        justify-content: center;
+        min-width: 0;
+    }
+
+    .contact-line {
+        opacity: 0.34;
+    }
+
+    .contact-line--three {
+        display: none;
     }
 }
 
-/*
-    Nota: prefers-reduced-motion se maneja exclusivamente en
-    contact-animations.js con la variable reduceMotion.
-    No se duplica aquí para evitar conflictos con clearProps de GSAP.
-*/
+@media (prefers-reduced-motion: reduce) {
+    .contact-line,
+    .contact-heading,
+    .minimal-form,
+    .form-field,
+    .submit-btn {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
