@@ -119,6 +119,13 @@ body.nav-open .setup-model-stage {
     pointer-events: none;
 }
 
+/* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
+
+body.nav-open .setup-canvas,
+body.nav-open .setup-model-stage {
+    pointer-events: none;
+
+}
 /* Loader */
 
 .setup-loader {
@@ -148,34 +155,61 @@ body.nav-open .setup-model-stage {
 /* Orbit items */
 
 .setup-orbit {
+
     position: absolute;
+
     inset: 0;
+
     z-index: 2;
+
     pointer-events: none;
+
 }
 
 .orbit-item {
+
     position: absolute;
+
     max-width: 230px;
+
     margin: 0;
+
     padding-top: 14px;
-    border-top: 1px solid rgba(244, 241, 234, 0.28);
+
+    border-top: 1px solid rgba(244, 241, 234, 0.26);
+
     font-family: var(--font-sans);
-    font-size: clamp(0.72rem, 0.9vw, 0.9rem);
-    font-weight: 700;
-    line-height: 1.35;
-    color: rgba(244, 241, 234, 0.88);
-    transform-origin: center;
+
+    font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+
+    font-weight: 750;
+
+    line-height: 1.25;
+
+    letter-spacing: -0.02em;
+
+    color: rgba(244, 241, 234, 0.9);
+
 }
 
 .orbit-item span {
+
     display: block;
+
     margin-top: 6px;
+
     font-family: var(--font-sans);
-    font-size: 0.78rem;
+
+    font-size: clamp(0.68rem, 0.75vw, 0.78rem);
+
     font-weight: 300;
-    line-height: 1.45;
-    color: rgba(244, 241, 234, 0.52);
+
+    line-height: 1.42;
+
+    letter-spacing: -0.015em;
+
+    color: rgba(244, 241, 234, 0.54);
+
 }
 
 /* 
@@ -210,15 +244,10 @@ body.nav-open .setup-model-stage {
     bottom: 24vh;
 }
 
-.orbit-mac {
+.orbit-dji {
     right: 18vw;
     bottom: 24vh;
     text-align: right;
-}
-
-/* Mobile label eliminado del diseño */
-.setup-mobile-label {
-    display: none !important;
 }
 
 /* Texto editorial debajo */
