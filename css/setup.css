@@ -197,15 +197,15 @@ body.nav-open .setup-model-stage {
 
 /* Lado izquierdo — 3 labels */
 
-.orbit-ipad {
-    left: clamp(34px, 7vw, 120px);
-    top: 25%;
-
-}
-
 .orbit-benq {
     left: clamp(34px, 7vw, 120px);
     top: 48%;
+
+}
+
+.orbit-ipad {
+    left: clamp(34px, 7vw, 120px);
+    top: 25%;
 
 }
 
@@ -217,6 +217,13 @@ body.nav-open .setup-model-stage {
 
 /* Lado derecho — 3 labels */
 
+.orbit-dji {
+    right: clamp(34px, 7vw, 120px);
+    bottom: 18%;
+    text-align: right;
+
+}
+
 .orbit-mx {
     right: clamp(34px, 7vw, 120px);
     top: 25%;
@@ -227,13 +234,6 @@ body.nav-open .setup-model-stage {
 .orbit-light {
     right: clamp(34px, 7vw, 120px);
     top: 48%;
-    text-align: right;
-
-}
-
-.orbit-dji {
-    right: clamp(34px, 7vw, 120px);
-    bottom: 18%;
     text-align: right;
 
 }
