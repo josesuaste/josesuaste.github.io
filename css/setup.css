@@ -6,12 +6,12 @@
     position: relative;
     background: var(--cream);
     color: var(--dark);
-    padding: clamp(72px, 8vw, 120px) var(--pad-x);
+    padding: clamp(72px, 8vw, 120px) clamp(20px, 6vw, 96px);
     overflow: hidden;
 }
 
 .setup-shell {
-    width: min(100%, 1320px);
+    width: min(100%, 1180px);
     margin: 0 auto;
 }
 
@@ -229,7 +229,7 @@ body.nav-open .setup-model-stage {
 
 @media (max-width: 900px) {
     .setup-cinematic {
-        padding: 72px 14px 88px;
+        padding: 72px 20px 88px;
     }
 
     .setup-shell {
