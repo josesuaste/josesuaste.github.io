@@ -116,11 +116,6 @@
     user-select: none;
 }
 
-body.nav-open .setup-canvas,
-body.nav-open .setup-model-stage {
-    pointer-events: none;
-}
-
 /* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
 
 body.nav-open .setup-canvas,
@@ -152,15 +147,6 @@ body.nav-open .setup-model-stage {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-}
-
-/* Orbit items */
-.setup-orbit {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-
 }
 
 .orbit-item {
