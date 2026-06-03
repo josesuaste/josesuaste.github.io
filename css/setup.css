@@ -87,8 +87,9 @@
 /* Label principal */
 
 .setup-copy-main {
+
     position: absolute;
-    top: clamp(76px, 9vh, 110px);
+    top: clamp(54px, 7vh, 86px);
     left: 50%;
     z-index: 5;
     width: min(100%, 760px);
@@ -96,6 +97,7 @@
     padding-inline: var(--pad-x);
     transform: translateX(-50%);
     text-align: center;
+
 }
 
 /* Modelo */
@@ -153,101 +155,88 @@ body.nav-open .setup-model-stage {
 }
 
 /* Orbit items */
-
 .setup-orbit {
-
     position: absolute;
-
     inset: 0;
-
     z-index: 2;
-
     pointer-events: none;
 
 }
 
 .orbit-item {
-
     position: absolute;
-
     max-width: 230px;
-
     margin: 0;
-
     padding-top: 14px;
-
     border-top: 1px solid rgba(244, 241, 234, 0.26);
-
     font-family: var(--font-sans);
-
     font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-
     font-weight: 750;
-
     line-height: 1.25;
-
     letter-spacing: -0.02em;
-
     color: rgba(244, 241, 234, 0.9);
 
 }
 
 .orbit-item span {
-
     display: block;
-
     margin-top: 6px;
-
     font-family: var(--font-sans);
-
     font-size: clamp(0.68rem, 0.75vw, 0.78rem);
-
     font-weight: 300;
-
     line-height: 1.42;
-
     letter-spacing: -0.015em;
-
     color: rgba(244, 241, 234, 0.54);
 
 }
+
 
 /* 
    Composición desktop.
    Si después quieres más arco, solo movemos estos valores.
 */
 
-.orbit-ipad {
-    left: 8vw;
-    top: 28vh;
-}
+/* Lado izquierdo — 3 labels */
 
-.orbit-mx {
-    right: 8vw;
-    top: 25vh;
-    text-align: right;
+.orbit-ipad {
+    left: clamp(34px, 7vw, 120px);
+    top: 25%;
+
 }
 
 .orbit-benq {
-    left: 7vw;
-    bottom: 24vh;
-}
+    left: clamp(34px, 7vw, 120px);
+    top: 48%;
 
-.orbit-light {
-    right: 9vw;
-    bottom: 27vh;
-    text-align: right;
 }
 
 .orbit-keys {
-    left: 18vw;
-    bottom: 24vh;
+    left: clamp(34px, 7vw, 120px);
+    bottom: 18%;
+
+}
+
+/* Lado derecho — 3 labels */
+
+.orbit-mx {
+    right: clamp(34px, 7vw, 120px);
+    top: 25%;
+    text-align: right;
+
+}
+
+.orbit-light {
+    right: clamp(34px, 7vw, 120px);
+    top: 48%;
+    text-align: right;
+
 }
 
 .orbit-dji {
-    right: 18vw;
-    bottom: 24vh;
+    right: clamp(34px, 7vw, 120px);
+    bottom: 18%;
     text-align: right;
+
 }
 
 /* Texto editorial debajo */
