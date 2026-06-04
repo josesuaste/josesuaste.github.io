@@ -87,7 +87,6 @@
 /* Label principal */
 
 .setup-copy-main {
-
     position: absolute;
     top: clamp(54px, 7vh, 86px);
     left: 50%;
@@ -97,7 +96,6 @@
     padding-inline: var(--pad-x);
     transform: translateX(-50%);
     text-align: center;
-
 }
 
 /* Modelo */
@@ -105,7 +103,7 @@
 .setup-model-stage {
     position: absolute;
     inset: 0;
-    z-index: -1;
+    z-index: 1;
 }
 
 .setup-canvas {
@@ -114,6 +112,11 @@
     display: block;
     touch-action: pan-y;
     user-select: none;
+    cursor: grab;
+}
+
+.setup-canvas:active {
+    cursor: grabbing;
 }
 
 /* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
@@ -121,8 +124,8 @@
 body.nav-open .setup-canvas,
 body.nav-open .setup-model-stage {
     pointer-events: none;
-
 }
+
 /* Loader */
 
 .setup-loader {
@@ -130,7 +133,7 @@ body.nav-open .setup-model-stage {
     left: 50%;
     bottom: 8vh;
     transform: translateX(-50%);
-    z-index: 2;
+    z-index: 3;
     font-family: var(--font-sans);
     font-size: 0.62rem;
     font-weight: 800;
@@ -150,12 +153,12 @@ body.nav-open .setup-model-stage {
 }
 
 /* Orbit items */
+
 .setup-orbit {
     position: absolute;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-
 }
 
 .orbit-item {
@@ -170,7 +173,6 @@ body.nav-open .setup-model-stage {
     line-height: 1.25;
     letter-spacing: -0.02em;
     color: rgba(244, 241, 234, 0.9);
-
 }
 
 .orbit-item span {
@@ -182,7 +184,6 @@ body.nav-open .setup-model-stage {
     line-height: 1.42;
     letter-spacing: -0.015em;
     color: rgba(244, 241, 234, 0.54);
-
 }
 
 /* 
@@ -246,6 +247,7 @@ body.nav-open .setup-model-stage {
 }
 
 /* Mobile */
+
 @media (max-width: 900px) {
     .setup-cinematic {
         padding: 72px 20px 88px;
@@ -270,6 +272,7 @@ body.nav-open .setup-model-stage {
 
     .setup-model-stage {
         inset: 0;
+        z-index: 1;
     }
 
     .setup-orbit {
@@ -289,7 +292,6 @@ body.nav-open .setup-model-stage {
         color: rgba(17, 17, 17, 0.68);
     }
 }
-
 
 /* Reduced motion */
 

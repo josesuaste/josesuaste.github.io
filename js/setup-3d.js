@@ -1,10 +1,11 @@
 /* ════════════════════════════════════════════════════════════
    SETUP 3D — Mac Mini
-   Three.js + GLTFLoader + GSAP intro + drag horizontal
+   Three.js + GLTFLoader + GSAP intro + OrbitControls
    ════════════════════════════════════════════════════════════ */
 
 import * as THREE from 'https://esm.sh/three@0.160.0';
 import { GLTFLoader } from 'https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js';
 
 
 /* ───────────────────────────────────────────────────────────
@@ -24,7 +25,7 @@ if (canvas && setupSection) {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-    camera.position.set(0, 0.55, 4.8);
+    camera.position.set(0, 0.3, 4.9);
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
@@ -37,24 +38,57 @@ if (canvas && setupSection) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
+    renderer.toneMappingExposure = 0.95;
+
+
+    /* ─────────────────────────────────────────────────────────
+       CONTROLES DEL MOUSE
+       ───────────────────────────────────────────────────────── */
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.065;
+
+    /*
+       Click / drag: rota el modelo.
+       Scroll encima del canvas: NO hace zoom.
+       Esto permite que la página siga scrolleando normal.
+    */
+
+    controls.enableRotate = true;
+    controls.enableZoom = false;
+    controls.enablePan = false;
+
+    controls.rotateSpeed = 0.75;
+
+    /*
+       Límites verticales suaves.
+       Evita que el usuario lo voltee completamente por debajo.
+    */
+
+    controls.minPolarAngle = Math.PI * 0.18;
+    controls.maxPolarAngle = Math.PI * 0.82;
+
+    controls.target.set(0, 0, 0);
+    controls.update();
 
 
     /* ─────────────────────────────────────────────────────────
        LUCES
        ───────────────────────────────────────────────────────── */
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.35));
+    scene.add(new THREE.AmbientLight(0xffffff, 0.9));
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
     keyLight.position.set(4, 5, 6);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0x9fbfff, 1.4);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.7);
     fillLight.position.set(-5, 2, 3);
     scene.add(fillLight);
 
-    const rimLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const rimLight = new THREE.DirectionalLight(0xffffff, 1.4);
     rimLight.position.set(0, 3, -5);
     scene.add(rimLight);
 
@@ -69,19 +103,6 @@ if (canvas && setupSection) {
     let macMini = null;
     let introStarted = false;
     let introComplete = false;
-    let isDragging = false;
-
-    let previousX = 0;
-    let previousY = 0;
-
-    let targetRotationY = -0.55;
-    let currentRotationY = -0.55;
-
-    let targetRotationX = 0;
-    let currentRotationX = 0;
-
-    let dragMode = null;
-    let activePointerId = null;
     let rafResize = null;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -95,24 +116,8 @@ if (canvas && setupSection) {
         return document.body.classList.contains('nav-open');
     }
 
-    function releaseCanvasPointer() {
-        if (activePointerId === null) return;
-
-        try {
-            if (canvas.hasPointerCapture(activePointerId)) {
-                canvas.releasePointerCapture(activePointerId);
-            }
-        } catch (error) {
-            // El puntero pudo haber sido cancelado por el navegador.
-        }
-
-        activePointerId = null;
-    }
-
-    function stopDragging() {
-        isDragging = false;
-        dragMode = null;
-        releaseCanvasPointer();
+    function setControlsEnabled() {
+        controls.enabled = !isNavOpen();
     }
 
 
@@ -127,6 +132,7 @@ if (canvas && setupSection) {
 
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
+
         renderer.setSize(width, height, false);
     }
 
@@ -165,16 +171,21 @@ if (canvas && setupSection) {
         introStarted = true;
 
         if (!window.gsap || prefersReducedMotion) {
-            modelGroup.position.y = 0.02;
+            modelGroup.position.y = 0;
             introComplete = true;
             return;
         }
+
+        /*
+           Cae de frente.
+           El modelo ya queda orientado antes de iniciar la caída.
+        */
 
         gsap.fromTo(
             modelGroup.position,
             { y: 3.2 },
             {
-                y: 0.02,
+                y: 0,
                 duration: 1.25,
                 ease: 'power4.out',
                 onComplete: () => {
@@ -225,28 +236,37 @@ if (canvas && setupSection) {
 
             centerAndScaleModel(macMini);
 
-            macMini.rotation.set(0.24, -0.7, 0);
-            macMini.position.set(0, -0.08, 0);
+            /*
+               Modelo exportado limpio desde Blender con +Y Up.
+               No necesita correcciones de rotación.
+            */
+
+            macMini.rotation.set(0, 0, 0);
+            macMini.position.set(0, 0, 0);
 
             macMini.traverse((child) => {
                 if (!child.isMesh || !child.material) return;
 
-                child.material.side = THREE.DoubleSide;
+                child.castShadow = true;
+                child.receiveShadow = true;
 
-                if ('metalness' in child.material) {
-                    child.material.metalness = 0.42;
+                if (child.material.map) {
+                    child.material.map.colorSpace = THREE.SRGBColorSpace;
                 }
 
-                if ('roughness' in child.material) {
-                    child.material.roughness = 0.46;
-                }
+                child.material.needsUpdate = true;
             });
 
             modelGroup.add(macMini);
 
+            /*
+               El grupo cae recto.
+               No tiene rotación lateral para que no entre chueco.
+            */
+
             modelGroup.position.set(0, 3.2, 0);
             modelGroup.scale.set(0.72, 0.72, 0.72);
-            modelGroup.rotation.set(0, -0.55, 0);
+            modelGroup.rotation.set(0, 0, 0);
 
             if (setupLoader) {
                 setupLoader.classList.add('is-hidden');
@@ -278,96 +298,23 @@ if (canvas && setupSection) {
 
 
     /* ─────────────────────────────────────────────────────────
-       INTERACCIÓN DRAG
-       - Arrastre horizontal = rota la Mac
-       - Arrastre vertical = permite scroll en móvil/tablet
-       - Si el nav está abierto, el canvas no captura interacción
-       ───────────────────────────────────────────────────────── */
-
-    canvas.addEventListener('pointerdown', (event) => {
-        if (!macMini || isNavOpen()) return;
-
-        isDragging = true;
-        dragMode = null;
-        activePointerId = event.pointerId;
-
-        previousX = event.clientX;
-        previousY = event.clientY;
-
-        try {
-            canvas.setPointerCapture(event.pointerId);
-        } catch (error) {
-            activePointerId = null;
-        }
-    });
-
-    canvas.addEventListener('pointermove', (event) => {
-        if (!isDragging || isNavOpen()) {
-            stopDragging();
-            return;
-        }
-
-        const deltaX = event.clientX - previousX;
-        const deltaY = event.clientY - previousY;
-
-        if (!dragMode && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
-            dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
-        }
-
-        if (dragMode === 'scroll') {
-            stopDragging();
-            return;
-        }
-
-        if (dragMode !== 'rotate') return;
-
-        event.preventDefault();
-
-        previousX = event.clientX;
-        previousY = event.clientY;
-
-        targetRotationY += deltaX * 0.012;
-        targetRotationX += deltaY * 0.006;
-        targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
-    }, { passive: false });
-
-    canvas.addEventListener('pointerup', () => {
-        stopDragging();
-    });
-
-    canvas.addEventListener('pointercancel', () => {
-        stopDragging();
-    });
-
-    canvas.addEventListener('lostpointercapture', () => {
-        stopDragging();
-    });
-
-
-    /* ─────────────────────────────────────────────────────────
        LOOP DE ANIMACIÓN
        ───────────────────────────────────────────────────────── */
 
     function animate() {
         requestAnimationFrame(animate);
 
+        setControlsEnabled();
+        controls.update();
+
         if (macMini) {
-            if (isNavOpen()) {
-                stopDragging();
-            }
+            /*
+               Flotación sutil después de caer.
+               No toca la rotación, así que no pelea contra el mouse.
+            */
 
-            if (!isDragging && !prefersReducedMotion && !isNavOpen()) {
-                targetRotationY += 0.002;
-            }
-
-            currentRotationY += (targetRotationY - currentRotationY) * 0.08;
-            currentRotationX += (targetRotationX - currentRotationX) * 0.08;
-
-            modelGroup.rotation.y = currentRotationY;
-            modelGroup.rotation.x = currentRotationX;
-
-            if (introComplete && !isDragging && !prefersReducedMotion && !isNavOpen()) {
-                modelGroup.position.y = 0.02 + Math.sin(Date.now() * 0.001) * 0.025;
+            if (introComplete && !prefersReducedMotion && !isNavOpen()) {
+                modelGroup.position.y = Math.sin(Date.now() * 0.001) * 0.025;
             }
         }
 
@@ -395,13 +342,9 @@ if (canvas && setupSection) {
         window.addEventListener('resize', resizeRenderer, { passive: true });
     }
 
-    window.addEventListener('blur', () => {
-        stopDragging();
-    });
-
     document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            stopDragging();
+        if (!document.hidden) {
+            controls.update();
         }
     });
 

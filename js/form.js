@@ -1,7 +1,7 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   FORM — inbox curado + rounded fields + submit animation
+   FORM — editorial contact + rounded fields + submit animation
    GSAP + ScrollTrigger + optional TextPlugin
    ════════════════════════════════════════════════════════════ */
 
@@ -11,6 +11,10 @@
         const form = document.querySelector('.minimal-form');
         const textarea = document.querySelector('.minimal-form textarea');
 
+        /*
+          Auto-resize del textarea.
+          Esta parte no depende de GSAP.
+        */
         if (textarea) {
             const resizeTextarea = () => {
                 textarea.style.height = 'auto';
@@ -47,7 +51,7 @@
         const subtitle = contact.querySelector('.contact-subtitle');
         const copy = contact.querySelector('.contact-copy');
         const fields = contact.querySelectorAll('.form-field');
-        const inputs = contact.querySelectorAll('.form-field input, .form-field textarea, .form-field select');
+        const inputs = contact.querySelectorAll('.form-field input, .form-field textarea');
         const button = contact.querySelector('.submit-btn');
         const buttonText = contact.querySelector('.submit-btn__text');
         const lines = contact.querySelectorAll('.contact-line');
@@ -67,6 +71,9 @@
             return;
         }
 
+        /*
+          Estado inicial
+        */
         gsap.set([label, title, subtitle, copy].filter(Boolean), {
             autoAlpha: 0,
             y: 28
@@ -92,6 +99,9 @@
             });
         }
 
+        /*
+          Entrada de la sección
+        */
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: contact,
@@ -172,6 +182,9 @@
             }, 0.92);
         }
 
+        /*
+          Focus en campos
+        */
         inputs.forEach((input) => {
             const field = input.closest('.form-field');
             const labelEl = field?.querySelector('label');
@@ -189,7 +202,7 @@
                 if (labelEl) {
                     gsap.to(labelEl, {
                         x: 2,
-                        color: 'rgba(244, 241, 234, 0.9)',
+                        color: 'rgba(7, 17, 31, 0.9)',
                         duration: 0.24,
                         ease: 'power2.out',
                         overwrite: 'auto'
@@ -210,7 +223,7 @@
                 if (labelEl) {
                     gsap.to(labelEl, {
                         x: 0,
-                        color: 'rgba(244, 241, 234, 0.62)',
+                        color: 'rgba(7, 17, 31, 0.66)',
                         duration: 0.3,
                         ease: 'power2.out',
                         overwrite: 'auto'
@@ -219,6 +232,9 @@
             });
         });
 
+        /*
+          Hover botón solo desktop
+        */
         if (canHover && button) {
             button.addEventListener('mouseenter', () => {
                 if (isNavOpen() || button.disabled) return;
@@ -267,6 +283,11 @@
             });
         }
 
+        /*
+          Submit:
+          Se activa solo cuando el formulario pasa la validación HTML.
+          No se resetea porque Web3Forms redirige a gracias.html.
+        */
         if (button) {
             form.addEventListener('submit', () => {
                 button.disabled = true;
@@ -319,9 +340,13 @@
             });
         }
 
+        /*
+          Movimiento muy sutil de SVGs decorativos.
+          No es estilo tech; solo da vida a la pieza gráfica.
+        */
         if (canHover && lines.length && typeof ScrollTrigger !== 'undefined') {
             gsap.to('.contact-line--one', {
-                y: -34,
+                y: -30,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: contact,
@@ -332,7 +357,7 @@
             });
 
             gsap.to('.contact-line--two', {
-                y: 42,
+                y: 36,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: contact,
