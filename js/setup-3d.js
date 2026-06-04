@@ -364,34 +364,48 @@ if (canvas && setupSection) {
 
     let touchStartX = 0;
     let touchStartY = 0;
-    let isTouchRotating = false;
+    // null = sin decidir, 'rotate' = horizontal, 'scroll' = vertical
+    let touchIntent = null;
 
     canvas.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
-        isTouchRotating = false;
+        touchIntent = null;
+        // Arranca desactivado — se activa solo si el gesto es horizontal
         controls.enabled = false;
     }, { passive: true });
 
     canvas.addEventListener('touchmove', (e) => {
+        // Si ya decidimos la intención, no la cambiamos
+        if (touchIntent !== null) return;
+
         const dx = Math.abs(e.touches[0].clientX - touchStartX);
         const dy = Math.abs(e.touches[0].clientY - touchStartY);
 
-        if (!isTouchRotating && (dx > 4 || dy > 4)) {
-            if (dx > dy) {
-                // Gesto horizontal → rotar modelo
-                isTouchRotating = true;
-                controls.enabled = true;
-            } else {
-                // Gesto vertical → scroll de página, no rotar
-                controls.enabled = false;
-            }
+        // Esperamos al menos 6px para decidir
+        if (dx < 6 && dy < 6) return;
+
+        if (dx > dy * 1.4) {
+            // Claramente horizontal → rotar modelo
+            touchIntent = 'rotate';
+            controls.enabled = true;
+        } else {
+            // Vertical o diagonal → scroll, no rotar
+            touchIntent = 'scroll';
+            controls.enabled = false;
         }
     }, { passive: true });
 
     canvas.addEventListener('touchend', () => {
-        isTouchRotating = false;
-        controls.enabled = !isNavOpen();
+        touchIntent = null;
+        // Desactiva hasta el próximo touchstart
+        // setControlsEnabled lo reactiva en desktop vía el loop
+        if (isTouchDevice()) controls.enabled = false;
+    }, { passive: true });
+
+    canvas.addEventListener('touchcancel', () => {
+        touchIntent = null;
+        if (isTouchDevice()) controls.enabled = false;
     }, { passive: true });
 
     resizeRenderer();
