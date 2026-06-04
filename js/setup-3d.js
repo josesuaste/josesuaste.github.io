@@ -71,6 +71,7 @@ if (canvas && setupSection) {
     controls.maxPolarAngle = Math.PI * 0.82;
 
     controls.target.set(0, 0, 0);
+    controls.enabled = true;
     controls.update();
 
 
@@ -116,10 +117,16 @@ if (canvas && setupSection) {
         return document.body.classList.contains('nav-open');
     }
 
+    const isTouchDevice = () => window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
     function setControlsEnabled() {
-        // En mobile, el estado lo maneja el listener de touch.
-        // Solo forzamos off cuando el nav está abierto.
-        if (isNavOpen()) controls.enabled = false;
+        // Desktop: siempre activo salvo nav abierto.
+        // Mobile: lo maneja el listener de touch, aquí solo forzamos off con nav.
+        if (!isTouchDevice()) {
+            controls.enabled = !isNavOpen();
+        } else {
+            if (isNavOpen()) controls.enabled = false;
+        }
     }
 
 
