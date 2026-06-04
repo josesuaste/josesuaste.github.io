@@ -117,7 +117,9 @@ if (canvas && setupSection) {
     }
 
     function setControlsEnabled() {
-        controls.enabled = !isNavOpen();
+        // En mobile, el estado lo maneja el listener de touch.
+        // Solo forzamos off cuando el nav está abierto.
+        if (isNavOpen()) controls.enabled = false;
     }
 
 
@@ -347,6 +349,43 @@ if (canvas && setupSection) {
             controls.update();
         }
     });
+
+    /* ─────────────────────────────────────────────────────────
+       TOUCH — solo rota si el gesto es horizontal.
+       Si es vertical, desactiva controles y deja pasar el scroll.
+       ───────────────────────────────────────────────────────── */
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouchRotating = false;
+
+    canvas.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isTouchRotating = false;
+        controls.enabled = false;
+    }, { passive: true });
+
+    canvas.addEventListener('touchmove', (e) => {
+        const dx = Math.abs(e.touches[0].clientX - touchStartX);
+        const dy = Math.abs(e.touches[0].clientY - touchStartY);
+
+        if (!isTouchRotating && (dx > 4 || dy > 4)) {
+            if (dx > dy) {
+                // Gesto horizontal → rotar modelo
+                isTouchRotating = true;
+                controls.enabled = true;
+            } else {
+                // Gesto vertical → scroll de página, no rotar
+                controls.enabled = false;
+            }
+        }
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', () => {
+        isTouchRotating = false;
+        controls.enabled = !isNavOpen();
+    }, { passive: true });
 
     resizeRenderer();
     animate();

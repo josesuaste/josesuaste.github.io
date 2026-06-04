@@ -303,3 +303,34 @@ body.nav-open .setup-model-stage {
         animation: none !important;
     }
 }
+
+/* ─────────────────────────────────────────────────────────
+   TOUCH MOBILE — el canvas no debe capturar scroll
+   ni interferir con elementos fuera del área del modelo
+   ───────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+    /*
+       En mobile el canvas ocupa todo el card pero solo
+       debe reaccionar a drags horizontales (rotar modelo).
+       touch-action: pan-y permite scroll vertical nativo
+       y solo captura el movimiento horizontal para rotar.
+    */
+
+    .setup-canvas {
+        touch-action: pan-y;
+    }
+
+    /*
+       El stage no debe bloquear el área del título arriba
+       ni el loader abajo — los reducimos a la zona central.
+    */
+
+    .setup-model-stage {
+        top: 15%;
+        bottom: 15%;
+        left: 0;
+        right: 0;
+        inset: 15% 0;
+    }
+}
