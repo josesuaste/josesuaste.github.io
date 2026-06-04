@@ -5,12 +5,14 @@
 .contact-section {
     --contact-bg: var(--green);
     --contact-text: var(--ink);
+    --contact-title: var(--sky);
     --contact-muted: rgba(7, 17, 31, 0.68);
     --contact-field-bg: var(--cream);
     --contact-field-text: var(--ink);
     --contact-field-border: rgba(7, 17, 31, 0.12);
-    --contact-accent: var(--coral);
-    --contact-pink: #fec5fb;
+    --contact-accent: var(--sky);
+    --contact-pink: var(--pink, #fec5fb);
+    --contact-radius-top: clamp(34px, 5vw, 72px);
 
     position: relative;
     background: var(--contact-bg);
@@ -18,11 +20,10 @@
     padding: clamp(96px, 10vw, 160px) clamp(20px, 6vw, 96px);
     overflow: hidden;
     isolation: isolate;
+    border-radius: var(--contact-radius-top) var(--contact-radius-top) 0 0;
 }
 
-/* ════════════════════════════════════════════════════════════
-   Líneas SVG decorativas
-   ════════════════════════════════════════════════════════════ */
+/* Líneas SVG decorativas */
 
 .contact-bg {
     position: absolute;
@@ -51,24 +52,24 @@
 .contact-line--one {
     top: 4%;
     left: -10%;
-    transform: rotate(-12deg);
+    transform: rotate(-10deg);
 }
 
 .contact-line--two {
     right: -12%;
     bottom: 8%;
     width: clamp(300px, 46vw, 760px);
-    transform: rotate(14deg);
+    transform: rotate(12deg);
 }
 
 .contact-line--three {
     left: 8%;
     bottom: -10%;
     width: clamp(180px, 24vw, 360px);
-    transform: rotate(24deg);
+    transform: rotate(20deg);
 }
 
-/* SVGs con fill */
+/* Si tus SVG usan fill */
 
 .contact-fill-shape {
     fill: currentColor;
@@ -90,7 +91,7 @@
     color: var(--cream);
 }
 
-/* SVGs con stroke */
+/* Si tus SVG usan stroke */
 
 .contact-draw-line {
     fill: none;
@@ -115,9 +116,7 @@
     color: var(--cream);
 }
 
-/* ════════════════════════════════════════════════════════════
-   Layout
-   ════════════════════════════════════════════════════════════ */
+/* Layout */
 
 .contact-inner {
     width: min(100%, 860px);
@@ -147,7 +146,7 @@
     line-height: 0.78;
     letter-spacing: -0.085em;
     text-transform: uppercase;
-    color: var(--contact-text);
+    color: var(--contact-title);
 }
 
 .contact-subtitle {
@@ -172,9 +171,7 @@
     color: var(--contact-muted);
 }
 
-/* ════════════════════════════════════════════════════════════
-   Formulario
-   ════════════════════════════════════════════════════════════ */
+/* Formulario */
 
 .minimal-form {
     width: min(100%, 760px);
@@ -249,7 +246,7 @@
     background: var(--cream);
     box-shadow:
         0 16px 38px rgba(7, 17, 31, 0.12),
-        0 0 0 4px rgba(255, 112, 93, 0.16);
+        0 0 0 4px rgba(43, 160, 255, 0.18);
 }
 
 .form-field textarea {
@@ -267,9 +264,7 @@
     padding-top: 10px;
 }
 
-/* ════════════════════════════════════════════════════════════
-   Botón
-   ════════════════════════════════════════════════════════════ */
+/* Botón */
 
 .submit-btn {
     position: relative;
@@ -319,7 +314,7 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--coral);
+    background: var(--contact-accent);
     flex-shrink: 0;
     transform-origin: center;
     transition: background var(--t-fast) var(--ease-out);
@@ -341,12 +336,11 @@
     }
 }
 
-/* ════════════════════════════════════════════════════════════
-   Responsive
-   ════════════════════════════════════════════════════════════ */
+/* Responsive */
 
 @media (max-width: 760px) {
     .contact-section {
+        --contact-radius-top: 30px;
         padding: 96px 20px;
     }
 

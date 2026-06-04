@@ -11,10 +11,6 @@
         const form = document.querySelector('.minimal-form');
         const textarea = document.querySelector('.minimal-form textarea');
 
-        /*
-          Auto-resize del textarea.
-          Esta parte no depende de GSAP.
-        */
         if (textarea) {
             const resizeTextarea = () => {
                 textarea.style.height = 'auto';
@@ -71,9 +67,6 @@
             return;
         }
 
-        /*
-          Estado inicial
-        */
         gsap.set([label, title, subtitle, copy].filter(Boolean), {
             autoAlpha: 0,
             y: 28
@@ -99,9 +92,6 @@
             });
         }
 
-        /*
-          Entrada de la sección
-        */
         const tl = gsap.timeline({
             scrollTrigger: {
                 trigger: contact,
@@ -182,9 +172,6 @@
             }, 0.92);
         }
 
-        /*
-          Focus en campos
-        */
         inputs.forEach((input) => {
             const field = input.closest('.form-field');
             const labelEl = field?.querySelector('label');
@@ -232,9 +219,6 @@
             });
         });
 
-        /*
-          Hover botón solo desktop
-        */
         if (canHover && button) {
             button.addEventListener('mouseenter', () => {
                 if (isNavOpen() || button.disabled) return;
@@ -283,11 +267,6 @@
             });
         }
 
-        /*
-          Submit:
-          Se activa solo cuando el formulario pasa la validación HTML.
-          No se resetea porque Web3Forms redirige a gracias.html.
-        */
         if (button) {
             form.addEventListener('submit', () => {
                 button.disabled = true;
@@ -340,10 +319,6 @@
             });
         }
 
-        /*
-          Movimiento muy sutil de SVGs decorativos.
-          No es estilo tech; solo da vida a la pieza gráfica.
-        */
         if (canHover && lines.length && typeof ScrollTrigger !== 'undefined') {
             gsap.to('.contact-line--one', {
                 y: -30,

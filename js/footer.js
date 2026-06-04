@@ -1,7 +1,7 @@
 'use strict';
 
 // ════════════════════════════════════════════════════════════
-//  FOOTER — año automático + pills animation
+//  FOOTER — año automático + bento hover animation
 // ════════════════════════════════════════════════════════════
 
 (function initFooter() {
@@ -11,28 +11,28 @@
         year.textContent = new Date().getFullYear();
     }
 
-    const pills = document.querySelectorAll('.footer-pill');
+    const cards = document.querySelectorAll('.footer-card');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    if (!pills.length || reduceMotion || !canHover || typeof gsap === 'undefined') return;
+    if (!cards.length || reduceMotion || !canHover || typeof gsap === 'undefined') return;
 
-    pills.forEach((pill) => {
-        const text = pill.querySelector('.footer-pill__text');
-        const arrow = pill.querySelector('.footer-pill__arrow');
+    cards.forEach((card) => {
+        const title = card.querySelector('.footer-card__title');
+        const arrow = card.querySelector('.footer-card__arrow');
 
-        pill.addEventListener('mouseenter', () => {
-            gsap.to(pill, {
-                y: -4,
-                scaleX: 1.035,
+        card.addEventListener('mouseenter', () => {
+            gsap.to(card, {
+                y: -5,
+                scale: 1.015,
                 duration: 0.28,
                 ease: 'power2.out',
                 overwrite: 'auto'
             });
 
-            if (text) {
-                gsap.to(text, {
-                    x: 3,
+            if (title) {
+                gsap.to(title, {
+                    x: 4,
                     duration: 0.28,
                     ease: 'power2.out',
                     overwrite: 'auto'
@@ -41,8 +41,8 @@
 
             if (arrow) {
                 gsap.to(arrow, {
-                    x: 4,
-                    y: -4,
+                    x: 5,
+                    y: -5,
                     rotate: 8,
                     duration: 0.28,
                     ease: 'power2.out',
@@ -51,17 +51,17 @@
             }
         });
 
-        pill.addEventListener('mouseleave', () => {
-            gsap.to(pill, {
+        card.addEventListener('mouseleave', () => {
+            gsap.to(card, {
                 y: 0,
-                scaleX: 1,
+                scale: 1,
                 duration: 0.34,
                 ease: 'power2.out',
                 overwrite: 'auto'
             });
 
-            if (text) {
-                gsap.to(text, {
+            if (title) {
+                gsap.to(title, {
                     x: 0,
                     duration: 0.34,
                     ease: 'power2.out',

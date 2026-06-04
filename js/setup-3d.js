@@ -8,7 +8,7 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
    Three.js + GLTFLoader + drag rotation
    ════════════════════════════════════════════════════════════ */
 
-const MODEL_PATH = 'models/mac-mini.glb';
+const MODEL_PATH = 'models/macmini.glb';
 
 const canvas = document.querySelector('#macmini-canvas');
 const setupSection = document.querySelector('#setup');
@@ -27,7 +27,12 @@ function initSetup3D() {
     const scene = new THREE.Scene();
 
     const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
-    camera.position.set(0, 1.15, 6);
+
+    /*
+      Cámara ligeramente baja para ver mejor el modelo editado en Blender.
+      Si lo quieres más frontal, sube el segundo valor a 1.0 o 1.15.
+    */
+    camera.position.set(0, 0.85, 6);
 
     const renderer = new THREE.WebGLRenderer({
         canvas,
@@ -41,14 +46,14 @@ function initSetup3D() {
 
     /* Luces */
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.7);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    const keyLight = new THREE.DirectionalLight(0xffffff, 2.3);
     keyLight.position.set(3.2, 4.2, 5.2);
     scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.8);
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.9);
     fillLight.position.set(-4, 2.5, 3);
     scene.add(fillLight);
 
@@ -69,17 +74,19 @@ function initSetup3D() {
     loader.load(
         MODEL_PATH,
         (gltf) => {
+            console.log('[setup-3d] Modelo cargado:', gltf.scene);
+
             model = gltf.scene;
 
             prepareModel(model);
             centerAndScaleModel(model);
 
             /*
-              Rotación inicial:
-              Ajusta este valor si tu nuevo GLB no queda con la manzanita/frente correcto.
-              Math.PI = gira 180 grados.
+              Importante:
+              No forzamos Math.PI porque ya orientaste el GLB en Blender.
+              Esto respeta la posición y frente del modelo exportado.
             */
-            model.rotation.set(0, Math.PI, 0);
+            model.rotation.set(0, 0, 0);
 
             modelGroup.add(model);
 
@@ -120,7 +127,7 @@ function initSetup3D() {
         material.needsUpdate = true;
 
         if ('roughness' in material) {
-            material.roughness = Math.min(material.roughness ?? 0.55, 0.7);
+            material.roughness = Math.min(material.roughness ?? 0.55, 0.74);
         }
 
         if ('metalness' in material) {
@@ -149,16 +156,21 @@ function initSetup3D() {
         object.position.z -= center.z;
 
         const maxAxis = Math.max(size.x, size.y, size.z);
-        const targetSize = isCoarsePointer ? 2.35 : 2.75;
+
+        /*
+          El nuevo GLB editado puede requerir un poco más de escala.
+          Si se ve demasiado grande, baja desktop a 3.0.
+        */
+        const targetSize = isCoarsePointer ? 2.35 : 2.9;
         const scale = targetSize / maxAxis;
 
         object.scale.setScalar(scale);
 
         /*
-          Baja/sube el modelo dentro del card.
-          Si lo quieres más arriba, sube este valor.
+          Ajuste vertical.
+          Si se ve muy abajo, sube a 0.06 o 0.1.
         */
-        object.position.y = isCoarsePointer ? -0.05 : -0.08;
+        object.position.y = isCoarsePointer ? 0 : -0.03;
     }
 
     /* Resize */
@@ -254,13 +266,17 @@ function initSetup3D() {
 
         if (model) {
             const idle = reduceMotion ? 0 : Math.sin(elapsed * 0.8) * 0.035;
-            const scrollTilt = reduceMotion ? 0 : THREE.MathUtils.lerp(-0.08, 0.08, progress);
+            const scrollTilt = reduceMotion ? 0 : THREE.MathUtils.lerp(-0.045, 0.055, progress);
 
             currentRotationY = THREE.MathUtils.lerp(currentRotationY, targetRotationY, 0.08);
 
-            model.rotation.y = Math.PI + currentRotationY;
+            /*
+              Respetamos la orientación de Blender.
+              Solo agregamos la rotación del usuario y un tilt suave.
+            */
+            model.rotation.y = currentRotationY;
             model.rotation.x = scrollTilt;
-            model.position.y = (isCoarsePointer ? -0.05 : -0.08) + idle;
+            model.position.y = (isCoarsePointer ? 0 : -0.03) + idle;
         }
 
         renderer.render(scene, camera);
@@ -290,7 +306,7 @@ function initSetup3D() {
     });
 
     function disposeMaterial(material) {
-        if (!material) return;
+        if (!material) return; 
 
         Object.keys(material).forEach((key) => {
             const value = material[key];
