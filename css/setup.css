@@ -103,7 +103,7 @@
 .setup-model-stage {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: -1;
 }
 
 .setup-canvas {
@@ -112,11 +112,6 @@
     display: block;
     touch-action: pan-y;
     user-select: none;
-    cursor: grab;
-}
-
-.setup-canvas:active {
-    cursor: grabbing;
 }
 
 /* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
@@ -133,7 +128,7 @@ body.nav-open .setup-model-stage {
     left: 50%;
     bottom: 8vh;
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 2;
     font-family: var(--font-sans);
     font-size: 0.62rem;
     font-weight: 800;
@@ -187,11 +182,12 @@ body.nav-open .setup-model-stage {
 }
 
 /* 
-   Composición desktop.
-   Si después quieres más arco, solo movemos estos valores.
+   Labels escalonados, rectos y ordenados.
+   Izquierda: BenQ / iPad / Pebble Keys.
+   Derecha: DJI Mic Mini / MX Vertical / Xiaomi Lightbar.
 */
 
-/* Lado izquierdo — escalonado recto */
+/* Lado izquierdo */
 
 .orbit-benq {
     left: clamp(46px, 7vw, 120px);
@@ -199,7 +195,7 @@ body.nav-open .setup-model-stage {
 }
 
 .orbit-ipad {
-    left: clamp(72px, 9vw, 150px);
+    left: clamp(92px, 11vw, 190px);
     top: 46%;
 }
 
@@ -208,7 +204,7 @@ body.nav-open .setup-model-stage {
     bottom: 18%;
 }
 
-/* Lado derecho — escalonado recto */
+/* Lado derecho */
 
 .orbit-dji {
     right: clamp(46px, 7vw, 120px);
@@ -217,7 +213,7 @@ body.nav-open .setup-model-stage {
 }
 
 .orbit-mx {
-    right: clamp(72px, 9vw, 150px);
+    right: clamp(92px, 11vw, 190px);
     top: 46%;
     text-align: right;
 }
@@ -272,7 +268,6 @@ body.nav-open .setup-model-stage {
 
     .setup-model-stage {
         inset: 0;
-        z-index: 1;
     }
 
     .setup-orbit {
@@ -293,6 +288,23 @@ body.nav-open .setup-model-stage {
     }
 }
 
+@media (max-width: 520px) {
+    .setup-card {
+        --setup-card-radius: 24px;
+
+        min-height: 74svh;
+        border-radius: var(--setup-card-radius);
+    }
+
+    .setup-copy-main {
+        top: 72px;
+    }
+
+    .setup-description {
+        margin-top: 26px;
+    }
+}
+
 /* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
@@ -301,36 +313,5 @@ body.nav-open .setup-model-stage {
     .setup-description {
         transition: none !important;
         animation: none !important;
-    }
-}
-
-/* ─────────────────────────────────────────────────────────
-   TOUCH MOBILE — el canvas no debe capturar scroll
-   ni interferir con elementos fuera del área del modelo
-   ───────────────────────────────────────────────────────── */
-
-@media (max-width: 900px) {
-    /*
-       En mobile el canvas ocupa todo el card pero solo
-       debe reaccionar a drags horizontales (rotar modelo).
-       touch-action: pan-y permite scroll vertical nativo
-       y solo captura el movimiento horizontal para rotar.
-    */
-
-    .setup-canvas {
-        touch-action: pan-y;
-    }
-
-    /*
-       El stage no debe bloquear el área del título arriba
-       ni el loader abajo — los reducimos a la zona central.
-    */
-
-    .setup-model-stage {
-        top: 15%;
-        bottom: 15%;
-        left: 0;
-        right: 0;
-        inset: 15% 0;
     }
 }

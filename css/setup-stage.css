@@ -1,0 +1,99 @@
+/* ════════════════════════════════════════════════════════════
+   SETUP MODEL STAGE — canvas + overlay
+   Parche para reemplazar / extender las reglas existentes
+   del .setup-model-stage y .setup-canvas en tu CSS de setup.
+   ════════════════════════════════════════════════════════════ */
+
+/*
+   El stage es el contenedor que envuelve el canvas y el overlay.
+   Necesita dimensiones explícitas para que tanto el ResizeObserver
+   como el overlay absolute se comporten correctamente.
+*/
+
+.setup-model-stage {
+    position: relative;          /* ancla el overlay absolute */
+    width: 100%;
+    /* Desktop: altura generosa para que el Mac se vea grande */
+    height: clamp(360px, 50vw, 580px);
+    margin: clamp(24px, 3vw, 40px) auto;
+    flex-shrink: 0;
+    overflow: visible;           /* permite que órbita sobresalga si hace falta */
+}
+
+.setup-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;        /* JS lo fuerza también; doble seguro */
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/*
+   El overlay se crea dinámicamente en JS con position:absolute/inset:0,
+   pero lo declaramos aquí también por si necesitas overrides de diseño.
+*/
+#macmini-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: grab;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#macmini-overlay:active {
+    cursor: grabbing;
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   TABLET / iPAD  (≤ 1024px)
+   ───────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+    .setup-model-stage {
+        /* Altura relativa al viewport para no verse miniatura */
+        height: clamp(300px, 44vw, 480px);
+    }
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE  (≤ 680px)
+   ───────────────────────────────────────────────────────── */
+
+@media (max-width: 680px) {
+    .setup-model-stage {
+        /*
+           En móvil queremos que el Mac ocupe buena parte de la
+           pantalla. 55vw suele dar ~220-240px en teléfonos comunes,
+           suficiente para que se vea limpio sin dominar todo.
+        */
+        height: clamp(240px, 55vw, 340px);
+        margin-block: 20px;
+    }
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   TELÉFONOS PEQUEÑOS  (≤ 390px)
+   ───────────────────────────────────────────────────────── */
+
+@media (max-width: 390px) {
+    .setup-model-stage {
+        height: clamp(220px, 60vw, 280px);
+    }
+}
+
+
+/* ─────────────────────────────────────────────────────────
+   REDUCED MOTION
+   ───────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+    #macmini-overlay {
+        /* Cursor normal si no hay animaciones */
+        cursor: default;
+    }
+}
