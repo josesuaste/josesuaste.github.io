@@ -152,11 +152,11 @@
     color: var(--contact-title);
 
     /*
-      Ajuste óptico.
-      Si se va a la derecha, usa negativo.
-      Si se va a la izquierda, usa positivo.
+      FIX: valor fijo en px en lugar de em relativo
+      para que el ajuste óptico sea predecible
+      a cualquier font-size del clamp.
     */
-    transform: translateX(-0.03em);
+    transform: translateX(-2px);
 }
 
 .contact-subtitle {
@@ -311,16 +311,22 @@
         box-shadow var(--t-fast) var(--ease-out);
 }
 
+/* FIX: .btn-dot declarado una sola vez (era duplicado) */
 .btn-dot {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: var(--cream);
+    background: var(--contact-accent);
     flex-shrink: 0;
     transform-origin: center;
     transition: background var(--t-fast) var(--ease-out);
 }
 
+.submit-btn__text {
+    display: inline-block;
+}
+
+/* FIX: bloque hover declarado una sola vez (era duplicado) */
 @media (hover: hover) and (pointer: fine) {
     .submit-btn:hover {
         background: var(--contact-pink);
@@ -342,49 +348,14 @@
     opacity: 0.9;
 }
 
-.submit-btn__text {
-    display: inline-block;
-}
-
-.btn-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--contact-accent);
-    flex-shrink: 0;
-    transform-origin: center;
-    transition: background var(--t-fast) var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .submit-btn:hover {
-        background: var(--contact-pink);
-        color: var(--dark);
-        border-color: var(--contact-pink);
-        transform: translateY(-3px);
-        box-shadow:
-            0 20px 44px rgba(17, 17, 17, 0.14),
-            0 1px 0 rgba(255, 255, 255, 0.5) inset;
-    }
-
-    .submit-btn:hover .btn-dot {
-        background: var(--dark);
-    }
-}
-
 /* Responsive */
 
 @media (max-width: 760px) {
-    .contact-title {
-        font-size: clamp(5rem, 28vw, 8.8rem);
-        line-height: 0.78;
-        transform: translateX(-0.02em);
-    }
-
-
+    /* FIX: regla única para .contact-title en mobile (era duplicada) */
     .contact-title {
         font-size: clamp(4.4rem, 25vw, 7.6rem);
         line-height: 0.78;
+        transform: translateX(-2px);
     }
 
     .contact-subtitle {
