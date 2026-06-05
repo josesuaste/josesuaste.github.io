@@ -10,7 +10,7 @@
     --contact-field-bg: var(--white);
     --contact-field-text: var(--dark);
     --contact-field-border: rgba(17, 17, 17, 0.12);
-    --contact-accent: var(--sky);
+    --contact-accent: var(--pink, #fec5fb);
     --contact-pink: var(--pink, #fec5fb);
     --contact-radius-top: clamp(34px, 5vw, 72px);
 
@@ -139,14 +139,24 @@
 }
 
 .contact-title {
-    margin: 0;
+    display: block;
+    width: 100%;
+    margin: 0 auto;
     font-family: var(--font-burst-smooth);
-    font-size: clamp(7rem, 22vw, 18rem);
+    font-size: clamp(6.4rem, 19vw, 16rem);
     font-weight: 400;
     line-height: 0.72;
     letter-spacing: -0.06em;
     text-transform: none;
+    text-align: center;
     color: var(--contact-title);
+
+    /*
+      Ajuste óptico.
+      Si se va a la derecha, usa negativo.
+      Si se va a la izquierda, usa positivo.
+    */
+    transform: translateX(-0.03em);
 }
 
 .contact-subtitle {
@@ -246,7 +256,7 @@
     background: var(--white);
     box-shadow:
         0 16px 38px rgba(17, 17, 17, 0.08),
-        0 0 0 4px rgba(43, 160, 255, 0.16);
+        0 0 0 4px rgba(254, 197, 251, 0.26);
 }
 
 .form-field textarea {
@@ -342,6 +352,7 @@
     .contact-title {
         font-size: clamp(5rem, 28vw, 8.8rem);
         line-height: 0.78;
+        transform: translateX(-0.02em);
     }
 
 

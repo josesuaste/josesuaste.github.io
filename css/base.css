@@ -51,13 +51,6 @@
     font-style: normal;
     font-display: swap;
 }
-@font-face {
-    font-family: 'Little Boy';
-    src: url('../fonts/Little Boy Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
-    font-display: swap;
-}
 /* ── Tokens ──────────────────────────────────────────────── */
 
 :root {
@@ -84,7 +77,6 @@
     --font-handmade: 'Jelek Type', cursive;
     --font-burst: 'Dx Burst', cursive;
     --font-burst-smooth: 'Dx Burst Smooth', cursive;
-    --font-little-boy: 'Little Boy', cursive;
     
 
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);

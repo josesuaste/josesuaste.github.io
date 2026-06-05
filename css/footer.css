@@ -40,34 +40,43 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 0;
 }
 
 .footer-social a {
-    min-height: 42px;
-    padding: 0 18px;
-
+    position: relative;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
 
-    border: 1px solid rgba(17, 17, 17, 0.14);
-    border-radius: 999px;
+    padding: 0 14px;
+    min-height: auto;
+
+    border: 0;
+    border-radius: 0;
     background: transparent;
-    color: rgba(17, 17, 17, 0.76);
+    color: rgba(17, 17, 17, 0.72);
 
     font-family: var(--font-sans);
-    font-size: 0.78rem;
-    font-weight: 750;
+    font-size: 0.82rem;
+    font-weight: 700;
     line-height: 1;
-    letter-spacing: 0.02em;
+    letter-spacing: -0.01em;
     text-decoration: none;
 
     transition:
-        background var(--t-fast) var(--ease-out),
         color var(--t-fast) var(--ease-out),
-        border-color var(--t-fast) var(--ease-out),
         transform var(--t-fast) var(--ease-out);
+}
+
+.footer-social a:not(:last-child)::after {
+    content: "/";
+    position: absolute;
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%) rotate(12deg);
+    color: rgba(17, 17, 17, 0.34);
+    font-weight: 500;
 }
 
 .footer-email {
@@ -112,9 +121,7 @@
 
 @media (hover: hover) and (pointer: fine) {
     .footer-social a:hover {
-        background: var(--sky);
         color: var(--dark);
-        border-color: var(--sky);
         transform: translateY(-2px);
     }
 
@@ -150,13 +157,12 @@
 
     .footer-social {
         width: 100%;
-        gap: 8px;
+        gap: 0;
     }
 
     .footer-social a {
-        flex: 1 1 auto;
-        min-width: 0;
-        padding-inline: 14px;
+        flex: initial;
+        padding-inline: 12px;
     }
 
     .footer-bar {
