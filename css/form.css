@@ -311,6 +311,32 @@
         box-shadow var(--t-fast) var(--ease-out);
 }
 
+.btn-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cream);
+    flex-shrink: 0;
+    transform-origin: center;
+    transition: background var(--t-fast) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .submit-btn:hover {
+        background: var(--contact-pink);
+        color: var(--dark);
+        border-color: var(--contact-pink);
+        transform: translateY(-3px);
+        box-shadow:
+            0 20px 44px rgba(17, 17, 17, 0.14),
+            0 1px 0 rgba(255, 255, 255, 0.5) inset;
+    }
+
+    .submit-btn:hover .btn-dot {
+        background: var(--dark);
+    }
+}
+
 .submit-btn:disabled {
     cursor: progress;
     opacity: 0.9;
