@@ -189,7 +189,7 @@
                 if (labelEl) {
                     gsap.to(labelEl, {
                         x: 2,
-                        color: 'rgba(7, 17, 31, 0.9)',
+                        color: 'rgba(17, 17, 17, 0.86)',
                         duration: 0.24,
                         ease: 'power2.out',
                         overwrite: 'auto'
@@ -210,7 +210,7 @@
                 if (labelEl) {
                     gsap.to(labelEl, {
                         x: 0,
-                        color: 'rgba(7, 17, 31, 0.66)',
+                        color: 'rgba(17, 17, 17, 0.56)',
                         duration: 0.3,
                         ease: 'power2.out',
                         overwrite: 'auto'
@@ -321,7 +321,7 @@
 
         if (canHover && lines.length && typeof ScrollTrigger !== 'undefined') {
             gsap.to('.contact-line--one', {
-                y: -30,
+                y: -24,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: contact,
@@ -332,7 +332,7 @@
             });
 
             gsap.to('.contact-line--two', {
-                y: 36,
+                y: 28,
                 ease: 'none',
                 scrollTrigger: {
                     trigger: contact,
