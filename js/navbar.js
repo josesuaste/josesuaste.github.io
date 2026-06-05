@@ -1,513 +1,443 @@
 'use strict';
 
-// ════════════════════════════════════════════════════════════
-//  NAVBAR — MENÚ GSAP + LINK ACTIVO POR SECCIÓN
-//  Versión estable: timeline nueva por acción
-// ════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════
+   NAVBAR — GSAP overlay + blur activo + choque al cerrar
+   Permite cerrar inmediatamente aunque la apertura siga animando
+   ════════════════════════════════════════════════════════════ */
 
-(function initNavbarMenu() {
+(function initNavbar() {
+    const navbar = document.querySelector('.navbar');
     const toggle = document.querySelector('.menu-toggle');
-    const overlay = document.querySelector('.nav-overlay');
+    const overlay = document.querySelector('#navOverlay');
     const overlayBg = document.querySelector('.nav-overlay-bg');
-    const panels = gsap?.utils?.toArray ? gsap.utils.toArray('.nav-panel') : Array.from(document.querySelectorAll('.nav-panel'));
-    const navItems = gsap?.utils?.toArray ? gsap.utils.toArray('.nav-overlay-links li') : Array.from(document.querySelectorAll('.nav-overlay-links li'));
-    const socialItems = gsap?.utils?.toArray ? gsap.utils.toArray('.nav-socials li') : Array.from(document.querySelectorAll('.nav-socials li'));
-    const allLinks = document.querySelectorAll('.nav-overlay a');
+
+    const mainPanel = document.querySelector('.nav-panel-main');
+    const socialPanel = document.querySelector('.nav-panel-social');
+
     const barTop = document.querySelector('.bar-top');
     const barBot = document.querySelector('.bar-bot');
 
-    if (!toggle || !overlay) return;
+    if (!navbar || !toggle || !overlay || !overlayBg || !mainPanel || !socialPanel) return;
 
-    let isOpen = false;
-    let menuTl = null;
-
-    /*
-      Fallback:
-      Si GSAP no carga, el menú sigue funcionando con clases.
-    */
     if (typeof gsap === 'undefined') {
-        function openMenuFallback() {
-            isOpen = true;
-
-            overlay.classList.add('is-active');
-            toggle.classList.add('is-active');
-            document.body.classList.add('nav-open');
-
-            toggle.setAttribute('aria-expanded', 'true');
-            toggle.setAttribute('aria-label', 'Cerrar menú');
-            overlay.setAttribute('aria-hidden', 'false');
-
-            allLinks.forEach(link => {
-                link.setAttribute('tabindex', '0');
-            });
-        }
-
-        function closeMenuFallback() {
-            isOpen = false;
-
-            overlay.classList.remove('is-active');
-            toggle.classList.remove('is-active');
-            document.body.classList.remove('nav-open');
-
-            toggle.setAttribute('aria-expanded', 'false');
-            toggle.setAttribute('aria-label', 'Abrir menú');
-            overlay.setAttribute('aria-hidden', 'true');
-
-            allLinks.forEach(link => {
-                link.setAttribute('tabindex', '-1');
-            });
-        }
-
-        function isFallbackOpen() {
-            return (
-                isOpen ||
-                overlay.classList.contains('is-active') ||
-                document.body.classList.contains('nav-open') ||
-                toggle.getAttribute('aria-expanded') === 'true'
-            );
-        }
-
-        toggle.addEventListener('click', () => {
-            if (isFallbackOpen()) {
-                closeMenuFallback();
-            } else {
-                openMenuFallback();
-            }
-        });
-
-        overlay.addEventListener('click', event => {
-            const clickedPanel = event.target.closest('.nav-panel');
-            const clickedToggle = event.target.closest('.menu-toggle');
-
-            if (!clickedPanel && !clickedToggle && isFallbackOpen()) {
-                closeMenuFallback();
-            }
-        });
-
-        allLinks.forEach(link => {
-            link.addEventListener('click', closeMenuFallback);
-        });
-
-        document.addEventListener('keydown', event => {
-            if (event.key === 'Escape' && isFallbackOpen()) {
-                closeMenuFallback();
-                toggle.focus();
-            }
-        });
-
+        console.warn('[navbar] GSAP no está cargado.');
         return;
     }
 
-    function setA11y(open) {
-        toggle.setAttribute('aria-expanded', String(open));
-        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-        overlay.setAttribute('aria-hidden', String(!open));
+    const links = gsap.utils.toArray('.nav-overlay-links a');
+    const socialLinks = gsap.utils.toArray('.nav-socials a');
 
-        allLinks.forEach(link => {
-            link.setAttribute('tabindex', open ? '0' : '-1');
-        });
-    }
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function resetBars() {
-        if (!barTop || !barBot) return;
+    let isOpen = false;
+    let activeTimeline = null;
 
-        gsap.set(barTop, {
-            attr: {
-                x1: 6,
-                y1: 10,
-                x2: 22,
-                y2: 10
-            }
-        });
-
-        gsap.set(barBot, {
-            attr: {
-                x1: 6,
-                y1: 18,
-                x2: 22,
-                y2: 18
-            }
-        });
-    }
-
-    function isMenuVisuallyOpen() {
-        const overlayAutoAlpha = Number(gsap.getProperty(overlay, 'autoAlpha')) || 0;
-        const overlayOpacity = Number(gsap.getProperty(overlay, 'opacity')) || 0;
-        const overlayPointerEvents = gsap.getProperty(overlay, 'pointerEvents');
-
-        return (
-            isOpen ||
-            overlay.classList.contains('is-active') ||
-            document.body.classList.contains('nav-open') ||
-            toggle.getAttribute('aria-expanded') === 'true' ||
-            overlayAutoAlpha > 0 ||
-            overlayOpacity > 0 ||
-            overlayPointerEvents === 'auto'
-        );
-    }
-
-    function killMenuAnimation() {
-        if (menuTl) {
-            menuTl.kill();
-            menuTl = null;
+    function killActiveAnimation() {
+        if (activeTimeline) {
+            activeTimeline.kill();
+            activeTimeline = null;
         }
 
         gsap.killTweensOf([
             overlay,
             overlayBg,
-            ...panels,
-            ...navItems,
-            ...socialItems,
+            mainPanel,
+            socialPanel,
             barTop,
-            barBot
-        ].filter(Boolean));
+            barBot,
+            ...links,
+            ...socialLinks
+        ]);
     }
 
-    function setInitialState() {
-        killMenuAnimation();
+    /* ════════════════════════════════════════════════════════
+       Navbar limpio: solo cambia colores al bajar
+       ════════════════════════════════════════════════════════ */
 
-        isOpen = false;
+    function updateNavbarState() {
+        const shouldInvert = window.scrollY > 40;
 
+        navbar.classList.toggle('is-scrolled', shouldInvert);
+    }
+
+    updateNavbarState();
+
+    window.addEventListener('scroll', updateNavbarState, {
+        passive: true
+    });
+
+    /* ════════════════════════════════════════════════════════
+       Estados iniciales
+       ════════════════════════════════════════════════════════ */
+
+    gsap.set(overlay, {
+        autoAlpha: 0,
+        visibility: 'hidden'
+    });
+
+    gsap.set(overlayBg, {
+        autoAlpha: 0,
+        backdropFilter: 'blur(0px)',
+        webkitBackdropFilter: 'blur(0px)'
+    });
+
+    gsap.set(mainPanel, {
+        y: -56,
+        rotateZ: -1.8,
+        autoAlpha: 0,
+        transformOrigin: 'top center'
+    });
+
+    gsap.set(socialPanel, {
+        y: -34,
+        rotateZ: 1.4,
+        autoAlpha: 0,
+        transformOrigin: 'top center'
+    });
+
+    gsap.set(links, {
+        yPercent: 110,
+        autoAlpha: 0
+    });
+
+    gsap.set(socialLinks, {
+        y: 18,
+        autoAlpha: 0
+    });
+
+    /* ════════════════════════════════════════════════════════
+       Helpers
+       ════════════════════════════════════════════════════════ */
+
+    function setA11y(open) {
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+        overlay.setAttribute('aria-hidden', String(!open));
+    }
+
+    function resetClosedState() {
         overlay.classList.remove('is-active');
-        toggle.classList.remove('is-active');
         document.body.classList.remove('nav-open');
 
         gsap.set(overlay, {
             autoAlpha: 0,
-            pointerEvents: 'none'
+            visibility: 'hidden'
         });
 
-        if (overlayBg) {
-            gsap.set(overlayBg, {
-                opacity: 0
-            });
-        }
+        gsap.set(overlayBg, {
+            autoAlpha: 0,
+            backdropFilter: 'blur(0px)',
+            webkitBackdropFilter: 'blur(0px)'
+        });
 
-        gsap.set(panels, {
-            xPercent: 104,
+        gsap.set(mainPanel, {
+            y: -56,
+            rotateZ: -1.8,
+            autoAlpha: 0
+        });
+
+        gsap.set(socialPanel, {
+            y: -34,
+            rotateZ: 1.4,
+            autoAlpha: 0
+        });
+
+        gsap.set(links, {
+            yPercent: 110,
+            autoAlpha: 0
+        });
+
+        gsap.set(socialLinks, {
+            y: 18,
+            autoAlpha: 0
+        });
+
+        gsap.set(barTop, {
             y: 0,
             rotate: 0
         });
 
-        gsap.set([...navItems, ...socialItems], {
-            opacity: 0,
-            y: 24
+        gsap.set(barBot, {
+            y: 0,
+            rotate: 0
         });
 
-        resetBars();
-        setA11y(false);
+        updateNavbarState();
     }
 
     function openMenu() {
-        if (isMenuVisuallyOpen()) return;
+        if (isOpen) return;
 
-        killMenuAnimation();
+        killActiveAnimation();
 
         isOpen = true;
 
-        overlay.classList.add('is-active');
-        toggle.classList.add('is-active');
         document.body.classList.add('nav-open');
+        overlay.classList.add('is-active');
         setA11y(true);
 
-        menuTl = gsap.timeline({
+        if (reduceMotion) {
+            gsap.set(overlay, {
+                autoAlpha: 1,
+                visibility: 'visible'
+            });
+
+            gsap.set(overlayBg, {
+                autoAlpha: 1,
+                backdropFilter: 'blur(14px)',
+                webkitBackdropFilter: 'blur(14px)'
+            });
+
+            gsap.set([mainPanel, socialPanel, links, socialLinks], {
+                autoAlpha: 1,
+                clearProps: 'transform'
+            });
+
+            return;
+        }
+
+        const tl = gsap.timeline({
             defaults: {
-                ease: 'power3.out',
-                overwrite: 'auto'
+                ease: 'power3.out'
             },
-            onComplete: () => {
-                menuTl = null;
+            onComplete() {
+                activeTimeline = null;
             }
         });
 
-        menuTl.set(overlay, {
+        activeTimeline = tl;
+
+        tl.set(overlay, {
+            visibility: 'visible',
+            autoAlpha: 1
+        })
+
+        /* Blur de fondo */
+        .to(overlayBg, {
             autoAlpha: 1,
-            pointerEvents: 'auto'
-        });
+            backdropFilter: 'blur(14px)',
+            webkitBackdropFilter: 'blur(14px)',
+            duration: 0.42,
+            ease: 'power2.out'
+        }, 0)
 
-        if (overlayBg) {
-            menuTl.to(overlayBg, {
-                opacity: 1,
-                duration: 0.28
-            }, 0);
-        }
+        /* Panel crema entra */
+        .fromTo(mainPanel, {
+            y: -64,
+            rotateZ: -1.8,
+            autoAlpha: 0
+        }, {
+            y: 0,
+            rotateZ: 0,
+            autoAlpha: 1,
+            duration: 0.72,
+            ease: 'power4.out'
+        }, 0.08)
 
-        menuTl.fromTo(
-            panels,
-            {
-                xPercent: 104,
-                y: 0,
-                rotate: 0
-            },
-            {
-                xPercent: 0,
-                y: 0,
-                rotate: 0,
-                duration: 0.72,
-                stagger: 0.09,
-                ease: 'expo.out'
-            },
-            0.02
-        );
+        /* Panel negro entra */
+        .fromTo(socialPanel, {
+            y: -44,
+            rotateZ: 1.4,
+            autoAlpha: 0
+        }, {
+            y: 0,
+            rotateZ: 0,
+            autoAlpha: 1,
+            duration: 0.68,
+            ease: 'power4.out'
+        }, 0.18)
 
-        menuTl.fromTo(
-            navItems,
-            {
-                opacity: 0,
-                y: 32
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.72,
-                stagger: 0.045,
-                ease: 'expo.out'
-            },
-            0.2
-        );
+        /* Links principales */
+        .to(links, {
+            yPercent: 0,
+            autoAlpha: 1,
+            duration: 0.68,
+            stagger: 0.06,
+            ease: 'power4.out'
+        }, 0.24)
 
-        menuTl.fromTo(
-            socialItems,
-            {
-                opacity: 0,
-                y: 18
-            },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 0.42,
-                stagger: 0.045
-            },
-            0.38
-        );
+        /* Links sociales */
+        .to(socialLinks, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.44,
+            stagger: 0.045,
+            ease: 'power3.out'
+        }, 0.48)
 
-        if (barTop && barBot) {
-            menuTl.to(barTop, {
-                attr: {
-                    x1: 8,
-                    y1: 8,
-                    x2: 20,
-                    y2: 20
-                },
-                duration: 0.28,
-                ease: 'power3.out'
-            }, 0.05);
+        /* Hamburguesa a X */
+        .to(barTop, {
+            y: 4,
+            rotate: 45,
+            transformOrigin: '50% 50%',
+            duration: 0.32,
+            ease: 'power3.out'
+        }, 0)
 
-            menuTl.to(barBot, {
-                attr: {
-                    x1: 20,
-                    y1: 8,
-                    x2: 8,
-                    y2: 20
-                },
-                duration: 0.28,
-                ease: 'power3.out'
-            }, 0.05);
-        }
+        .to(barBot, {
+            y: -4,
+            rotate: -45,
+            transformOrigin: '50% 50%',
+            duration: 0.32,
+            ease: 'power3.out'
+        }, 0);
     }
 
     function closeMenu() {
-        if (!isMenuVisuallyOpen()) return;
+        if (!isOpen) return;
 
-        killMenuAnimation();
+        killActiveAnimation();
 
         isOpen = false;
         setA11y(false);
 
-        menuTl = gsap.timeline({
-            defaults: {
-                ease: 'power3.out',
-                overwrite: 'auto'
-            },
-            onComplete: () => {
-                overlay.classList.remove('is-active');
-                toggle.classList.remove('is-active');
-                document.body.classList.remove('nav-open');
+        if (reduceMotion) {
+            resetClosedState();
+            return;
+        }
 
-                gsap.set(overlay, {
-                    autoAlpha: 0,
-                    pointerEvents: 'none'
-                });
-
-                gsap.set(panels, {
-                    xPercent: 104,
-                    y: 0,
-                    rotate: 0
-                });
-
-                gsap.set([...navItems, ...socialItems], {
-                    opacity: 0,
-                    y: 24
-                });
-
-                resetBars();
-                menuTl = null;
+        const tl = gsap.timeline({
+            onComplete() {
+                activeTimeline = null;
+                resetClosedState();
             }
         });
 
-        if (barTop && barBot) {
-            menuTl.to(barTop, {
-                attr: {
-                    x1: 6,
-                    y1: 10,
-                    x2: 22,
-                    y2: 10
-                },
-                duration: 0.18,
-                ease: 'power3.inOut'
-            }, 0);
+        activeTimeline = tl;
 
-            menuTl.to(barBot, {
-                attr: {
-                    x1: 6,
-                    y1: 18,
-                    x2: 22,
-                    y2: 18
-                },
-                duration: 0.18,
-                ease: 'power3.inOut'
-            }, 0);
-        }
+        /*
+            Cierre:
+            1. Links salen.
+            2. Panel crema baja primero.
+            3. Panel crema choca con panel negro.
+            4. Ambos caen.
+        */
 
-        menuTl.to([...navItems, ...socialItems], {
-            opacity: 0,
-            y: 18,
-            duration: 0.12,
-            stagger: {
-                each: 0.01,
-                from: 'end'
-            },
-            ease: 'power2.in'
-        }, 0);
-
-        menuTl.to(panels, {
-            y: '115vh',
-            rotate: () => gsap.utils.random(-8, 8),
-            duration: 0.42,
-            stagger: {
-                each: 0.025,
-                from: 'end'
-            },
-            ease: 'power3.in'
-        }, 0.04);
-
-        if (overlayBg) {
-            menuTl.to(overlayBg, {
-                opacity: 0,
-                duration: 0.18,
-                ease: 'power2.in'
-            }, 0.2);
-        }
-
-        menuTl.set(overlay, {
+        tl.to(links, {
+            yPercent: -105,
             autoAlpha: 0,
-            pointerEvents: 'none'
-        });
-    }
+            duration: 0.22,
+            stagger: 0.025,
+            ease: 'power2.in'
+        }, 0)
 
-    function closeInstant() {
-        killMenuAnimation();
-        setInitialState();
+        .to(socialLinks, {
+            y: -12,
+            autoAlpha: 0,
+            duration: 0.18,
+            stagger: 0.02,
+            ease: 'power2.in'
+        }, 0)
+
+        .to(barTop, {
+            y: 0,
+            rotate: 0,
+            duration: 0.22,
+            ease: 'power3.out'
+        }, 0)
+
+        .to(barBot, {
+            y: 0,
+            rotate: 0,
+            duration: 0.22,
+            ease: 'power3.out'
+        }, 0)
+
+        /* Panel crema cae hacia el panel negro */
+        .to(mainPanel, {
+            y: 44,
+            rotateZ: 2.4,
+            duration: 0.24,
+            ease: 'power2.in'
+        }, 0.1)
+
+        /*
+            Choque:
+            el panel negro baja un poco por el impacto,
+            y el crema rebota ligeramente.
+        */
+        .to(socialPanel, {
+            y: 18,
+            rotateZ: -1.8,
+            duration: 0.14,
+            ease: 'power1.out'
+        }, 0.28)
+
+        .to(mainPanel, {
+            y: 26,
+            rotateZ: -1.2,
+            duration: 0.14,
+            ease: 'power2.out'
+        }, 0.28)
+
+        /* Ambos se desploman */
+        .to(mainPanel, {
+            y: window.innerHeight * 1.1,
+            rotateZ: -8,
+            autoAlpha: 0,
+            duration: 0.58,
+            ease: 'power4.in'
+        }, 0.42)
+
+        .to(socialPanel, {
+            y: window.innerHeight * 1.08,
+            rotateZ: 7,
+            autoAlpha: 0,
+            duration: 0.54,
+            ease: 'power4.in'
+        }, 0.44)
+
+        /* Blur desaparece */
+        .to(overlayBg, {
+            autoAlpha: 0,
+            backdropFilter: 'blur(0px)',
+            webkitBackdropFilter: 'blur(0px)',
+            duration: 0.36,
+            ease: 'power2.out'
+        }, 0.48);
     }
 
     function toggleMenu() {
-        if (isMenuVisuallyOpen()) {
+        if (isOpen) {
             closeMenu();
         } else {
             openMenu();
         }
     }
 
-    setInitialState();
+    /* ════════════════════════════════════════════════════════
+       Eventos
+       ════════════════════════════════════════════════════════ */
 
-    toggle.addEventListener('click', event => {
-        event.preventDefault();
-        event.stopPropagation();
-        toggleMenu();
-    });
+    toggle.addEventListener('click', toggleMenu);
 
     /*
-      Cierra al hacer click en cualquier espacio fuera de los paneles.
-      Esto cubre overlayBg y también zonas vacías del overlay.
+        Cierra el menú al hacer click fuera de los paneles,
+        sobre el fondo con blur.
     */
-    overlay.addEventListener('click', event => {
-        const clickedPanel = event.target.closest('.nav-panel');
+    overlayBg.addEventListener('click', closeMenu);
 
-        if (!clickedPanel && isMenuVisuallyOpen()) {
+    /*
+        Evita que clicks dentro de los paneles afecten el fondo.
+        No es estrictamente necesario porque escuchamos overlayBg,
+        pero lo dejamos como protección.
+    */
+    mainPanel.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
+    socialPanel.addEventListener('click', (event) => {
+        event.stopPropagation();
+    });
+
+    links.forEach((link) => {
+        link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && isOpen) {
             closeMenu();
         }
     });
-
-    allLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (isMenuVisuallyOpen()) {
-                closeMenu();
-            }
-        });
-    });
-
-    window.addEventListener('resize', () => {
-        if (isMenuVisuallyOpen()) {
-            closeInstant();
-        }
-    });
-
-    document.addEventListener('keydown', event => {
-        if (event.key === 'Escape' && isMenuVisuallyOpen()) {
-            closeMenu();
-            toggle.focus();
-        }
-    });
-})();
-
-
-// ════════════════════════════════════════════════════════════
-//  NAV LINK ACTIVO POR SECCIÓN
-// ════════════════════════════════════════════════════════════
-
-(function initActiveLinks() {
-    const sections = Array.from(document.querySelectorAll('section[id], header[id]'));
-
-    const navLinks = Array.from(
-        document.querySelectorAll('.nav-overlay-links a[href^="#"]')
-    ).filter(link => {
-        const href = link.getAttribute('href');
-        return href && href.length > 1;
-    });
-
-    if (!sections.length || !navLinks.length || !('IntersectionObserver' in window)) return;
-
-    const linkById = new Map(
-        navLinks.map(link => [link.getAttribute('href').slice(1), link])
-    );
-
-    function setActive(id) {
-        navLinks.forEach(link => {
-            const isActive = link.getAttribute('href') === `#${id}`;
-
-            link.classList.toggle('active', isActive);
-
-            if (isActive) {
-                link.setAttribute('aria-current', 'page');
-            } else {
-                link.removeAttribute('aria-current');
-            }
-        });
-    }
-
-    const observer = new IntersectionObserver(entries => {
-        const visible = entries
-            .filter(entry => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible.length && linkById.has(visible[0].target.id)) {
-            setActive(visible[0].target.id);
-        }
-    }, {
-        rootMargin: '-28% 0px -55% 0px',
-        threshold: [0.15, 0.35, 0.6]
-    });
-
-    sections.forEach(section => observer.observe(section));
 })();
 

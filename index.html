@@ -66,96 +66,101 @@
 
 <div id="app">
 
-    <!-- ════════════════════════════════════════════════════
-         NAVBAR
-         ════════════════════════════════════════════════════ -->
+    <!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 
-    <nav class="navbar" aria-label="Navegación principal">
-        <a class="navbar-logo" href="#hero" aria-label="Ir al inicio">
-            ERROR404
-        </a>
+<!-- ════════════════════════════════════════════════════
+     NAVBAR
+     ════════════════════════════════════════════════════ -->
 
-        <button
-            class="menu-toggle"
-            type="button"
-            aria-expanded="false"
-            aria-controls="navOverlay"
-            aria-label="Abrir menú"
-        >
-            <svg class="menu-icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
-                <line class="bar bar-top" x1="6" y1="10" x2="22" y2="10" />
-                <line class="bar bar-bot" x1="6" y1="18" x2="22" y2="18" />
-            </svg>
-        </button>
-    </nav>
+<nav class="navbar" aria-label="Navegación principal">
+    <a class="navbar-logo" href="#hero" aria-label="Ir al inicio">
+        ERROR404
+    </a>
 
-    <div class="nav-overlay" id="navOverlay" aria-hidden="true">
-        <div class="nav-overlay-bg"></div>
+    <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="navOverlay"
+        aria-label="Abrir menú"
+    >
+        <svg class="menu-icon" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+            <line class="bar bar-top" x1="6" y1="10" x2="22" y2="10" />
+            <line class="bar bar-bot" x1="6" y1="18" x2="22" y2="18" />
+        </svg>
+    </button>
+</nav>
 
-        <div class="nav-panel nav-panel-main">
-            <div class="nav-panel-header">
-                <span>Navegación</span>
-                <span>ERROR404</span>
-            </div>
+<div class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <div class="nav-overlay-bg" aria-hidden="true"></div>
 
-            <ul class="nav-overlay-links">
-                <li><a href="#about">Sobre mí</a></li>
-                <li><a href="#setup">Set up</a></li>
-                <li><a href="#stats">Stats</a></li>
-                <li><a href="#videos">Videos</a></li>
-                <li><a href="#contact">Contacto</a></li>
-            </ul>
+    <div class="nav-panel nav-panel-main">
+        <div class="nav-panel-header">
+            <span>Navegación</span>
+            <span>ERROR404</span>
         </div>
 
-        <div class="nav-panel nav-panel-social">
-            <p class="nav-social-label">Redes</p>
-
-            <ul class="nav-socials">
-                <li>
-                    <a
-                        href="https://github.com/josesuaste"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-umami-event="Click-Nav-GitHub"
-                    >
-                        GitHub
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="https://www.instagram.com/josesuaste"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-umami-event="Click-Nav-Instagram"
-                    >
-                        Instagram
-                    </a>
-                </li>
-
-                <li>
-                    <a
-                        href="https://www.youtube.com/@error404mx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-umami-event="Click-Nav-YouTube"
-                    >
-                        YouTube
-                    </a>
-                </li>
-                <li>
-                    <a
-                        href="docs/media-kit.pdf"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-umami-event="Click-Nav-MediaKit"
-                    >
-                        Media Kit
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <ul class="nav-overlay-links">
+            <li><a href="#about">Sobre mí</a></li>
+            <li><a href="#setup">Set up</a></li>
+            <li><a href="#stats">Stats</a></li>
+            <li><a href="#videos">Videos</a></li>
+            <li><a href="#contact">Contacto</a></li>
+        </ul>
     </div>
+
+    <div class="nav-panel nav-panel-social">
+        <p class="nav-social-label">Redes</p>
+
+        <ul class="nav-socials">
+            <li>
+                <a
+                    href="https://github.com/josesuaste"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-umami-event="Click-Nav-GitHub"
+                >
+                    GitHub
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="https://www.instagram.com/josesuaste"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-umami-event="Click-Nav-Instagram"
+                >
+                    Instagram
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="https://www.youtube.com/@error404mx"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-umami-event="Click-Nav-YouTube"
+                >
+                    YouTube
+                </a>
+            </li>
+
+            <li>
+                <a
+                    href="docs/media-kit.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-umami-event="Click-Nav-MediaKit"
+                >
+                    Media Kit
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
 
     <main id="main-content">
 
@@ -290,10 +295,9 @@
 
         <div class="setup-description">
             <p>
-                Tengo un BenQ MOBIUZ EX240 y el núcleo es una Mac Mini M4, que ofrece la potencia necesaria en un formato compacto,
-                complemento mi flujo creativo con un iPad Pro M2 como segunda pantalla, la ergonomía del MX Vertical y 
-                Pebble Keys 2 K380s para sesiones largas, en el audio DJI Mic Mini para capturar audio claro
-                y para una iluminación limpia Xiaomi Lightbar
+                Tengo un BenQ MOBIUZ EX240 y el núcleo es una Mac Mini M4, que ofrece la potencia necesaria en un formato compacto. 
+                Complemento mi flujo creativo con un iPad Pro M2 como segunda pantalla, la ergonomía del MX Vertical y el Pebble Keys 2 K380s para sesiones largas. 
+                En el audio, uso el DJI Mic Mini para capturar un sonido claro y, para una iluminación limpia, la Xiaomi Lightbar.
             </p>
         </div>
 

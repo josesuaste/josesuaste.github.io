@@ -1,6 +1,6 @@
 /* ════════════════════════════════════════════════════════════
    NAVBAR — ERROR404
-   GSAP Core menu overlay
+   Sin barra glass, con blur activo y mejor contraste
    ════════════════════════════════════════════════════════════ */
 
 .navbar {
@@ -9,16 +9,21 @@
     left: 0;
     right: 0;
     z-index: 600;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     padding: clamp(16px, 2.5vw, 26px) var(--pad-x);
+
     color: var(--dark);
     pointer-events: none;
+
+    background: transparent;
+    border-bottom: 0;
+
     transition:
-        background-color var(--t-mid) var(--ease-out),
-        backdrop-filter var(--t-mid) var(--ease-out),
-        border-color var(--t-mid) var(--ease-out);
+        color var(--t-mid) var(--ease-out);
 }
 
 .navbar > * {
@@ -28,33 +33,84 @@
 .navbar-logo {
     position: relative;
     z-index: 610;
+
     display: inline-flex;
     align-items: center;
+
     text-decoration: none;
     font-family: var(--font-sans);
     font-size: clamp(0.85rem, 1.1vw, 1rem);
     font-weight: 800;
     line-height: 1;
     letter-spacing: -0.04em;
+
+    color: var(--dark);
+
+    transition:
+        color var(--t-mid) var(--ease-out),
+        opacity var(--t-fast) var(--ease-out);
+}
+
+.navbar-logo:hover {
+    opacity: 0.72;
+}
+
+/* Estado cuando haces scroll: NO hay barra, solo cambia contraste */
+
+.navbar.is-scrolled .navbar-logo {
+    color: var(--cream);
+}
+
+.navbar.is-scrolled .menu-toggle {
+    background: var(--cream);
+    color: var(--dark);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+}
+
+/* Si estás en una sección clara después del hero, puedes quitar esta clase desde JS si quieres */
+
+.navbar.is-light-section .navbar-logo {
     color: var(--dark);
 }
+
+.navbar.is-light-section .menu-toggle {
+    background: var(--dark);
+    color: var(--cream);
+}
+
+/* Botón */
 
 .menu-toggle {
     position: relative;
     z-index: 610;
+
     width: 46px;
     height: 46px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     border: 0;
     padding: 0;
     border-radius: 999px;
+
     background: var(--dark);
     color: var(--cream);
+
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+
+    transition:
+        background-color var(--t-mid) var(--ease-out),
+        color var(--t-mid) var(--ease-out),
+        transform var(--t-fast) var(--ease-out),
+        box-shadow var(--t-mid) var(--ease-out);
+}
+
+.menu-toggle:hover {
+    transform: scale(1.04);
 }
 
 .menu-icon {
@@ -70,17 +126,22 @@
     stroke-linecap: round;
 }
 
-/* Overlay */
+/* ════════════════════════════════════════════════════════════
+   OVERLAY
+   ════════════════════════════════════════════════════════════ */
 
 .nav-overlay {
     position: fixed;
     inset: 0;
     z-index: 550;
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: clamp(10px, 1.4vw, 16px);
+
     padding: clamp(74px, 8vw, 96px) var(--pad-x) var(--pad-x);
+
     visibility: hidden;
     pointer-events: none;
 }
@@ -90,32 +151,54 @@
 }
 
 .nav-overlay-bg {
+    pointer-events: auto;
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: rgba(17, 17, 17, 0.48);
+
+    background: rgba(17, 17, 17, 0.42);
     opacity: 0;
+
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+}
+
+/* Este es el blur que sí te gustó */
+
+.nav-overlay.is-active .nav-overlay-bg {
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
 }
 
 .nav-panel {
     position: relative;
     z-index: 2;
+
     width: min(100%, 720px);
+
     border: 1px solid rgba(17, 17, 17, 0.14);
     border-radius: clamp(18px, 2vw, 28px);
+
     overflow: clip;
     will-change: transform, opacity;
+
+    transform-origin: top center;
 }
 
 .nav-panel-main {
     min-height: auto;
     max-height: calc(100dvh - 230px);
+
     padding: clamp(22px, 3vw, 34px);
+
     display: flex;
     flex-direction: column;
+
     background: var(--cream);
     color: var(--dark);
+
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.2);
+
     overflow-y: auto;
     overscroll-behavior: contain;
 }
@@ -125,20 +208,26 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
+
     margin-bottom: clamp(22px, 4vw, 44px);
+
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+
     color: rgba(17, 17, 17, 0.54);
 }
 
 .nav-overlay-links {
     list-style: none;
+
     display: flex;
     flex-direction: column;
     gap: clamp(0px, 0.3vw, 5px);
-    margin-top: 0;
+
+    margin: 0;
+    padding: 0;
 }
 
 .nav-overlay-links li {
@@ -147,26 +236,34 @@
 
 .nav-overlay-links a {
     position: relative;
+
     display: inline-block;
+
     text-decoration: none;
     font-family: var(--font-sans);
     font-size: clamp(2.6rem, 6.8vw, 5.8rem);
     font-weight: 800;
     line-height: 0.9;
     letter-spacing: -0.08em;
+
     color: var(--dark);
 }
 
 .nav-overlay-links a::after {
     content: "";
+
     position: absolute;
     left: 0.05em;
     right: 0.05em;
     bottom: 0.02em;
+
     height: 0.08em;
+
     background: #fec5fb;
+
     transform: scaleX(0);
     transform-origin: right;
+
     transition: transform 0.35s var(--ease-out);
 }
 
@@ -181,56 +278,78 @@
     color: var(--dark);
 }
 
+/* Panel negro */
+
 .nav-panel-social {
     min-height: 132px;
+
     padding: clamp(18px, 3vw, 28px);
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+
     background: var(--dark);
     color: var(--cream);
+
     border-color: rgba(244, 241, 234, 0.18);
+
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
 }
 
 .nav-social-label {
+    margin: 0;
+
     font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.12em;
     text-transform: uppercase;
+
     color: rgba(244, 241, 234, 0.54);
 }
 
 .nav-socials {
     list-style: none;
+
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: clamp(12px, 2vw, 24px);
+
+    margin: 0;
+    padding: 0;
 }
 
 .nav-socials a {
     position: relative;
+
     display: inline-block;
+
     text-decoration: none;
     font-size: clamp(0.95rem, 1.4vw, 1.15rem);
     font-weight: 700;
     letter-spacing: -0.03em;
+
     color: var(--cream);
 }
 
 .nav-socials a::after {
     content: "";
+
     position: absolute;
     left: 0;
     right: 0;
     bottom: -0.35em;
+
     height: 1px;
+
     background: #fec5fb;
+
     transform: scaleX(0);
     transform-origin: right;
+
     transition: transform 0.3s var(--ease-out);
 }
 
@@ -240,21 +359,20 @@
     transform-origin: left;
 }
 
-/* Estado cuando el menú está abierto */
+/* Estado menú abierto */
 
-body.nav-open .navbar {
-    color: var(--dark);
+body.nav-open {
+    overflow: hidden;
+}
+
+body.nav-open .navbar-logo {
+    color: var(--cream);
 }
 
 body.nav-open .menu-toggle {
     background: var(--cream);
     color: var(--dark);
 }
-
-
-
-
-
 
 /* Responsive */
 
