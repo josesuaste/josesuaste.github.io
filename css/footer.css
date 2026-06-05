@@ -121,13 +121,13 @@
 
 @media (hover: hover) and (pointer: fine) {
     .footer-social a:hover {
-        color: var(--dark);
+        color: var(--pink, #fec5fb);
         transform: translateY(-2px);
     }
 
     .footer-email:hover,
     .footer-logo:hover {
-        color: var(--sky);
+        color: var(--dark);
         transform: translateY(-2px);
     }
 }
