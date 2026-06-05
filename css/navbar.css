@@ -251,35 +251,6 @@ body.nav-open .menu-toggle {
     color: var(--dark);
 }
 
-/* ════════════════════════════════════════════════════════════
-   NAVBAR — Glassmorphism on scroll
-   ════════════════════════════════════════════════════════════ */
-
-.navbar {
-    background: rgba(244, 241, 234, 0);
-    border-bottom: 1px solid transparent;
-    -webkit-backdrop-filter: blur(0px);
-    backdrop-filter: blur(0px);
-}
-
-/* Se activa cuando haces scroll */
-.navbar.is-scrolled {
-    background: rgba(244, 241, 234, 0.68);
-    border-bottom: 1px solid rgba(17, 17, 17, 0.1);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    backdrop-filter: blur(18px) saturate(160%);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-}
-
-/* Mejor contraste cuando está encima de secciones oscuras */
-.navbar.is-scrolled .navbar-logo {
-    color: var(--dark);
-}
-
-.navbar.is-scrolled .menu-toggle {
-    background: rgba(17, 17, 17, 0.9);
-    color: var(--cream);
-}
 
 /* Responsive */
 

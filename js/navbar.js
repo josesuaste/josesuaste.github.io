@@ -511,26 +511,3 @@
     sections.forEach(section => observer.observe(section));
 })();
 
-
-// ════════════════════════════════════════════════════════════
-//  NAVBAR GLASS
-// ════════════════════════════════════════════════════════════
-
-
-(function initNavbarGlass() {
-    const navbar = document.querySelector('.navbar');
-
-    if (!navbar) return;
-
-    function updateNavbarGlass() {
-        const shouldGlass = window.scrollY > 20;
-
-        navbar.classList.toggle('is-scrolled', shouldGlass);
-    }
-
-    updateNavbarGlass();
-
-    window.addEventListener('scroll', updateNavbarGlass, {
-        passive: true
-    });
-})();
