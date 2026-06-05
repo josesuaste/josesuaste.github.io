@@ -31,7 +31,7 @@
     let intervalId = null;
 
     const observer = new IntersectionObserver((entries) => {
-        const entry = entries;
+        const entry = entries; // ✅ Fix: tomar el primer elemento del array
 
         if (!entry.isIntersecting || intervalId) return;
 
@@ -40,6 +40,8 @@
                 wiggle.play(0);
             }
         }, 7000);
+
+        observer.disconnect(); // ✅ Fix: desconectar tras el primer trigger, ya no es necesario
     }, {
         threshold: 0.6
     });
