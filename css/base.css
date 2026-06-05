@@ -54,10 +54,10 @@
 /* ── Tokens ──────────────────────────────────────────────── */
 
 :root {
-    --green: #A8BF8A;
-    --coral: #D9826B;
-    --sky: #6FA7C8;
-    --yellow: #E5CF86;
+    --green: #8ED462;
+--coral: #FF705D;
+--sky: #2BA0FF;
+--yellow: #F5E211; /* si ya decidiste usar este amarillo cálido */
 
     --cream: #f4f1ea;
     --paper: #fdfaf3;
@@ -69,7 +69,6 @@
 
     --blue: var(--sky);
     --orange: var(--coral);
-
     --hero-bg: var(--cream);
 
     --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

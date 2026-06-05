@@ -7,11 +7,11 @@
     --contact-text: var(--dark);
     --contact-title: var(--dark);
     --contact-muted: rgba(17, 17, 17, 0.64);
-    --contact-field-bg: var(--white);
+    --contact-field-bg: var(--paper);
     --contact-field-text: var(--dark);
-    --contact-field-border: rgba(17, 17, 17, 0.12);
-    --contact-accent: var(--pink, #fec5fb);
-    --contact-pink: var(--pink, #fec5fb);
+    --contact-field-border: rgba(17, 17, 17, 0.1);
+    --contact-focus: rgba(17, 17, 17, 0.22);
+    --contact-hover: var(--sky);
 
     position: relative;
     background: var(--contact-bg);
@@ -117,7 +117,7 @@
 /* Layout */
 
 .contact-inner {
-    width: min(100%, 760px);
+    width: min(100%, 1180px);
     min-width: 0;
     margin: 0 auto;
     display: flex;
@@ -126,40 +126,32 @@
 }
 
 .contact-heading {
-    width: min(100%, 720px);
+    width: min(100%, 1180px);
     margin: 0 auto clamp(32px, 4.8vw, 52px);
     text-align: center;
 }
 
-.contact-heading .section-kicker {
-    width: 100%;
-    margin-bottom: clamp(14px, 2vw, 22px);
-}
+/* Título handmade */
 
 .contact-title {
     display: block;
     width: 100%;
+    max-width: calc(100vw - 32px);
     margin: 0 auto;
     font-family: var(--font-burst-smooth);
-    font-size: clamp(6.4rem, 19vw, 16rem);
+    font-size: clamp(6.2rem, 17vw, 16rem);
     font-weight: 400;
-    line-height: 0.72;
-    letter-spacing: -0.06em;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
     text-transform: none;
     text-align: center;
     color: var(--contact-title);
-
-    /*
-      FIX: valor fijo en px en lugar de em relativo
-      para que el ajuste óptico sea predecible
-      a cualquier font-size del clamp.
-    */
     transform: translateX(-2px);
 }
 
 .contact-subtitle {
     max-width: 620px;
-    margin: clamp(28px, 4vw, 44px) auto 0;
+    margin: clamp(26px, 4vw, 42px) auto 0;
     font-family: var(--font-sans);
     font-size: clamp(1.35rem, 2.7vw, 2.15rem);
     font-weight: 620;
@@ -234,8 +226,8 @@
     line-height: 1.2;
     outline: none;
     box-shadow:
-        0 12px 30px rgba(17, 17, 17, 0.055),
-        0 1px 0 rgba(255, 255, 255, 0.52) inset;
+        inset 0 1px 0 rgba(255, 255, 255, 0.78),
+        0 10px 24px rgba(17, 17, 17, 0.045);
     transition:
         border-color var(--t-fast) var(--ease-out),
         box-shadow var(--t-fast) var(--ease-out),
@@ -250,11 +242,12 @@
 
 .form-field input:focus,
 .form-field textarea:focus {
-    border-color: var(--contact-accent);
-    background: var(--white);
+    border-color: var(--contact-focus);
+    background: var(--paper);
     box-shadow:
-        0 16px 38px rgba(17, 17, 17, 0.08),
-        0 0 0 4px rgba(254, 197, 251, 0.26);
+        inset 0 1px 0 rgba(255, 255, 255, 0.82),
+        0 14px 30px rgba(17, 17, 17, 0.07),
+        0 0 0 4px rgba(17, 17, 17, 0.055);
 }
 
 .form-field textarea {
@@ -309,27 +302,30 @@
         box-shadow var(--t-fast) var(--ease-out);
 }
 
-/* FIX: .btn-dot declarado una sola vez (era duplicado) */
-.btn-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--contact-accent);
-    flex-shrink: 0;
-    transform-origin: center;
-    transition: background var(--t-fast) var(--ease-out);
+.submit-btn:disabled {
+    cursor: progress;
+    opacity: 0.9;
 }
 
 .submit-btn__text {
     display: inline-block;
 }
 
-/* FIX: bloque hover declarado una sola vez (era duplicado) */
+.btn-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cream);
+    flex-shrink: 0;
+    transform-origin: center;
+    transition: background var(--t-fast) var(--ease-out);
+}
+
 @media (hover: hover) and (pointer: fine) {
     .submit-btn:hover {
-        background: var(--contact-pink);
+        background: var(--contact-hover);
         color: var(--dark);
-        border-color: var(--contact-pink);
+        border-color: var(--contact-hover);
         transform: translateY(-3px);
         box-shadow:
             0 20px 44px rgba(17, 17, 17, 0.14),
@@ -341,19 +337,33 @@
     }
 }
 
-.submit-btn:disabled {
-    cursor: progress;
-    opacity: 0.9;
+/* iPad / tablets */
+
+@media (min-width: 761px) and (max-width: 1180px) {
+    .contact-title {
+        font-size: clamp(7rem, 15vw, 11.5rem);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        transform: translateX(-1px);
+    }
+
+    .contact-heading {
+        width: min(100%, 980px);
+    }
 }
 
-/* Responsive */
+/* Mobile */
 
 @media (max-width: 760px) {
-    /* FIX: regla única para .contact-title en mobile (era duplicada) */
+    .contact-section {
+        padding: 92px 20px 78px;
+    }
+
     .contact-title {
-        font-size: clamp(4.4rem, 25vw, 7.6rem);
-        line-height: 0.78;
-        transform: translateX(-2px);
+        font-size: clamp(4.4rem, 24vw, 7.4rem);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        transform: translateX(-1px);
     }
 
     .contact-subtitle {
