@@ -50,18 +50,21 @@
     transition:
         color var(--t-mid) var(--ease-out),
         text-shadow var(--t-mid) var(--ease-out),
-        opacity var(--t-fast) var(--ease-out);
+        opacity var(--t-fast) var(--ease-out),
+        transform var(--t-fast) var(--ease-out);
 }
 
 .navbar-logo:hover {
     opacity: 0.72;
 }
 
-/* Estado cuando haces scroll: NO hay barra, solo cambia contraste */
+/* Estado cuando haces scroll: NO hay barra, solo queda visible el botón */
 
 .navbar.is-scrolled .navbar-logo {
-    color: var(--sky);
-    text-shadow: 0 2px 14px rgba(17, 17, 17, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-6px);
+    text-shadow: none;
 }
 
 .navbar.is-scrolled .menu-toggle {
@@ -262,7 +265,7 @@
 
     height: 0.08em;
 
-    background: #2BA0FF;
+    background: var(--sky);
 
     transform: scaleX(0);
     transform-origin: right;
@@ -348,7 +351,7 @@
 
     height: 1px;
 
-    background: #2BA0FF;
+    background: var(--sky);
 
     transform: scaleX(0);
     transform-origin: right;
@@ -369,8 +372,11 @@ body.nav-open {
 }
 
 body.nav-open .navbar-logo {
-    color: var(--sky);
-    text-shadow: 0 2px 14px rgba(17, 17, 17, 0.28);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    color: var(--cream);
+    text-shadow: none;
 }
 
 body.nav-open .menu-toggle {
