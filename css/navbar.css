@@ -45,9 +45,11 @@
     letter-spacing: -0.04em;
 
     color: var(--dark);
+    text-shadow: none;
 
     transition:
         color var(--t-mid) var(--ease-out),
+        text-shadow var(--t-mid) var(--ease-out),
         opacity var(--t-fast) var(--ease-out);
 }
 
@@ -58,7 +60,8 @@
 /* Estado cuando haces scroll: NO hay barra, solo cambia contraste */
 
 .navbar.is-scrolled .navbar-logo {
-    color: var(--cream);
+    color: var(--sky);
+    text-shadow: 0 2px 14px rgba(17, 17, 17, 0.28);
 }
 
 .navbar.is-scrolled .menu-toggle {
@@ -259,7 +262,7 @@
 
     height: 0.08em;
 
-    background: #F5E211;
+    background: #2BA0FF;
 
     transform: scaleX(0);
     transform-origin: right;
@@ -345,7 +348,7 @@
 
     height: 1px;
 
-    background: #fec5fb;
+    background: #2BA0FF;
 
     transform: scaleX(0);
     transform-origin: right;
@@ -366,7 +369,8 @@ body.nav-open {
 }
 
 body.nav-open .navbar-logo {
-    color: var(--cream);
+    color: var(--sky);
+    text-shadow: 0 2px 14px rgba(17, 17, 17, 0.28);
 }
 
 body.nav-open .menu-toggle {
