@@ -1,7 +1,7 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   FORM — editorial contact + rounded fields + submit animation
+   FORM — editorial contact + rounded fields + custom tooltip
    GSAP + ScrollTrigger + optional TextPlugin
    ════════════════════════════════════════════════════════════ */
 
@@ -9,7 +9,10 @@
     function start() {
         const contact = document.querySelector('#contact');
         const form = document.querySelector('.minimal-form');
-        const textarea = document.querySelector('.minimal-form textarea');
+
+        if (!contact || !form) return;
+
+        const textarea = form.querySelector('textarea');
 
         if (textarea) {
             const resizeTextarea = () => {
@@ -20,8 +23,6 @@
             textarea.addEventListener('input', resizeTextarea);
             resizeTextarea();
         }
-
-        if (!contact || !form) return;
 
         if (typeof gsap === 'undefined') {
             console.warn('[form] GSAP no está cargado.');
@@ -47,13 +48,88 @@
         const subtitle = contact.querySelector('.contact-subtitle');
         const copy = contact.querySelector('.contact-copy');
         const fields = contact.querySelectorAll('.form-field');
-        const inputs = contact.querySelectorAll('.form-field input, .form-field textarea');
-        const button = contact.querySelector('.submit-btn');
-        const buttonText = contact.querySelector('.submit-btn__text');
+        const inputs = form.querySelectorAll('.form-field input, .form-field textarea');
+        const button = form.querySelector('.submit-btn');
+        const buttonText = form.querySelector('.submit-btn__text');
         const lines = contact.querySelectorAll('.contact-line');
 
         function isNavOpen() {
             return document.body.classList.contains('nav-open');
+        }
+
+        function getFieldMessage(input) {
+            const name = input.getAttribute('name');
+
+            if (input.validity.valueMissing) {
+                if (name === 'nombre') return 'Escribe tu nombre.';
+                if (name === 'email') return 'Escribe tu correo.';
+                if (name === 'mensaje') return 'Cuéntame qué debería probar.';
+                return 'Completa este campo.';
+            }
+
+            if (input.validity.typeMismatch && input.type === 'email') {
+                return 'Escribe un correo válido.';
+            }
+
+            return 'Revisa este campo.';
+        }
+
+        function getTooltip(field) {
+            let tooltip = field.querySelector('.form-tooltip');
+
+            if (!tooltip) {
+                tooltip = document.createElement('div');
+                tooltip.className = 'form-tooltip';
+                tooltip.setAttribute('role', 'alert');
+                field.appendChild(tooltip);
+            }
+
+            return tooltip;
+        }
+
+        function clearFieldError(input) {
+            const field = input.closest('.form-field');
+            if (!field) return;
+
+            field.classList.remove('is-invalid');
+
+            const tooltip = field.querySelector('.form-tooltip');
+
+            if (tooltip) {
+                tooltip.textContent = '';
+            }
+        }
+
+        function clearAllFieldErrors() {
+            inputs.forEach((input) => {
+                clearFieldError(input);
+            });
+        }
+
+        function showFieldError(input) {
+            const field = input.closest('.form-field');
+            if (!field) return;
+
+            const tooltip = getTooltip(field);
+
+            tooltip.textContent = getFieldMessage(input);
+            field.classList.add('is-invalid');
+
+            gsap.fromTo(
+                tooltip,
+                { y: 8, scale: 0.98 },
+                {
+                    y: 0,
+                    scale: 1,
+                    duration: 0.28,
+                    ease: 'back.out(1.8)',
+                    overwrite: 'auto'
+                }
+            );
+        }
+
+        function isClickInsideFormField(target) {
+            return Boolean(target.closest('.form-field'));
         }
 
         if (reduceMotion) {
@@ -179,6 +255,12 @@
             input.addEventListener('focus', () => {
                 if (!field || isNavOpen()) return;
 
+                inputs.forEach((otherInput) => {
+                    if (otherInput !== input) {
+                        clearFieldError(otherInput);
+                    }
+                });
+
                 gsap.to(field, {
                     y: -3,
                     duration: 0.24,
@@ -194,6 +276,15 @@
                         ease: 'power2.out',
                         overwrite: 'auto'
                     });
+                }
+            });
+
+            input.addEventListener('input', () => {
+                clearFieldError(input);
+
+                if (input === textarea) {
+                    textarea.style.height = 'auto';
+                    textarea.style.height = `${textarea.scrollHeight}px`;
                 }
             });
 
@@ -216,7 +307,28 @@
                         overwrite: 'auto'
                     });
                 }
+
+                if (input.value.trim() && !input.checkValidity()) {
+                    showFieldError(input);
+                }
             });
+        });
+
+        document.addEventListener('pointerdown', (event) => {
+            if (!form.contains(event.target)) {
+                clearAllFieldErrors();
+                return;
+            }
+
+            if (!isClickInsideFormField(event.target)) {
+                clearAllFieldErrors();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                clearAllFieldErrors();
+            }
         });
 
         if (canHover && button) {
@@ -268,7 +380,25 @@
         }
 
         if (button) {
-            form.addEventListener('submit', () => {
+            form.addEventListener('submit', (event) => {
+                const firstInvalid = Array.from(inputs).find((input) => !input.checkValidity());
+
+                clearAllFieldErrors();
+
+                if (firstInvalid) {
+                    event.preventDefault();
+
+                    showFieldError(firstInvalid);
+                    firstInvalid.focus({ preventScroll: true });
+
+                    firstInvalid.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+
+                    return;
+                }
+
                 button.disabled = true;
                 button.setAttribute('aria-busy', 'true');
 
@@ -319,7 +449,7 @@
             });
         }
 
-        if (canHover && lines.length && typeof ScrollTrigger !== 'undefined') {
+        if (canHover && lines.length) {
             gsap.to('.contact-line--one', {
                 y: -24,
                 ease: 'none',
