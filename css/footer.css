@@ -121,7 +121,7 @@
 
 @media (hover: hover) and (pointer: fine) {
     .footer-social a:hover {
-        color: var(--pink, #fec5fb);
+        color: var(--green, #8ED462);
         transform: translateY(-2px);
     }
 
