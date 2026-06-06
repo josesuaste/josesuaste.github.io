@@ -107,19 +107,34 @@
 }
 
 .bottom-sub-btn {
-    display: inline-block;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 52px;
+    padding: 15px 34px;
+
     background: var(--dark, #111111);
     color: var(--cream, #f4f1ea);
-    padding: 12px 34px;
-    border: 1px solid var(--dark, #111111);
-    border-radius: 50px;
+    border: 1px solid rgba(17, 17, 17, 0.14);
+    border-radius: 999px;
+
     text-decoration: none;
-    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
     font-weight: 900;
-    letter-spacing: 0.08em;
+    line-height: 1;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+
     transform-origin: center;
     will-change: transform;
+
+    box-shadow:
+        0 16px 34px rgba(17, 17, 17, 0.14),
+        0 1px 0 rgba(255, 255, 255, 0.12) inset;
+
     transition:
         transform var(--t-fast, 0.2s) var(--ease-out, ease),
         background var(--t-fast, 0.2s) var(--ease-out, ease),
@@ -130,13 +145,16 @@
 
 @media (hover: hover) and (pointer: fine) {
     .bottom-sub-btn:hover {
-        background: var(--pink, #fec5fb);
+        background: var(--coral, #FF705D);
         color: var(--dark, #111111);
-        border-color: var(--pink, #fec5fb);
+        border-color: var(--coral, #FF705D);
         transform: translateY(-4px);
-        box-shadow: 0 16px 34px rgba(17, 17, 17, 0.14);
+        box-shadow:
+            0 20px 44px rgba(17, 17, 17, 0.16),
+            0 1px 0 rgba(255, 255, 255, 0.5) inset;
     }
 }
+
 
 /* ── Desktop ─────────────────────────────────────────────── */
 
@@ -160,6 +178,7 @@
     .profile-img,
     .bottom-sub-btn {
         transition: none;
+        will-change: auto;
     }
 
     .bottom-sub-btn:hover {
