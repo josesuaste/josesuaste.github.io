@@ -1,8 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
 
-'use strict';
-
 /* ════════════════════════════════════════════════════════════
    SETUP 3D — Mac Mini
    Three.js + GLTFLoader + drag rotation
@@ -259,8 +257,12 @@ function initSetup3D() {
     /* Animación */
 
     const clock = new THREE.Clock();
+    let rafId = null;
+    let isVisible = false;
 
     function animate() {
+        rafId = requestAnimationFrame(animate);
+
         const elapsed = clock.getElapsedTime();
         const progress = getSetupProgress();
 
@@ -280,15 +282,38 @@ function initSetup3D() {
         }
 
         renderer.render(scene, camera);
-        requestAnimationFrame(animate);
     }
 
-    animate();
+    /* Pausar el loop cuando la sección no está visible */
+
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        const entry = entries;
+
+        if (entry.isIntersecting && !isVisible) {
+            isVisible = true;
+            clock.start();
+            animate();
+        } else if (!entry.isIntersecting && isVisible) {
+            isVisible = false;
+            if (rafId !== null) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+        }
+    }, { threshold: 0 });
+
+    visibilityObserver.observe(setupSection);
 
     /* Limpieza básica cuando la página se descarga */
 
     window.addEventListener('pagehide', () => {
+        visibilityObserver.disconnect();
         resizeObserver.disconnect();
+
+        if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        }
 
         renderer.dispose();
 

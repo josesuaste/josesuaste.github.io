@@ -89,11 +89,6 @@
             }, 0.42);
         }
 
-        window.addEventListener('load', () => {
-            if (typeof ScrollTrigger !== 'undefined') {
-                ScrollTrigger.refresh();
-            }
-        }, { once: true });
     }
 
     if (document.readyState === 'loading') {

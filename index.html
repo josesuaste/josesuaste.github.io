@@ -33,8 +33,8 @@
     <link rel="manifest" href="site.webmanifest">
 
     <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/NectoMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/Mattone-Regular.woff2.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/NyghtSerif-LightItalic.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/DxBurst-Smooth.woff2" as="font" type="font/woff2" crossorigin>
 
     <script>
         document.documentElement.classList.add("js");
@@ -441,6 +441,7 @@
             <input type="hidden" name="subject" value="Nueva propuesta — ERROR404">
             <input type="hidden" name="from_name" value="ERROR404 — Web">
             <input type="hidden" name="redirect" value="https://josesuaste.github.io/gracias.html">
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
 
             <div class="form-row">
                 <div class="form-field">
@@ -572,6 +573,15 @@
 
 <!-- 3. ES module separado -->
 <script type="module" src="js/setup-3d.js"></script>
+
+<!-- 4. ScrollTrigger refresh centralizado — se ejecuta una vez al cargar todo -->
+<script>
+    window.addEventListener('load', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+        }
+    }, { once: true });
+</script>
 
 </body>
 </html>
