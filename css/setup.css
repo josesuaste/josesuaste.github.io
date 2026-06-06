@@ -288,6 +288,24 @@ body.nav-open .setup-model-stage {
     }
 }
 
+/* Línea decorativa debajo del párrafo */
+
+.setup-scribble {
+    display: block;
+    width: min(760px, 80vw);
+    height: clamp(36px, 5vw, 56px);
+    margin: clamp(18px, 2.5vw, 28px) auto 0;
+    overflow: visible;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.38;
+}
+
+.setup-scribble__path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+}
+
 @media (max-width: 520px) {
     .setup-card {
         --setup-card-radius: 24px;
