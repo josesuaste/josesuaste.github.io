@@ -453,6 +453,8 @@
     line-height: 1.2;
     letter-spacing: -0.015em;
 
+    /* Estado inicial: oculto. GSAP controla todas las transiciones,
+       no hay CSS transition para evitar conflictos en el cierre. */
     opacity: 0;
     visibility: hidden;
     transform: translateY(8px) scale(0.98);
@@ -461,11 +463,6 @@
     box-shadow:
         0 18px 44px rgba(17, 17, 17, 0.16),
         0 1px 0 rgba(255, 255, 255, 0.24) inset;
-
-    transition:
-        opacity var(--t-fast) var(--ease-out),
-        visibility var(--t-fast) var(--ease-out),
-        transform var(--t-fast) var(--ease-out);
 }
 
 .form-tooltip::after {
@@ -482,11 +479,7 @@
     border-radius: 2px;
 }
 
-.form-field.is-invalid .form-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-}
+/* El estado visible del tooltip lo gestiona GSAP en form.js */
 
 @media (max-width: 760px) {
     .form-tooltip {

@@ -95,9 +95,24 @@
 
             const tooltip = field.querySelector('.form-tooltip');
 
-            if (tooltip) {
-                tooltip.textContent = '';
-            }
+            if (!tooltip) return;
+
+            // Animar la salida con GSAP y limpiar el contenido solo al terminar.
+            // Esto evita el "cuadro con bola" que aparece cuando el CSS transition
+            // colapsa el contenido antes de que la opacidad llegue a 0.
+            gsap.to(tooltip, {
+                autoAlpha: 0,
+                y: 6,
+                scale: 0.96,
+                duration: 0.22,
+                ease: 'power2.in',
+                overwrite: 'auto',
+                onComplete() {
+                    tooltip.textContent = '';
+                    // Resetear transform para que la próxima entrada parta limpia
+                    gsap.set(tooltip, { y: 8, scale: 0.98, clearProps: 'visibility' });
+                }
+            });
         }
 
         function clearAllFieldErrors() {
@@ -112,13 +127,17 @@
 
             const tooltip = getTooltip(field);
 
+            // Cancelar cualquier animación de salida en curso antes de mostrar
+            gsap.killTweensOf(tooltip);
+
             tooltip.textContent = getFieldMessage(input);
             field.classList.add('is-invalid');
 
             gsap.fromTo(
                 tooltip,
-                { y: 8, scale: 0.98 },
+                { autoAlpha: 0, y: 8, scale: 0.98 },
                 {
+                    autoAlpha: 1,
                     y: 0,
                     scale: 1,
                     duration: 0.28,
