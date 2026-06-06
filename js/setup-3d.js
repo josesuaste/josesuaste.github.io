@@ -6,7 +6,7 @@ import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/
    Three.js + GLTFLoader + drag rotation
    ════════════════════════════════════════════════════════════ */
 
-const MODEL_PATH = 'models/macmini.glb';
+const MODEL_PATH = 'models/Macmini.glb';
 
 const canvas = document.querySelector('#macmini-canvas');
 const setupSection = document.querySelector('#setup');
@@ -80,11 +80,12 @@ function initSetup3D() {
             centerAndScaleModel(model);
 
             /*
-              Importante:
-              No forzamos Math.PI porque ya orientaste el GLB en Blender.
-              Esto respeta la posición y frente del modelo exportado.
+              El nodo raíz "m4" exporta con rotation xyzw [0.707,0,0,0.707]
+              = 90° en X (eje Blender → glTF). Compensamos -PI/2 en X para
+              que quede vertical, y PI en Y para que la manzana mire al frente.
+              Ajusta el valor de Y si necesitas girar más o menos.
             */
-            model.rotation.set(0, 0, 0);
+            model.rotation.set(-Math.PI / 2, Math.PI, 0);
 
             modelGroup.add(model);
 
@@ -273,11 +274,13 @@ function initSetup3D() {
             currentRotationY = THREE.MathUtils.lerp(currentRotationY, targetRotationY, 0.08);
 
             /*
-              Respetamos la orientación de Blender.
-              Solo agregamos la rotación del usuario y un tilt suave.
+              Rotación base: -PI/2 en X compensa el eje Blender.
+              PI en Y es la orientación frontal (manzana hacia cámara).
+              El drag del usuario se suma sobre el Y base.
+              El scrollTilt se suma sobre el X base.
             */
-            model.rotation.y = currentRotationY;
-            model.rotation.x = scrollTilt;
+            model.rotation.x = -Math.PI / 2 + scrollTilt;
+            model.rotation.y = Math.PI + currentRotationY;
             model.position.y = (isCoarsePointer ? 0 : -0.03) + idle;
         }
 
