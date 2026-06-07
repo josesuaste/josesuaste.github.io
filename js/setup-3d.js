@@ -31,7 +31,7 @@ if (canvas && setupSection) {
     canvas,
     antialias: true,
     alpha: true,
-    preserveDrawingBuffer: true   // evita que el canvas se limpie entre frames durante resize
+    // preserveDrawingBuffer eliminado — no es necesario y tiene coste de memoria
   });
 
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -80,6 +80,14 @@ if (canvas && setupSection) {
   let targetRotationX = 0;
   let currentRotationX = 0;
 
+  /*
+    Límite de auto-rotación: el modelo no gira más de ±AUTO_DRIFT_MAX
+    rad desde la posición inicial sin interacción del usuario.
+    Cuando el usuario arrastra se ignora el límite.
+  */
+  const AUTO_DRIFT_MAX = 0.8;
+  const BASE_ROTATION_Y = -0.55;
+
   let dragMode = null;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -102,9 +110,6 @@ if (canvas && setupSection) {
 
   /* ─────────────────────────────────────────────────────────
      CENTRAR Y ESCALAR MODELO
-     Cambia aquí el tamaño:
-     - 1.45 = móvil
-     - 1.75 = escritorio
      ───────────────────────────────────────────────────────── */
 
   function centerAndScaleModel(object) {
@@ -120,7 +125,8 @@ if (canvas && setupSection) {
     object.position.sub(center);
 
     const maxAxis = Math.max(size.x, size.y, size.z);
-    const targetSize = window.innerWidth < 700 ? 2.05 : 2.05;
+    // Diferenciación real mobile vs desktop
+    const targetSize = window.innerWidth < 700 ? 1.75 : 2.05;
     const scale = targetSize / maxAxis;
 
     object.scale.setScalar(scale);
@@ -170,18 +176,8 @@ if (canvas && setupSection) {
       }
     );
 
-    gsap.fromTo(
-      '.setup-description',
-      { autoAlpha: 0, y: 18 },
-      {
-        autoAlpha: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.55,
-        ease: 'power3.out',
-        clearProps: 'transform,opacity,visibility'
-      }
-    );
+    // setup-description y scribble los maneja setup.js via ScrollTrigger
+    // para evitar conflictos de doble animación sobre los mismos elementos
   }
 
 
@@ -224,17 +220,17 @@ if (canvas && setupSection) {
         setupLoader.classList.add('is-hidden');
       }
 
-      const observer = new IntersectionObserver(
+      const introObserver = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
             playIntro();
-            observer.disconnect();
+            introObserver.disconnect();
           }
         },
         { threshold: 0.15 }
       );
 
-      observer.observe(setupSection);
+      introObserver.observe(setupSection);
     },
 
     undefined,
@@ -251,8 +247,8 @@ if (canvas && setupSection) {
 
   /* ─────────────────────────────────────────────────────────
      INTERACCIÓN DRAG
-     - Arrastre horizontal = rota la Mac
-     - Arrastre vertical = permite scroll en móvil/tablet
+     - Arrastre horizontal → rota la Mac
+     - Arrastre vertical → permite scroll en móvil/tablet
      ───────────────────────────────────────────────────────── */
 
   canvas.addEventListener('pointerdown', (event) => {
@@ -311,15 +307,24 @@ if (canvas && setupSection) {
 
 
   /* ─────────────────────────────────────────────────────────
-     LOOP DE ANIMACIÓN
+     LOOP DE ANIMACIÓN — pausado cuando la sección no es visible
      ───────────────────────────────────────────────────────── */
 
+  let rafId = null;
+  let sectionVisible = false;
+
   function animate() {
-    requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
 
     if (macMini) {
       if (!isDragging && !prefersReducedMotion) {
-        targetRotationY += 0.002;
+        // Auto-rotación con límite: no deriva más de AUTO_DRIFT_MAX desde la base
+        const driftedY = targetRotationY + 0.002;
+        const driftFromBase = driftedY - BASE_ROTATION_Y;
+
+        if (Math.abs(driftFromBase) < AUTO_DRIFT_MAX) {
+          targetRotationY = driftedY;
+        }
       }
 
       currentRotationY += (targetRotationY - currentRotationY) * 0.08;
@@ -336,18 +341,28 @@ if (canvas && setupSection) {
     renderer.render(scene, camera);
   }
 
+  // Pausa el RAF cuando la sección sale del viewport — ahorra GPU
+  const visibilityObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting && !sectionVisible) {
+        sectionVisible = true;
+        if (!rafId) animate();
+      } else if (!entry.isIntersecting && sectionVisible) {
+        sectionVisible = false;
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    },
+    { threshold: 0 }
+  );
 
-  /* ─────────────────────────────────────────────────────────
-     EVENTOS GLOBALES
-     ───────────────────────────────────────────────────────── */
+  visibilityObserver.observe(setupSection);
+
 
   /* ─────────────────────────────────────────────────────────
      RESIZE — rAF debounce sobre ResizeObserver
-     El observer dispara ~60x/seg durante resize.
-     rAF agrupa todas las llamadas del mismo frame en una sola
-     ejecución de resizeRenderer(), eliminando el parpadeo
-     sin introducir delay perceptible.
      ───────────────────────────────────────────────────────── */
+
   let rafResize = null;
 
   const ro = new ResizeObserver(() => {
@@ -360,5 +375,30 @@ if (canvas && setupSection) {
   ro.observe(canvas.parentElement);
 
   resizeRenderer();
-  animate();
+  animate(); // arranque inicial; el visibilityObserver lo pausa si está fuera de viewport
+
+
+  /* ─────────────────────────────────────────────────────────
+     LIMPIEZA AL SALIR DE PÁGINA
+     ───────────────────────────────────────────────────────── */
+
+  window.addEventListener('pagehide', () => {
+    visibilityObserver.disconnect();
+    ro.disconnect();
+
+    if (rafId) cancelAnimationFrame(rafId);
+
+    renderer.dispose();
+
+    scene.traverse((obj) => {
+      if (!obj.isMesh) return;
+      obj.geometry?.dispose();
+      const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+      mats.forEach((m) => {
+        if (!m) return;
+        Object.values(m).forEach((v) => { if (v?.dispose) v.dispose(); });
+        m.dispose();
+      });
+    });
+  }, { once: true });
 }

@@ -60,6 +60,13 @@
         linear-gradient(90deg, rgba(244, 241, 234, 0.055) 1px, transparent 1px);
     background-size: 42px 42px;
     mask-image: radial-gradient(circle at center, black 0%, transparent 72%);
+    /* Drift muy lento de la grid — inapreciable pero añade profundidad */
+    animation: grid-drift 28s linear infinite;
+}
+
+@keyframes grid-drift {
+    0%   { background-position: 0 0; }
+    100% { background-position: 42px 42px; }
 }
 
 .setup-glow {
@@ -74,6 +81,7 @@
     left: 5vw;
     top: 20vh;
     background: rgba(244, 241, 234, 0.08);
+    animation: glow-breathe-a 9s ease-in-out infinite;
 }
 
 .setup-glow-b {
@@ -82,6 +90,17 @@
     right: 8vw;
     bottom: 8vh;
     background: rgba(255, 112, 93, 0.12);
+    animation: glow-breathe-b 11s ease-in-out infinite;
+}
+
+@keyframes glow-breathe-a {
+    0%, 100% { opacity: 0.38; transform: scale(1) translate(0, 0); }
+    50%       { opacity: 0.54; transform: scale(1.12) translate(2%, -3%); }
+}
+
+@keyframes glow-breathe-b {
+    0%, 100% { opacity: 0.42; transform: scale(1) translate(0, 0); }
+    50%       { opacity: 0.62; transform: scale(1.1) translate(-2%, 2%); }
 }
 
 /* Label principal */
@@ -114,7 +133,7 @@
     user-select: none;
 }
 
-/* Seguridad: cuando el menú está abierto, el 3D no captura clicks/touch */
+/* Cuando el menú está abierto, el 3D no captura clicks/touch */
 
 body.nav-open .setup-canvas,
 body.nav-open .setup-model-stage {
@@ -139,12 +158,20 @@ body.nav-open .setup-model-stage {
         opacity var(--t-mid),
         visibility var(--t-mid);
     pointer-events: none;
+    /* Pulso sutil mientras carga */
+    animation: loader-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes loader-pulse {
+    0%, 100% { opacity: 0.54; }
+    50%       { opacity: 0.22; }
 }
 
 .setup-loader.is-hidden {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    animation: none;
 }
 
 /* Orbit items */
@@ -180,12 +207,6 @@ body.nav-open .setup-model-stage {
     letter-spacing: -0.015em;
     color: rgba(244, 241, 234, 0.54);
 }
-
-/* 
-   Labels escalonados, rectos y ordenados.
-   Izquierda: BenQ / iPad / Pebble Keys.
-   Derecha: DJI Mic Mini / MX Vertical / Xiaomi Lightbar.
-*/
 
 /* Lado izquierdo */
 
@@ -274,6 +295,17 @@ body.nav-open .setup-model-stage {
         display: none !important;
     }
 
+    /* En mobile los glows se reducen para no sobrecargar */
+    .setup-glow-a {
+        width: 80vw;
+        height: 80vw;
+    }
+
+    .setup-glow-b {
+        width: 60vw;
+        height: 60vw;
+    }
+
     .setup-description {
         width: min(100%, 560px);
         margin-top: 30px;
@@ -288,7 +320,7 @@ body.nav-open .setup-model-stage {
     }
 }
 
-/* Línea decorativa debajo del párrafo */
+/* Línea decorativa scribble */
 
 .setup-scribble {
     display: block;
@@ -302,6 +334,9 @@ body.nav-open .setup-model-stage {
 }
 
 .setup-scribble__path {
+    /* Valores de dasharray/dashoffset se inyectan desde JS via getTotalLength()
+       para que coincidan exactamente con la longitud real del path.
+       Aquí ponemos un fallback grande para que no se vea antes de que cargue JS. */
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
 }
@@ -326,10 +361,17 @@ body.nav-open .setup-model-stage {
 /* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
-    .setup-loader,
+    .setup-grid,
+    .setup-glow-a,
+    .setup-glow-b,
+    .setup-loader {
+        animation: none !important;
+    }
+
     .orbit-item,
     .setup-description {
+        opacity: 1 !important;
+        visibility: visible !important;
         transition: none !important;
-        animation: none !important;
     }
 }
