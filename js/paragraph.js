@@ -1,7 +1,7 @@
 'use strict';
 
 /* ════════════════════════════════════════════════════════════
-   SETUP — animación de entrada del párrafo + línea decorativa
+   PARAGRAPH — animación de entrada del párrafo + línea decorativa
    Este archivo es el único responsable de animar:
    · .setup-description
    · .setup-scribble__path
