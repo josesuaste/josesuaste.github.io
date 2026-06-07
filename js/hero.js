@@ -31,9 +31,7 @@
 
     let intervalId = null;
 
-    const observer = new IntersectionObserver((entries) => {
-        const entry = entries;
-
+    const observer = new IntersectionObserver(([entry]) => {
         if (!entry || !entry.isIntersecting || intervalId) return;
 
         intervalId = window.setInterval(() => {

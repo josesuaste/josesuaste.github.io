@@ -30,11 +30,10 @@ if (canvas && setupSection) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
-    alpha: true,
-    // preserveDrawingBuffer eliminado — no es necesario y tiene coste de memoria
+    alpha: true
   });
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -104,6 +103,7 @@ if (canvas && setupSection) {
 
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
+
     renderer.setSize(width, height, false);
   }
 
@@ -125,7 +125,6 @@ if (canvas && setupSection) {
     object.position.sub(center);
 
     const maxAxis = Math.max(size.x, size.y, size.z);
-    // Diferenciación real mobile vs desktop
     const targetSize = window.innerWidth < 700 ? 1.75 : 2.05;
     const scale = targetSize / maxAxis;
 
@@ -144,6 +143,14 @@ if (canvas && setupSection) {
 
     if (!window.gsap || prefersReducedMotion) {
       modelGroup.position.y = 0.02;
+
+      document.querySelectorAll('.orbit-item').forEach((item) => {
+        item.style.opacity = '1';
+        item.style.visibility = 'visible';
+        item.style.transform = 'none';
+        item.style.filter = 'none';
+      });
+
       introComplete = true;
       return;
     }
@@ -176,8 +183,8 @@ if (canvas && setupSection) {
       }
     );
 
-    // setup-description y scribble los maneja setup.js via ScrollTrigger
-    // para evitar conflictos de doble animación sobre los mismos elementos
+    // setup-description y scribble los maneja paragraph.js vía ScrollTrigger
+    // para evitar conflictos de doble animación sobre los mismos elementos.
   }
 
 
@@ -214,7 +221,7 @@ if (canvas && setupSection) {
 
       modelGroup.position.set(0, 3.2, 0);
       modelGroup.scale.set(0.72, 0.72, 0.72);
-      modelGroup.rotation.set(0, -0.55, 0);
+      modelGroup.rotation.set(0, BASE_ROTATION_Y, 0);
 
       if (setupLoader) {
         setupLoader.classList.add('is-hidden');
@@ -318,7 +325,6 @@ if (canvas && setupSection) {
 
     if (macMini) {
       if (!isDragging && !prefersReducedMotion) {
-        // Auto-rotación con límite: no deriva más de AUTO_DRIFT_MAX desde la base
         const driftedY = targetRotationY + 0.002;
         const driftFromBase = driftedY - BASE_ROTATION_Y;
 
@@ -341,16 +347,21 @@ if (canvas && setupSection) {
     renderer.render(scene, camera);
   }
 
-  // Pausa el RAF cuando la sección sale del viewport — ahorra GPU
   const visibilityObserver = new IntersectionObserver(
     ([entry]) => {
       if (entry.isIntersecting && !sectionVisible) {
         sectionVisible = true;
-        if (!rafId) animate();
+
+        if (!rafId) {
+          animate();
+        }
       } else if (!entry.isIntersecting && sectionVisible) {
         sectionVisible = false;
-        cancelAnimationFrame(rafId);
-        rafId = null;
+
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
       }
     },
     { threshold: 0 }
@@ -366,7 +377,10 @@ if (canvas && setupSection) {
   let rafResize = null;
 
   const ro = new ResizeObserver(() => {
-    if (rafResize) cancelAnimationFrame(rafResize);
+    if (rafResize) {
+      cancelAnimationFrame(rafResize);
+    }
+
     rafResize = requestAnimationFrame(() => {
       resizeRenderer();
     });
@@ -375,7 +389,16 @@ if (canvas && setupSection) {
   ro.observe(canvas.parentElement);
 
   resizeRenderer();
-  animate(); // arranque inicial; el visibilityObserver lo pausa si está fuera de viewport
+
+  const initialRect = setupSection.getBoundingClientRect();
+  const initiallyVisible =
+    initialRect.bottom > 0 &&
+    initialRect.top < window.innerHeight;
+
+  if (initiallyVisible) {
+    sectionVisible = true;
+    animate();
+  }
 
 
   /* ─────────────────────────────────────────────────────────
@@ -386,18 +409,30 @@ if (canvas && setupSection) {
     visibilityObserver.disconnect();
     ro.disconnect();
 
-    if (rafId) cancelAnimationFrame(rafId);
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
 
     renderer.dispose();
 
     scene.traverse((obj) => {
       if (!obj.isMesh) return;
+
       obj.geometry?.dispose();
+
       const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
-      mats.forEach((m) => {
-        if (!m) return;
-        Object.values(m).forEach((v) => { if (v?.dispose) v.dispose(); });
-        m.dispose();
+
+      mats.forEach((material) => {
+        if (!material) return;
+
+        Object.values(material).forEach((value) => {
+          if (value?.dispose) {
+            value.dispose();
+          }
+        });
+
+        material.dispose();
       });
     });
   }, { once: true });

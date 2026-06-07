@@ -68,7 +68,6 @@
 
     --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --font-nyght: 'NyghtSerif', Georgia, serif;
-    --font-handmade: 'Jelek Type', cursive;
     --font-burst: 'Dx Burst', cursive;
     --font-burst-smooth: 'Dx Burst Smooth', cursive;
     
@@ -122,10 +121,13 @@ body {
 
 img,
 svg,
-video,
-canvas {
+video {
     display: block;
     max-width: 100%;
+}
+
+canvas {
+    display: block;
 }
 
 a {

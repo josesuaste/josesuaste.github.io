@@ -38,9 +38,9 @@
             return;
         }
 
-        // Estado inicial del párrafo
-        // (el CSS ya lo tiene en opacity:0 visibility:hidden, pero
-        //  gsap.set lo confirma para que GSAP tome control)
+        // Estado inicial del párrafo.
+        // GSAP lo oculta justo antes de crear la animación,
+        // así evitamos depender de opacity/visibility en CSS.
         gsap.set(description, { autoAlpha: 0, y: 24 });
 
         // Párrafo: fade + translateY al entrar al viewport
