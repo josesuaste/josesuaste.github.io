@@ -1,349 +1,364 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
-
 /* ════════════════════════════════════════════════════════════
    SETUP 3D — Mac Mini
-   Three.js + GLTFLoader + drag rotation
+   Three.js + GLTFLoader + GSAP intro + drag horizontal
    ════════════════════════════════════════════════════════════ */
 
-const MODEL_PATH = 'models/Macmini.glb';
+import * as THREE from 'https://esm.sh/three@0.160.0';
+import { GLTFLoader } from 'https://esm.sh/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+
+
+/* ───────────────────────────────────────────────────────────
+   ELEMENTOS DEL DOM
+   ─────────────────────────────────────────────────────────── */
 
 const canvas = document.querySelector('#macmini-canvas');
 const setupSection = document.querySelector('#setup');
 const setupLoader = document.querySelector('#setup-loader');
 
-if (!canvas || !setupSection) {
-    console.warn('[setup-3d] Canvas o sección #setup no encontrados.');
-} else {
-    initSetup3D();
-}
 
-function initSetup3D() {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+/* ───────────────────────────────────────────────────────────
+   INIT
+   ─────────────────────────────────────────────────────────── */
 
-    const scene = new THREE.Scene();
+if (canvas && setupSection) {
+  const scene = new THREE.Scene();
 
-    const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100);
+  camera.position.set(0, 0.55, 4.8);
+  camera.lookAt(0, 0, 0);
 
-    /*
-      Cámara ligeramente baja para ver mejor el modelo editado en Blender.
-      Si lo quieres más frontal, sube el segundo valor a 1.0 o 1.15.
-    */
-    camera.position.set(0, 0.85, 6);
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: true,
+    alpha: true,
+    preserveDrawingBuffer: true   // evita que el canvas se limpie entre frames durante resize
+  });
 
-    const renderer = new THREE.WebGLRenderer({
-        canvas,
-        alpha: true,
-        antialias: true,
-        powerPreference: 'high-performance'
-    });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.15;
 
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 
-    /* Luces */
+  /* ─────────────────────────────────────────────────────────
+     LUCES
+     ───────────────────────────────────────────────────────── */
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.8);
-    scene.add(ambientLight);
+  scene.add(new THREE.AmbientLight(0xffffff, 1.35));
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 2.3);
-    keyLight.position.set(3.2, 4.2, 5.2);
-    scene.add(keyLight);
+  const keyLight = new THREE.DirectionalLight(0xffffff, 3.2);
+  keyLight.position.set(4, 5, 6);
+  scene.add(keyLight);
 
-    const fillLight = new THREE.DirectionalLight(0xffffff, 0.9);
-    fillLight.position.set(-4, 2.5, 3);
-    scene.add(fillLight);
+  const fillLight = new THREE.DirectionalLight(0x9fbfff, 1.4);
+  fillLight.position.set(-5, 2, 3);
+  scene.add(fillLight);
 
-    const rimLight = new THREE.DirectionalLight(0xfff2e0, 1.1);
-    rimLight.position.set(-2.5, 3.2, -3.5);
-    scene.add(rimLight);
+  const rimLight = new THREE.DirectionalLight(0xffffff, 2.2);
+  rimLight.position.set(0, 3, -5);
+  scene.add(rimLight);
 
-    /* Grupo principal */
 
-    const modelGroup = new THREE.Group();
-    scene.add(modelGroup);
+  /* ─────────────────────────────────────────────────────────
+     GRUPO DEL MODELO
+     ───────────────────────────────────────────────────────── */
 
-    let model = null;
-    let modelLoaded = false;
+  const modelGroup = new THREE.Group();
+  scene.add(modelGroup);
 
-    const loader = new GLTFLoader();
+  let macMini = null;
+  let introStarted = false;
+  let introComplete = false;
+  let isDragging = false;
 
-    loader.load(
-        MODEL_PATH,
-        (gltf) => {
-            console.log('[setup-3d] Modelo cargado:', gltf.scene);
+  let previousX = 0;
+  let previousY = 0;
 
-            model = gltf.scene;
+  let targetRotationY = -0.55;
+  let currentRotationY = -0.55;
 
-            prepareModel(model);
-            centerAndScaleModel(model);
+  let targetRotationX = 0;
+  let currentRotationX = 0;
 
-            /*
-              El nodo raíz "m4" exporta con rotation xyzw [0.707,0,0,0.707]
-              = 90° en X (eje Blender → glTF). Compensamos -PI/2 en X para
-              que quede vertical, y PI en Y para que la manzana mire al frente.
-              Ajusta el valor de Y si necesitas girar más o menos.
-            */
-            model.rotation.set(-Math.PI / 2, Math.PI, 0);
+  let dragMode = null;
 
-            modelGroup.add(model);
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            modelLoaded = true;
 
-            if (setupLoader) {
-                setupLoader.classList.add('is-hidden');
-            }
-        },
-        undefined,
-        (error) => {
-            console.error('[setup-3d] Error cargando modelo GLB:', error);
+  /* ─────────────────────────────────────────────────────────
+     RESIZE DEL CANVAS
+     ───────────────────────────────────────────────────────── */
 
-            if (setupLoader) {
-                setupLoader.textContent = 'No se pudo cargar el modelo';
-            }
+  function resizeRenderer() {
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(1, rect.width);
+    const height = Math.max(1, rect.height);
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height, false);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────
+     CENTRAR Y ESCALAR MODELO
+     Cambia aquí el tamaño:
+     - 1.45 = móvil
+     - 1.75 = escritorio
+     ───────────────────────────────────────────────────────── */
+
+  function centerAndScaleModel(object) {
+    object.updateMatrixWorld(true);
+
+    const box = new THREE.Box3().setFromObject(object);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+
+    box.getSize(size);
+    box.getCenter(center);
+
+    object.position.sub(center);
+
+    const maxAxis = Math.max(size.x, size.y, size.z);
+    const targetSize = window.innerWidth < 700 ? 2.05 : 2.05;
+    const scale = targetSize / maxAxis;
+
+    object.scale.setScalar(scale);
+  }
+
+
+  /* ─────────────────────────────────────────────────────────
+     ANIMACIÓN DE ENTRADA
+     ───────────────────────────────────────────────────────── */
+
+  function playIntro() {
+    if (introStarted || !macMini) return;
+
+    introStarted = true;
+
+    if (!window.gsap || prefersReducedMotion) {
+      modelGroup.position.y = 0.02;
+      introComplete = true;
+      return;
+    }
+
+    gsap.fromTo(
+      modelGroup.position,
+      { y: 3.2 },
+      {
+        y: 0.02,
+        duration: 1.25,
+        ease: 'power4.out',
+        onComplete: () => {
+          introComplete = true;
         }
+      }
     );
 
-    function prepareModel(object) {
-        object.traverse((child) => {
-            if (!child.isMesh) return;
+    gsap.fromTo(
+      '.orbit-item',
+      { autoAlpha: 0, y: 18, filter: 'blur(8px)' },
+      {
+        autoAlpha: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.7,
+        stagger: 0.07,
+        delay: 0.35,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity,visibility,filter'
+      }
+    );
 
-            child.castShadow = false;
-            child.receiveShadow = false;
+    gsap.fromTo(
+      '.setup-description',
+      { autoAlpha: 0, y: 18 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.8,
+        delay: 0.55,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity,visibility'
+      }
+    );
+  }
 
-            if (!child.material) return;
 
-            if (Array.isArray(child.material)) {
-                child.material.forEach(enhanceMaterial);
-            } else {
-                enhanceMaterial(child.material);
-            }
-        });
-    }
+  /* ─────────────────────────────────────────────────────────
+     CARGA DEL MODELO GLB
+     ───────────────────────────────────────────────────────── */
 
-    function enhanceMaterial(material) {
-        material.needsUpdate = true;
+  new GLTFLoader().load(
+    './models/Macmini.glb',
 
-        if ('roughness' in material) {
-            material.roughness = Math.min(material.roughness ?? 0.55, 0.74);
+    (gltf) => {
+      macMini = gltf.scene;
+
+      centerAndScaleModel(macMini);
+
+      macMini.rotation.set(0.24, -0.7, 0);
+      macMini.position.set(0, -0.08, 0);
+
+      macMini.traverse((child) => {
+        if (!child.isMesh || !child.material) return;
+
+        child.material.side = THREE.DoubleSide;
+
+        if ('metalness' in child.material) {
+          child.material.metalness = 0.42;
         }
 
-        if ('metalness' in material) {
-            material.metalness = Math.max(material.metalness ?? 0.2, 0.28);
+        if ('roughness' in child.material) {
+          child.material.roughness = 0.46;
         }
+      });
 
-        if (material.map) {
-            material.map.colorSpace = THREE.SRGBColorSpace;
-        }
+      modelGroup.add(macMini);
 
-        if (material.emissive) {
-            material.emissiveIntensity = Math.min(material.emissiveIntensity || 0, 0.2);
-        }
+      modelGroup.position.set(0, 3.2, 0);
+      modelGroup.scale.set(0.72, 0.72, 0.72);
+      modelGroup.rotation.set(0, -0.55, 0);
+
+      if (setupLoader) {
+        setupLoader.classList.add('is-hidden');
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            playIntro();
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.15 }
+      );
+
+      observer.observe(setupSection);
+    },
+
+    undefined,
+
+    (error) => {
+      console.error('Error cargando Macmini.glb:', error);
+
+      if (setupLoader) {
+        setupLoader.textContent = 'No se pudo cargar el modelo 3D';
+      }
+    }
+  );
+
+
+  /* ─────────────────────────────────────────────────────────
+     INTERACCIÓN DRAG
+     - Arrastre horizontal = rota la Mac
+     - Arrastre vertical = permite scroll en móvil/tablet
+     ───────────────────────────────────────────────────────── */
+
+  canvas.addEventListener('pointerdown', (event) => {
+    if (!macMini) return;
+
+    isDragging = true;
+    dragMode = null;
+
+    previousX = event.clientX;
+    previousY = event.clientY;
+
+    canvas.setPointerCapture(event.pointerId);
+  });
+
+  canvas.addEventListener('pointermove', (event) => {
+    if (!isDragging) return;
+
+    const deltaX = event.clientX - previousX;
+    const deltaY = event.clientY - previousY;
+
+    if (!dragMode && Math.abs(deltaX) + Math.abs(deltaY) > 6) {
+      dragMode = Math.abs(deltaX) > Math.abs(deltaY) ? 'rotate' : 'scroll';
     }
 
-    function centerAndScaleModel(object) {
-        const box = new THREE.Box3().setFromObject(object);
-        const size = new THREE.Vector3();
-        const center = new THREE.Vector3();
-
-        box.getSize(size);
-        box.getCenter(center);
-
-        object.position.x -= center.x;
-        object.position.y -= center.y;
-        object.position.z -= center.z;
-
-        const maxAxis = Math.max(size.x, size.y, size.z);
-
-        /*
-          El nuevo GLB editado puede requerir un poco más de escala.
-          Si se ve demasiado grande, baja desktop a 3.0.
-        */
-        const targetSize = isCoarsePointer ? 2.35 : 2.9;
-        const scale = targetSize / maxAxis;
-
-        object.scale.setScalar(scale);
-
-        /*
-          Ajuste vertical.
-          Si se ve muy abajo, sube a 0.06 o 0.1.
-        */
-        object.position.y = isCoarsePointer ? 0 : -0.03;
+    if (dragMode === 'scroll') {
+      isDragging = false;
+      dragMode = null;
+      return;
     }
 
-    /* Resize */
+    if (dragMode !== 'rotate') return;
 
-    function resizeRenderer() {
-        const rect = canvas.getBoundingClientRect();
+    event.preventDefault();
 
-        if (!rect.width || !rect.height) return;
+    previousX = event.clientX;
+    previousY = event.clientY;
 
-        camera.aspect = rect.width / rect.height;
-        camera.updateProjectionMatrix();
+    targetRotationY += deltaX * 0.012;
+    targetRotationX += deltaY * 0.006;
+    targetRotationX = Math.max(-0.35, Math.min(0.35, targetRotationX));
+  }, { passive: false });
 
-        renderer.setSize(rect.width, rect.height, false);
+  canvas.addEventListener('pointerup', (event) => {
+    isDragging = false;
+    dragMode = null;
+
+    if (canvas.hasPointerCapture(event.pointerId)) {
+      canvas.releasePointerCapture(event.pointerId);
+    }
+  });
+
+  canvas.addEventListener('pointercancel', () => {
+    isDragging = false;
+    dragMode = null;
+  });
+
+
+  /* ─────────────────────────────────────────────────────────
+     LOOP DE ANIMACIÓN
+     ───────────────────────────────────────────────────────── */
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    if (macMini) {
+      if (!isDragging && !prefersReducedMotion) {
+        targetRotationY += 0.002;
+      }
+
+      currentRotationY += (targetRotationY - currentRotationY) * 0.08;
+      currentRotationX += (targetRotationX - currentRotationX) * 0.08;
+
+      modelGroup.rotation.y = currentRotationY;
+      modelGroup.rotation.x = currentRotationX;
+
+      if (introComplete && !isDragging && !prefersReducedMotion) {
+        modelGroup.position.y = 0.02 + Math.sin(Date.now() * 0.001) * 0.025;
+      }
     }
 
-    resizeRenderer();
+    renderer.render(scene, camera);
+  }
 
-    const resizeObserver = new ResizeObserver(() => {
-        resizeRenderer();
+
+  /* ─────────────────────────────────────────────────────────
+     EVENTOS GLOBALES
+     ───────────────────────────────────────────────────────── */
+
+  /* ─────────────────────────────────────────────────────────
+     RESIZE — rAF debounce sobre ResizeObserver
+     El observer dispara ~60x/seg durante resize.
+     rAF agrupa todas las llamadas del mismo frame en una sola
+     ejecución de resizeRenderer(), eliminando el parpadeo
+     sin introducir delay perceptible.
+     ───────────────────────────────────────────────────────── */
+  let rafResize = null;
+
+  const ro = new ResizeObserver(() => {
+    if (rafResize) cancelAnimationFrame(rafResize);
+    rafResize = requestAnimationFrame(() => {
+      resizeRenderer();
     });
+  });
 
-    resizeObserver.observe(canvas);
+  ro.observe(canvas.parentElement);
 
-    window.addEventListener('resize', resizeRenderer, { passive: true });
-
-    /* Interacción drag */
-
-    let isDragging = false;
-    let lastX = 0;
-    let targetRotationY = 0;
-    let currentRotationY = 0;
-
-    const dragSensitivity = isCoarsePointer ? 0.006 : 0.0045;
-
-    canvas.addEventListener('pointerdown', (event) => {
-        if (!modelLoaded || document.body.classList.contains('nav-open')) return;
-
-        isDragging = true;
-        lastX = event.clientX;
-
-        canvas.setPointerCapture?.(event.pointerId);
-    });
-
-    canvas.addEventListener('pointermove', (event) => {
-        if (!isDragging || !modelLoaded) return;
-
-        const deltaX = event.clientX - lastX;
-        lastX = event.clientX;
-
-        targetRotationY += deltaX * dragSensitivity;
-    });
-
-    canvas.addEventListener('pointerup', (event) => {
-        isDragging = false;
-        canvas.releasePointerCapture?.(event.pointerId);
-    });
-
-    canvas.addEventListener('pointercancel', () => {
-        isDragging = false;
-    });
-
-    canvas.addEventListener('pointerleave', () => {
-        isDragging = false;
-    });
-
-    /*
-      Evita que el scroll encima del canvas haga zoom.
-      No usamos OrbitControls para no activar zoom accidental.
-    */
-    canvas.addEventListener('wheel', (event) => {
-        event.preventDefault();
-    }, { passive: false });
-
-    /* Scroll progress dentro de Setup */
-
-    function getSetupProgress() {
-        const rect = setupSection.getBoundingClientRect();
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-        const total = rect.height + viewportHeight;
-        const raw = (viewportHeight - rect.top) / total;
-
-        return THREE.MathUtils.clamp(raw, 0, 1);
-    }
-
-    /* Animación */
-
-    const clock = new THREE.Clock();
-    let rafId = null;
-    let isVisible = false;
-
-    function animate() {
-        rafId = requestAnimationFrame(animate);
-
-        const elapsed = clock.getElapsedTime();
-        const progress = getSetupProgress();
-
-        if (model) {
-            const idle = reduceMotion ? 0 : Math.sin(elapsed * 0.8) * 0.035;
-            const scrollTilt = reduceMotion ? 0 : THREE.MathUtils.lerp(-0.045, 0.055, progress);
-
-            currentRotationY = THREE.MathUtils.lerp(currentRotationY, targetRotationY, 0.08);
-
-            /*
-              Rotación base: -PI/2 en X compensa el eje Blender.
-              PI en Y es la orientación frontal (manzana hacia cámara).
-              El drag del usuario se suma sobre el Y base.
-              El scrollTilt se suma sobre el X base.
-            */
-            model.rotation.x = -Math.PI / 2 + scrollTilt;
-            model.rotation.y = Math.PI + currentRotationY;
-            model.position.y = (isCoarsePointer ? 0 : -0.03) + idle;
-        }
-
-        renderer.render(scene, camera);
-    }
-
-    /* Pausar el loop cuando la sección no está visible */
-
-    const visibilityObserver = new IntersectionObserver((entries) => {
-        const entry = entries;
-
-        if (entry.isIntersecting && !isVisible) {
-            isVisible = true;
-            clock.start();
-            animate();
-        } else if (!entry.isIntersecting && isVisible) {
-            isVisible = false;
-            if (rafId !== null) {
-                cancelAnimationFrame(rafId);
-                rafId = null;
-            }
-        }
-    }, { threshold: 0 });
-
-    visibilityObserver.observe(setupSection);
-
-    /* Limpieza básica cuando la página se descarga */
-
-    window.addEventListener('pagehide', () => {
-        visibilityObserver.disconnect();
-        resizeObserver.disconnect();
-
-        if (rafId !== null) {
-            cancelAnimationFrame(rafId);
-            rafId = null;
-        }
-
-        renderer.dispose();
-
-        scene.traverse((object) => {
-            if (!object.isMesh) return;
-
-            object.geometry?.dispose?.();
-
-            if (Array.isArray(object.material)) {
-                object.material.forEach(disposeMaterial);
-            } else {
-                disposeMaterial(object.material);
-            }
-        });
-    });
-
-    function disposeMaterial(material) {
-        if (!material) return; 
-
-        Object.keys(material).forEach((key) => {
-            const value = material[key];
-
-            if (value && typeof value.dispose === 'function') {
-                value.dispose();
-            }
-        });
-
-        material.dispose?.();
-    }
+  resizeRenderer();
+  animate();
 }
