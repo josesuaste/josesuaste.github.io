@@ -30,6 +30,29 @@
             return document.body.classList.contains('nav-open');
         }
 
+        /*
+          Formatea un número al mismo estilo que data-display.
+          Detecta si el display final usa "K" o "+" para aplicar
+          el mismo formato durante la animación del contador.
+        */
+        function formatCount(value, display) {
+            if (display.includes('K')) {
+                // Formato miles: anima de 0 a N y muestra como "X.XK"
+                const k = value / 1000;
+                // Un decimal si no es entero exacto
+                const formatted = Number.isInteger(k) ? k.toString() : k.toFixed(1);
+                return formatted + 'K';
+            }
+
+            const rounded = Math.round(value).toLocaleString('es-MX');
+
+            if (display.includes('+')) {
+                return rounded + '+';
+            }
+
+            return rounded;
+        }
+
         if (reduceMotion) {
             cards.forEach((card) => {
                 const number = card.querySelector('.stat-number');
@@ -50,9 +73,7 @@
             const display = card.dataset.display;
             const value = Number(card.dataset.val || 0);
 
-            /*
-              Entrada de cada card.
-            */
+            /* Entrada de cada card */
             gsap.from(card, {
                 y: 80,
                 autoAlpha: 0,
@@ -67,9 +88,7 @@
                 }
             });
 
-            /*
-              Efecto stack: cada card se comprime sutilmente al quedar pegada.
-            */
+            /* Efecto stack: compresión sutil al quedar pegada */
             gsap.to(card, {
                 scale: 1 - index * 0.025,
                 transformOrigin: 'center top',
@@ -83,9 +102,7 @@
                 }
             });
 
-            /*
-              Conteo numérico.
-            */
+            /* Conteo numérico — funciona para todos los formatos */
             if (number && display) {
                 const counter = { value: 0 };
 
@@ -99,19 +116,11 @@
                             duration: 1.4,
                             ease: 'power2.out',
                             overwrite: 'auto',
-                            onUpdate: () => {
-                                if (display.includes('K')) {
-                                    number.textContent = display;
-                                    return;
-                                }
-
-                                number.textContent = Math.round(counter.value).toLocaleString('es-MX');
-
-                                if (display.includes('+')) {
-                                    number.textContent += '+';
-                                }
+                            onUpdate() {
+                                number.textContent = formatCount(counter.value, display);
                             },
-                            onComplete: () => {
+                            onComplete() {
+                                // Asegurar que el valor final sea exactamente el display
                                 number.textContent = display;
                             }
                         });
@@ -119,11 +128,7 @@
                 });
             }
 
-            /*
-              Hover premium solo desktop.
-              Se desactiva mientras el menú está abierto para evitar
-              conflictos de pointer/mouse con el overlay del navbar.
-            */
+            /* Hover premium — solo desktop */
             const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
             if (canHover) {

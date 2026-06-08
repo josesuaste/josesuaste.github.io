@@ -38,9 +38,7 @@
             return;
         }
 
-        // Estado inicial del párrafo.
-        // GSAP lo oculta justo antes de crear la animación,
-        // así evitamos depender de opacity/visibility en CSS.
+        // Estado inicial del párrafo
         gsap.set(description, { autoAlpha: 0, y: 24 });
 
         // Párrafo: fade + translateY al entrar al viewport
@@ -56,10 +54,9 @@
         });
 
         // Línea scribble: se dibuja al entrar
+        // scribblePath ya pasó el guard del if, getTotalLength() es seguro de llamar directamente
         if (scribblePath && typeof ScrollTrigger !== 'undefined') {
-            // getTotalLength() da la longitud real del path para que el
-            // stroke-dasharray sea exacto y no haya hueco al final
-            const pathLength = scribblePath.getTotalLength?.() || 1000;
+            const pathLength = scribblePath.getTotalLength() || 1000;
             scribblePath.style.strokeDasharray = pathLength;
             scribblePath.style.strokeDashoffset = pathLength;
 

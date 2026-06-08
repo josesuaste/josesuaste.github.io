@@ -102,7 +102,7 @@
             <li><a href="#about">Sobre mí</a></li>
             <li><a href="#setup">Set up</a></li>
             <li><a href="#stats">Stats</a></li>
-            <li><a href="#videos">Videos</a></li>
+            <!-- <li><a href="#videos">Videos</a></li> → descomentar cuando la sección esté lista -->
             <li><a href="#contact">Contacto</a></li>
         </ul>
     </div>
@@ -589,8 +589,20 @@
 <!-- 3. ES module separado -->
 <script type="module" src="js/setup-3d.js"></script>
 
-<!-- 4. ScrollTrigger refresh centralizado — se ejecuta una vez al cargar todo -->
+<!-- 4. Registro centralizado de plugins + refresh al cargar todo -->
 <script>
+    // Registrar plugins una sola vez aquí en lugar de hacerlo en cada módulo JS.
+    // Los archivos propios hacen gsap.registerPlugin() de forma idempotente por si
+    // se ejecutan antes de este bloque, pero este es el punto canónico de registro.
+    if (typeof gsap !== 'undefined') {
+        const plugins = [
+            typeof ScrollTrigger !== 'undefined' && ScrollTrigger,
+            typeof TextPlugin   !== 'undefined' && TextPlugin
+        ].filter(Boolean);
+
+        if (plugins.length) gsap.registerPlugin(...plugins);
+    }
+
     window.addEventListener('load', () => {
         if (typeof ScrollTrigger !== 'undefined') {
             ScrollTrigger.refresh();

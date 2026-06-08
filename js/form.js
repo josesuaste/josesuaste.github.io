@@ -97,9 +97,6 @@
 
             if (!tooltip) return;
 
-            // Animar la salida con GSAP y limpiar el contenido solo al terminar.
-            // Esto evita el "cuadro con bola" que aparece cuando el CSS transition
-            // colapsa el contenido antes de que la opacidad llegue a 0.
             gsap.to(tooltip, {
                 autoAlpha: 0,
                 y: 6,
@@ -109,7 +106,6 @@
                 overwrite: 'auto',
                 onComplete() {
                     tooltip.textContent = '';
-                    // Resetear transform para que la próxima entrada parta limpia
                     gsap.set(tooltip, { y: 8, scale: 0.98, clearProps: 'visibility' });
                 }
             });
@@ -127,7 +123,6 @@
 
             const tooltip = getTooltip(field);
 
-            // Cancelar cualquier animación de salida en curso antes de mostrar
             gsap.killTweensOf(tooltip);
 
             tooltip.textContent = getFieldMessage(input);
@@ -152,12 +147,30 @@
         }
 
         if (reduceMotion) {
-            gsap.set([label, title, subtitle, copy, fields, button, lines].filter(Boolean), {
-                clearProps: 'all',
+            /*
+              FIX: usar clearProps específicos en lugar de 'all'
+              para no borrar propiedades que CSS controla con position/absolute.
+            */
+            gsap.set([label, title, subtitle, copy, button].filter(Boolean), {
+                clearProps: 'transform,opacity,visibility',
                 autoAlpha: 1,
                 y: 0,
                 scale: 1
             });
+
+            gsap.set(fields, {
+                clearProps: 'transform,opacity,visibility',
+                autoAlpha: 1,
+                y: 0
+            });
+
+            if (lines.length) {
+                gsap.set(lines, {
+                    clearProps: 'transform,opacity,visibility',
+                    autoAlpha: 1,
+                    scale: 1
+                });
+            }
 
             return;
         }
