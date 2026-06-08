@@ -58,7 +58,7 @@
 
 /* "José" — NyghtSerif Light Italic */
 .giant-title__serif {
-    font-family: 'NyghtSerif-LightItalic', Georgia, serif;
+    font-family: var(--font-serif);
     font-weight: 300;
     font-style: italic;
 }

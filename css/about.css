@@ -64,7 +64,7 @@
 }
 
 .about-copy__serif {
-    font-family: 'NyghtSerif-LightItalic', Georgia, serif;
+    font-family: var(--font-serif);
     font-weight: 300;
     font-style: italic;
     letter-spacing: -0.045em;
