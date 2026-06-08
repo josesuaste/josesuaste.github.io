@@ -269,18 +269,15 @@ body.nav-open .setup-model-stage {
 /* Mobile */
 
 @media (max-width: 900px) {
-    .setup-cinematic {
-        padding: 72px 20px 88px;
-    }
-
     .setup-shell {
         width: 100%;
     }
 
+    /* Bloque único — sin duplicados */
     .setup-card {
         --setup-card-radius: 26px;
 
-        min-height: 78svh;
+        min-height: 62svh;
         border-radius: var(--setup-card-radius);
     }
 
@@ -346,10 +343,7 @@ body.nav-open .setup-model-stage {
 
 @media (max-width: 520px) {
     .setup-card {
-        --setup-card-radius: 24px;
-
-        min-height: 74svh;
-        border-radius: var(--setup-card-radius);
+        min-height: 58svh;
     }
 
     .setup-copy-main {
