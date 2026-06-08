@@ -15,22 +15,6 @@
 }
 
 @font-face {
-    font-family: 'NyghtSerif';
-    src: url('../fonts/NyghtSerif-LightItalic.woff2') format('woff2');
-    font-weight: 300;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'NyghtSerif';
-    src: url('../fonts/NyghtSerif-RegularItalic.woff2') format('woff2');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-}
-
-@font-face {
     font-family: 'Dx Burst';
     src: url('../fonts/DxBurst-Regular.woff2') format('woff2');
     font-weight: 400;
@@ -67,7 +51,6 @@
     
 
     --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-nyght: 'NyghtSerif', Georgia, serif;
     --font-burst: 'Dx Burst', cursive;
     --font-burst-smooth: 'Dx Burst Smooth', cursive;
     
