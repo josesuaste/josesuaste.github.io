@@ -28,13 +28,15 @@
             return;
         }
 
+        // ScrollTrigger se registra una sola vez; si ya fue registrado por otro
+        // módulo GSAP lo ignora silenciosamente (idempotente).
         if (typeof ScrollTrigger !== 'undefined') {
             gsap.registerPlugin(ScrollTrigger);
         }
 
         if (reduceMotion) {
             gsap.set([sectionLabel, copy, lead, body].filter(Boolean), {
-                clearProps: 'all',
+                clearProps: 'transform,opacity,visibility',
                 autoAlpha: 1,
                 y: 0
             });
@@ -88,7 +90,6 @@
                 ease: 'power3.out'
             }, 0.42);
         }
-
     }
 
     if (document.readyState === 'loading') {

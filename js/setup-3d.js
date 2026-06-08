@@ -200,6 +200,15 @@ if (canvas && setupSection) {
 
       centerAndScaleModel(macMini);
 
+      /*
+        ROTACIÓN INICIAL DEL MODELO
+        Si el GLB fue exportado desde Blender con el eje Z hacia arriba (por defecto
+        en Blender), el modelo aparecerá tumbado. En ese caso usar:
+            macMini.rotation.set(-Math.PI / 2, Math.PI, 0)
+        Si el modelo ya fue corregido en Blender (Forward: -Z, Up: Y al exportar),
+        los valores manuales de abajo son correctos.
+        Ajustar X/Y/Z según cómo quede el modelo al cargar.
+      */
       macMini.rotation.set(0.24, -0.7, 0);
       macMini.position.set(0, -0.08, 0);
 
