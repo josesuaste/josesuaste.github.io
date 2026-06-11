@@ -31,6 +31,10 @@
 
     let isOpen = false;
     let activeTimeline = null;
+    // Altura de ventana capturada en el momento de abrir el menú.
+    // Se usa en closeMenu para que la animación de caída sea correcta
+    // aunque el usuario haya rotado el dispositivo entre apertura y cierre.
+    let snapshotHeight = window.innerHeight;
 
     function killActiveAnimation() {
         if (activeTimeline) {
@@ -171,6 +175,7 @@
         killActiveAnimation();
 
         isOpen = true;
+        snapshotHeight = window.innerHeight;
 
         document.body.classList.add('nav-open');
         overlay.classList.add('is-active');
@@ -372,7 +377,7 @@
 
         /* Ambos se desploman */
         .to(mainPanel, {
-            y: window.innerHeight * 1.1,
+            y: snapshotHeight * 1.1,
             rotateZ: -8,
             autoAlpha: 0,
             duration: 0.58,
@@ -380,7 +385,7 @@
         }, 0.42)
 
         .to(socialPanel, {
-            y: window.innerHeight * 1.08,
+            y: snapshotHeight * 1.08,
             rotateZ: 7,
             autoAlpha: 0,
             duration: 0.54,
@@ -402,6 +407,43 @@
             closeMenu();
         } else {
             openMenu();
+        }
+    }
+
+    /* ════════════════════════════════════════════════════════
+       Focus trap — mantiene el foco dentro del overlay
+       cuando el menú está abierto (accesibilidad teclado)
+       ════════════════════════════════════════════════════════ */
+
+    function getFocusableElements() {
+        return Array.from(
+            overlay.querySelectorAll(
+                'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+            )
+        ).filter((el) => !el.closest('[aria-hidden="true"]'));
+    }
+
+    function trapFocus(event) {
+        if (!isOpen || event.key !== 'Tab') return;
+
+        const focusable = getFocusableElements();
+        if (!focusable.length) return;
+
+        const first = focusable;
+        const last = focusable[focusable.length - 1];
+
+        if (event.shiftKey) {
+            // Shift+Tab: si el foco está en el primer elemento, saltar al último
+            if (document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            }
+        } else {
+            // Tab: si el foco está en el último elemento, saltar al primero
+            if (document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
         }
     }
 
@@ -437,8 +479,19 @@
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && isOpen) {
             closeMenu();
+            // Devolver el foco al botón que abrió el menú
+            toggle.focus();
+            return;
         }
+
+        trapFocus(event);
     });
+
+    // Cleanup al salir de página (back/forward cache incluido)
+    window.addEventListener('pagehide', () => {
+        window.removeEventListener('scroll', updateNavbarState);
+        killActiveAnimation();
+    }, { once: true });
 })();
 
 

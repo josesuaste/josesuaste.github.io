@@ -518,4 +518,13 @@
     } else {
         start();
     }
+
+    // Limpiar el interval de puntos si el usuario navega fuera
+    // (back/forward cache incluido) antes de que el form haga redirect.
+    window.addEventListener('pagehide', () => {
+        const btn = document.querySelector('.submit-btn');
+        if (btn && btn._dotInterval) {
+            window.clearInterval(btn._dotInterval);
+        }
+    }, { once: true });
 })();
