@@ -27,7 +27,12 @@
     src: url('../fonts/DxBurst-Smooth.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
-    font-display: swap;
+    /*
+      block: el navegador espera brevemente la fuente antes de mostrar texto
+      en blanco invisible. Evita el FOUT (flash de Georgia a 16rem) en el
+      título del contact sin sacrificar visibilidad del contenido.
+    */
+    font-display: block;
 }
 /* ── Tokens ──────────────────────────────────────────────── */
 

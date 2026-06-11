@@ -413,14 +413,24 @@
 
         if (button) {
             form.addEventListener('submit', (event) => {
-                const firstInvalid = Array.from(inputs).find((input) => !input.checkValidity());
+                const invalidInputs = Array.from(inputs).filter((input) => !input.checkValidity());
+                const firstInvalid = invalidInputs ?? null;
 
                 clearAllFieldErrors();
 
                 if (firstInvalid) {
                     event.preventDefault();
 
-                    showFieldError(firstInvalid);
+                    // Marcar visualmente todos los campos inválidos,
+                    // pero el tooltip solo aparece en el primero.
+                    invalidInputs.forEach((input, i) => {
+                        if (i === 0) {
+                            showFieldError(input);
+                        } else {
+                            input.closest('.form-field')?.classList.add('is-invalid');
+                        }
+                    });
+
                     firstInvalid.focus({ preventScroll: true });
 
                     firstInvalid.scrollIntoView({
@@ -456,27 +466,24 @@
                 if (buttonText && typeof TextPlugin !== 'undefined') {
                     const submitTL = gsap.timeline();
 
-                    submitTL
-                        .to(buttonText, {
-                            duration: 0.36,
-                            text: {
-                                value: 'Enviando...',
-                                type: 'diff'
-                            },
-                            ease: 'sine.in'
-                        })
-                        .to(buttonText, {
-                            duration: 0.5,
-                            text: {
-                                value: 'Enviando',
-                                type: 'diff'
-                            },
-                            ease: 'sine.inOut',
-                            repeat: -1,
-                            yoyo: true
-                        });
+                    submitTL.to(buttonText, {
+                        duration: 0.36,
+                        text: {
+                            value: 'Enviando...',
+                            type: 'diff'
+                        },
+                        ease: 'sine.in'
+                    });
                 } else if (buttonText) {
-                    buttonText.textContent = 'Enviando...';
+                    // Animación de puntos sin TextPlugin: cicla "Enviando." → ".." → "..."
+                    buttonText.textContent = 'Enviando.';
+                    let dotCount = 1;
+                    const dotInterval = window.setInterval(() => {
+                        dotCount = (dotCount % 3) + 1;
+                        buttonText.textContent = 'Enviando' + '.'.repeat(dotCount);
+                    }, 420);
+                    // Guardar referencia para limpieza si hiciera falta
+                    button._dotInterval = dotInterval;
                 }
             });
         }
