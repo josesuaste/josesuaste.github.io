@@ -25,6 +25,7 @@
         if (!section || !cards.length) return;
 
         const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
         function isNavOpen() {
             return document.body.classList.contains('nav-open');
@@ -37,9 +38,7 @@
         */
         function formatCount(value, display) {
             if (display.includes('K')) {
-                // Formato miles: anima de 0 a N y muestra como "X.XK"
                 const k = value / 1000;
-                // Un decimal si no es entero exacto
                 const formatted = Number.isInteger(k) ? k.toString() : k.toFixed(1);
                 return formatted + 'K';
             }
@@ -66,6 +65,15 @@
             return;
         }
 
+        /*
+          gsap.matchMedia() para separar la entrada según breakpoint.
+          En desktop: y + autoAlpha + filter:blur (visualmente rico,
+          la GPU puede manejarlo en pocos elementos grandes).
+          En mobile: solo y + autoAlpha — filter:blur es caro en
+          dispositivos mid-range y el efecto apenas se percibe en scroll.
+        */
+        const mm = gsap.matchMedia();
+
         cards.forEach((card, index) => {
             const number = card.querySelector('.stat-number');
             const label = card.querySelector('.stat-label');
@@ -73,22 +81,43 @@
             const display = card.dataset.display;
             const value = Number(card.dataset.val || 0);
 
-            /* Entrada de cada card */
-            gsap.from(card, {
-                y: 80,
-                autoAlpha: 0,
-                filter: 'blur(14px)',
-                duration: 0.9,
-                ease: 'power3.out',
-                overwrite: 'auto',
-                scrollTrigger: {
-                    trigger: card,
-                    start: 'top 82%',
-                    once: true
-                }
+            /* ── Animación de entrada — breakpoint-aware ── */
+
+            mm.add('(min-width: 900px)', () => {
+                /* Desktop: blur permitido — pocos elementos, GPU con margen */
+                gsap.from(card, {
+                    y: 80,
+                    autoAlpha: 0,
+                    filter: 'blur(14px)',
+                    duration: 0.9,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 82%',
+                        once: true
+                    }
+                });
             });
 
-            /* Efecto stack: compresión sutil al quedar pegada */
+            mm.add('(max-width: 899px)', () => {
+                /* Mobile/tablet: sin blur — solo transform + opacity */
+                gsap.from(card, {
+                    y: 60,
+                    autoAlpha: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    overwrite: 'auto',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        once: true
+                    }
+                });
+            });
+
+            /* ── Efecto stack: compresión sutil al quedar pegada ── */
+
             gsap.to(card, {
                 scale: 1 - index * 0.025,
                 transformOrigin: 'center top',
@@ -102,7 +131,8 @@
                 }
             });
 
-            /* Conteo numérico — funciona para todos los formatos */
+            /* ── Conteo numérico — funciona para todos los formatos ── */
+
             if (number && display) {
                 const counter = { value: 0 };
 
@@ -128,8 +158,7 @@
                 });
             }
 
-            /* Hover premium — solo desktop */
-            const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            /* ── Hover premium — solo desktop ── */
 
             if (canHover) {
                 card.addEventListener('pointermove', (event) => {

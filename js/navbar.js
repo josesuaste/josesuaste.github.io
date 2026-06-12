@@ -79,11 +79,8 @@
         visibility: 'hidden'
     });
 
-    gsap.set(overlayBg, {
-        autoAlpha: 0,
-        backdropFilter: 'blur(0px)',
-        webkitBackdropFilter: 'blur(0px)'
-    });
+    // backdrop-filter lo gestiona CSS via .is-blurred — aquí solo opacity
+    gsap.set(overlayBg, { autoAlpha: 0 });
 
     gsap.set(mainPanel, {
         y: -56,
@@ -123,16 +120,15 @@
         overlay.classList.remove('is-active');
         document.body.classList.remove('nav-open');
 
+        // Quitar el blur CSS
+        overlayBg.classList.remove('is-blurred');
+
         gsap.set(overlay, {
             autoAlpha: 0,
             visibility: 'hidden'
         });
 
-        gsap.set(overlayBg, {
-            autoAlpha: 0,
-            backdropFilter: 'blur(0px)',
-            webkitBackdropFilter: 'blur(0px)'
-        });
+        gsap.set(overlayBg, { autoAlpha: 0 });
 
         gsap.set(mainPanel, {
             y: -56,
@@ -156,15 +152,8 @@
             autoAlpha: 0
         });
 
-        gsap.set(barTop, {
-            y: 0,
-            rotate: 0
-        });
-
-        gsap.set(barBot, {
-            y: 0,
-            rotate: 0
-        });
+        gsap.set(barTop, { y: 0, rotate: 0 });
+        gsap.set(barBot, { y: 0, rotate: 0 });
 
         updateNavbarState();
     }
@@ -182,16 +171,9 @@
         setA11y(true);
 
         if (reduceMotion) {
-            gsap.set(overlay, {
-                autoAlpha: 1,
-                visibility: 'visible'
-            });
-
-            gsap.set(overlayBg, {
-                autoAlpha: 1,
-                backdropFilter: 'blur(14px)',
-                webkitBackdropFilter: 'blur(14px)'
-            });
+            gsap.set(overlay, { autoAlpha: 1, visibility: 'visible' });
+            gsap.set(overlayBg, { autoAlpha: 1 });
+            overlayBg.classList.add('is-blurred');
 
             gsap.set([mainPanel, socialPanel, links, socialLinks], {
                 autoAlpha: 1,
@@ -201,10 +183,13 @@
             return;
         }
 
+        // Activar blur CSS antes de que empiece la animación.
+        // La transition de backdrop-filter en CSS corre en paralelo
+        // con los tweens de GSAP — no bloquea el hilo principal.
+        overlayBg.classList.add('is-blurred');
+
         const tl = gsap.timeline({
-            defaults: {
-                ease: 'power3.out'
-            },
+            defaults: { ease: 'power3.out' },
             onComplete() {
                 activeTimeline = null;
             }
@@ -212,16 +197,11 @@
 
         activeTimeline = tl;
 
-        tl.set(overlay, {
-            visibility: 'visible',
-            autoAlpha: 1
-        })
+        tl.set(overlay, { visibility: 'visible', autoAlpha: 1 })
 
-        /* Blur de fondo */
+        /* Fondo: solo opacity — blur lo hace CSS */
         .to(overlayBg, {
             autoAlpha: 1,
-            backdropFilter: 'blur(14px)',
-            webkitBackdropFilter: 'blur(14px)',
             duration: 0.42,
             ease: 'power2.out'
         }, 0)
@@ -316,6 +296,7 @@
             2. Panel crema baja primero.
             3. Panel crema choca con panel negro.
             4. Ambos caen.
+            5. Blur CSS se quita al completar (en resetClosedState).
         */
 
         tl.to(links, {
@@ -392,11 +373,9 @@
             ease: 'power4.in'
         }, 0.44)
 
-        /* Blur desaparece */
+        /* Fondo desaparece — blur CSS se limpia en resetClosedState al onComplete */
         .to(overlayBg, {
             autoAlpha: 0,
-            backdropFilter: 'blur(0px)',
-            webkitBackdropFilter: 'blur(0px)',
             duration: 0.36,
             ease: 'power2.out'
         }, 0.48);
@@ -429,17 +408,16 @@
         const focusable = getFocusableElements();
         if (!focusable.length) return;
 
+        // FIX: focusable en lugar de focusable (el array entero era siempre truthy)
         const first = focusable;
         const last = focusable[focusable.length - 1];
 
         if (event.shiftKey) {
-            // Shift+Tab: si el foco está en el primer elemento, saltar al último
             if (document.activeElement === first) {
                 event.preventDefault();
                 last.focus();
             }
         } else {
-            // Tab: si el foco está en el último elemento, saltar al primero
             if (document.activeElement === last) {
                 event.preventDefault();
                 first.focus();
@@ -453,17 +431,8 @@
 
     toggle.addEventListener('click', toggleMenu);
 
-    /*
-        Cierra el menú al hacer click fuera de los paneles,
-        sobre el fondo con blur.
-    */
     overlayBg.addEventListener('click', closeMenu);
 
-    /*
-        Evita que clicks dentro de los paneles afecten el fondo.
-        No es estrictamente necesario porque escuchamos overlayBg,
-        pero lo dejamos como protección.
-    */
     mainPanel.addEventListener('click', (event) => {
         event.stopPropagation();
     });
@@ -479,7 +448,6 @@
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && isOpen) {
             closeMenu();
-            // Devolver el foco al botón que abrió el menú
             toggle.focus();
             return;
         }

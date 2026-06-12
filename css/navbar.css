@@ -156,6 +156,12 @@
     pointer-events: auto;
 }
 
+/* ── Fondo con blur ──────────────────────────────────────────
+   backdrop-filter se mueve via CSS transition para evitar que
+   GSAP lo interpole frame a frame (caro en compositor).
+   GSAP solo controla opacity — el blur lo activa/desactiva
+   la clase .is-blurred que JS añade al abrir/cerrar.        */
+
 .nav-overlay-bg {
     pointer-events: auto;
     position: absolute;
@@ -167,11 +173,13 @@
 
     -webkit-backdrop-filter: blur(0px);
     backdrop-filter: blur(0px);
+
+    transition:
+        -webkit-backdrop-filter 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+        backdrop-filter 0.42s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Este es el blur que sí te gustó */
-
-.nav-overlay.is-active .nav-overlay-bg {
+.nav-overlay-bg.is-blurred {
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
 }
@@ -447,5 +455,6 @@ body.nav-open .menu-toggle {
     .nav-panel,
     .nav-overlay-bg {
         transform: none !important;
+        transition: none !important;
     }
 }
