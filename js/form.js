@@ -415,8 +415,6 @@
                     invalidInputs.forEach((input, i) => {
                         if (i === 0) {
                             showFieldError(input);
-                        } else {
-                            input.closest('.form-field')?.classList.add('is-invalid');
                         }
                     });
 
