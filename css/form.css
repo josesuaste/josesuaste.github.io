@@ -192,9 +192,14 @@
 }
 
 .form-field {
+    position: relative;
     min-width: 0;
     max-width: 100%;
 }
+
+/* ── Label: color vía CSS transition, sin GSAP ───────────
+   Evita repaint por animación de color en cada focus/blur.
+   GSAP sigue controlando el `x` (transform) del label. */
 
 .form-field label {
     display: block;
@@ -207,6 +212,12 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: rgba(17, 17, 17, 0.56);
+    transition: color var(--t-fast) var(--ease-out);
+}
+
+/* El color activo lo aplica :focus-within — compositor puro */
+.form-field:focus-within label {
+    color: rgba(17, 17, 17, 0.86);
 }
 
 .form-field input,
@@ -415,14 +426,16 @@
         transition: none !important;
         animation: none !important;
     }
+
+    /* Restaurar transición del label para que :focus-within siga funcionando */
+    .form-field label {
+        transition: none;
+    }
 }
+
 /* ════════════════════════════════════════════════════════════
    CUSTOM FORM TOOLTIP
    ════════════════════════════════════════════════════════════ */
-
-.form-field {
-    position: relative;
-}
 
 .form-field.is-invalid input,
 .form-field.is-invalid textarea {

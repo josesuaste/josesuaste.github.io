@@ -41,7 +41,11 @@
         // Estado inicial del párrafo
         gsap.set(description, { autoAlpha: 0, y: 24 });
 
-        // Párrafo: fade + translateY al entrar al viewport
+        // Párrafo: fade + translateY al entrar al viewport.
+        // invalidateOnRefresh: true recalcula el trigger después del
+        // ScrollTrigger.refresh() del window load, evitando que una
+        // posición incorrecta en el cálculo inicial deje el elemento
+        // invisible de forma permanente.
         gsap.to(description, {
             autoAlpha: 1,
             y: 0,
@@ -49,7 +53,17 @@
             ease: 'power3.out',
             clearProps: 'transform,opacity,visibility',
             scrollTrigger: typeof ScrollTrigger !== 'undefined'
-                ? { trigger: description, start: 'top 82%', once: true }
+                ? {
+                    trigger: description,
+                    start: 'top 82%',
+                    once: true,
+                    invalidateOnRefresh: true,
+                    onEnter: () => {
+                        // Limpiar el estado inline que GSAP set() aplicó,
+                        // por si clearProps no alcanza a correr en algún edge case
+                        description.style.removeProperty('visibility');
+                    }
+                }
                 : undefined
         });
 
@@ -67,7 +81,8 @@
                 scrollTrigger: {
                     trigger: description,
                     start: 'top 75%',
-                    once: true
+                    once: true,
+                    invalidateOnRefresh: true
                 }
             });
         }

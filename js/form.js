@@ -282,8 +282,11 @@
 
         inputs.forEach((input) => {
             const field = input.closest('.form-field');
-            const labelEl = field?.querySelector('label');
 
+            /*
+              Color del label: manejado por CSS (:focus-within en form.css).
+              GSAP solo anima `x` (transform) — compositor puro, sin repaint.
+            */
             input.addEventListener('focus', () => {
                 if (!field || isNavOpen()) return;
 
@@ -299,16 +302,6 @@
                     ease: 'power2.out',
                     overwrite: 'auto'
                 });
-
-                if (labelEl) {
-                    gsap.to(labelEl, {
-                        x: 2,
-                        color: 'rgba(17, 17, 17, 0.86)',
-                        duration: 0.24,
-                        ease: 'power2.out',
-                        overwrite: 'auto'
-                    });
-                }
             });
 
             input.addEventListener('input', () => {
@@ -329,16 +322,6 @@
                     ease: 'power2.out',
                     overwrite: 'auto'
                 });
-
-                if (labelEl) {
-                    gsap.to(labelEl, {
-                        x: 0,
-                        color: 'rgba(17, 17, 17, 0.56)',
-                        duration: 0.3,
-                        ease: 'power2.out',
-                        overwrite: 'auto'
-                    });
-                }
 
                 if (input.value.trim() && !input.checkValidity()) {
                     showFieldError(input);
@@ -414,6 +397,12 @@
         if (button) {
             form.addEventListener('submit', (event) => {
                 const invalidInputs = Array.from(inputs).filter((input) => !input.checkValidity());
+
+                /*
+                  FIX: invalidInputs es siempre un array — los arrays vacíos
+                  son truthy. Acceder a [0] para obtener el primer inválido
+                  (undefined si no hay ninguno, que es falsy correctamente).
+                */
                 const firstInvalid = invalidInputs ?? null;
 
                 clearAllFieldErrors();
