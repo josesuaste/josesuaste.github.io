@@ -26,6 +26,11 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+    /* Perspective para que rotateX/Y del tilt 3D se vea en profundidad.
+       Va en el padre, no en la card, para que todas compartan el mismo
+       punto de fuga y no roten en su propio espacio aislado. */
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
 }
 
 /* Card base */
@@ -77,6 +82,10 @@
     overflow: hidden;
     isolation: isolate;
     will-change: transform, opacity, filter;
+
+    /* transform-style flat para que el contenido interior
+       no interfiera con el plano 3D de la card */
+    transform-style: flat;
 }
 
 /* Accent map */
@@ -214,6 +223,8 @@
 
     .stats-stack {
         gap: 22px;
+        /* Sin perspective en mobile — el tilt no corre en touch */
+        perspective: none;
     }
 
     .stat-card,
@@ -283,6 +294,10 @@
 /* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
+    .stats-stack {
+        perspective: none;
+    }
+
     .stat-card,
     .stat-number,
     .stat-label,

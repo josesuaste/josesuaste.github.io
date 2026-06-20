@@ -2,7 +2,7 @@
 
 /* ════════════════════════════════════════════════════════════
    STATS ANIMATIONS
-   Sticky stack cards + hover premium + number count
+   Sticky stack cards + hover premium + number count + tilt 3D
    ════════════════════════════════════════════════════════════ */
 
 (function initStatsAnimations() {
@@ -84,7 +84,6 @@
             /* ── Animación de entrada — breakpoint-aware ── */
 
             mm.add('(min-width: 900px)', () => {
-                /* Desktop: blur permitido — pocos elementos, GPU con margen */
                 gsap.from(card, {
                     y: 80,
                     autoAlpha: 0,
@@ -101,7 +100,6 @@
             });
 
             mm.add('(max-width: 899px)', () => {
-                /* Mobile/tablet: sin blur — solo transform + opacity */
                 gsap.from(card, {
                     y: 60,
                     autoAlpha: 0,
@@ -131,7 +129,7 @@
                 }
             });
 
-            /* ── Conteo numérico — funciona para todos los formatos ── */
+            /* ── Conteo numérico ── */
 
             if (number && display) {
                 const counter = { value: 0 };
@@ -150,7 +148,6 @@
                                 number.textContent = formatCount(counter.value, display);
                             },
                             onComplete() {
-                                // Asegurar que el valor final sea exactamente el display
                                 number.textContent = display;
                             }
                         });
@@ -158,18 +155,51 @@
                 });
             }
 
-            /* ── Hover premium — solo desktop ── */
+            /* ── Tilt 3D + hover — solo desktop ── */
 
             if (canHover) {
+                /*
+                  gsap.quickTo() crea un setter optimizado que interpola
+                  hacia el valor objetivo sin crear un tween nuevo por cada
+                  pointermove. El duration controla qué tan rápido sigue
+                  al cursor — 0.55s es suave y elegante.
+                */
+                const quickRotX = gsap.quickTo(card, 'rotateX', {
+                    duration: 0.55,
+                    ease: 'power3.out'
+                });
+
+                const quickRotY = gsap.quickTo(card, 'rotateY', {
+                    duration: 0.55,
+                    ease: 'power3.out'
+                });
+
+                /*
+                  Intensidad máxima del tilt en grados.
+                  8° es sutil pero perceptible — suficiente para dar
+                  profundidad sin marear ni competir con el sticky.
+                */
+                const TILT_MAX = 8;
+
                 card.addEventListener('pointermove', (event) => {
                     if (isNavOpen()) return;
 
                     const rect = card.getBoundingClientRect();
-                    const x = ((event.clientX - rect.left) / rect.width) * 100;
-                    const y = ((event.clientY - rect.top) / rect.height) * 100;
 
-                    card.style.setProperty('--mx', `${x}%`);
-                    card.style.setProperty('--my', `${y}%`);
+                    // Posición normalizada: -1 a 1 dentro de la card
+                    const nx = (event.clientX - rect.left) / rect.width * 2 - 1;
+                    const ny = (event.clientY - rect.top) / rect.height * 2 - 1;
+
+                    // rotateX: cursor arriba → card inclina hacia atrás (negativo)
+                    // rotateY: cursor derecha → card gira hacia la derecha
+                    quickRotY(nx * TILT_MAX);
+                    quickRotX(-ny * TILT_MAX);
+
+                    // Actualizar el gradiente de fondo con la posición del cursor
+                    const px = ((event.clientX - rect.left) / rect.width) * 100;
+                    const py = ((event.clientY - rect.top) / rect.height) * 100;
+                    card.style.setProperty('--mx', `${px}%`);
+                    card.style.setProperty('--my', `${py}%`);
                 });
 
                 card.addEventListener('mouseenter', () => {
@@ -214,9 +244,12 @@
                 card.addEventListener('mouseleave', () => {
                     if (isNavOpen()) return;
 
+                    // Resetear tilt y hover juntos en un solo tween
                     gsap.to(card, {
+                        rotateX: 0,
+                        rotateY: 0,
                         y: 0,
-                        duration: 0.35,
+                        duration: 0.55,
                         ease: 'power3.out',
                         overwrite: 'auto'
                     });
