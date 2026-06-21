@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Política de Privacidad — ERROR404</title>
+    <meta name="description" content="Política de privacidad del sitio web ERROR404 de José Suaste.">
+    <meta name="author" content="José Suaste">
+    <meta name="robots" content="noindex, follow">
+
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="7d243bf9-5a94-4c25-9371-e60236ca9366"></script>
+
+    <link rel="canonical" href="https://josesuaste.github.io/privacidad.html">
+
+    <link rel="icon" type="image/png" href="images/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="images/favicon/favicon.svg">
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-title" content="ERROR404">
+
+    <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <style>
+        /* ════════════════════════════════════════════════════════════
+           PRIVACIDAD — layout editorial de página interna
+           ════════════════════════════════════════════════════════════ */
+
+        .privacy-page {
+            background: var(--cream);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: clamp(120px, 14vw, 180px) var(--pad-x) clamp(80px, 10vw, 140px);
+        }
+
+        .privacy-inner {
+            width: min(100%, 720px);
+            margin: 0 auto;
+        }
+
+        /* Kicker */
+
+        .privacy-kicker {
+            display: inline-block;
+            font-family: var(--font-sans);
+            font-size: clamp(0.68rem, 0.75vw, 0.78rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(17, 17, 17, 0.44);
+            margin-bottom: clamp(20px, 3vw, 32px);
+        }
+
+        /* Título */
+
+        .privacy-title {
+            font-family: var(--font-sans);
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            font-weight: 850;
+            line-height: 0.9;
+            letter-spacing: -0.065em;
+            color: var(--dark);
+            margin: 0 0 clamp(12px, 2vw, 20px);
+        }
+
+        .privacy-title em {
+            font-family: var(--font-serif);
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: -0.05em;
+        }
+
+        /* Fecha */
+
+        .privacy-date {
+            display: block;
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: rgba(17, 17, 17, 0.44);
+            margin-bottom: clamp(48px, 7vw, 80px);
+            padding-bottom: clamp(28px, 4vw, 44px);
+            border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+        }
+
+        /* Cuerpo */
+
+        .privacy-body {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(36px, 5vw, 56px);
+        }
+
+        .privacy-block h2 {
+            font-family: var(--font-sans);
+            font-size: clamp(1rem, 1.4vw, 1.18rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+            color: var(--dark);
+            margin: 0 0 clamp(10px, 1.5vw, 16px);
+        }
+
+        .privacy-block p,
+        .privacy-block li {
+            font-family: var(--font-sans);
+            font-size: clamp(0.96rem, 1.1vw, 1.05rem);
+            font-weight: 300;
+            line-height: 1.68;
+            letter-spacing: -0.02em;
+            color: rgba(17, 17, 17, 0.72);
+            margin: 0;
+        }
+
+        .privacy-block p + p {
+            margin-top: 14px;
+        }
+
+        .privacy-block ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .privacy-block li::before {
+            content: "—";
+            margin-right: 10px;
+            color: rgba(17, 17, 17, 0.28);
+            font-weight: 400;
+        }
+
+        .privacy-block a {
+            color: var(--dark);
+            text-decoration: underline;
+            text-decoration-color: rgba(17, 17, 17, 0.28);
+            text-underline-offset: 3px;
+            transition: text-decoration-color var(--t-fast) var(--ease-out);
+        }
+
+        .privacy-block a:hover {
+            text-decoration-color: var(--dark);
+        }
+
+        /* Divisor */
+
+        .privacy-divider {
+            width: 100%;
+            height: 1px;
+            background: rgba(17, 17, 17, 0.08);
+            border: none;
+            margin: 0;
+        }
+
+        /* Tag de servicio */
+
+        .service-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(17, 17, 17, 0.06);
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: rgba(17, 17, 17, 0.62);
+            white-space: nowrap;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        /* Bloque de contacto destacado */
+
+        .privacy-contact-block {
+            padding: clamp(22px, 3vw, 32px);
+            border-radius: 18px;
+            border: 1px solid rgba(17, 17, 17, 0.1);
+            background: rgba(17, 17, 17, 0.028);
+        }
+
+        .privacy-contact-block p {
+            margin: 0;
+        }
+
+        .privacy-contact-block a {
+            font-weight: 500;
+        }
+
+        /* Back link */
+
+        .privacy-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: clamp(48px, 7vw, 80px);
+            padding-top: clamp(28px, 4vw, 44px);
+            border-top: 1px solid rgba(17, 17, 17, 0.1);
+            width: 100%;
+
+            font-family: var(--font-sans);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: rgba(17, 17, 17, 0.52);
+
+            transition:
+                color var(--t-fast) var(--ease-out),
+                gap var(--t-fast) var(--ease-out);
+        }
+
+        .privacy-back:hover {
+            color: var(--dark);
+            gap: 14px;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 680px) {
+            .privacy-page {
+                padding-top: 100px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .privacy-back,
+            .privacy-block a {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#privacy-content">Saltar al contenido</a>
+
+<div id="app">
+
+<!-- Navbar mínimo — solo logo y botón de regreso -->
+<nav class="navbar" aria-label="Navegación">
+    <a class="navbar-logo" href="/" aria-label="Volver al inicio — ERROR404">
+        ERROR404
+    </a>
+</nav>
+
+<main id="privacy-content" class="privacy-page">
+    <div class="privacy-inner">
+
+        <span class="privacy-kicker">Legal</span>
+
+        <h1 class="privacy-title">
+            Política de <em>privacidad</em>
+        </h1>
+
+        <span class="privacy-date">
+            Última actualización: junio de 2025
+        </span>
+
+        <div class="privacy-body">
+
+            <!-- 1. Responsable -->
+            <div class="privacy-block">
+                <h2>1. Responsable del tratamiento</h2>
+                <p>
+                    El responsable del sitio web <strong>error404mx</strong>
+                    (en adelante, "el Sitio") es <strong>José Suaste</strong>,
+                    operando bajo el nombre de contenido <strong>ERROR404</strong>.
+                    Puedes contactarme en
+                    <a href="mailto:holaerror404mx@gmail.com">holaerror404mx@gmail.com</a>
+                    para cualquier asunto relacionado con el tratamiento de tus datos.
+                </p>
+                <p>
+                    Esta política se rige por la
+                    <strong>Ley Federal de Protección de Datos Personales
+                    en Posesión de los Particulares (LFPDPPP)</strong> de México
+                    y, en lo aplicable, por el
+                    <strong>Reglamento General de Protección de Datos (GDPR)</strong>
+                    de la Unión Europea para visitantes de esa región.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 2. Datos que recolecto -->
+            <div class="privacy-block">
+                <h2>2. Datos personales que recolecto</h2>
+                <p>El Sitio recolecta únicamente los siguientes datos:</p>
+                <ul>
+                    <li>
+                        <strong>Formulario de contacto:</strong> nombre, dirección
+                        de correo electrónico y el contenido del mensaje o propuesta
+                        que envías voluntariamente.
+                    </li>
+                    <li>
+                        <strong>Datos de navegación:</strong> páginas visitadas,
+                        tiempo de sesión aproximado y país de origen, recopilados
+                        de forma anónima y sin cookies de seguimiento a través de
+                        Umami Analytics.
+                    </li>
+                </ul>
+                <p>
+                    No recolecto datos sensibles (salud, origen étnico, orientación
+                    sexual, datos financieros ni similares).
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 3. Finalidad -->
+            <div class="privacy-block">
+                <h2>3. Finalidad del tratamiento</h2>
+                <p>Los datos recolectados se usan exclusivamente para:</p>
+                <ul>
+                    <li>
+                        Responder a mensajes, propuestas o consultas que envíes
+                        a través del formulario de contacto.
+                    </li>
+                    <li>
+                        Entender de forma agregada y anónima cómo se navega el
+                        Sitio para mejorar su contenido y experiencia.
+                    </li>
+                </ul>
+                <p>
+                    No utilizo tus datos para publicidad, perfilado, venta a
+                    terceros ni ninguna otra finalidad distinta a las anteriores.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 4. Terceros -->
+            <div class="privacy-block">
+                <h2>4. Servicios de terceros</h2>
+                <p>
+                    El Sitio utiliza los siguientes servicios externos. Cada uno
+                    tiene sus propias políticas de privacidad:
+                </p>
+
+                <ul>
+                    <li>
+                        <strong>Web3Forms</strong>
+                        <span class="service-tag">Formulario</span>
+                        — procesa los envíos del formulario de contacto y entrega
+                        el mensaje a mi correo. Los datos se transmiten de forma
+                        segura (HTTPS) y no se usan para fines ajenos a la entrega.
+                        <a
+                            href="https://web3forms.com/privacy"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Política de Web3Forms ↗</a>
+                    </li>
+                    <li>
+                        <strong>Umami Analytics</strong>
+                        <span class="service-tag">Analítica</span>
+                        — mide visitas y comportamiento de navegación de forma
+                        anónima, sin cookies de rastreo ni identificadores
+                        personales. Cumple con GDPR por diseño.
+                        <a
+                            href="https://umami.is/privacy"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Política de Umami ↗</a>
+                    </li>
+                    <li>
+                        <strong>GitHub Pages / Vercel</strong>
+                        <span class="service-tag">Hosting</span>
+                        — el Sitio se aloja en infraestructura de GitHub o Vercel,
+                        que pueden registrar logs de acceso estándar (IP, agente
+                        de usuario) por razones de seguridad operativa.
+                        <a
+                            href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >Política de GitHub ↗</a>
+                    </li>
+                </ul>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 5. Cookies -->
+            <div class="privacy-block">
+                <h2>5. Cookies</h2>
+                <p>
+                    El Sitio <strong>no utiliza cookies propias</strong> ni
+                    cookies de rastreo publicitario. Umami Analytics opera sin
+                    cookies — usa un identificador de sesión anónimo en memoria
+                    que no persiste entre visitas.
+                </p>
+                <p>
+                    Si en el futuro se incorporaran cookies, esta política se
+                    actualizará y se notificará de forma visible en el Sitio.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 6. Conservación -->
+            <div class="privacy-block">
+                <h2>6. Conservación de los datos</h2>
+                <p>
+                    Los mensajes recibidos a través del formulario de contacto
+                    se conservan en mi bandeja de correo el tiempo necesario para
+                    gestionar la comunicación correspondiente. No existe una base
+                    de datos propia de contactos ni se almacenan en ningún sistema
+                    adicional.
+                </p>
+                <p>
+                    Los datos de analítica son agregados y anónimos; no es
+                    posible identificar a una persona a partir de ellos.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 7. Derechos -->
+            <div class="privacy-block">
+                <h2>7. Tus derechos (ARCO)</h2>
+                <p>
+                    De acuerdo con la LFPDPPP, tienes derecho a
+                    <strong>Acceder, Rectificar, Cancelar u Oponerte</strong>
+                    al tratamiento de tus datos personales. Si eres residente
+                    de la Unión Europea, también tienes derecho a la portabilidad
+                    y a presentar una reclamación ante la autoridad de control
+                    correspondiente.
+                </p>
+                <p>
+                    Para ejercer cualquiera de estos derechos, escríbeme a:
+                </p>
+                <div class="privacy-contact-block">
+                    <p>
+                        <a href="mailto:holaerror404mx@gmail.com">
+                            holaerror404mx@gmail.com
+                        </a>
+                        — indica en el asunto "Solicitud ARCO" y el tipo de
+                        derecho que deseas ejercer. Responderé en un plazo
+                        máximo de <strong>20 días hábiles</strong>.
+                    </p>
+                </div>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 8. Seguridad -->
+            <div class="privacy-block">
+                <h2>8. Seguridad</h2>
+                <p>
+                    El Sitio opera exclusivamente bajo conexión cifrada
+                    (<strong>HTTPS</strong>). Los envíos del formulario se
+                    transmiten de forma segura a través de Web3Forms. No
+                    almaceno contraseñas ni información de pago de ningún tipo.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 9. Menores -->
+            <div class="privacy-block">
+                <h2>9. Menores de edad</h2>
+                <p>
+                    El Sitio no está dirigido a menores de 18 años y no recolecta
+                    intencionalmente datos de menores. Si crees que un menor ha
+                    enviado datos a través del formulario, contáctame para
+                    proceder a su eliminación inmediata.
+                </p>
+            </div>
+
+            <hr class="privacy-divider">
+
+            <!-- 10. Cambios -->
+            <div class="privacy-block">
+                <h2>10. Cambios a esta política</h2>
+                <p>
+                    Esta política puede actualizarse cuando sea necesario —
+                    por ejemplo, si se agregan nuevos servicios o funcionalidades
+                    al Sitio. La fecha de "última actualización" al inicio del
+                    documento siempre reflejará la versión vigente.
+                </p>
+                <p>
+                    El uso continuado del Sitio tras una actualización implica
+                    la aceptación de los cambios.
+                </p>
+            </div>
+
+        </div><!-- /.privacy-body -->
+
+        <a class="privacy-back" href="/">
+            <span aria-hidden="true">←</span>
+            Volver al sitio
+        </a>
+
+    </div><!-- /.privacy-inner -->
+</main>
+
+<!-- Footer mínimo -->
+<footer class="site-footer" role="contentinfo">
+    <div class="footer-bar" style="border-top: 1px solid rgba(17,17,17,0.1); padding-top: 20px; width: min(100%, 1180px); margin: 0 auto;">
+        <span>© <span id="current-year">2025</span> José Suaste</span>
+        <span>Hecho en México</span>
+    </div>
+</footer>
+
+</div><!-- /#app -->
+
+<script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
