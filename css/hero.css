@@ -47,16 +47,26 @@
 /* ── Título mixto ────────────────────────────────────────── */
 
 .giant-title {
+    position: relative;
+    /*
+      z-index 2 en el título y 3 en la imagen hacen que la foto
+      quede encima del texto — necesario para el efecto de roce.
+    */
+    z-index: 2;
+
+    display: flex;
+    align-items: baseline;
+    gap: 0.18em;
+
+    margin: 0;
+
     font-size: clamp(3.5rem, 13vw, 10rem);
     line-height: 0.82;
     letter-spacing: -0.04em;
     color: var(--dark, #111111);
-    display: flex;
-    align-items: baseline;
-    gap: 0.18em;
 }
 
-/* "José" — NyghtSerif Light Italic */
+/* "José" — serif cursiva */
 .giant-title__serif {
     font-family: var(--font-serif);
     font-weight: 300;
@@ -74,6 +84,10 @@
 
 .profile-wrapper {
     position: relative;
+    /*
+      z-index mayor que el título para que la imagen
+      quede encima y cree el efecto de roce.
+    */
     z-index: 3;
     margin-top: -30px;
 }
@@ -81,9 +95,11 @@
 .profile-img {
     width: clamp(200px, 72vw, 560px);
     height: auto;
+    display: block;
+
     filter: grayscale(100%);
     border-radius: 50%;
-    display: block;
+
     transition: filter 0.5s ease;
     will-change: filter;
 }
@@ -98,16 +114,19 @@
 .hero-footer {
     position: relative;
     z-index: 4;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    padding: 0 var(--pad-x) 36px;
+
     width: 100%;
+    padding: 0 var(--pad-x) 36px;
 }
 
 .bottom-sub-btn {
     position: relative;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -145,10 +164,11 @@
 
 @media (hover: hover) and (pointer: fine) {
     .bottom-sub-btn:hover {
-        background: var(--coral, #FF705D);
+        background: var(--coral, #ff705d);
         color: var(--dark, #111111);
-        border-color: var(--coral, #FF705D);
+        border-color: var(--coral, #ff705d);
         transform: translateY(-4px);
+
         box-shadow:
             0 20px 44px rgba(17, 17, 17, 0.16),
             0 1px 0 rgba(255, 255, 255, 0.5) inset;
@@ -156,18 +176,53 @@
 }
 
 
-/* ── Desktop ─────────────────────────────────────────────── */
+/* ── Tablet y desktop ────────────────────────────────────── */
 
 @media (min-width: 768px) {
+    .profile-wrapper {
+        /*
+          El título en desktop mide ~10rem con line-height 0.82,
+          lo que da ~130px de altura visual real.
+          Con -110px la imagen sube lo suficiente para rozar
+          la base de las letras sin taparlas.
+          Ajusta este valor ±10px según tu foto específica.
+        */
+        margin-top: -180px;
+    }
+
     .hero-footer {
         position: absolute;
         bottom: 40px;
         left: 0;
+
         flex-direction: row;
         justify-content: center;
         align-items: flex-end;
-        padding: 0 50px;
         gap: 20px;
+
+        padding: 0 50px;
+    }
+}
+
+
+/* ── Pantallas de escritorio con poca altura ─────────────── */
+
+@media (min-width: 768px) and (max-height: 780px) {
+    .giant-title {
+        font-size: clamp(3.5rem, 11vw, 8rem);
+    }
+
+    .profile-wrapper {
+        /* Proporcional al título reducido */
+        margin-top: -88px;
+    }
+
+    .profile-img {
+        width: clamp(200px, 52vh, 480px);
+    }
+
+    .hero-footer {
+        bottom: 24px;
     }
 }
 
