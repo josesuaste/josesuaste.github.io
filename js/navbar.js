@@ -408,7 +408,11 @@
         const focusable = getFocusableElements();
         if (!focusable.length) return;
 
-        // FIX: focusable en lugar de focusable (el array entero era siempre truthy)
+        /*
+          FIX: focusable en lugar de focusable.
+          El array completo siempre es truthy — comparar
+          document.activeElement contra él nunca daría true.
+        */
         const first = focusable;
         const last = focusable[focusable.length - 1];
 

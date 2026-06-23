@@ -119,6 +119,12 @@
     color: rgba(17, 17, 17, 0.42);
 }
 
+.footer-bar a {
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--t-fast) var(--ease-out);
+}
+
 @media (hover: hover) and (pointer: fine) {
     .footer-social a:hover {
         color: var(--green, #8ED462);
@@ -129,6 +135,10 @@
     .footer-logo:hover {
         color: var(--dark);
         transform: translateY(-2px);
+    }
+
+    .footer-bar a:hover {
+        color: var(--dark);
     }
 }
 

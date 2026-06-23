@@ -71,6 +71,16 @@
                 return 'Escribe un correo válido.';
             }
 
+            if (input.validity.tooShort) {
+                if (name === 'nombre') return 'El nombre es muy corto.';
+                if (name === 'mensaje') return 'La propuesta es muy corta.';
+                return 'El texto es muy corto.';
+            }
+
+            if (input.validity.tooLong) {
+                return 'El texto es demasiado largo.';
+            }
+
             return 'Revisa este campo.';
         }
 
@@ -147,10 +157,6 @@
         }
 
         if (reduceMotion) {
-            /*
-              FIX: usar clearProps específicos en lugar de 'all'
-              para no borrar propiedades que CSS controla con position/absolute.
-            */
             gsap.set([label, title, subtitle, copy, button].filter(Boolean), {
                 clearProps: 'transform,opacity,visibility',
                 autoAlpha: 1,
@@ -285,7 +291,7 @@
 
             /*
               Color del label: manejado por CSS (:focus-within en form.css).
-              GSAP solo anima `x` (transform) — compositor puro, sin repaint.
+              GSAP solo anima `y` del field contenedor — compositor puro.
             */
             input.addEventListener('focus', () => {
                 if (!field || isNavOpen()) return;
@@ -395,13 +401,22 @@
         }
 
         if (button) {
+            /*
+              Timestamp honeypot — antispam sin dependencias.
+              Registra cuándo cargó el form y bloquea envíos
+              que lleguen en menos de 3 segundos. Los bots
+              llenan formularios en milisegundos; los humanos no.
+            */
+            const formLoadTime = Date.now();
+            const MIN_FILL_MS = 3000;
+
             form.addEventListener('submit', (event) => {
                 const invalidInputs = Array.from(inputs).filter((input) => !input.checkValidity());
 
                 /*
-                  FIX: invalidInputs es siempre un array — los arrays vacíos
-                  son truthy. Acceder a [0] para obtener el primer inválido
-                  (undefined si no hay ninguno, que es falsy correctamente).
+                  FIX: invalidInputs en lugar de invalidInputs.
+                  Un array vacío [] es truthy — acceder a [0] devuelve
+                  undefined cuando no hay errores, que es falsy.
                 */
                 const firstInvalid = invalidInputs ?? null;
 
@@ -410,13 +425,7 @@
                 if (firstInvalid) {
                     event.preventDefault();
 
-                    // Marcar visualmente todos los campos inválidos,
-                    // pero el tooltip solo aparece en el primero.
-                    invalidInputs.forEach((input, i) => {
-                        if (i === 0) {
-                            showFieldError(input);
-                        }
-                    });
+                    showFieldError(firstInvalid);
 
                     firstInvalid.focus({ preventScroll: true });
 
@@ -425,6 +434,12 @@
                         block: 'center'
                     });
 
+                    return;
+                }
+
+                // Antispam: bloquear si el form se llenó demasiado rápido
+                if (Date.now() - formLoadTime < MIN_FILL_MS) {
+                    event.preventDefault();
                     return;
                 }
 
@@ -462,14 +477,12 @@
                         ease: 'sine.in'
                     });
                 } else if (buttonText) {
-                    // Animación de puntos sin TextPlugin: cicla "Enviando." → ".." → "..."
                     buttonText.textContent = 'Enviando.';
                     let dotCount = 1;
                     const dotInterval = window.setInterval(() => {
                         dotCount = (dotCount % 3) + 1;
                         buttonText.textContent = 'Enviando' + '.'.repeat(dotCount);
                     }, 420);
-                    // Guardar referencia para limpieza si hiciera falta
                     button._dotInterval = dotInterval;
                 }
             });
@@ -506,8 +519,6 @@
         start();
     }
 
-    // Limpiar el interval de puntos si el usuario navega fuera
-    // (back/forward cache incluido) antes de que el form haga redirect.
     window.addEventListener('pagehide', () => {
         const btn = document.querySelector('.submit-btn');
         if (btn && btn._dotInterval) {
