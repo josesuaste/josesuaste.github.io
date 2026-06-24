@@ -1,0 +1,10 @@
+# robots.txt — ERROR404
+# https://error404mx.com
+
+User-agent: *
+Allow: /
+
+Disallow: /gracias.html
+Disallow: /privacidad.html
+
+Sitemap: https://error404mx.com/sitemap.xml
