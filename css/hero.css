@@ -48,10 +48,6 @@
 
 .giant-title {
     position: relative;
-    /*
-      z-index 2 en el título y 3 en la imagen hacen que la foto
-      quede encima del texto — necesario para el efecto de roce.
-    */
     z-index: 2;
 
     display: flex;
@@ -71,12 +67,24 @@
     font-family: var(--font-serif);
     font-weight: 300;
     font-style: italic;
+    display: inline-block;
 }
 
 /* "Suaste" — Inter */
 .giant-title__sans {
     font-family: var(--font-sans);
     font-weight: 900;
+    display: inline-block;
+}
+
+/*
+  Chars generados por SplitText.
+  display: inline-block para que y/rotation funcionen.
+  will-change declarado aquí; JS lo limpia con clearProps al terminar.
+*/
+.giant-title .char {
+    display: inline-block;
+    will-change: transform, opacity;
 }
 
 
@@ -84,12 +92,15 @@
 
 .profile-wrapper {
     position: relative;
-    /*
-      z-index mayor que el título para que la imagen
-      quede encima y cree el efecto de roce.
-    */
     z-index: 3;
     margin-top: -30px;
+
+    /*
+      Estado inicial: círculo colapsado en el centro.
+      GSAP anima a circle(50% at 50% 50%) en la entrada.
+    */
+    clip-path: circle(0% at 50% 50%);
+    will-change: clip-path;
 }
 
 .profile-img {
@@ -180,13 +191,6 @@
 
 @media (min-width: 768px) {
     .profile-wrapper {
-        /*
-          El título en desktop mide ~10rem con line-height 0.82,
-          lo que da ~130px de altura visual real.
-          Con -110px la imagen sube lo suficiente para rozar
-          la base de las letras sin taparlas.
-          Ajusta este valor ±10px según tu foto específica.
-        */
         margin-top: -180px;
     }
 
@@ -213,7 +217,6 @@
     }
 
     .profile-wrapper {
-        /* Proporcional al título reducido */
         margin-top: -158px;
     }
 
@@ -230,6 +233,15 @@
 /* ── Accesibilidad ───────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
+    .profile-wrapper {
+        clip-path: circle(50% at 50% 50%) !important;
+        will-change: auto;
+    }
+
+    .giant-title .char {
+        will-change: auto;
+    }
+
     .profile-img,
     .bottom-sub-btn {
         transition: none;
