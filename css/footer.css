@@ -116,7 +116,8 @@
     font-weight: 650;
     line-height: 1;
     letter-spacing: 0.02em;
-    color: rgba(17, 17, 17, 0.42);
+    /* 0.42 → 0.62: ratio sube de 2.6:1 a 5.1:1 — pasa WCAG AA */
+    color: rgba(17, 17, 17, 0.62);
 }
 
 .footer-bar a {

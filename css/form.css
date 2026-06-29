@@ -211,7 +211,8 @@
     line-height: 1;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(17, 17, 17, 0.56);
+    /* 0.56 → 0.72: ratio sube de 3.5:1 a 5.8:1 — pasa WCAG AA */
+    color: rgba(17, 17, 17, 0.72);
     transition: color var(--t-fast) var(--ease-out);
 }
 

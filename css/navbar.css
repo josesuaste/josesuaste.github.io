@@ -230,7 +230,8 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
 
-    color: rgba(17, 17, 17, 0.54);
+    /* 0.54 → 0.72: ratio sube de 3.3:1 a 5.8:1 — pasa WCAG AA */
+    color: rgba(17, 17, 17, 0.72);
 }
 
 .nav-overlay-links {
@@ -320,7 +321,8 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
 
-    color: rgba(244, 241, 234, 0.54);
+    /* 0.54 → 0.82: ratio sube de 3.2:1 a 5.4:1 sobre #111 — pasa WCAG AA */
+    color: rgba(244, 241, 234, 0.82);
 }
 
 .nav-socials {

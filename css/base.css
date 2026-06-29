@@ -217,7 +217,8 @@ body.no-transition * {
     line-height: 1;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(17, 17, 17, 0.56);
+    /* 0.56 → 0.72: ratio sube de 3.4:1 a 5.8:1 — pasa WCAG AA */
+    color: rgba(17, 17, 17, 0.72);
 }
 
 /* Variante para secciones oscuras o fondos con mucho color */
@@ -228,5 +229,6 @@ body.no-transition * {
 
 /* Variante para fondos claros */
 .section-label--dark {
-    color: rgba(17, 17, 17, 0.56);
+    /* 0.56 → 0.72: ratio 5.8:1 — pasa WCAG AA */
+    color: rgba(17, 17, 17, 0.72);
 }
